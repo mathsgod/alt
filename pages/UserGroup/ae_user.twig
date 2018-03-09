@@ -1,0 +1,37 @@
+	<form method="post">
+<div class="box box-primary table-responsive">
+
+	<table class="table table-condensed table-hover">
+	<thead>
+		<tr>
+			<td></td>
+			{% for usergroup in usergroups %}
+			<td>{{usergroup.name}}</td>
+			{% endfor %}
+		</tr>
+	</thead>
+	<tbody>
+		{% for user in users %}
+		<tr>
+			<td>{{user}}</td>
+			{% for usergroup in usergroups %}
+			<td>
+				<input name="u[{{user.user_id}}][]" type="checkbox" class="iCheck" {{user.is(usergroup)?'checked':''}} value="{{usergroup.usergroup_id}}" />
+			</td>
+			{% endfor %}
+		</tr>
+		{% endfor %}
+	</tbody>
+
+</table>
+
+
+
+	<div class="box-footer">
+		<button class="btn btn-success">Submit</button>
+	</div>
+
+
+</div>
+
+</form>

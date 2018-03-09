@@ -1,0 +1,64 @@
+<template id="pb-widget-div">
+    <div class="pb-widget-div box box-primary">
+        <pb-widget-box-header :model="model"></pb-widget-box-header>
+        <div class="box-body">
+            <button type="button" class="btn btn-xs btn-default" @click="editMode=true" v-if="!editMode">
+                <i class="fa fa-chevron-up"></i>
+            </button>
+            <button type="button" class="btn btn-xs btn-default" @click="editMode=false" v-if="editMode">
+                <i class="fa fa-chevron-down"></i>
+            </button>
+
+            <div v-if="editMode">
+                <table class="table table-condensed">
+                    <tr>
+                        <th>Class</th>
+                        <td>
+                            <input type="text" v-model="model.attributes.class" class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Style</th>
+                        <td>
+                            <input type="text" v-model="model.attributes.style" class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Id</th>
+                        <td>
+                            <input type="text" v-model="model.attributes.id" class="form-control" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <pb-widget-container :model="model.children" class="box-body"></pb-widget-container>
+    </div>
+</template>
+
+<script>
+    Vue.component("pb-widget-div", {
+        name: "pb-widget-div",
+        template: document.currentScript.ownerDocument.getElementById("pb-widget-div"),
+        data: function () {
+            return {
+                editMode: false
+            };
+        },
+        props: {
+            model: Object,
+        },
+        created: function () {
+            if (!this.model.children) {
+                Vue.set(this.model, 'children', []);
+                Vue.set(this.model, "attributes", {});
+            }
+        },
+        mounted: function () {
+
+        },
+        methods: {
+
+        }
+    });
+</script>

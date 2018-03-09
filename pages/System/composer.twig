@@ -1,0 +1,23 @@
+
+<script>
+
+function run(cmd){
+	$("#result1").box("showLoading");
+	$.get("System/composer/run",{
+		command:cmd
+	}).done(function(html){
+		$("#result1 .box-body").html(html);
+
+		$("#result1").box("hideLoading");
+	});
+	
+}
+function onClickRun(){
+	run($("#command input").val());
+}
+
+function onClickRunCustom(){
+	run("require "+$("#plugins").val());
+}
+
+</script>

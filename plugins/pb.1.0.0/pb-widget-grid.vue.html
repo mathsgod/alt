@@ -1,0 +1,70 @@
+<template id="pb-widget-grid">
+    <div class="box box-primary">
+        <pb-widget-box-header :model="model"></pb-widget-box-header>
+
+        <div class="box-body" style=" min-height: 100px;">
+            <div>
+                <button type="button" class="btn btn-xs btn-default" @click="addCol">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </div>
+            <!-- div v-for="(widget,index) in model.children" :key="widget.id" :class="'col-md-'+widget.size">
+                <pb-widget-div :model="widget" v-on:delete="onDeleteWidget(widget)"></pb-widget-div>
+            </div -->
+            <div>
+                <pb-widget-div :class="'col-md-'+widget.size" v-for="(widget,index) in model.children" :key="widget.id" :model="widget" v-on:delete="onDeleteWidget(widget)"></pb-widget-div>
+            </div>
+        </div>
+    </div>
+</template>
+
+
+<script>
+    Vue.component("pb-widget-grid", {
+        name: "pb-widget-grid",
+        template: document.currentScript.ownerDocument.getElementById("pb-widget-grid"),
+        props: {
+            model: Object
+        }, computed: {
+            colSize: function () {
+                if (this.model.children.length == 0) {
+                    return 12;
+                }
+
+                return Math.floor(12 / this.model.children.length);
+            }
+        }, methods: {
+            onDeleteWidget: function (widget) {
+                var a = this.model.children.indexOf(widget);
+                if (a >= 0) {
+                    this.model.children.splice(a, 1);
+                }
+                //re-calc size
+                this.model.children.forEach(function (o) {
+                    o.size = this.colSize;
+                }.bind(this));
+            },
+            addCol: function () {
+                this.model.children.push({
+                    name: "Div",
+                    type: "div",
+                    id: PB.getNextID(),
+                    size: 0
+                });
+                //re-calc size
+                this.model.children.forEach(function (o) {
+                    o.size = this.colSize;
+                }.bind(this));
+
+            }
+        }, created: function () {
+            Vue.set(this.model, "children", []);
+            this.model.children.push({
+                name: "Div",
+                type: "div",
+                size: 12,
+                id: PB.getNextID()
+            });
+        }
+    });
+</script>

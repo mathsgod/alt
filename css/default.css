@@ -1,0 +1,41 @@
+.box-body .dataTables_wrapper{
+	margin:15px
+}
+
+table.content-wrap tbody>tr>td{
+	word-wrap: break-word;
+	white-space: pre-wrap;
+}
+
+
+.fc-event-container{
+	cursor: pointer;
+}
+
+.editable-click, a.editable-click, a.editable-click:hover{
+	border-bottom:none;
+}
+
+span.select2{
+    width:100%
+}
+
+.select2-dropdown{
+	z-index:9999
+}
+
+[data-format=json] {
+	padding: 0.5em 1.5em !important;
+}
+
+.dropdown-menu>li:not(.checked)>a>i{
+	display:none
+}
+
+.select2-dropdown{
+	z-index:99995
+}
+
+.bootstrap-datetimpicker-widget{
+	z-index:99995
+}

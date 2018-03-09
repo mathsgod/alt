@@ -1,0 +1,63 @@
+<template id="pb-widget-text">
+    <div class="box pb-widget">
+        <pb-widget-box-header :model="model"></pb-widget-box-header>
+        <div class="box-body">
+            <div>
+                <button type="button" class="btn btn-xs btn-default" @click="edit" v-if="!editMode">
+                    <i class="fa fa-pencil"></i>
+                </button>
+                <button type="button" class="btn btn-xs btn-default" @click="ok" v-if="editMode">
+                    <i class="fa fa-check"></i>
+                </button>
+            </div>
+
+            <div v-if="!editMode">
+                <pre v-html="model.value"></pre>
+            </div>
+            <div v-if="editMode">
+                <div ref="editor" style="width:100%;height:400px"></div>
+            </div>
+        </div>
+
+    </div>
+</template>
+
+<script>
+    Vue.component("pb-widget-text", {
+        name: "pb-widget-text",
+        template: document.currentScript.ownerDocument.getElementById("pb-widget-text"),
+        props: {
+            model: Object
+        },
+        data: function () {
+            return {
+                editor: null,
+                editMode: false
+            };
+        },
+        created: function () {
+            if (!this.model.value) {
+                this.model.value = "";
+            }
+
+            console.log(this);
+        },
+        methods: {
+            ok: function () {
+                this.editMode = false;
+                this.model.value = this.editor.getValue();
+                this.$nextTick(function () {
+                    this.editor.destroy();
+                    this.editor.container.remove();
+                });
+            },
+            edit: function () {
+                this.editMode = true;
+                this.$nextTick(function () {
+                    this.editor = ace.edit(this.$refs.editor)
+                    this.editor.setValue(this.model.value);
+                });
+            }
+        }
+    });
+</script>

@@ -1,0 +1,179 @@
+table.RT .rt-col{
+    min-width: 28px;
+}
+
+table.RT .rt-col-sizer{
+    min-width: 28px;
+}
+
+.RT .select2-selection{
+    padding-left: 1px;
+    padding-right: 1px;
+    height: 25px;
+}
+
+.RT .select2-selection__rendered{
+    padding-left: 2px!important;
+    margin-top: -9px!important;
+}
+.RT .select2-selection__arrow{
+    top:-3px!important;
+}
+
+.RTColumnVis{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	overflow: auto;
+}
+
+.RTColumnVis>li{
+	border-radius: 2px;
+	padding: 10px;
+	background: #f4f4f4;
+	margin-bottom: 2px;
+	border-left: 2px solid #e6e7e8;
+	color: #444;
+}
+
+.RTColumnVis .handle{
+	display: inline-block;
+	cursor: move;
+	margin: 0 5px
+}
+
+.rt-header .search-clear-btn,
+table.RT .search-clear-btn{
+	height:25px!important;
+	padding:5px 5px!important;
+}
+
+table.RT .unselectable{
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+}
+
+.rt-header thead tr td{
+	padding:1px;
+}
+
+.rt-header tr th,
+table.RT thead tr th{
+	overflow: hidden;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+}
+
+table.RT tbody tr td input{
+	padding-left:1px;
+	padding-right:1px;
+	height:22px;
+
+}
+
+table.RT tbody tr td textarea{
+	padding-left:1px;
+	padding-right:1px;
+}
+
+table.RT tbody tr td select{
+	padding-left:1px;
+	padding-right:1px;
+	padding-top:3px;
+	height:25px;
+}
+
+table.RT tbody tr.child td{
+	white-space:normal;
+	word-break:break-all;
+}
+
+.rt-header tr:nth-child(2) td input,
+table.RT thead tr:nth-child(2) td input{
+	padding-left:1px;
+	padding-right:1px;
+	height:25px;
+}
+
+.rt-header tr:nth-child(2) td .input-group input,
+table.RT thead tr:nth-child(2) td .input-group input{
+	width:80px;
+	float:left;
+}
+
+.rt-header tr:nth-child(2) td input.date,
+table.RT thead tr:nth-child(2) td input.date{
+	width:80px;
+	float:left;
+}
+
+.rt-header tr:nth-child(2) td .input-group,
+table.RT thead tr:nth-child(2) td .input-group{
+	width:1px;
+	float:left;
+}
+
+.rt-header tr:nth-child(2) td select,
+table.RT thead tr:nth-child(2) td select{
+	padding:0px 1px;
+	height:25px;
+}
+
+table.RT.collasped tbody tr.parent td:first-child:before{
+	cursor:pointer;
+}
+
+.rt-header th,
+table.RT td,
+table.RT th{
+	white-space: nowrap;
+	padding: 1px 2px 1px 2px!important;
+}
+
+table.RT.collapsed > tbody > tr.child > td:before {
+	display: none;
+}
+
+.rt-header th.sortable,
+table.RT th.sortable{
+	cursor: pointer;
+	background: url('../images/sort_both.png') no-repeat center right;
+}
+
+.rt-header th.sorting_asc,
+table.RT th.sorting_asc{
+	background: url('../images/sort_asc.png') no-repeat center right;
+}
+
+.rt-header th.sorting_desc,
+table.RT th.sorting_desc{
+	background: url('../images/sort_desc.png') no-repeat center right;
+}
+
+table.RT.collapsed tbody td:first-child:before,
+table.RT.collapsed tbody th:first-child:before {
+	left: 4px;
+	height: 14px;
+	width: 14px;
+	display: block;
+	position: absolute;
+	color: white;
+	border: 2px solid white;
+	border-radius: 16px;
+	text-align: center;
+	line-height: 15px;
+	box-shadow: 0 0 3px #444;
+	box-sizing: content-box;
+	background-color: #31b131;
+}
+
+table.RT tr.child ul {
+	display: inline-block;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+table.RT .ui-resizable-e{
+    right:0px;
+}

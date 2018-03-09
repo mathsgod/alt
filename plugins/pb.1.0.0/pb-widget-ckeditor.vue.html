@@ -1,0 +1,56 @@
+<template id="pb-widget-ckeditor">
+    <div class="box pb-widget">
+        <pb-widget-box-header :model="model"></pb-widget-box-header>
+        <div class="box-body">
+            <div>
+                <button type="button" class="btn btn-xs btn-default" @click="edit" v-if="!editMode">
+                    <i class="fa fa-pencil"></i>
+                </button>
+                <button type="button" class="btn btn-xs btn-default" @click="ok" v-if="editMode">
+                    <i class="fa fa-check"></i>
+                </button>
+            </div>
+
+            <div v-if="!editMode" v-html="model.value">
+
+            </div>
+            <div v-if="editMode">
+                <textarea ref="editor">{{model.value}}</textarea>
+            </div>
+        </div>
+
+    </div>
+</template>
+<script>
+    Vue.component("pb-widget-ckeditor", {
+        template: document.currentScript.ownerDocument.getElementById("pb-widget-ckeditor"),
+        props: {
+            model: Object
+        },
+        data: function () {
+            return {
+                editor: null,
+                editMode: false
+            };
+        },
+        created: function () {
+            console.log(this);
+        },
+        methods: {
+            ok: function () {
+                this.model.value = this.editor.getData();
+                this.$nextTick(function () {
+                    this.editMode = false;
+                });
+            },
+            edit: function () {
+                this.editMode = true;
+                //console.log(this);
+                this.$nextTick(function () {
+                    this.editor = CKEDITOR.replace(this.$refs.editor);
+                    this.editor.setData(this.model.value);
+                });
+            }
+        }
+    });
+</script>

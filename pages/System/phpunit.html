@@ -1,0 +1,13 @@
+<script>
+$(function(){
+	$("#run1").on("click",function(){
+
+		var box= $(this).closest(".box");
+		box.box("showLoading");
+		$(this).closest(".box").find(".box-body").load("System/phpunit/run",function(){
+			box.box("hideLoading");
+		});
+	});
+
+});
+</script>

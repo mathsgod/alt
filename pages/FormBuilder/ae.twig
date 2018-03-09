@@ -1,0 +1,153 @@
+<script src="composer/vendor/kevinchappell/form-builder/dist/form-builder.min.js"></script>
+{{form1|raw}}
+<div id="fb-editor"></div>
+<input type='hidden' value='{{formData}}' id='formData' />
+<input type='hidden' value='{{roles}}' id="roles" />
+
+<script>
+    // configure the class for runtime loading
+    if (!window.fbControls) window.fbControls = [];
+    window.fbControls.push(function (controlClass, allControlClasses) {
+        class ctrl extends controlClass {
+            build() {
+                return this.markup('span', this.id, { id: this.config.name });
+            }
+
+        }
+        controlClass.register('p', ctrl);
+        return ctrl;
+
+    });
+
+    window.fbControls.push(function (controlClass, allControlClasses) {
+        let controlSelect = allControlClasses.select;
+
+        class controlSelect2 extends controlClass {
+            build() {
+
+                return this.markup('span', 'test', { id: this.config.name });
+            }
+
+        }
+        controlClass.register('select2', controlSelect2);
+
+        return controlSelect2;
+    });
+
+    window.fbControls.push(function (controlClass, allControlClasses) {
+        controlClass.register(['normal'], allControlClasses.select, 'select');
+        return allControlClasses.select;
+
+
+    });
+
+    window.fbControls.push(function (controlClass, allControlClasses) {
+        controlClass.register(['ckeditor'], allControlClasses.textarea, 'textarea');
+        return allControlClasses.textarea;
+
+        console.log(controlClass);
+        let controlTextarea = allControlClasses.textarea;
+        /**
+         * Star rating class
+         */
+        class controlCKEditor extends controlTextarea {
+
+            /**
+             * Class configuration - return the icons & label related to this control
+             * @returndefinition object
+             */
+            static get definition() {
+                return {
+                    icon: '<i class="fa fa-list"></i>',
+                    i18n: {
+                        default: 'CKEditor'
+                    }
+                };
+            }
+
+            /**
+             * javascript & css to load
+             */
+            configure() {
+                //this.js = '//cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.js';
+                //this.css = '//cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.css';
+            }
+
+            /**
+             * build a text DOM element, supporting other jquery text form-control's
+             * @return {Object} DOM Element to be injected into the form.
+             */
+            /*    build() {
+                  return this.markup('span', null, {id: this.config.name});
+                }*/
+
+            /**
+             * onRender callback
+             */
+            /*    onRender() {
+                  let value = this.config.value || 3.6;
+                  $('#'+this.config.name).rateYo({rating: value});
+                }*/
+        }
+
+        // register this control for the following types & text subtypes
+        controlClass.register('ckeditor', controlCKEditor);
+        return controlCKEditor;
+    });
+    var fb;
+
+    $(function ($) {
+
+        var options = {};
+        options.typeUserAttrs = {
+            p: {
+                index: {
+                    label: "Index"
+                }
+            },
+            text: {
+                index: {
+                    label: "Index"
+                },
+                minlength: {
+                    label: "Min Length",
+                    type: "number"
+                }
+            },
+            select: {
+                source: {
+                    label: "source"
+                }
+            }
+        };
+
+        options.roles = JSON.parse($("#roles").val());
+
+        var editor = document.getElementById('fb-editor');
+
+        fb = $(editor).formBuilder(options);
+
+        fb.promise.then(fb => {
+            //download data
+
+            var formData = $("#formData").val();
+            fb.actions.setData(formData);
+
+            $(editor).find(".save-template").on("click", function () {
+                //console.log(fb.formData);
+                $.post("FormBuilder/ae", {
+                    name: $("input[name='name']").val(),
+                    content: fb.formData
+                }).done(function (d) {
+                    if (d.code == 200) {
+                        new PNotify({
+                            title: 'Saved!',
+                            type: 'success'
+                        });
+                    }
+                });
+            });
+        });
+    });
+
+</script>

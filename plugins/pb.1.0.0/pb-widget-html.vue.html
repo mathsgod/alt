@@ -1,0 +1,70 @@
+<template id="pb-widget-html">
+    <div class="box pb-widget">
+        <pb-widget-box-header :model="model"></pb-widget-box-header>
+        <div class="box-body">
+            <div>
+                <button type="button" class="btn btn-xs btn-default" @click="edit" v-if="!editMode">
+                    <i class="fa fa-pencil"></i>
+                </button>
+                <button type="button" class="btn btn-xs btn-default" @click="ok" v-if="editMode">
+                    <i class="fa fa-check"></i>
+                </button>
+            </div>
+
+            <div v-if="!editMode" v-html="model.value">
+            </div>
+            <div v-if="editMode">
+                <div ref="editor" style="width:100%;height:400px"></div>
+            </div>
+        </div>
+
+    </div>
+</template>
+
+<script>
+    Vue.component("pb-widget-html", {
+        name: "pb-widget-html",
+        template: document.currentScript.ownerDocument.getElementById("pb-widget-html"),
+        props: {
+            model: Object
+        },
+        data: function () {
+            return {
+                editor: null,
+                editMode: false
+            };
+        },
+        created: function () {
+            if (!this.model.value) {
+                this.model.value = "";
+            }
+
+            console.log(this);
+        },
+        methods: {
+            editName: function () {
+                var name = prompt("Please enter name");
+                if (name != null) {
+                    this.model.name = name;
+                }
+            },
+            ok: function () {
+                this.editMode = false;
+                this.model.value = this.editor.getValue();
+                this.$nextTick(function () {
+                    this.editor.destroy();
+                    this.editor.container.remove();
+                });
+            },
+            edit: function () {
+                this.editMode = true;
+                this.$nextTick(function () {
+                    var Mode = ace.require("ace/mode/html").Mode;
+                    this.editor = ace.edit(this.$refs.editor);
+                    this.editor.session.setMode(new Mode());
+                    this.editor.setValue(this.model.value);
+                });
+            }
+        }
+    });
+</script>

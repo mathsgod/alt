@@ -1,0 +1,82 @@
+<template id="pb-widget-tab">
+    <div class="box pb-widget">
+        <pb-widget-box-header :model="model"></pb-widget-box-header>
+        <div class="box-body">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li v-for="(tab,index) in model.children" :class="{active:selected_index==index}">
+                        <a href="#" data-toggle="tab" @click.prevent="selected_index=index">
+                            Tab {{tab.id}} [{{tab.language}}]
+                            <button type="button" class="btn btn-box-tool" @click="editLang(tab)">
+                                <i class="fa fa-globe"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" @click="deleteTab(tab)">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="#" data-toggle="tab">
+                            <button type="button" class="btn btn-box-tool" @click.prevent="addTab">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane" :class="{active:selected_index==index}" v-for="(tab,index) in model.children">
+                        <pb-widget-container :model="tab.children"></pb-widget-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    Vue.component("pb-widget-tab", {
+        name: "pb-widget-tab",
+        template: document.currentScript.ownerDocument.getElementById("pb-widget-tab"),
+        props: {
+            model: Object
+        },
+        data: function () {
+            return {
+                selected_index: 0
+            };
+        },
+        created: function () {
+            console.log(this.model);
+            if (!this.model.children) {
+                Vue.set(this.model, "children", [{
+                    id: PB.getNextID(),
+                    language: "",
+                    children: []
+                }]);
+            }
+        },
+        methods: {
+            editLang: function (tab) {
+                var name = prompt("Please language", tab.language);
+                if (name != null) {
+                    tab.language = name;
+                }
+            },
+            deleteTab: function (tab) {
+                var i = this.model.children.indexOf(tab);
+                this.model.children.splice(i, 1);
+            },
+            addTab: function () {
+                this.model.children.push({
+                    id: PB.getNextID(),
+                    language: "",
+                    children: []
+                });
+                this.$nextTick(function () {
+                    this.selected_index = this.model.children.length - 1;
+                });
+
+            }
+        }
+    });
+</script>

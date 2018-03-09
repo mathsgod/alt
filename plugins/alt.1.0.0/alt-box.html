@@ -1,0 +1,123 @@
+<template id="alt-box-header">
+    <div class="box-header">
+        <h3 class="box-title" v-if="title" v-text="title"></h3>
+        <h3 class="box-title" v-else><slot></slot></h3>
+        <div class="box-tools pull-right">
+            <div class="btn-group">
+                <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-lock"></i>
+                </button>
+                <ul class="dropdown-menu pull-right" role="menu">
+                    <li v-for="acl in aclGroup" :class="{checked:acl.selected}">
+                        <a href="#" @click.prevent="aclClicked(acl)">
+                            <i class="fa fa-check"></i> {{acl.name}}</a>
+                    </li>
+                </ul>
+            </div>
+
+            <button v-if="collapsible" type="button" class="btn btn-box-tool" data-widget="collapse" @click="$emit('collapsed')">
+                <i class="fa fa-minus"></i>
+            </button>
+            <button v-if="closeable" type="button" class="btn btn-box-tool" data-widget="remove" @click="$emit('closed')">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+    </div>
+</template>
+
+<template id="alt-box-footer">
+    <div class="box-footer">
+        <slot></slot>
+    </div>
+</template>
+
+<template id="alt-box-body">
+    <div class="box-body">
+        <slot></slot>
+    </div>
+</template>
+
+<template id="alt-box">
+    <div class="box">
+
+        <div class="overlay" v-if="loading">
+            <i class="fa fa-spin fa-sync-alt"></i>
+        </div>
+
+        <slot></slot>
+    </div>
+</template>
+<script>
+    Vue.component("alt-box", {
+        template: document.currentScript.ownerDocument.getElementById("alt-box"),
+        data: function () {
+            return {
+                loading: false
+            }
+        },
+        computed: {
+            header() {
+                return this.$slots.default.filter(o => {
+                    if (o.componentOptions == undefined) return false;
+                    return o.componentOptions.tag == "alt-box-header";
+                }).map(o => {
+                    return o.componentInstance;
+                });
+            }
+        },
+        mounted() {
+            this.header.forEach(h => {
+                h.collapsible = this.collapsible;
+                h.closeable = this.closeable;
+                h.acl = this.acl;
+                h.aclGroup = this.aclGroup;
+            });
+
+            this.header.forEach(h => {
+                h.$on("collapsed", () => {
+                    console.log("collapsed");
+                });
+            })
+        },
+        props: {
+            collapsible: Boolean,
+            closeable: Boolean,
+            acl: Boolean,
+            aclGroup: Array
+        },
+        methods: {
+            showLoading: function () {
+                this.loading = true;
+            }, hideLoading: function () {
+                this.loading = false;
+            }
+        }
+    });
+
+    Vue.component("alt-box-body", {
+        template: document.currentScript.ownerDocument.getElementById("alt-box-body")
+    });
+
+    Vue.component("alt-box-footer", {
+        template: document.currentScript.ownerDocument.getElementById("alt-box-footer")
+    });
+
+    Vue.component("alt-box-header", {
+        template: document.currentScript.ownerDocument.getElementById("alt-box-header"),
+        props: {
+            title: String
+        },
+        data() {
+            return {
+                collapsible: false,
+                closeable: false,
+                acl: false,
+                aclGroup: []
+            }
+        }, methods: {
+            aclClicked: function (acl) {
+                acl.selected = !acl.selected;
+            }
+        }
+    });
+</script>

@@ -1,0 +1,14 @@
+<template id="bs-input">
+    <input :type="type" class="form-control" />
+</template>
+<script>
+    Vue.component("bs-input", {
+        template: document.currentScript.ownerDocument.getElementById("bs-input"),
+        props: {
+            type: {
+                type: String,
+                default: "text"
+            }
+        }
+    });
+</script>

@@ -1,0 +1,197 @@
+<template id="alt-rt">
+    <alt-box ref="box">
+        <alt-box-body class="no-padding" :class="{'table-responsive':!tableResponsive}">
+            <div style="position: relative; clear: both;">
+
+                <div :style="tableContainerStyle">
+                    <rt-table class="rt table-bordered" :responsive="tableResponsive" :sort-field="sortField" :sort-dir="sortDir" :cell-url="cellUrl"
+                        :page-size="page_size" v-on:resized="resized" :data-url="source" ref="table" v-on:refreshed="refreshed"
+                        v-on:loading="$refs.box.showLoading()" v-on:loaded="$refs.box.hideLoading()">
+                        <slot></slot>
+                    </rt-table>
+                </div>
+
+                <div style="position:absolute; top:0; left:0; overflow:hidden;" v-if="hasFixedColumn">
+
+                    <table class="table table-hover table-condensed rt table-bordered" style="background-color: white">
+                        <thead>
+                            <tr>
+                                <th :data-width="c.getWidth()" :style="{width:c.getWidth()+'px'}" class="unselectable sorting_desc" v-for="c in fixedColumns()">{{c.field}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="d in getData()">
+                                <td :style="{width:c.getWidth()+'px', height:c.getHeight()+'px'}" v-for="c in fixedColumns()">
+                                    <span v-html="c.getDataValue(d)" />
+                                    <span>{{c.$el.offsetWidth}}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </alt-box-body>
+
+        <alt-box-footer>
+            <div is="rt-pagination" :page="page" :page-count="page_count" v-on:first-page="$refs.table.firstPage()" v-on:last-page="$refs.table.lastPage()"
+                v-on:prev-page="$refs.table.prevPage()" v-on:next-page="$refs.table.nextPage()" v-on:change-page="$refs.table.gotoPage($event)"></div>
+
+            <div class="pull-left btn-group">
+                <button @click="$refs.table.refresh()" class="btn btn-default btn-sm" type="button" title="重新載入" data-toggle="tooltip">
+                    <span class="icon glyphicon glyphicon-refresh"></span>
+                </button>
+
+                <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+                    <span class="icon glyphicon glyphicon-th-list"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li v-for="col in columns">
+                        <a href="#" class="small" data-value="option1" tabIndex="-1" @click.prevent="col.isVisible=!col.isVisible">
+                            <input type="checkbox" v-model="col.isVisible" />&nbsp;{{col.field}}</a>
+                    </li>
+                </ul>
+            </div>
+
+
+            <div class="pull-left">
+                <select class="form-control input-sm" style="width:70px" @change="changePageSize()" v-model="page_size">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="500">500</option>
+                </select>
+            </div>
+
+            <div class="pull-left btn-group">
+                <button @click="toggleResponsive" class="btn btn-default btn-sm" type="button" title="Responsive" data-toggle="tooltip">
+                    <i class="fa fa-tv"></i>
+                </button>
+            </div>
+
+            <div class="pull-left dropdown" v-if="showExport()">
+                <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                    Export
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li v-if="exportXlsx">
+                        <a href="#" @click.prevent="exportFile('xlsx')">XLSX</a>
+                    </li>
+                    <li v-if="exportCsv">
+                        <a href="#" @click.prevent="exportFile('csv')">CSV</a>
+                    </li>
+                </ul>
+            </div>
+
+            <rt-info class="pull-right" :total="total" :from="from" :to="to"></rt-info>
+        </alt-box-footer>
+    </alt-box>
+</template>
+
+<script>
+    Vue.component("alt-rt", {
+        template: document.currentScript.ownerDocument.getElementById("alt-rt"),
+        props: {
+            responsive: {
+                type: Boolean,
+                default: false
+            },
+            exportXlsx: Boolean,
+            exportCsv: Boolean,
+            cellUrl: {
+                type: String
+            },
+            source: {
+                type: String,
+                require: true
+            }, sortDir: String,
+            sortField: String,
+            pageSize: Number
+        }, created: function () {
+
+
+        }, mounted: function () {
+            this.total = this.$refs.table.total;
+            this.from = 1;
+            this.to = 100;
+            this.hasFixedColumn = this.$refs.table.hasFixedColumn();
+            this.columns = this.$refs.table.columns;
+
+            this.$refs.table.$on("resize", function () {
+                this.$forceUpdate();
+            });
+            //window.addEventListener('resize', this.resize);
+
+        },
+        computed: {
+
+        },
+        data() {
+            return {
+                columns: [],
+                hasFixedColumn: false,
+                tableResponsive: this.responsive,
+                from: 0,
+                to: 0,
+                total: 0,
+                page_size: 25,
+                page_count: 0,
+                page: 0
+            }
+        },
+        methods: {
+            showExport(){
+                return this.exportXlsx || this.exportCsv;
+            },
+            exportFile(type) {
+                return this.$refs.table.exportFile(type);
+            },
+            tableContainerStyle() {
+                var style = {};
+                if (this.responsive) {
+                    style.overflow = "auto";
+                }
+                return style;
+            },
+            resized() {
+                this.$forceUpdate();
+            },
+            resize() {
+                this.$forceUpdate();
+            },
+            fixedColumns() {
+                if (!this.$refs.table.hasFixedColumn()) {
+                    return [];
+                }
+
+                var cs = this.$refs.table.columns.filter(function (o) {
+                    return o.fixed;
+                });
+                return cs;
+            },
+            getData() {
+                return this.$refs.table.data;
+            },
+            toggleResponsive() {
+                this.tableResponsive = !this.tableResponsive;
+            },
+            refreshed: function () {
+                var table = this.$refs.table;
+                this.total = table.getTotal();
+                this.from = table.getFrom();
+                this.to = table.getTo();
+                this.page = table.getPage();
+                this.page_count = table.getPageCount();
+                this.$forceUpdate();
+            },
+            changePageSize() {
+                this.$refs.table.setPageSize(this.page_size);
+            }
+        }
+
+
+    });
+</script>

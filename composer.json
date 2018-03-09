@@ -1,0 +1,71 @@
+{
+    "name": "hostlink\/r-alt",
+    "description": "Raymond ALT framework",
+    "autoload": {
+        "psr-4": {
+            "ALT\\": "class\/ALT\/",
+            "App\\": "class\/App\/",
+            "PHP\\": "class\/PHP\/",
+            "My\\": "class\/My\/",
+            "Sepia\\": "class\/Sepia\/",
+            "Xeditable\\": "class\/Xeditable\/"
+        },
+        "classmap": [
+            "class"
+        ],
+        "files": [
+            "function\/function.php"
+        ]
+    },
+    "require": {
+        "php": ">=5.6",
+        "hostlink\/r": "1.2.x",
+        "hostlink\/r-p": ">=1.0.1",
+        "hostlink\/r-bs": "1.*",
+        "hostlink\/r-db": "1.*",
+        "hostlink\/holiday-hk": ">=1.0.3",
+        "hostlink\/weather": "1.*",
+        "hostlink\/html": "*",
+        "twig\/twig": "*",
+        "twig\/extensions": "*",
+        "sepia\/po-parser": "*",
+        "components\/font-awesome": "5.*",
+        "components\/jquery": "2.2.4",
+        "driftyco\/ionicons": "*",
+        "twbs\/bootstrap": "3.*",
+        "bassjobsen\/bootstrap-3-typeahead": "*",
+        "fullcalendar\/fullcalendar": "3.*",
+        "eternicode\/bootstrap-datepicker": "1.*",
+        "eonasdan\/bootstrap-datetimepicker": "4.*",
+        "robinherbots\/jquery.inputmask": "3.*",
+        "cache\/apcu-adapter": "*",
+        "bootstrap-select\/bootstrap-select": "*",
+        "phpmailer\/phpmailer": "*"
+    },
+    "suggest": {
+        "ckeditor\/ckeditor": "JavaScript WYSIWYG web text editor.",
+        "dompdf\/dompdf": "DOMPDF is a CSS 2.1 compliant HTML to PDF converter",
+        "eventviva\/php-image-resize": "PHP class to re-size and scale images",
+        "phpmailer\/phpmailer": "PHPMailer is a full-featured email creation and transfer class for PHP",
+        "monolog\/monolog": "Sends your logs to files, sockets, inboxes, databases and various web services",
+        "nnnick\/chartjs": "Simple HTML5 charts using the canvas element.",
+        "phpunit\/phpunit": "The PHP Unit Testing framework.",
+        "guzzlehttp\/guzzle": "Guzzle is a PHP HTTP client library",
+        "vakata\/jstree": "jsTree is jquery plugin, that provides interactive trees.",
+        "google\/apiclient": "Client library for Google APIs",
+        "ktamas77\/firebase-php": "Firebase PHP Client",
+        "php-console\/php-console": "Server side PHP library for Google Chrome extension \"PHP Console\""
+    },
+    "type": "library",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Raymond Chong",
+            "email": "raymond@hostlink.com.hk",
+            "role": "Analyst programmer",
+            "homepage": "https:\/\/www.hostlink.com.hk"
+        }
+    ],
+    "minimum-stability": "stable",
+    "version": "4.6.180307.1"
+}

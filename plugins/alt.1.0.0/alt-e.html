@@ -1,0 +1,29 @@
+<template id="alt-e">
+    <alt-box v-if="hasHeader()">
+        <alt-box-header :title="header"></alt-box-header>
+        <alt-box-body>
+            <div class="form-horizontal clearfix">
+                <slot></slot>
+            </div>
+        </alt-box-body>
+    </alt-box>
+    <div v-else class="form-horizontal clearfix">
+        <slot></slot>
+    </div>
+</template>
+<script>
+    Vue.component("alt-e", {
+        template: document.currentScript.ownerDocument.getElementById("alt-e"),
+        props: {
+            header: String
+        }, methods: {
+            hasHeader() {
+                if (this.header) {
+                    return true;
+                }
+                return false;
+
+            }
+        }
+    });
+</script>

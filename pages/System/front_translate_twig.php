@@ -1,0 +1,328 @@
+<?php
+namespace System;
+
+use SplFileInfo;
+use RecursiveIteratorIterator;
+use App\Config;
+use App;
+use My\TreeView;
+use WebClient;
+
+require_once (__dir__ . "/str_chinese.php");
+//require_once (__dir__ . "/accesstokenauthentication.php");
+
+class front_translate_twig extends \ALT\Page
+{
+    public function googleTranslate()
+    {
+        $p = [];
+        $p["client"] = "gtx";
+        $p["sl"] = $_POST["from"];
+        $p["tl"] = $_POST["to"];
+        $p["dt"] = "t";
+        $p["q"] = $_POST["text"];
+
+        $wc=new WebClient();
+        $wc->xhr->setRequestHeader("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36");
+        $wc->get("https://translate.googleapis.com/translate_a/single?" . http_build_query($p));
+
+        return ["text"=>$wc->responseJSON[0][0][0]];
+    }
+
+    public function microsoft()
+    {
+        Config::_("microsoft-translate-client-id", $_POST["client_id"]);
+        Config::_("microsoft-translate-client-secret", $_POST["client_secret"]);
+        App::Redirect("System/front_translate_twig");
+    }
+
+    public function microsoftTranslate()
+    {
+        $post = json_decode(file_get_contents("php://input"), true);
+        $from = $post["from"];
+        $to = $post["to"];
+        $text = $post["text"];
+        $accessToken = $post["accessToken"];
+
+        $translatorObj = new HTTPTranslator();
+        $authHeader = "Authorization: Bearer " . $accessToken;
+
+        $url = "http://api.microsofttranslator.com/v2/Http.svc/Translate?text=" . urlencode($text) . "&from=$from&to=$to";
+        $strResponse = $translatorObj->curlRequest($url, $authHeader);
+
+        $xmlObj = simplexml_load_string($strResponse);
+        return (string )$xmlObj;
+    }
+
+    public function getMicrosoftAccessToken()
+    {
+        $clientID = (string )App\Config::_("microsoft-translate-client-id");
+        $clientSecret = (string )App\Config::_("microsoft-translate-client-secret");
+
+        return $this->microsoft_access_token($clientID, $clientSecret);
+    }
+
+    public function microsoft_access_token($clientID, $clientSecret)
+    {
+        if (!$clientID) {
+            return "";
+        }
+        if (!$clientSecret) {
+            return "";
+        }
+        try {
+            // Client ID of the application.
+            // $clientID       = "clientId";
+            // Client Secret key of the application.
+            // $clientSecret = "ClientSecret";
+            // OAuth Url.
+            $authUrl = "https://datamarket.accesscontrol.windows.net/v2/OAuth2-13/";
+            // Application Scope Url
+            $scopeUrl = "http://api.microsofttranslator.com";
+            // Application grant type
+            $grantType = "client_credentials";
+            // Create the AccessTokenAuthentication object.
+            $authObj = new AccessTokenAuthentication();
+            // Get the Access token.
+            $accessToken = $authObj->getTokens($grantType, $scopeUrl, $clientID, $clientSecret, $authUrl);
+
+            return $accessToken;
+        } catch (exception $e) {
+            return "";
+            echo "Exception: " . $e->getMessage() . PHP_EOL;
+        }
+    }
+
+    public function t2s()
+    {
+        $post = json_decode(file_get_contents("php://input"), true);
+        $str = $post["str"];
+
+        return ["text" => str_chinese_simp($str)];
+    }
+
+    public function getLocaleFolder()
+    {
+        $frontPage = new SplFileInfo($this->frontPath());
+        return new SplFileInfo($frontPage->getPath() . "/locale");
+    }
+
+    public function getRootPath()
+    {
+        $frontPage = new SplFileInfo($this->frontPath());
+        $basePath = new SplFileInfo($frontPage->getPath());
+        return $basePath;
+    }
+
+    public function post()
+    {
+        $post = json_decode(file_get_contents("php://input"), true);
+
+        $data = $post["data"];
+        $file = $post["file"];
+
+        $frontPage = new SplFileInfo($this->frontPath());
+        $basePath = new SplFileInfo($frontPage->getPath());
+
+        $fi = pathinfo($file);
+        foreach ($this->getLang() as $lang) {
+            if (!file_exists($po_file = $basePath . "/locale/$lang/LC_MESSAGES/" . $fi["dirname"] . "/" . $fi["filename"] . ".po")) {
+                mkdir(dirname($po_file), 0777, true);
+                file_put_contents($po_file, "");
+            }
+
+            $poFile = new \Sepia\FileHandler($po_file);
+            $poParser = new \Sepia\PoParser($poFile);
+            /*            $poParser->setHeaders([
+			'"Project-Id-Version: \n"',
+			'"Report-Msgid-Bugs-To: \n"',
+			'"POT-Creation-Date: \n"',
+			'"PO-Revision-Date: \n"',
+			'"Last-Translator: none\n"',
+			'"Language-Team: \n"',
+			'"MIME-Version: 1.0\n"',
+			'"Content-Type: text/plain; charset=UTF-8\n"']
+			);*/
+            foreach ($data as $d) {
+                $poParser->setEntry($d["msgid"], ["msgid" => [$d["msgid"]], "msgstr" => $d["msgstr"][$lang] ? $d["msgstr"][$lang] : ""]);
+            }
+            $poParser->writeFile($po_file);
+            // del all mo
+            foreach (glob(dirname($po_file) . "/" . $fi["filename"] . "-*.mo") as $mo_file) {
+                unlink($mo_file);
+            }
+            // conver po to mo
+            $mo = $basePath . "/locale/$lang/LC_MESSAGES/" . $fi["dirname"] . "/" . $fi["filename"] . "-" . time() . ".mo";
+
+            `msgfmt -o $mo $po_file`;
+        }
+        return $msg;
+    }
+
+    public function getLang()
+    {
+        // get front language
+        $ini = parse_ini_file($this->getRootPath() . "/config.ini", true);
+        $lang = $ini["language"]["value"];
+
+        $lang_locale_map = $ini["language_locale_map"];
+
+
+        $la = [];
+        foreach ($lang as $l) {
+            $la[] = $lang_locale_map[$l];
+        }
+        return $la;
+    }
+
+    private function getTextNode($h)
+    {
+        $n = [];
+        foreach ($h as $c) {
+            if ($c->tagName == "script") {
+                continue;
+            }
+            if ($c->tagName == "style") {
+                continue;
+            }
+            if ($c instanceof P\Text) {
+                $n[] = $c;
+            } else {
+                foreach ($this->getTextNode($c->childNodes) as $n1) {
+                    $n[] = $n1;
+                }
+            }
+        }
+        return $n;
+    }
+
+    public function getToken($file)
+    {
+        $pi = pathinfo($file);
+        if ($pi["extension"] == "twig") {
+            $twig["loader"] = new \Twig_Loader_Filesystem($this->frontPath());
+            $twig["env"] = new \Twig_Environment($twig["loader"]);
+            $twig["pot"] = new \Twig\twig2pot();
+            $twig["env"]->addExtension($twig["pot"]);
+            $function = new \Twig_SimpleFunction('_', function ($a, $b) {
+                return "";
+            }
+            );
+            $twig["env"]->addFunction($function);
+            $twig["tpl"] = $twig["env"]->loadTemplate($file);
+            $twig["tpl"]->render([]);
+            return $twig["pot"]->token_parser->_values;
+        } elseif ($pi["extension"] == "tpl") {
+            $h = \P\Query::ParseFile($this->frontPath() . "/" . $file);
+            $data = [];
+            $text_nodes = $this->getTextNode($h);
+            foreach ($text_nodes as $n) {
+                $n = trim($n);
+                if ($n == "") {
+                    continue;
+                }
+
+                $data[] = ["value" => (string )$n];
+            }
+            return $data;
+        }
+    }
+
+    public function getTran($file)
+    {
+        $frontPage = new SplFileInfo($this->frontPath());
+        $basePath = new SplFileInfo($frontPage->getPath());
+        $fi = pathinfo($file);
+
+        $text_domain = preg_replace('/.[^.]*$/', '', $file);
+        $poParser = new \Sepia\PoParser();
+        foreach ($this->getLang() as $lang) {
+            if (file_exists($f = $basePath . "/locale/{$lang}/LC_MESSAGES/{$text_domain}.po")) {
+                $poFile[$lang] = $poParser->parseFile($f, ["multiline-glue" => ""]);
+                $poEntries[$lang] = $poFile[$lang]->getEntries();
+            }
+        }
+
+        $data = [];
+        foreach ($this->getToken($file) as $values) {
+            $msgstr = [];
+            foreach ($this->getLang() as $lang) {
+                $entries = $poEntries[$lang][$values["value"]];
+                $msgstr[$lang] = implode("", $entries["msgstr"]);
+                unset($poEntries[$lang][$values["value"]]);
+            }
+            $data[] = ["msgid" => $values["value"], "msgstr" => $msgstr];
+        }
+
+        return ["data" => $data, "unuse" => $poEntries];
+    }
+
+    public function frontPath()
+    {
+        return realpath(getcwd() . "/../pages");
+    }
+
+    public function readAllFile($path)
+    {
+        $files = [];
+        $objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::SELF_FIRST);
+        foreach ($objects as $name => $object) {
+            if ($object->getExtension() == "twig") {
+                $files[] = $object;
+            }
+        }
+        return $files;
+    }
+
+    public function renderTree($path, $tree)
+    {
+        $fpath = $this->frontPath();
+        $file=[];
+        foreach (glob($path . "/*") as $p) {
+            $pi = pathinfo($p);
+            if (is_file($p)) {
+                $spl = new SplFileInfo($p);
+                if ($spl->getExtension() != "twig" && $spl->getExtension() != "tpl") {
+                    continue;
+                }
+                $file[]=$spl;
+            } else {
+                $folder = $tree->addFolder($pi["basename"]);
+                $folder->icon("far fa-folder text-yellow");
+                $this->renderTree($p, $folder);
+            }
+        }
+
+        foreach ($file as $spl) {
+            $basename=$spl->getBaseName();
+            $f = $tree->addFile($basename);
+            $path=$spl->getPathname();
+            $file = substr($path, strlen($fpath) + 1);
+            $f->a()->attr("onClick", "onClickFile('$file')");
+        }
+    }
+
+    public function get()
+    {
+        $data = [];
+
+        // ms trans
+        $data["ms_trans_client_id"] = App\Config::_("microsoft-translate-client-id");
+        $data["ms_trans_client_secret"] = App\Config::_("microsoft-translate-client-secret");
+
+        // get locale folder
+        $locale_folder = $this->getLocaleFolder();
+        if (!$locale_folder->isWritable()) {
+            App::Msg("Cannot write to locale, please create and change the permission of folder ({$locale_folder}) to 0777",
+                "danger");
+            return;
+        }
+
+        $this->addLib("vakata/jstree");
+        
+        $tree = new TreeView();
+        $this->renderTree($this->frontPath(), $tree);
+        $data["tree"] = $tree;
+        return $data;
+    }
+}

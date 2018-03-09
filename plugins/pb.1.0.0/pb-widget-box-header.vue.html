@@ -1,0 +1,40 @@
+<template id="pb-widget-box-header">
+    <div class="box-header my-handle">
+        <div class="box-title">
+            {{model.name}}
+            <button type="button" class="btn btn-box-tool" @click="$parent.$emit('edit-name')">
+                <i class="fa fa-pencil"></i>
+            </button>
+            {{model.language}}
+            <button type="button" class="btn btn-box-tool" @click="$parent.$emit('edit-language')">
+                <i class="fa fa-globe"></i>
+            </button>
+            <small>{{model.type}} {{model.id}}</small>
+        </div>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" @click="$parent.$emit('download')" data-toggle="tooltip" title="Download">
+                <i class="fa fa-download"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" @click="$parent.$emit('copy')" data-toggle="tooltip" title="Copy">
+                <i class="fa fa-copy"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" @click="$parent.$emit('collapse')" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                <i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" @click="$parent.$emit('delete')" data-toggle="tooltip" title="Delete">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+    </div>
+</template>
+<script>
+    Vue.component("pb-widget-box-header", {
+        template: document.currentScript.ownerDocument.getElementById("pb-widget-box-header"),
+        props: {
+            model: {
+                type: Object,
+                required: true
+            }
+        }
+    });
+</script>

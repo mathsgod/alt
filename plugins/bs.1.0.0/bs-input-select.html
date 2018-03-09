@@ -1,0 +1,38 @@
+<template id="bs-input-select">
+    <div class="input-group">
+        <div class="input-group-btn">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li v-for="o in options">
+                    <a href="javascript:void(0)" v-text="o" v-on:click.prevent="itemSelected(o)"></a>
+                </li>
+            </ul>
+        </div>
+        <input type="text" class="form-control" v-bind="$props" :value="v">
+    </div>
+</template>
+
+<script>
+    Vue.component("bs-input-select", {
+        template: document.currentScript.ownerDocument.getElementById("bs-input-select"),
+        props: {
+            name: String,
+            value: String,
+            options: Array
+        }, data() {
+            return {
+                v: this.value
+            }
+        }, mounted() {
+            console.log("mounted");
+            console.log(document.currentScript.ownerDocument.getElementById("bs-input-select"));
+        }, methods: {
+            itemSelected(value) {
+                console.log(value);
+                this.v = value;
+            }
+        }
+    });
+</script>

@@ -1,0 +1,30 @@
+<link rel="import" href="pb-widget-source.vue.html">
+<link rel="import" href="pb-widget-html.vue.html">
+<link rel="import" href="pb-widget-div.vue.html">
+<link rel="import" href="pb-widget-grid.vue.html">
+<link rel="import" href="pb-widget-image.vue.html">
+<link rel="import" href="pb-widget-css.vue.html">
+<link rel="import" href="pb-widget-container.vue.html">
+<link rel="import" href="pb-widget-javascript.vue.html">
+<link rel="import" href="pb-widget-text.vue.html">
+<link rel="import" href="pb-widget-ckeditor.vue.html">
+<link rel="import" href="pb-widget-tab.vue.html">
+<link rel="import" href="pb-widget-box-header.vue.html">
+
+<script>
+    var PB = new Vue({
+        data: {
+            id: 0
+        }, methods: {
+            getNextID() {
+                return ++this.id;
+            },
+            recreateID: function (a) {
+                a.id = PB.getNextID();
+                for (var i in a.children) {
+                    this.recreateID(a.children[i]);
+                }
+            },
+        }
+    });
+</script>

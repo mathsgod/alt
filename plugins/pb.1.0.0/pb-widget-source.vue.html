@@ -1,0 +1,74 @@
+<template id="pb-widget-source">
+    <div class="pb-widget-source">
+        <div v-for="widget in data" class="list-group-item">
+            {{widget.name}}
+        </div>
+    </div>
+</template>
+<script>
+    Vue.component("pb-widget-source", {
+        template: document.currentScript.ownerDocument.getElementById("pb-widget-source"),
+        mounted: function () {
+            new Sortable(this.$el, {
+                group: { name: "widget", pull: "clone", put: false },
+                sort: false,
+                draggable: ".list-group-item",
+                onStart: this.onStart,
+                onClone: this.onClone
+            });
+        },
+        data: function () {
+            return {
+                id: 1,
+                data: [{
+                    name: "HTML",
+                    type: "html",
+                    component: "pb-widget-html"
+                }, {
+                    name: "DIV",
+                    type: "div",
+                    component: "pb-widget-div"
+                }, {
+                    name: "Grid",
+                    type: "grid",
+                    component: "pb-widget-grid"
+                }, {
+                    name: "Image",
+                    type: "image",
+                    component: "pb-widget-image"
+                }, {
+                    name: "CSS",
+                    type: "css",
+                    component: "pb-widget-css"
+                }, {
+                    name: "JS",
+                    type: "javascript",
+                    component: "pb-widget-javascript"
+                }, {
+                    name: "TEXT",
+                    type: "text",
+                    component: "pb-widget-text"
+                }, {
+                    name: "CKEditor",
+                    type: "ckeditor",
+                    component: "pb-widget-ckeditor"
+                }, {
+                    name: "Tab",
+                    type: "tab",
+                    component: "pb-widget-tab"
+                }]
+            };
+        }, methods: {
+            onClone: function (evt) {
+                console.log('clone', evt);
+            },
+            onStart: function (evt) {
+                var data = this.data[evt.oldIndex];
+                data = jQuery.extend({}, data);
+                data.id = PB.getNextID();
+                console.log("start", evt);
+                $(evt.item).data("item", data);
+            }
+        }
+    });
+</script>

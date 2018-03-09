@@ -1,0 +1,116 @@
+{% verbatim %}
+<style>
+    .test {
+        min-height: 100px;
+        margin: 5px;
+    }
+
+    .item {
+        margin: 5px;
+        min-height: 20px;
+        background-color: lightgray
+    }
+</style>
+<div id="el1">
+
+    <sortable style="background-color:rgb(229, 255, 0)" ref="a1" class="top" :name="'top'" v-model="list1" :options="{connectWith:'.top',handle:'.hand1'}">
+
+        <sortable v-for="(l,i) in list1" :name="i" :list="l.data" class="test" :options="{connectWith:'.test',handle:'.hand',items:'> li'}"
+            :key="l.uuid">
+            <h1 class="hand1">S {{i}}</h1>
+            <div class="list-group-item" v-for="(element,index) in l.data" z:name="element.name" :key="element.uuid">
+                <div class="hand">handle</div>
+                {{element.name}} {{index}}
+            </div>
+        </sortable>
+
+    </sortable>
+
+    <draggable :options="{connectToSortable:'.test',helper:'clone', revert: 'invalid'}" v-model="source">
+
+        <div v-for="d in source" class="list-group-item" :name="d.name" :key="d.uuid">
+            {{d.name}}
+        </div>
+
+    </draggable>
+
+
+    <div>
+        <div v-for="l1 in list1">
+
+            <div v-for="(element,index) in l1.data">
+
+                <div>{{element.name}} {{index}}</div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>
+</div>
+
+<script>
+
+    var vm = new Vue({
+        el: "#el1",
+        data: {
+            source: [
+                {
+                    name: "X",
+                    data: []
+                }, {
+                    name: "Y",
+                    data: []
+                }
+            ],
+            list1: [
+                {
+                    id: 10,
+                    data: [{
+                        name: "a",
+                        id: 1,
+                        data: []
+                    }, {
+                        name: "b",
+                        id: 2,
+                        data: []
+                    }, {
+                        name: "c",
+                        id: 3,
+                        data: []
+                    }]
+                },
+
+                {
+                    id: 20,
+                    data:
+                        [{
+                            name: "AA",
+                            id: 6,
+                            data: []
+                        }, {
+                            name: "BB",
+                            id: 7,
+                            data: []
+                        }, {
+                            name: "CC",
+                            id: 8,
+                            data: []
+                        }]
+
+                }
+
+
+            ]
+
+
+        }, methods: {
+            log: function (evt) {
+                console.log(evt)
+            }
+        }
+    });
+
+</script> {% endverbatim %}

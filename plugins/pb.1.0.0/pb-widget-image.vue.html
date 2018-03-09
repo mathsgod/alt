@@ -1,0 +1,65 @@
+<template id="pb-widget-image">
+    <div class="box pb-widget">
+        <pb-widget-box-header :model="model"></pb-widget-box-header>
+        <div class="box-body">
+
+            <button type="button" class="btn btn-xs btn-default" @click="edit" v-if="!editMode">
+                <i class="fa fa-pencil"></i>
+            </button>
+            <button type="button" class="btn btn-xs btn-default" @click="ok" v-if="editMode">
+                <i class="fa fa-check"></i>
+            </button>
+
+            <div v-if="!editMode">
+                <img v-if="model.attribute.src!=''" :src="model.attribute.src" :width="model.attribute.width" :height="model.attribute.height" />
+            </div>
+            <div v-if="editMode">
+
+                <div>
+                    <div class="form-group">
+                        <label>src</label>
+                        <input type="text" class="form-control roxy_fileman" v-model="model.attribute.src"/>
+                    </div>
+                    <div class="form-group">
+                        <label>width</label>
+                        <input type="text" class="form-control" v-model="model.attribute.width" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>height</label>
+                        <input type="text" class="form-control" v-model="model.attribute.height" />
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    Vue.component("pb-widget-image", {
+        template: document.currentScript.ownerDocument.getElementById("pb-widget-image"),
+        props: {
+            model: Object
+        },
+        data: function () {
+            return {
+                editMode: false
+            };
+        },
+        created: function () {
+            if (!this.model.attribute) {
+                Vue.set(this.model, "attribute", {});
+            }
+        },
+        methods: {
+            ok: function () {
+                this.editMode = false;
+                this.$nextTick(function () {
+                });
+            },
+            edit: function () {
+                this.editMode = true;
+            }
+        }
+    });
+</script>

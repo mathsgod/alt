@@ -1,0 +1,144 @@
+<style>
+    .empty {
+        border: 3px dashed rgb(204, 204, 204);
+    }
+</style>
+
+<template id="pb-widget-container">
+    <div :class="{empty:model.length==0}" style="min-height: 100px; background-color:whitesmoke; ">
+        <div v-if="model.length==0">
+            <div style="text-align:center">Drag here</div>
+        </div>
+
+        <div v-for="(widget,index) in model" :key="widget.id">
+            <div :is="widget.component" :model="widget" v-on:delete="onDeleteWidget(widget)" v-on:download="onDownloadWidget(widget)"
+                v-on:edit-name="onEditName(widget)" v-on:copy="onCopy(widget)" v-on:edit-language="onEditLanguage(widget)" v-on:collapse="onCollapse(widget)"></div>
+        </div>
+
+        <div style="text-align:center">
+            <button class="btn btn-xs btn-default" @click="onClickImport()">
+                <i class="fa fa-upload"></i>
+            </button>
+        </div>
+    </div>
+</template>
+
+<script>
+    Vue.component("pb-widget-container", {
+        name: "pb-widget-container",
+        template: document.currentScript.ownerDocument.getElementById("pb-widget-container"),
+        props: {
+            model: Array
+        },
+        created: function () {
+            if (!this.model.children) {
+                Vue.set(this.model, 'children', []);
+            }
+        },
+        mounted: function () {
+            console.log('mounted');
+            console.log(this.$el);
+            new Sortable(this.$el, {
+                group: 'widget',
+                onAdd: this.onAdd,
+                onRemove: this.onRemove,
+                onEnd: this.onEnd,
+                onStart: this.onStart,
+                onUpdate: this.onUpdate
+            });
+        },
+        methods: {
+            onCollapse: function (widget) {
+                widget.collapse = !widget.collapse;
+            },
+            onEditLanguage: function (widget) {
+                var str = prompt("Please enter name", widget.language);
+                if (str != null) {
+                    widget.language = str;
+                }
+                this.$forceUpdate();
+            },
+            onClickImport: function () {
+                var that = this;
+                var input = document.createElement("input");
+                input.type = "file";
+                input.click();
+                input.addEventListener('change', function (evt) {
+                    var files = evt.target.files;
+                    var file = files[0];
+                    var reader = new FileReader();
+                    reader.onload = (function (f) {
+                        return function (e) {
+
+                            var a = JSON.parse(e.target.result);
+                            PB.recreateID(a);
+
+                            that.model.splice(that.model.length - 1, 0, a);
+
+                        }
+                    })(file);
+
+                    reader.readAsText(file);
+
+                }, false);
+
+            },
+            recreateID: function (a) {
+                a.id = PB.getNextID();
+                for (var i in a.children) {
+                    this.recreateID(a.children[i]);
+                }
+            },
+            onCopy: function (widget) {
+                var a = this.model.indexOf(widget);
+                var copy = Object.assign({}, JSON.parse(JSON.stringify(widget)));
+                this.recreateID(copy);
+                this.model.splice(a, 0, copy);
+            },
+            onEditName: function (widget) {
+                var name = prompt("Please enter name", widget.name);
+                if (name != null) {
+                    widget.name = name;
+                }
+            },
+            onDownloadWidget: function (widget) {
+
+                var text = JSON.stringify(widget);
+                var blob = new Blob([text], { type: "text/plain" });
+                var downloadLink = document.createElement("a");
+                downloadLink.download = widget.name + "." + widget.type + ".txt";
+                downloadLink.innerHTML = "download";
+                downloadLink.href = window.webkitURL.createObjectURL(blob);
+                downloadLink.click();
+
+            },
+            onDeleteWidget: function (widget) {
+                var a = this.model.indexOf(widget);
+                if (a >= 0) {
+                    this.model.splice(a, 1);
+                }
+            },
+            onUpdate: function (evt) {
+                var data = $(evt.item).data("item");
+                this.model.splice(evt.oldIndex, 1);
+                this.model.splice(evt.newIndex, 0, data);
+            },
+            onStart: function (evt) {
+                var data = this.model[evt.oldIndex];
+                $(evt.item).data('item', data);
+                this.drag = true;
+            },
+            onEnd: function (evt) {
+            },
+            onRemove: function (evt) {
+                this.model.splice(evt.oldIndex, 1);
+
+            },
+            onAdd: function (evt) {
+                var data = $(evt.item).data("item");
+                this.model.splice(evt.newIndex, 0, data);
+                evt.item.remove();
+            }
+        }
+    });
+</script>

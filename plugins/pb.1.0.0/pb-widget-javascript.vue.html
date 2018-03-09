@@ -1,0 +1,63 @@
+<template id="pb-widget-javascript">
+    <div class="box pb-widget">
+        <pb-widget-box-header :model="model"></pb-widget-box-header>
+        <div class="box-body">
+            <button type="button" class="btn btn-xs btn-default" @click="edit">
+                <i class="fa fa-pencil"></i>
+            </button>
+            <button type="button" class="btn btn-xs btn-default" @click="ok">
+                <i class="fa fa-check"></i>
+            </button>
+
+            <div v-if="!editMode">
+                <pre v-html="model.value"></pre>
+
+            </div>
+            <div v-if="editMode">
+                <div ref="editor" id="editor" style="width:100%;height:400px">{{model.value}}</div>
+            </div>
+        </div>
+
+    </div>
+</template>
+
+<script>
+    Vue.component("pb-widget-javascript", {
+        name: "pb-widget-javascript",
+        template: document.currentScript.ownerDocument.getElementById("pb-widget-javascript"),
+        props: {
+            model: Object
+        },
+        data: function () {
+            return {
+                editor: null,
+                editMode: false
+            };
+        },
+        created: function () {
+            if (!this.model.value) {
+                this.model.value = "";
+            }
+        },
+        methods: {
+            ok: function () {
+                this.editMode = false;
+                this.model.value = this.editor.getValue();
+                this.$nextTick(function () {
+                    this.editor.destroy();
+                    this.editor.container.remove();
+                });
+            },
+            edit: function () {
+                this.editMode = true;
+                this.$nextTick(function () {
+                    var JavascriptMode = ace.require("ace/mode/javascript").Mode;
+                    this.editor = ace.edit(this.$refs.editor)
+                    this.editor.session.setMode(new JavascriptMode());
+                    this.editor.setValue(this.model.value);
+
+                });
+            }
+        }
+    });
+</script>

@@ -1,0 +1,343 @@
+<script src="plugins/vuedraggable.2.15.0/Sortable/Sortable.js"></script> {% verbatim %}
+<template id="pb-widget-source">
+    <div class="pb-widget-source">
+        <div v-for="widget in data" class="list-group-item">
+            {{widget.name}}
+        </div>
+    </div>
+</template>
+<script>
+    var id = 1;
+    Vue.component("pb-widget-source", {
+        template: "#pb-widget-source",
+        mounted: function () {
+            new Sortable(this.$el, {
+                group: { name: "widget", pull: "clone", put: false },
+                sort: false,
+                draggable: ".list-group-item",
+                onStart: this.onStart,
+                onClone: this.onClone
+            });
+        },
+        data: function () {
+            return {
+                data: [{
+                    name: "HTML",
+                    type: "html"
+                }, {
+                    name: "Container",
+                    type: "container"
+                }, {
+                    name: "Grid",
+                    type: "grid"
+                }]
+            };
+        }, methods: {
+            onClone: function (evt) {
+                console.log('clone', evt);
+            },
+            onStart: function (evt) {
+                var data = this.data[evt.oldIndex];
+                data = jQuery.extend({}, data);
+                data.id = id++;
+                console.log("start", evt);
+                $(evt.item).data("item", data);
+            }
+        }
+    });
+</script>
+
+
+<template id="pb-widget-container">
+    <div class="pb-widget-container box box-primary">
+        <div class="box-header my-handle">
+            <div class="box-title">{{model.name}} {{model.id}}</div>
+            <div class="box-tools">
+                <div type="button" class="btn btn-box-tool">
+                    <button type="button" class="btn btn-default btn-xs" @click="$emit('delete')">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="box-body" style=" min-height: 100px; background-color:lightgray;">
+
+            <div v-for="(widget,index) in model.children" :key="widget.id">
+                <pb-widget-html v-if="widget.type=='html'" :model="widget" v-on:delete="onDeleteWidget(widget)"></pb-widget-html>
+                <pb-widget-container v-if="widget.type=='container'" :model="widget" v-on:delete="onDeleteWidget(widget)"></pb-widget-container>
+                <pb-widget-grid v-if="widget.type=='grid'" :model="widget" v-on:delete="onDeleteWidget(widget)"></pb-widget-grid>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    Vue.component("pb-widget-container", {
+        name: "pb-widget-container",
+        template: "#pb-widget-container",
+        props: {
+            model: Object
+        }, data: function () {
+            return {
+                data: false
+            };
+        },
+        mounted: function () {
+            new Sortable($(this.$el).find(".box-body").get(0), {
+                group: 'widget',
+                onAdd: this.onAdd,
+                onRemove: this.onRemove,
+                onEnd: this.onEnd,
+                onStart: this.onStart,
+                onUpdate: this.onUpdate
+            });
+        },
+        methods: {
+            onDeleteWidget: function (widget) {
+                var a = this.model.children.indexOf(widget);
+                if (a >= 0) {
+                    this.model.children.splice(a, 1);
+                }
+            },
+            onUpdate: function (evt) {
+                console.log(this.model.id + " onUpdate", evt);
+
+                var data = $(evt.item).data("item");
+                this.model.children.splice(evt.oldIndex, 1);
+                this.model.children.splice(evt.newIndex, 0, data);
+            },
+            onStart: function (evt) {
+                console.log(this.model.id + " onStart", evt);
+                var data = this.model.children[evt.oldIndex];
+                $(evt.item).data('item', data);
+                this.drag = true;
+            },
+            onEnd: function (evt) {
+                console.log(this.model.id + " onEnd", evt);
+                console.log(this.model.id + " drag", this.drag);
+            },
+            onRemove: function (evt) {
+                console.log(this.model.id + " onRemove", evt);
+                this.model.children.splice(evt.oldIndex, 1);
+
+            },
+            onAdd: function (evt) {
+                if (!this.model.children) {
+                    Vue.set(this.model, 'children', []);
+                }
+
+                console.log(this.model.id + " onAdd ", evt);
+                var data = $(evt.item).data("item");
+                this.model.children.splice(evt.newIndex, 0, data);
+                evt.item.remove();
+            }
+        }
+    });
+</script> -----------------------
+
+<template id="pb-widget-grid">
+    <div class="box">
+        <div class="box-header">
+            <div class="box-title">{{model.name}} {{model.id}}</div>
+            <div class="box-tools">
+                <div type="button" class="btn btn-box-tool">
+                    <button type="button" class="btn btn-default btn-xs" @click="addCol">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                    <button type="button" class="btn btn-default btn-xs" @click="$emit('delete')">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="box-body" style=" min-height: 100px; background-color:lightgray;">
+            <div v-for="(widget,index) in model.children" :key="widget.id" :class="'col-md-'+widget.size">
+                <pb-widget-container :model="widget" v-on:delete="onDeleteWidget(widget)"></pb-widget-container>
+            </div>
+        </div>
+    </div>
+</template>
+
+
+<script>
+    Vue.component("pb-widget-grid", {
+        name: "pb-widget-grid",
+        template: "#pb-widget-grid",
+        props: {
+            model: Object
+        }, computed: {
+            colSize: function () {
+                if (this.model.children.length == 0) {
+                    return 12;
+                }
+
+                return Math.floor(12 / this.model.children.length);
+            }
+        }, methods: {
+            onDeleteWidget: function (widget) {
+                var a = this.model.children.indexOf(widget);
+                if (a >= 0) {
+                    this.model.children.splice(a, 1);
+                }
+                //re-calc size
+                this.model.children.forEach(function (o) {
+                    o.size = this.colSize;
+                }.bind(this));
+            },
+            addCol: function () {
+                this.model.children.push({
+                    name: "Container",
+                    type: "container",
+                    id: id++,
+                    size: 0
+                });
+                //re-calc size
+                this.model.children.forEach(function (o) {
+                    o.size = this.colSize;
+                }.bind(this));
+
+            }
+        }, created: function () {
+            Vue.set(this.model, "children", []);
+            this.model.children.push({
+                name: "Container",
+                type: "container",
+                size: 12,
+                id: id++
+            });
+        }
+    });
+</script>
+
+<template id="pb-widget-html">
+    <div class="box pb-widget">
+        <div class="box-header my-handle">
+            <h3 class="box-title">{{model.name}} {{model.id}}
+                <button type="button" class="btn btn-default btn-xs" @click="editName">
+                    <i class="fa fa-pencil"></i>
+                </button>
+            </h3>
+            <div class="box-tools">
+                <div type="button" class="btn btn-box-tool">
+                    <button type="button" class="btn btn-default btn-xs" @click="$emit('delete')">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <button type="button" class="btn btn-default btn-xs" v-if="!editMode" @click="edit">
+                        <i class="fa fa-pencil"></i>
+                    </button>
+                    <button type="button" class="btn btn-default btn-xs" v-if="editMode" @click="ok">
+                        <i class="fa fa-check"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="box-body">
+            <div v-if="editMode">
+                <textarea ref="editor">{{model.value}}</textarea>
+            </div>
+        </div>
+
+    </div>
+</template>
+<script>
+    Vue.component("pb-widget-html", {
+        template: "#pb-widget-html",
+        props: {
+            model: Object
+        },
+        data: function () {
+            return {
+                editor: null,
+                editMode: false
+            };
+        },
+        created: function () {
+            console.log(this);
+        },
+        methods: {
+            editName: function () {
+                var name = prompt("Please enter name");
+                if (name != null) {
+                    this.model.name = name;
+                }
+            },
+            ok: function () {
+                this.model.value = this.editor.getData();
+                this.$nextTick(function () {
+                    this.editMode = false;
+                });
+            },
+            edit: function () {
+                this.editMode = true;
+                //console.log(this);
+                this.$nextTick(function () {
+                    this.editor = CKEDITOR.replace(this.$refs.editor);
+                    this.editor.setData(this.model.value);
+                });
+            }
+        }
+    });
+</script>
+
+<div id="app">
+
+
+    result:
+    <div>
+        {{data.name}} {{data.id}}
+        <ul>
+            <li v-for="child in data.children">
+                <div>
+                    {{child.name}} {{child.id}}
+                    <ul>
+                        <li v-for="c1 in child.children">
+                            {{c1.name}} {{c1.id}}
+                        </li>
+                    </ul>
+                </div>
+
+            </li>
+        </ul>
+    </div>
+    <hr/>
+
+    <div class="row">
+        <div class="col-md-10">
+            <div>
+                <button @click="addRow()">Add row</button>
+            </div>
+            <pb-widget-container :model="data"></pb-widget-container>
+        </div>
+
+        <div class="col-md-2">
+            <pb-widget-source></pb-widget-source>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            data: {
+                name: "Top",
+                id: -1,
+                children: []
+            },
+        },
+        created: function () {
+
+        },
+        methods: {
+            addRow: function () {
+
+            }
+
+        }
+    });
+
+
+</script> {% endverbatim %}
