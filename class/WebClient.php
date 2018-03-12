@@ -3,17 +3,20 @@
 /*
 Created by: Raymond Chong
 Date: 2016-10-12
-*/
+ */
 
-class WebClient {
+class WebClient
+{
 	public $cookies = [];
 	public $xhr;
 
-	public function __construct() {
+	public function __construct()
+	{
 		$this->xhr = new HttpRequest();
 	}
 
-	public function fail(Closure $callback) {
+	public function fail(Closure $callback)
+	{
 		if ($this->xhr->status != 200) {
 			$callback($this->xhr);
 		}
@@ -21,7 +24,8 @@ class WebClient {
 		return $this;
 	}
 
-	public function done(Closure $callback) {
+	public function done(Closure $callback)
+	{
 		if ($this->xhr->status == 200) {
 			$contentType = $this->xhr->getResponseHeader("Content-Type");
 			if (strstr($contentType, "application/json")) {
@@ -33,23 +37,27 @@ class WebClient {
 		return $this;
 	}
 
-	public static function Post($url, $data, $success, $dataType) {
-		$client = is_a($this, __class__) ? $this : new WebClient();
+	public static function Post($url, $data, $success, $dataType)
+	{
+		$client = new WebClient();
 		return $client->Ajax(["type" => "POST", "url" => $url, "data" => $data, "success" => $success, "dataType" => $dataType]);
 	}
 	// dataType: The type of data expected from the server. Default: Intelligent Guess (xml, json, script, text, html).
-	public function Get($url, $data, $success, $dataType) {
-		$client = is_a($this, __class__) ? $this : new WebClient();
+	public function Get($url, $data, $success, $dataType)
+	{
+		$client = new WebClient();
 		return $client->Ajax(["url" => $url, "data" => $data, "success" => $success, "dataType" => $dataType]);
 	}
 
-	public static function GetJSON($url, $data, $success) {
-		$client = is_a($this, __class__) ? $this : new WebClient();
-		return	$client->get($url,$data,$success,"json");
+	public static function GetJSON($url, $data, $success)
+	{
+		$client = new WebClient();
+		return $client->get($url, $data, $success, "json");
 	}
 
-	public function Ajax($url, $settings = []) {
-		$client = is_a($this, __class__) ? $this : new WebClient();
+	public function Ajax($url, $settings = [])
+	{
+		$client = new WebClient();
 
 		$a = $settings;
 		if (!is_array($url)) {
@@ -73,9 +81,9 @@ class WebClient {
 		if ($a["contentType"]) {
 			$client->xhr->setRequestHeader("content-type", $a["contentType"]);
 		}
-		
-		if($client->cookies){
-			$client->xhr->setRequestHeader("Cookie",implode("; ",$client->cookies));
+
+		if ($client->cookies) {
+			$client->xhr->setRequestHeader("Cookie", implode("; ", $client->cookies));
 		}
 
 		if (is_array($a["headers"])) {
