@@ -4,6 +4,12 @@ class SHM {
     public $shm_key;
     public $shm_id;
 
+    public static function Exists()
+    {
+        return function_exists("ftok");
+    }
+
+
     public function __construct($shm_key = "") {
         if ($shm_key == "") {
             $shm_key = SHM::GenerateKey();

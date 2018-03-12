@@ -1,6 +1,5 @@
 <?php
-namespace System;
-class login extends \R\Page
+class System_login extends R\Page
 {
     public function post()
     {
@@ -11,9 +10,9 @@ class login extends \R\Page
         try {
             \App\System::Login($username, $password, $code);
         } catch (Exception $e) {
-            return ["code"=>400,"message"=>$e->getMessage()];
+            return ["code" => 400, "message" => $e->getMessage()];
         }
-        
+
         return ["code" => 200];
     }
 

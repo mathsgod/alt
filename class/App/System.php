@@ -29,7 +29,6 @@ class System extends \R\System
         return $app->config;
     }
 
-
     public static function Root()
     {
         return SYSTEM;
@@ -46,9 +45,6 @@ class System extends \R\System
     {
         if ($logger) $logger->info("System::Run");
         self::Init($root, $composer, $logger);
-
-        $composer->addPsr4("", $root . "/pages");
-        $composer->addPsr4("", SYSTEM . "/pages");
 
         session_start();
         $request = ServerRequest::FromEnv();
@@ -70,7 +66,6 @@ class System extends \R\System
             ->withAttribute("action", $route->action)
             ->withAttribute("route", $route);
 
-
         if (!$page) {
             if (!$class = $route->class) {
                 if (\App::User()->isAdmin()) {
@@ -82,17 +77,16 @@ class System extends \R\System
             }
         }
 
-
         if ($page) {
             $response = new Response(200);
 
-
-            try{
+            try {
                 $response = $page($request->withMethod($route->method), $response);
-            }catch(\Exception $e){
-                \App::Redirect("404_not_found");    
+            } catch (\Exception $e) {
+
+                \App::Redirect("404_not_found");
             }
-            
+
 
             foreach ($response->getHeaders() as $name => $values) {
                 header($name . ": " . implode(", ", $values));
@@ -185,10 +179,14 @@ class System extends \R\System
 
     public static function Init($root, $loader, $logger)
     {
-
         self::$app = new System($root, $loader, $logger);
 
-        define(SYSTEM, $root . "/composer/vendor/hostlink/r-alt");
+        $p = explode(DIRECTORY_SEPARATOR, __DIR__);
+        array_pop($p);
+        array_pop($p);
+        $path = implode(DIRECTORY_SEPARATOR, $p);
+
+        define(SYSTEM, $path);
         define(CMS_ROOT, $root);
 
         $loader->addPsr4("", $root . "/class");

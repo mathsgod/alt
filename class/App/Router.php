@@ -8,7 +8,7 @@ class Router extends \R\Router
         $document_root=$request->getServerParams()["DOCUMENT_ROOT"];
         $base=$request->getUri()->getBasePath();
         $path= $request->getUri()->getPath();
-        
+
         $path=array_filter(explode("/", $path),function ($o) {
             return !is_numeric($o);
         });

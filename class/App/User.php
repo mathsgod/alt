@@ -57,8 +57,10 @@ class User extends Model
     {
         if (\PHP\APCu::Exists()) {
             $o = new \PHP\APCu();
-        } else {
+        } elseif (\PHP\SHM::Exists()) {
             $o = new \PHP\SHM();
+        } else {
+            return;
         }
         if (!is_array($r)) {
             $r = [];
@@ -71,8 +73,10 @@ class User extends Model
     {
         if (\PHP\APCu::Exists()) {
             $o = new \PHP\APCu();
-        } else {
+        } elseif (\PHP\SHM::Exists()) {
             $o = new \PHP\SHM();
+        } else {
+            return;
         }
         unset($r["online"][$this->user_id]);
 
@@ -164,8 +168,10 @@ class User extends Model
     {
         if (\PHP\APCu::Exists()) {
             $o = new \PHP\APCu();
-        } else {
+        } elseif (\PHP\SHM::Exists()) {
             $o = new \PHP\SHM();
+        } else {
+            return false;
         }
 
 

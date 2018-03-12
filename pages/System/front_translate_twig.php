@@ -1,6 +1,4 @@
 <?php
-namespace System;
-
 use SplFileInfo;
 use RecursiveIteratorIterator;
 use App\Config;
@@ -11,7 +9,7 @@ use WebClient;
 require_once (__dir__ . "/str_chinese.php");
 //require_once (__dir__ . "/accesstokenauthentication.php");
 
-class front_translate_twig extends \ALT\Page
+class System_front_translate_twig extends \ALT\Page
 {
     public function googleTranslate()
     {

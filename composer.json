@@ -20,10 +20,10 @@
     "require": {
         "php": ">=5.6",
         "hostlink\/r": "1.2.x",
-        "hostlink\/r-p": ">=1.0.1",
+        "hostlink\/r-p": "1.*",
         "hostlink\/r-bs": "1.*",
         "hostlink\/r-db": "1.*",
-        "hostlink\/holiday-hk": ">=1.0.3",
+        "hostlink\/holiday-hk": "1.*",
         "hostlink\/weather": "1.*",
         "hostlink\/html": "*",
         "twig\/twig": "*",

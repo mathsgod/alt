@@ -14,7 +14,7 @@ class Plugin
         self::$plugins[] = $name;
 
         foreach ($p->setting["php"] as $php) {
-            require_once ($p->path . "/" . $php);
+            require_once($p->path . "/" . $php);
         }
 
         return $p;
@@ -22,23 +22,25 @@ class Plugin
 
     public function __construct($name)
     {
-        $cms_root=getcwd();
-        $system="composer/vendor/hostlink/r-alt";
+        $cms_root = getcwd();
+        $system = "composer/vendor/hostlink/r-alt";
+        $system_root = System::Root();
 
         $this->name = $name;
         $path = [];
-        $path[] = [$cms_root . "/plugins/{$name}.*", "plugins"];
-        $path[] = [$cms_root . "/" . $system . "/plugins/{$name}", $system . "/plugins"];
-        $path[] = [$cms_root . "/" . $system . "/plugins/{$name}.*", $system . "/plugins"];
-        $path[] = [$cms_root . "/" . $system . "/AdminLTE/plugins/{$name}", $system . "/AdminLTE/plugins"];
-    	$path[] = [$cms_root . "/composer/{$name}", $system . "/composer"];
-    	$path[] = [$cms_root . "/composer/vendor/{$name}", $system . "/composer/vendor"];
-        $path[] = [$cms_root . "/" . $system . "/composer/vendor/{$name}", $system . "/composer/vendor"];
+
+        $path[] = [$cms_root . "/composer/{$name}", "composer/$name"];
+        $path[] = [$cms_root . "/composer/vendor/{$name}", "composer/vendor/$name"];
+        $path[] = [$cms_root . "/plugins/{$name}", "plugins/$name"];
+
+        $path[] = [$system_root . "/plugins/{$name}", $system . "/plugins"];
+        $path[] = [$system_root . "/plugins/{$name}.*", $system . "/plugins", "version"];
+        $path[] = [$system_root . "/AdminLTE/plugins/{$name}", $system . "/AdminLTE/plugins"];
 
         if (System::Config("user", "development")) {
-            $ini_file=$cms_root . "/" . $system . "/plugins.development.ini";
+            $ini_file = $cms_root . "/" . $system . "/plugins.development.ini";
         } else {
-            $ini_file=$cms_root . "/" . $system . "/plugins.ini";
+            $ini_file = $cms_root . "/" . $system . "/plugins.ini";
         }
 
         $found = false;
@@ -49,7 +51,11 @@ class Plugin
             if ($f = $r[0]) {
 
                 $this->path = $f;
-                $this->base =  substr($this->path, strlen($cms_root)+1);
+                $this->base = $p[1];
+
+                if($p[2]=="version"){
+                    $this->base.="/".basename($f);
+                }
                 // read ini
                 $ini = parse_ini_file($ini_file, true);
                 $this->setting = $ini[$name];
@@ -63,6 +69,8 @@ class Plugin
                 break;
             }
         }
+        //outp($this);
+
 
         if (!$found) {
             throw new \Exception($name . " not found");
@@ -91,6 +99,7 @@ class Plugin
                 $jss[] = $this->base . "/" . $f;
             }
         }
+
         return $jss;
     }
 }
