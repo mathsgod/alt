@@ -53,7 +53,7 @@
     },
     "require": {
         "php": ">=5.6",
-        "hostlink\/r": "1.2.x",
+        "hostlink\/r": ">1.2.*",
         "hostlink\/r-p": "1.*",
         "hostlink\/r-bs": "1.*",
         "hostlink\/r-db": "1.*",
