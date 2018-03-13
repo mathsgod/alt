@@ -53,7 +53,7 @@ class System_composer extends ALT\Page
         $this->navBar()->addButton("Add Hostlink repo", "System/composer?cmd=add_repo");
 
         if ($cmd=="add_repo") {
-            App\Composer::Run("config repositories.hostlink-raymond composer https://raymond2.hostlink.com.hk/repo");
+            App\Composer::Run("config repositories.hostlink-raymond composer https://raymond2.hostlink.com.hk/bitbucket/repo");
         }
 
         App\Composer::ChangeOwn();

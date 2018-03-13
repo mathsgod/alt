@@ -33,9 +33,9 @@ class Plugin
         $path[] = [$cms_root . "/composer/vendor/{$name}", "composer/vendor/$name"];
         $path[] = [$cms_root . "/plugins/{$name}", "plugins/$name"];
 
-        $path[] = [$system_root . "/plugins/{$name}", $system . "/plugins"];
+        $path[] = [$system_root . "/plugins/{$name}", $system . "/plugins/$name"];
         $path[] = [$system_root . "/plugins/{$name}.*", $system . "/plugins", "version"];
-        $path[] = [$system_root . "/AdminLTE/plugins/{$name}", $system . "/AdminLTE/plugins"];
+        $path[] = [$system_root . "/AdminLTE/plugins/{$name}", $system . "/AdminLTE/plugins/$name"];
 
         if (System::Config("user", "development")) {
             $ini_file = $cms_root . "/" . $system . "/plugins.development.ini";

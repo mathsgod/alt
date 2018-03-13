@@ -18,37 +18,9 @@
         ]
     },
     "repositories": {
-        "hostlink-r": {
-            "type": "vcs",
-            "url": "https://bitbucket.org/hostlink/r.git"
-        },
-        "hostlink-r-psr7": {
-            "type": "vcs",
-            "url": "https://bitbucket.org/hostlink/r-psr7.git"
-        },
-        "hostlink-holiday-hk": {
-            "type": "vcs",
-            "url": "https://bitbucket.org/hostlink/holiday-hk.git"
-        },
-        "hostlink-html": {
-            "type": "vcs",
-            "url": "https://bitbucket.org/hostlink/html.git"
-        },
-        "hostlink-r-db": {
-            "type": "vcs",
-            "url": "https://bitbucket.org/hostlink/r-db.git"
-        },
-        "hostlink-r-p": {
-            "type": "vcs",
-            "url": "https://bitbucket.org/hostlink/r-p.git"
-        },
-        "hostlink-r-bs": {
-            "type": "vcs",
-            "url": "https://bitbucket.org/hostlink/r-bs.git"
-        },
-        "hostlink-weather": {
-            "type": "vcs",
-            "url": "https://bitbucket.org/hostlink/weather.git"
+        "hostlink-raymond": {
+            "type": "composer",
+            "url": "https://raymond2.hostlink.com.hk/bitbucket/repo"
         }
     },
     "require": {
