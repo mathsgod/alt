@@ -22,13 +22,24 @@ class Plugin
 
     public function __construct($name)
     {
+       
         $cms_root = getcwd();
         $system = "composer/vendor/hostlink/r-alt";
         $system_root = System::Root();
 
+        $composer_root = dirname(dirname(dirname(__DIR__)));
+        $server=System::$request->getServerParams();
+        $document_root=$server["DOCUMENT_ROOT"];
+
+        $composer_base=substr($composer_root,strlen($document_root));
+        $composer_base=str_replace(DIRECTORY_SEPARATOR,"/",$composer_base);
+
         $this->name = $name;
         $path = [];
 
+        $path[] = [$composer_root."/".$name, "$composer_base/$name"];
+        $path[] = [$composer_root."/vendor/$name", "$composer_base/vendor/$name"];
+        
         $path[] = [$cms_root . "/composer/{$name}", "composer/$name"];
         $path[] = [$cms_root . "/composer/vendor/{$name}", "composer/vendor/$name"];
         $path[] = [$cms_root . "/plugins/{$name}", "plugins/$name"];
