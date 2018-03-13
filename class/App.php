@@ -171,16 +171,17 @@ class App
     public static function Path($uri)
     {
 
-        $f = App\System::$app->root . "/" . $uri;
+        extract(self::_()->pathInfo());
 
-        if (is_readable($f)) {
+        if(is_readable($f=$cms_root."/".$uri)){
             return $f;
         }
-        $f = App\System::$app->root . "/composer/vendor/hostlink/r-alt/" . $uri;
 
-        if (is_readable($f)) {
+        if (is_readable($f=$system_root."/".$uri)) {
             return $f;
         }
+        
+
     }
 
     public static function SystemPath($uri)
@@ -294,5 +295,10 @@ class App
     public static function _()
     {
         return App\System::$app;
+    }
+
+    public static function SystemBase(){
+        $p=self::_()->pathInfo();
+        return $p["system_base"];
     }
 }

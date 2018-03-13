@@ -3,10 +3,15 @@ class User_image extends R\Page
 {
     public function get($dummy)
     {
+
+        
         $basepath = \App\System::BasePath();
 
+        
+        $base=App::SystemBase();
+
         if ($dummy) {
-            header("location: {$basepath}composer/vendor/hostlink/r-alt/images/user.png");
+            header("location: $base/images/user.png");
             return;
         }
 
@@ -21,12 +26,11 @@ class User_image extends R\Page
         }
 
         //$this->setHeader("Content-Type","application/jpeg");
-        if (file_exists($f = getcwd() . "/data/{$user->username}/profile.image")) {
-
-
+        if (file_exists($f = App::Root() . "/data/{$user->username}/profile.image")) {
             header("location: {$basepath}data/{$user->username}/profile.image");
         } else {
-            header("location: {$basepath}composer/vendor/hostlink/r-alt/images/user.png");
+
+            header("location: {$base}/images/user.png");
         }
     }
 }

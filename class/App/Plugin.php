@@ -22,37 +22,21 @@ class Plugin
 
     public function __construct($name)
     {
-       
-        $cms_root = getcwd();
-        $system = "composer/vendor/hostlink/r-alt";
-        $system_root = System::Root();
-
-        $composer_root = dirname(dirname(dirname(__DIR__)));
-        $server=System::$request->getServerParams();
-        $document_root=$server["DOCUMENT_ROOT"];
-
-        $composer_base=substr($composer_root,strlen($document_root));
-        $composer_base=str_replace(DIRECTORY_SEPARATOR,"/",$composer_base);
+        extract(\App::_()->pathInfo());
 
         $this->name = $name;
         $path = [];
 
-        $path[] = [$composer_root."/".$name, "$composer_base/$name"];
-        $path[] = [$composer_root."/vendor/$name", "$composer_base/vendor/$name"];
-        
-        $path[] = [$cms_root . "/composer/{$name}", "composer/$name"];
-        $path[] = [$cms_root . "/composer/vendor/{$name}", "composer/vendor/$name"];
+        $path[] = [$composer_root . "/vendor/$name", "$composer_base/vendor/$name"];
+        $path[] = [$composer_root . "/" . $name, "$composer_base/$name"];
+
         $path[] = [$cms_root . "/plugins/{$name}", "plugins/$name"];
 
-        $path[] = [$system_root . "/plugins/{$name}", $system . "/plugins/$name"];
-        $path[] = [$system_root . "/plugins/{$name}.*", $system . "/plugins", "version"];
-        $path[] = [$system_root . "/AdminLTE/plugins/{$name}", $system . "/AdminLTE/plugins/$name"];
+        $path[] = [$system_root . "/plugins/{$name}", $system_base . "/plugins/$name"];
+        $path[] = [$system_root . "/plugins/{$name}.*", $system_base . "/plugins", "version"];
+        $path[] = [$system_root . "/AdminLTE/plugins/{$name}", $system_base . "/AdminLTE/plugins/$name"];
 
-        if (System::Config("user", "development")) {
-            $ini_file = $cms_root . "/" . $system . "/plugins.development.ini";
-        } else {
-            $ini_file = $cms_root . "/" . $system . "/plugins.ini";
-        }
+        $ini_file = $system_root . "/plugins.ini";
 
         $found = false;
         foreach ($path as $p) {
@@ -64,8 +48,8 @@ class Plugin
                 $this->path = $f;
                 $this->base = $p[1];
 
-                if($p[2]=="version"){
-                    $this->base.="/".basename($f);
+                if ($p[2] == "version") {
+                    $this->base .= "/" . basename($f);
                 }
                 // read ini
                 $ini = parse_ini_file($ini_file, true);
@@ -80,7 +64,6 @@ class Plugin
                 break;
             }
         }
-        //outp($this);
 
 
         if (!$found) {

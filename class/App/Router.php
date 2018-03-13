@@ -25,7 +25,7 @@ class Router extends \R\Router
                 $r->method=strtolower($route["method"]);
                 $r->action=basename($route["path"]);
                 parse_str($request->getURI()->getQuery(), $r->query);
-                $r->file=$document_root.$base.$route["params"]["file"];
+                $r->file=$route["params"]["file"];
 
                 $loader->addClassMap([
                     $r->class=>$r->file
@@ -34,6 +34,7 @@ class Router extends \R\Router
                 return $r;
             }
         }
+        
         return new Route($request, $loader);
     }
 }

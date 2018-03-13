@@ -222,7 +222,10 @@ class Page extends \App\Page
 
 
 
-                $system="composer/vendor/hostlink/r-alt";
+                extract(\App::_()->pathInfo());
+                $system=$system_base;
+
+                $data["system_base"]=$system_base;
 
                 
                 $plugins = new \App\Plugin("vue");

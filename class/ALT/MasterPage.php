@@ -159,7 +159,8 @@ class MasterPage
         }
         $data["sidebar_menu"] = $sidebar_menu;
 
-        $system="composer/vendor/hostlink/r-alt";
+        extract(\App::_()->pathInfo());
+        $system=$system_base;
         $data["script"][] = "$system/js/cookie.js";
         $data["script"][] = "$system/js/jquery.storageapi.min.js";
 
@@ -217,9 +218,8 @@ class MasterPage
         return $response->withBody($stream);
     }
 
-    public function __construct($route)
+    public function __construct()
     {
-        $this->route = $route;
         $user = \App::User();
         $setting = json_decode($user->setting, true);
 

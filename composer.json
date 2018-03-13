@@ -73,5 +73,6 @@
             "homepage": "https://www.hostlink.com.hk"
         }
     ],
-    "minimum-stability": "stable"
+    "minimum-stability": "stable",
+    "version": "4.7.0"
 }

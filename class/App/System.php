@@ -41,6 +41,26 @@ class System extends \R\System
         }
     }
 
+    public function pathInfo()
+    {
+        $s = $this->loader->getPrefixesPsr4()["ALT\\"][0];
+        $s = explode("/../", $s, 2)[0];
+        $composer_root = dirname(dirname($s));
+
+        $server = self::$request->getServerParams();
+        $document_root = $server["DOCUMENT_ROOT"];
+
+        $composer_base = substr($composer_root, strlen($document_root));
+        $composer_base = str_replace(DIRECTORY_SEPARATOR, "/", $composer_base);
+
+        $cms_root = CMS_ROOT;
+        $system_root = SYSTEM;
+        $system_base = substr($system_root, strlen($document_root));
+        $system_base = str_replace(DIRECTORY_SEPARATOR, "/", $system_base);
+
+        return compact("composer_base", "composer_root", "document_root", "cms_root", "system_root", "system_base");
+    }
+
     public static function Run($root, $composer, $logger)
     {
         if ($logger) $logger->info("System::Run");
@@ -51,16 +71,19 @@ class System extends \R\System
         self::$request = $request;
         self::$base = $request->getUri()->getBasePath();
 
+        $b=self::$app->pathInfo();
+        
         $router = new Router();
         $router->add("GET", "404_not_found", [
             "class" => "_404_not_found",
-            "file" => "composer/vendor/hostlink/r-alt/pages/404_not_found.php"
+            "file" => $b["system_root"]."/pages/404_not_found.php"
         ]);
 
         ob_start();
         $route = $router->getRoute($request, $composer);
         $request = $request->withAttribute("included_content", ob_get_contents());
         ob_end_clean();
+
 
         $request = $request
             ->withAttribute("action", $route->action)
@@ -77,16 +100,14 @@ class System extends \R\System
             }
         }
 
+        
         if ($page) {
             $response = new Response(200);
-
             try {
                 $response = $page($request->withMethod($route->method), $response);
             } catch (\Exception $e) {
-
-                \App::Redirect("404_not_found");
+                \App::Redirect("404_not_found?msg=" . $e->getMessage());
             }
-
 
             foreach ($response->getHeaders() as $name => $values) {
                 header($name . ": " . implode(", ", $values));

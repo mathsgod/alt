@@ -5,6 +5,7 @@ use App\User;
 class index extends ALT\Page\Login {
     public function get($r) {
 
+
         if (App\System::Logined()) {
             if (App::User()->secret == "" && App::Config("user", "2-step verification")->value) {
                 \App::Redirect("User/2step?auto_create=1");

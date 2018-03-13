@@ -46,6 +46,7 @@ class Route extends \R\Route
 
         $this->psr0($request, $loader);
 
+
         if (file_exists($this->file)) {
             require_once($this->file);
         }
@@ -82,6 +83,8 @@ class Route extends \R\Route
         $root = $request->getServerParams()["DOCUMENT_ROOT"];
         $base = $request->getURI()->getBasePath();
 
+
+
         while (count($qs)) {
             $path = implode("/", $qs);
 
@@ -108,7 +111,7 @@ class Route extends \R\Route
                 $this->file = $file;
                 $this->path = implode("/", $qs)."/index";
                 $this->class = implode("_", $qs) . "_index";
-                $this->action = array_pop($qs);
+                $this->action = "index";
                 $this->method = $method;
                 return;
             }

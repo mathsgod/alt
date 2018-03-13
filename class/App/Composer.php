@@ -4,9 +4,13 @@ namespace App;
 
 class Composer
 {
+    public function __construct()
+    {
+    }
+
     public function installed()
     {
-        $ret=self::exec("show -f json");
+        $ret = self::exec("show -f json");
         return json_decode($ret, true)["installed"];
     }
 
@@ -18,12 +22,12 @@ class Composer
     public function package($name)
     {
         foreach ($this->installed() as $p) {
-            if ($p["name"]==$name) {
-                $package=new Package();
-                $package->name=$p["name"];
-                $package->version=$p["version"];
-                $package->description=$p["description"];
-                $package->path=getcwd()."/composer/vender/".$name;
+            if ($p["name"] == $name) {
+                $package = new Package();
+                $package->name = $p["name"];
+                $package->version = $p["version"];
+                $package->description = $p["description"];
+                $package->path = getcwd() . "/composer/vender/" . $name;
 
                 return $package;
             }
@@ -32,10 +36,12 @@ class Composer
 
     public function exec($command)
     {
-        putenv("COMPOSER_HOME=" . $this->path());
-        $phar = self::Phar();
+        $cwd = getcwd();
 
-        chdir("composer");
+        putenv("COMPOSER_HOME=" . $this->path());
+
+        $phar = $this->phar();
+        chdir($this->path());
 
         if ($command) {
             $ret = `php $phar $command 2>&1`;
@@ -43,15 +49,15 @@ class Composer
             $ret = `php $phar 2>&1`;
         }
 
-        chdir("..");
+        chdir($cwd);
 
         return $ret;
     }
-    
+
     public function hasPackage($package)
     {
         foreach ($this->installed() as $p) {
-            if ($p["name"]==$package) {
+            if ($p["name"] == $package) {
                 return true;
             }
         }
@@ -60,115 +66,84 @@ class Composer
 
     public function path()
     {
-        return getcwd()."/composer";
+        $p = \App::_()->pathInfo();
+        return $p["composer_root"];
     }
 
-    public static function PackageSuggest($package)
+    public function packageSuggest($package)
     {
-        $suggest=self::Run("suggests $package");
-        $suggest=explode("\n", $suggest);
+        $suggest = $this->exec("suggests $package");
+        $suggest = explode("\n", $suggest);
         array_walk($suggest, "trim");
-        $suggest=array_filter($suggest, "strlen");
+        $suggest = array_filter($suggest, "strlen");
         return $suggest;
     }
 
-    public static function Auth()
+    public function suggests()
     {
-        return json_decode(file_get_contents(getcwd()."/composer/auth.json"), true);
-    }
-
-    public static function Suggests()
-    {
-        $suggest=self::Run("suggests");
-        $suggest=explode("\n", $suggest);
+        $suggest = $this->exec("suggests");
+        $suggest = explode("\n", $suggest);
         array_walk($suggest, "trim");
-        $suggest=array_filter($suggest, "strlen");
+        $suggest = array_filter($suggest, "strlen");
         return $suggest;
     }
 
-    public static function Info($checkupdate = false)
+    public function info($checkupdate = false)
     {
         if ($checkupdate) {
-            $info=self::Run("show -l --format=json");
+            $info = $this->exec("show -l --format=json");
         } else {
-            $info=self::Run("show --format=json");
+            $info = $this->exec("show --format=json");
         }
-        
+
         return json_decode($info, true)["installed"];
     }
 
-
-    public static function Phar()
+    public function config()
     {
-        if (!file_exists($file = getcwd() . "/composer/composer.phar")) {
+        if (file_exists($file = $this->path() . "/composer.json")) {
+            return json_decode(file_get_contents($file), true);
+        }
+        return [];
+    }
+
+    public function phar()
+    {
+        if (!file_exists($file = $this->path() . "/composer.phar")) {
             file_put_contents($file, fopen("https://getcomposer.org/composer.phar", 'r'));
         }
         return $file;
     }
 
-    public static function ChangeOwn()
+    public function changeOwn()
     {
-        $folder = getcwd() . "/composer";
+        $folder = $this->path();
         `find $folder -type d -exec chmod 0777 {} +`;
         `find $folder -type f -exec chmod 0777 {} +`;
     }
 
-    public static function RemoveAll()
+    public function removeAll()
     {
-        $folder = getcwd() . "/composer";
+        $folder = $this->path();
         `rm -rf $folder`;
     }
 
-    public static function Check()
+    public function remove($package)
     {
-        if (!is_readable($folder = getcwd() . "/composer")) {
-            throw new \Exception("composer folder {$folder} not found!");
-        }
-
-        if (!is_writable($folder = getcwd() . "/composer")) {
-            throw new \Exception("composer folder {$folder} not writable!");
-        }
-
-
-        if (!is_readable($file = getcwd() . "/composer/composer.phar")) {
-            file_put_contents($file, fopen("https://getcomposer.org/composer.phar", 'r'));
-        }
+        return $this->exec("remove $package");
     }
 
-    public static function Run($command)
+    public function install($package, $version)
     {
-        putenv("COMPOSER_HOME=" . getcwd() . "/composer");
-        $phar = self::Phar();
-        chdir("composer");
 
-        if ($command) {
-            $ret = `php $phar $command 2>&1`;
-        } else {
-            $ret = `php $phar 2>&1`;
-        }
-
-        chdir("..");
-
-        return $ret;
-    }
-
-    public static function Remove($package)
-    {
-        $ret = self::Run("remove $package");
-        return $ret;
-    }
-
-    public static function Install($package, $version)
-    {
-        //check install
-        $config = self::Config();
+        $config = $this->config();
 
         if ($config["require"][$package]) {
             return;
         }
 
-        $ret = self::Run("require $package");
-        self::ChangeOwn();
+        $ret = $this->exec("require $package");
+        $this->changeOwn();
 
         return $ret;
     }

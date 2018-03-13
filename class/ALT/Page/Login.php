@@ -28,15 +28,15 @@ class Login extends \R\Page
 
     public function __invoke($request, $response)
     {
-        $resp=parent::__invoke($request, $response);
-        
-        if ($request->getMethod()=="get") {
+        $resp = parent::__invoke($request, $response);
+
+        if ($request->getMethod() == "get") {
             $this->_twig["loader"] = new \Twig_Loader_Filesystem(\App\System::Root());
             $this->_twig["environment"] = new \Twig_Environment($this->_twig["loader"]);
             $this->_template = $this->_twig["environment"]->loadTemplate("AdminLTE/pages/login.html");
         }
 
-        $data=$resp->getBody()->getContents();
+        $data = $resp->getBody()->getContents();
         if ($this->_template) {
             if (!$data) {
                 $data = [];
@@ -57,12 +57,15 @@ class Login extends \R\Page
                 }
             }
 
-            $data["css"][] = "composer/vendor/hostlink/r-alt/AdminLTE/dist/css/AdminLTE.min.css";
+            $p = \App::_()->pathInfo();
 
-            $data["script"][] = "composer/vendor/hostlink/r-alt/js/cookie.js";
-            $data["script"][] = "composer/vendor/hostlink/r-alt/js/jquery.form.min.js";
 
-            $resp=$resp
+            $data["css"][] = $p["system_base"] . "/AdminLTE/dist/css/AdminLTE.min.css";
+
+            $data["script"][] = $p["system_base"] . "/js/cookie.js";
+            $data["script"][] = $p["system_base"] . "/js/jquery.form.min.js";
+
+            $resp = $resp
                 ->withHeader("Content-Type", "text/html; charset=UTF-8")
                 ->withBody(new Stream($this->_template->render($data)));
         }
