@@ -4,21 +4,21 @@ class Module_add_column extends ALT\Page
 
     public function post($table)
     {
-        $t=App::DB()->table($table);
+        $t = App::DB()->table($table);
 
-        $type=$_POST["Type"];
+        $type = $_POST["Type"];
         if ($_POST["Length"]) {
-            $type.="(".$_POST["Length"].")";
+            $type .= "(" . $_POST["Length"] . ")";
         }
 
-        $constraint="";
+        $constraint = "";
 
         if ($_POST["not_null"]) {
-            $constraint="NOT NULL";
+            $constraint = "NOT NULL";
         } else {
-            $constraint="NULL";
+            $constraint = "NULL";
         }
-        $ret=$t->addColumn($_POST["Field"], $type);
+        $ret = $t->addColumn($_POST["Field"], $type);
 
         App::Msg($ret);
         App::Redirect();
@@ -28,14 +28,14 @@ class Module_add_column extends ALT\Page
     {
 
         //$col=App::DB()->table($table);
-        $e=$this->createE($col);
-        
+        $e = $this->createE($col);
+
         $e->add("Field")->input("Field");
-        $e->add("Type")->select("Type")->options(["int","varchar","tinyint","text","date","time","datetime","longblob"]);
+        $e->add("Type")->select("Type")->options(["int", "varchar", "tinyint", "text", "date", "time", "datetime", "longblob", "json"]);
         $e->add("Length")->input("Length");
         $e->add("Not null")->checkbox("not_null");
 
-        
+
         $this->write($this->createForm($e));
     }
 }

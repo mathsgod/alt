@@ -213,7 +213,9 @@ class System extends \R\System
         $loader->addPsr4("", $root . "/class");
         $loader->addPsr4("", SYSTEM . "/class");
 
+
         spl_autoload_register(function ($class) use ($root) {
+            
             $class_path = str_replace("\\", DIRECTORY_SEPARATOR, $class);
             $file = realpath($root . "/pages/$class_path/$class.class.php");
             if (is_readable($file)) {

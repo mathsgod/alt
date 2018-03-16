@@ -59,7 +59,7 @@ class Module_index extends ALT\Page
                     $t = $this->createT($class::__db()->table($table)->columns());
                     $t->add("", function ($o) {
                         $btn=html("a")->class("btn btn-xs btn-danger");
-                        $btn->i->class('fa fa-remove');
+                        $btn->i->class('fa fa-times');
                         $table_name=$o->table()->name;
                         $btn->href("Module/del_column?table={$table_name}&field={$o->Field}");
                         
@@ -67,7 +67,7 @@ class Module_index extends ALT\Page
                     });
                     $t->add("", function ($o) {
                         $btn=html("a")->class("btn btn-xs btn-warning");
-                        $btn->i->class('fa fa-pencil');
+                        $btn->i->class('fa fa-pencil-alt');
                         $table_name=$o->table()->name;
                         $btn->href("Module/alter_column?table={$table_name}&field={$o->Field}");
                       
