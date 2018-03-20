@@ -13,6 +13,7 @@ class V extends Box {
 
 	public function __construct($object, $route) {
 		parent::__construct($route);
+		$this->_route=$route;
 		$this->object = $object;
 		$this->tableClass = "table-condensed";
 		$this->body()->addClass('no-padding');

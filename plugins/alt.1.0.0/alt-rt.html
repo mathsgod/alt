@@ -5,6 +5,7 @@
 
                 <div :style="tableContainerStyle">
                     <rt-table class="rt table-bordered" :responsive="tableResponsive" :sort-field="sortField" :sort-dir="sortDir" :cell-url="cellUrl"
+                        :page-number="pageNumber"
                         :page-size="page_size" v-on:resized="resized" :data-url="source" ref="table" v-on:refreshed="refreshed"
                         v-on:loading="$refs.box.showLoading()" v-on:loaded="$refs.box.hideLoading()">
                         <slot></slot>
@@ -47,9 +48,9 @@
                     <span class="icon glyphicon glyphicon-th-list"></span>
                 </button>
                 <ul class="dropdown-menu">
-                    <li v-for="col in columns">
-                        <a href="#" class="small" data-value="option1" tabIndex="-1" @click.prevent="col.isVisible=!col.isVisible">
-                            <input type="checkbox" v-model="col.isVisible" />&nbsp;{{col.field}}</a>
+                    <li v-for="col in columns" v-if="col.title">
+                        <a href="#" class="small" data-value="option1" tabIndex="-1" @click.prevent="col.toggleVisiable()">
+                            <input type="checkbox" v-model="col.isVisible" />&nbsp;{{col.title}}</a>
                     </li>
                 </ul>
             </div>
@@ -86,6 +87,10 @@
                 </ul>
             </div>
 
+            <div class="pull-left btn-group" v-if="$slots.buttons">
+                <slot name="buttons"></slot>
+            </div>
+
             <rt-info class="pull-right" :total="total" :from="from" :to="to"></rt-info>
         </alt-box-footer>
     </alt-box>
@@ -109,8 +114,15 @@
                 require: true
             }, sortDir: String,
             sortField: String,
-            pageSize: Number
+            pageSize: {
+                type: Number,
+                default: 25
+            },pageNumber:{
+                type: Number,
+                default: 1
+            }
         }, created: function () {
+            console.log(this.pageNumber);
 
 
         }, mounted: function () {
@@ -137,13 +149,13 @@
                 from: 0,
                 to: 0,
                 total: 0,
-                page_size: 25,
+                page_size: this.pageSize,
                 page_count: 0,
-                page: 0
+                page: this.pageNumber
             }
         },
         methods: {
-            showExport(){
+            showExport() {
                 return this.exportXlsx || this.exportCsv;
             },
             exportFile(type) {

@@ -7,6 +7,7 @@ use App\User;
 class EventLog_list extends App\Page {
     public function get() {
         $jq = $this->createRT([$this, "Datasource"]);
+        //$jq->attr("page-number",2);
 
     	$jq->attr("data-pagination",["top","bottom"]);
     	//$jq->attr("data-mode","virtual");
@@ -31,5 +32,3 @@ class EventLog_list extends App\Page {
             "data" => EventLog::find($w, $jq->Order(), $jq->Limit()));
     }
 }
-
-?>

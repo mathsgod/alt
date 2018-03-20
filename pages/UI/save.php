@@ -64,14 +64,22 @@ class UI_save extends App\Page {
             return;
         }
 
+        if($_POST["RT2"]){
+            $ui = UI::_($_POST["uri"]);
+            $layout=$ui->layout();
+            $layout["RT2"]["visible"][$_POST["name"]]=$_POST["visible"];
+            $ui->layout= json_encode($layout);
+            $ui->save();
+            return ["code"=>200];
+        }
+
         $uri = App::DB()->quote($_POST["uri"]);
         if ($_POST["RT"]) {
             $ui = UI::_($_POST["uri"]);
             $layout = $ui->layout();
             $layout["visible"] = array();
-            foreach($_POST["column"] as $column) {
-                $layout["visible"][$column["name"]] = ($column["visible"] == "true");
-            }
+            $layout["visible"][$column["name"]] = ($column["visible"] == "true");
+            
             $ui->layout = json_encode($layout);
             $ui->save();
 

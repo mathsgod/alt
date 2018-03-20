@@ -525,7 +525,7 @@ class RT implements \JsonSerializable
     public function addEdit()
     {
         $column = new RTColumn();
-        // $column->wdith(20);
+        $column->resizable = false;
         $column->descriptor[] = function ($obj) {
             $uri = $obj->uri('ae');
             if ($obj->canUpdate() && \App::ACL($uri)) {
@@ -544,9 +544,10 @@ class RT implements \JsonSerializable
     public function addView()
     {
         $column = new RTColumn();
+        $column->resizable = false;
         $column->descriptor[] = function ($obj) {
             $uri = $obj->uri('v');
-            if ($obj->canRead() && App::ACL($uri)) {
+            if ($obj->canRead() && \App::ACL($uri)) {
                 return "<a href=\"{$uri}\" class='btn btn-xs btn-info'><i class='fa fa-search'/></a>";
             }
         };
@@ -561,6 +562,7 @@ class RT implements \JsonSerializable
     public function addDel($redirect = "")
     {
         $c = new RTColumn();
+        $c->resizable = false;
         $c->align("center");
         $c->index("[del]");
         $c->width(28);
@@ -693,8 +695,7 @@ class RT implements \JsonSerializable
                 if ($c->alink && $last_obj) {
                     $htmlspecialchars = false;
                     $d["type"] = "link";
-                    $d["href"] = $last_obj->uri($alink); 
-
+                    $d["href"] = $last_obj->uri($c->alink); 
                     // $a = PA::_()->href($last_obj->uri(PFunc::_($c->alink)->call($last_obj)))->text($result);
                     /*$p = new \P\Query("a");
                     $alink = $c->alink;
@@ -806,6 +807,15 @@ class RT implements \JsonSerializable
         $writer->close();
     }
 
+    public function addButton($label)
+    {
+        $btn = new \BS\Button();
+        $btn->classList[] = "btn-sm";
+        $this->buttons[] = $btn;
+        p($btn)->text($label);
+        return $btn;
+    }
+
     public function __toString()
     {
         if ($_GET["draw"]) {
@@ -820,11 +830,11 @@ class RT implements \JsonSerializable
         $rt->class("no-border");
         $rt->attr(["id" => $uuid]);
         $rt->attr($this->_attribute);
-        if($this->export_xlsx){
+        if ($this->export_xlsx) {
             $rt->attr(["export-xlsx" => true]);
         }
 
-        if($this->export_csv){
+        if ($this->export_csv) {
             $rt->attr(["export-csv" => true]);
         }
 
@@ -838,6 +848,9 @@ class RT implements \JsonSerializable
             $rt->_child[] = "\n";
         }
 
+        $ui = \App\UI::_($this->_attribute["source"] );
+        $layout=$ui->layout()["RT2"];
+
         foreach ($this->columns as $col) {
             $rc = new \HTML\Node("rt-column");
 
@@ -850,6 +863,14 @@ class RT implements \JsonSerializable
                 "resizable" => $col->resizable,
                 "fixed" => $col->fixed
             ];
+
+            if($layout["visible"][$col->index]===false){
+                $attr["hidden"]=true;
+            }
+
+            if ($col->align) {
+                $attr["align"] = $col->align;
+            }
 
             if ($col->index == "[dels]") {
                 $attr["type"] = "deletes";
@@ -905,14 +926,23 @@ class RT implements \JsonSerializable
                 $attr["search-multiple"] = $col->searchMultiple;
             }
 
-
-
-
             $rc->attr($attr);
 
             $rt->_child[] = $rc;
             $rt->_child[] = "\n";
         }
+
+
+        if($this->buttons){
+            $div=html("div");
+            $div->slot("buttons");
+            foreach($this->buttons as $btn){
+                $div->_child[]=$btn;
+            }
+            $rt->_child[]=$div;
+    
+        }
+
 
         $html = (string)$rt;
 

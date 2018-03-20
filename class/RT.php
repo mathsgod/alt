@@ -750,7 +750,7 @@ td.find(\".iCheck\").trigger(\"change\");
             $uri = $obj->uri('ae');
             if ($obj->canUpdate() && App::ACL($uri)) {
                 // return "<a href=\"{$uri}\">" . Icon::_("edit") . "</a>";
-                return "<a href=\"{$uri}\" class='btn btn-xs btn-warning'><i class='fa fa-pencil'/></a>";
+                return "<a href=\"{$uri}\" class='btn btn-xs btn-warning'><i class='fa fa-pencil-alt'/></a>";
             }
         };
         $column->align("center");
@@ -766,7 +766,7 @@ td.find(\".iCheck\").trigger(\"change\");
         $column = new RTColumn();
         $column->descriptor[] = function ($obj) {
             $uri = $obj->uri('v');
-            if ($obj->canUpdate() && App::ACL($uri)) {
+            if ($obj->canRead() && App::ACL($uri)) {
                 return "<a href=\"{$uri}\" class='btn btn-xs btn-info'><i class='fa fa-search'/></a>";
             }
         };

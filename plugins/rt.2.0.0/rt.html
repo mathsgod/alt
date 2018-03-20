@@ -256,6 +256,16 @@
             });
 
 
+            this.columns.forEach(column => {
+                column.$on("toggle-visible", function (a) {
+
+                    this.$parent.$emit("toggle-visible", {
+                        name: this.field,
+                        visible: a
+                    });
+                });
+            });
+
             this.$on("sort", a => {
                 this.columns.forEach(column => {
                     if (column.field != a.field) {
@@ -367,7 +377,8 @@
                         <i v-if="showIndex[index]" class="fa fa-chevron-down"></i>
                     </button>
                 </td>
-                <td v-for="column in columns" @click="cellClicked(column,index,r)" v-if="column.display()" >
+                <td v-for="column in columns" @click="cellClicked(column,index,r)" v-if="column.display()"
+                    :style="getCellStyle(column,index,r)" >
                     <template v-if="isEditMode(column,index)" >
                         <template v-if="column.editType=='text'">
                             <input type="text" class="form-control input-sm" v-bind:value="getValue(r[column.field])" @blur="updateData(index,r,column,$event.target.value)"/>
@@ -442,6 +453,13 @@
             }
         },
         methods: {
+            getCellStyle(col, index, data) {
+                var style = {};
+                if (col.align) {
+                    style["text-align"] = col.align;
+                }
+                return style;
+            },
             mouseLeave(index) {
                 this.hoverChild[index] = false;
                 this.$forceUpdate();
@@ -583,13 +601,11 @@
             maxWidth: String,
             resizable: Boolean,
             fixed: Boolean,
-            visible: {
-                type: Boolean,
-                default: true
-            }
+            hidden: Boolean,
+            align: String
         }, data: function () {
             return {
-                isVisible: this.visible,
+                isVisible: !this.hidden,
                 hide: false,
                 index: -1,
                 hideIndex: -1,
@@ -656,6 +672,9 @@
                     field: this.field,
                     dir: this.dir
                 });
+            }, toggleVisiable() {
+                this.isVisible = !this.isVisible;
+                this.$emit("toggle-visible", this.isVisible);
             }
         }
     });
@@ -664,7 +683,7 @@
     Vue.component("rt-table", {
         template: `
 <table class="table table-hover table-condensed">
-   <thead is="rt-head" v-on:toggle-child="toggleChild" v-on:sort="sortByColumn" v-on:search="search" :hide-index="hideIndex"><slot></slot></thead>
+   <thead is="rt-head" v-on:toggle-child="toggleChild" v-on:toggle-visible="toggleVisible" v-on:sort="sortByColumn" v-on:search="search" :hide-index="hideIndex"><slot></slot></thead>
    <tbody ref="body" is="rt-body" :columns="columns" :data="data" v-on:update-data="updateData" v-on:data-deleted="refresh"></tbody>
 </table>
 `,
@@ -695,7 +714,7 @@
         data: function () {
             return {
                 draw: 0,
-                page: 1,
+                page: this.pageNumber,
                 data: [],
                 columns: [],
                 page_size: this.pageSize,
@@ -728,7 +747,13 @@
 
 
         }, methods: {
-
+            toggleVisible(data) {
+                data.RT2=1;
+                data.uri=this.dataUrl;
+                this.$http.post("UI/save",data).then(resp=>{
+                    console.log(resp);
+                });
+            },
             hasFixedColumn() {
                 return this.columns.some(c => {
                     return c.fixed;
@@ -837,12 +862,12 @@
                     });
                     var link = document.createElement('a');
                     link.href = window.URL.createObjectURL(blob);
-                    if(type=="xlsx"){
+                    if (type == "xlsx") {
                         link.download = "export.xlsx";
-                    }else if(type=="csv"){
+                    } else if (type == "csv") {
                         link.download = "export.csv";
                     }
-                    
+
                     link.click();
                 });
             },
