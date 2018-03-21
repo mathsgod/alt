@@ -60,6 +60,48 @@ class C2 extends \P\HTMLElement
 		return $p;
 	}
 
+	public function ace($field,$mode){
+		$p = p();
+
+		foreach ($this->cell as $cell) {
+			$e=p("textarea");
+			$e->css("height","400px");
+			
+			$e->attr("ace",true);
+			$e->attr('data-field', $field);
+			$e->attr('name', $field);
+
+			if($mode){
+				$e->attr("ace-mode",$mode);
+			}
+
+			if ($object = p($cell)->data("object")) {
+				$e->data("object", $object);
+				$e->text(is_object($object) ? $object->$field : $object[$field]);
+
+				if ($this->callback) {
+					call_user_func($this->callback, $object, $e[0]);
+				}
+			}
+
+			$cell->append($e);
+		}
+
+		
+		if ($this->createTemplate) {
+			$textarea = p("textarea");
+			$textarea->attr("name", $field);
+			$textarea->attr("data-field", $field);
+
+			$p[] = $textarea[0];
+			$this->c_tpl[] = $textarea[0];
+		}
+
+		return $p;
+	}
+
+
+
 	public function alink($uri)
 	{
 		foreach ($this->cell as $cell) {

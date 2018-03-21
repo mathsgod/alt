@@ -21,6 +21,29 @@ vue_init();
 
 (function ($) {
     var f = function () {
+
+        $("textarea[ace]").each(function(){
+            var $that=$(this);
+            $(this).addClass("hide");
+            var $div=$("<div style='height:400px'></div>");
+            $div.insertAfter(this);
+
+            var editor = ace.edit($div[0]);
+            var mode=$(this).attr("ace-mode");
+            if(mode){
+                editor.session.setMode("ace/mode/"+mode);
+            }
+
+            editor.getSession().setValue($(this).val());
+
+            editor.getSession().on('change',function(){
+                console.log(editor.getSession().getValue());
+                $that.val(editor.getSession().getValue());
+            });
+            
+            
+        });
+
         $('[data-toggle="popover"]').popover();
 
         $("[data-format='json']").each(function () {
