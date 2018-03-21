@@ -5,7 +5,7 @@
 
                 <div :style="tableContainerStyle">
                     <rt-table class="rt table-bordered" :responsive="tableResponsive" :sort-field="sortField" :sort-dir="sortDir" :cell-url="cellUrl"
-                        :page-number="pageNumber"
+                        :page-number="page"
                         :page-size="page_size" v-on:resized="resized" :data-url="source" ref="table" v-on:refreshed="refreshed"
                         v-on:loading="$refs.box.showLoading()" v-on:loaded="$refs.box.hideLoading()">
                         <slot></slot>
@@ -122,13 +122,12 @@
                 default: 1
             }
         }, created: function () {
-            console.log(this.pageNumber);
 
 
         }, mounted: function () {
             this.total = this.$refs.table.total;
             this.from = 1;
-            this.to = 100;
+            this.to = 1;
             this.hasFixedColumn = this.$refs.table.hasFixedColumn();
             this.columns = this.$refs.table.columns;
 

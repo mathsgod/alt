@@ -574,7 +574,7 @@
             sorting_desc:(dir=='desc'),
             sorting_asc:(dir=='asc')
         }" @click='sort' :style="style">
-        <div>{{title}}</div>
+        <div :title="title" style="overflow:hidden">{{title}}</div>
         <div ref="resizer"></div>
         <template v-if="type=='deletes'">
            <button class='btn btn-xs btn-danger' @click="$emit('deletes')"><i class='fa fa-times'></i></button>
@@ -701,6 +701,10 @@
             pageSize: {
                 type: Number,
                 default: 25
+            },
+            pageNumber: {
+                type: Number,
+                default: 1
             }
         },
         watch: {
@@ -748,9 +752,9 @@
 
         }, methods: {
             toggleVisible(data) {
-                data.RT2=1;
-                data.uri=this.dataUrl;
-                this.$http.post("UI/save",data).then(resp=>{
+                data.RT2 = 1;
+                data.uri = this.dataUrl;
+                this.$http.post("UI/save", data).then(resp => {
                     console.log(resp);
                 });
             },

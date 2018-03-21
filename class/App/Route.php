@@ -88,6 +88,17 @@ class Route extends \R\Route
         while (count($qs)) {
             $path = implode("/", $qs);
 
+
+            if (file_exists($file =  $root . $base . "pages/" . $path . "/index.php")) {
+                $this->file = $file;
+                $this->path = implode("/", $qs)."/index";
+                $this->class = implode("_", $qs) . "_index";
+                $this->action = "index";
+                $this->method = $method;
+                return;
+            }
+
+
             if (file_exists($file = $root . "/" . $base . "/pages/" . $path . ".php")) {
                 $this->file = $file;
                 $this->path = $path;

@@ -24,6 +24,8 @@ vue_init();
 
         $("textarea[ace]").each(function(){
             var $that=$(this);
+            this.removeAttribute("ace");
+
             $(this).addClass("hide");
             var $div=$("<div style='height:400px'></div>");
             $div.insertAfter(this);
