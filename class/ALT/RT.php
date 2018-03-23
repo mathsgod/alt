@@ -822,6 +822,7 @@ class RT implements \JsonSerializable
             if ($_GET["type"]) {
                 return $this->exportFile($_GET["type"]);
             }
+
             return json_encode($this->jsonSerialize(), JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
         }
 

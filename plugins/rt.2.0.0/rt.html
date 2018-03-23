@@ -157,13 +157,14 @@
             }
         },
         watch: {
-            page() {
-                this.p = this.page;
+            page: function (v) {
+                console.log(v);
+                this.p = v;
             }
         },
         data: function () {
             return {
-                p: 1
+                p: this.page
             };
         },
         methods: {
@@ -672,7 +673,7 @@
                     field: this.field,
                     dir: this.dir
                 });
-            }, toggleVisiable() {
+            }, toggleVisible() {
                 this.isVisible = !this.isVisible;
                 this.$emit("toggle-visible", this.isVisible);
             }
@@ -716,9 +717,11 @@
             }
         },
         data: function () {
-            return {
+            var storage = $.localStorage.get(this.dataUrl);
+
+            var data= {
                 draw: 0,
-                page: this.pageNumber,
+                page: 1,
                 data: [],
                 columns: [],
                 page_size: this.pageSize,
@@ -728,6 +731,21 @@
                 searchData: {},
                 hideIndex: -1
             };
+
+            if(storage){
+                if(storage.page){
+                    data.page=storage.page;
+                }
+    
+                if(storage.order.column){
+                    data.sort=storage.order.column;
+                }
+                if(storage.order.dir){
+                    data.sort_dir=storage.order.dir;
+                }
+            }
+
+            return data;
         },
         mounted: function () {
             //get the columns 
@@ -745,6 +763,15 @@
             });
 
             this.refresh();
+
+            this.columns.forEach(o=>{
+                if(o.field==this.sort){
+                    o.dir=this.sort_dir;
+                }else{
+                    o.dir=null;
+                }
+            });
+
 
             window.addEventListener('resize', this.resize);
         }, computed: {
@@ -876,10 +903,20 @@
                 });
             },
             refresh: function () {
+                var storage = $.localStorage.get(this.dataUrl)||{};
+                storage.page=this.page;
+                storage.order= {
+                    column: this.sort,
+                    dir: this.sort_dir
+                };
+                $.localStorage.set(this.dataUrl, storage);
+
                 this.$emit("loading");
+
                 this.draw++;
                 this.$http.get(this.dataUrl, {
                     params: {
+                        dataUrl: this.dataUrl,
                         draw: this.draw,
                         page: this.page,
                         length: this.page_size,

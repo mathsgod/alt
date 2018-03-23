@@ -266,7 +266,7 @@
                     {% endif %}
 
                     <li class="treeview {{menu.active?'active':''}}">
-                        <a href="{{menu.link}}">
+                        <a href="{{menu.link}}" target="{{menu.target}}">
                             <i class="{{menu.icon}}"></i>
                             <span>{{menu.label}}</span>
                             {% if menu.submenu %}
@@ -280,7 +280,7 @@
                         <ul class="treeview-menu">
                             {% for menu in menu.submenu %}
                             <li class="{{menu.active?'active':''}}">
-                                <a href="{{menu.link}}">
+                                <a href="{{menu.link}}" target="{{menu.target}}">
                                     <i class="{{menu.icon}}"></i> {{menu.label}} {% if menu.submenu %}
                                     <span class="pull-right-container">
                                         <i class="fa fa-angle-left pull-right"></i>

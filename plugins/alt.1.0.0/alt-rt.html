@@ -5,8 +5,7 @@
 
                 <div :style="tableContainerStyle">
                     <rt-table class="rt table-bordered" :responsive="tableResponsive" :sort-field="sortField" :sort-dir="sortDir" :cell-url="cellUrl"
-                        :page-number="page"
-                        :page-size="page_size" v-on:resized="resized" :data-url="source" ref="table" v-on:refreshed="refreshed"
+                        :page-number="page" :page-size="page_size" v-on:resized="resized" :data-url="source" ref="table" v-on:refreshed="refreshed"
                         v-on:loading="$refs.box.showLoading()" v-on:loaded="$refs.box.hideLoading()">
                         <slot></slot>
                     </rt-table>
@@ -43,7 +42,9 @@
                 <button @click="$refs.table.refresh()" class="btn btn-default btn-sm" type="button" title="重新載入" data-toggle="tooltip">
                     <span class="icon glyphicon glyphicon-refresh"></span>
                 </button>
+            </div>
 
+            <div class="pull-left dropup">
                 <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
                     <span class="icon glyphicon glyphicon-th-list"></span>
                 </button>
@@ -54,7 +55,6 @@
                     </li>
                 </ul>
             </div>
-
 
             <div class="pull-left">
                 <select class="form-control input-sm" style="width:70px" @change="changePageSize()" v-model="page_size">
@@ -117,12 +117,11 @@
             pageSize: {
                 type: Number,
                 default: 25
-            },pageNumber:{
+            }, pageNumber: {
                 type: Number,
                 default: 1
             }
         }, created: function () {
-
 
         }, mounted: function () {
             this.total = this.$refs.table.total;
@@ -141,7 +140,9 @@
 
         },
         data() {
-            return {
+            var storage = $.localStorage.get(this.source)||{};
+
+            var data= {
                 columns: [],
                 hasFixedColumn: false,
                 tableResponsive: this.responsive,
@@ -151,7 +152,17 @@
                 page_size: this.pageSize,
                 page_count: 0,
                 page: this.pageNumber
+            };
+
+            if(typeof storage.responsive !== "undefined"){
+                data.tableResponsive=storage.responsive;
             }
+
+            if(typeof storage.page_size !== "undefined"){
+                data.page_size=parseInt(storage.page_size);
+            }
+
+            return data;
         },
         methods: {
             showExport() {
@@ -188,6 +199,12 @@
             },
             toggleResponsive() {
                 this.tableResponsive = !this.tableResponsive;
+
+                //save 
+                var storage = $.localStorage.get(this.source)||{};
+                storage.responsive=this.tableResponsive;
+                $.localStorage.set(this.source,storage);
+                                
             },
             refreshed: function () {
                 var table = this.$refs.table;
@@ -200,6 +217,11 @@
             },
             changePageSize() {
                 this.$refs.table.setPageSize(this.page_size);
+
+                //save 
+                var storage = $.localStorage.get(this.source)||{};
+                storage.page_size=this.page_size;
+                $.localStorage.set(this.source,storage);
             }
         }
 

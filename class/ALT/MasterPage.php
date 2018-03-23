@@ -130,6 +130,7 @@ class MasterPage
                         $submenu["submenu"] = $links;
                     } else {
                         $submenu["link"] = $links[0]["link"];
+                        $submenu["target"] = $links[0]["target"];
                     }
 
                     $menu["submenu"][] = $submenu;
@@ -143,7 +144,7 @@ class MasterPage
                 $menu = [];
                 $menu["label"] = $module->translate($module->name);
                 $menu["icon"] = $module->icon;
-
+                
                 if ($current_module->name == $module->name) {
                     $menu["active"] = true;
                 }
@@ -152,6 +153,7 @@ class MasterPage
                     $menu["submenu"] = $links;
                 } else {
                     $menu["link"] = $links[0]["link"];
+                    $menu["target"]=$links[0]["target"];
                 }
             }
 

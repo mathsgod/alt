@@ -47,14 +47,14 @@
         "robinherbots/jquery.inputmask": "3.*",
         "cache/apcu-adapter": "*",
         "bootstrap-select/bootstrap-select": "*",
-        "phpmailer/phpmailer": "*"
+        "phpmailer/phpmailer": "*",
+        "symfony/yaml":"*",
+        "monolog/monolog":"*"
     },
     "suggest": {
         "ckeditor/ckeditor": "JavaScript WYSIWYG web text editor.",
         "dompdf/dompdf": "DOMPDF is a CSS 2.1 compliant HTML to PDF converter",
         "eventviva/php-image-resize": "PHP class to re-size and scale images",
-        "phpmailer/phpmailer": "PHPMailer is a full-featured email creation and transfer class for PHP",
-        "monolog/monolog": "Sends your logs to files, sockets, inboxes, databases and various web services",
         "nnnick/chartjs": "Simple HTML5 charts using the canvas element.",
         "phpunit/phpunit": "The PHP Unit Testing framework.",
         "guzzlehttp/guzzle": "Guzzle is a PHP HTTP client library",
@@ -74,5 +74,5 @@
         }
     ],
     "minimum-stability": "stable",
-    "version": "4.7.9"
+    "version": "4.8.1"
 }
