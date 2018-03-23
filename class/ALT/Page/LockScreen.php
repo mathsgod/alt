@@ -25,18 +25,18 @@ class LockScreen extends \R\Page
 
     public function __invoke($request, $response)
     {
-        if ($request->getMethod()=="get") {
+        if ($request->getMethod() == "get") {
             $this->_twig["loader"] = new \Twig_Loader_Filesystem(\App\System::Root());
             $this->_twig["environment"] = new \Twig_Environment($this->_twig["loader"]);
             $this->_template = $this->_twig["environment"]->loadTemplate("AdminLTE/pages/lockscreen.html");
         }
-        
-        $response=parent::__invoke($request, $response);
+
+        $response = parent::__invoke($request, $response);
 
         if ($this->_template) {
-            $data=[];
-            $data=array_merge($response->getBody()->getContents(), $data);
-           
+            $data = [];
+            $data = array_merge($response->getBody()->getContents(), $data);
+
 
             $p = new \App\Plugin("components/jquery");
             $data["jquery"] = $p->jss();
@@ -53,13 +53,15 @@ class LockScreen extends \R\Page
                 }
             }
 
+            $p = \App::_()->pathInfo();
 
-            $data["css"][] = "composer/vendor/hostlink/r-alt/AdminLTE/dist/css/AdminLTE.min.css";
 
-            $data["script"][] = "composer/vendor/hostlink/r-alt/js/cookie.js";
-            $data["script"][] = "composer/vendor/hostlink/r-alt/js/jquery.form.min.js";
+            $data["css"][] = $p["system_base"] . "/AdminLTE/dist/css/AdminLTE.min.css";
 
-            $content=$this->_template->render($data);
+            $data["script"][] = $p["system_base"] . "/js/cookie.js";
+            $data["script"][] = $p["system_base"] . "/js/jquery.form.min.js";
+
+            $content = $this->_template->render($data);
 
             return $response
                 ->withHeader("Content-Type", "text/html; charset=UTF-8")->withBody(new Stream($content));

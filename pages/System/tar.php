@@ -2,6 +2,7 @@
 
 class System_tar extends ALT\Page
 {
+    /*
     public function generatePackageJson($composer)
     {
         //get packages.json
@@ -53,5 +54,5 @@ class System_tar extends ALT\Page
         ]);
         $mv->add("Version")->input("version")->required();
         $this->write($this->createForm($mv));
-    }
+    }*/
 }

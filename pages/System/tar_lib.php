@@ -3,7 +3,8 @@
 // Created Date: 24/2/2010
 // Last Updated: 2013-04-10
 class System_tar_lib extends ALT\Page {
-	public function post() {
+
+	/*public function post() {
 		chdir($_POST['library']);
 		$name = basename($_POST['library']);
 		$path = $_POST["path"] . "/$name.gz";
@@ -21,7 +22,7 @@ class System_tar_lib extends ALT\Page {
 		$mv->add("Library")->select("library")->options(glob("/home/vhosts/raymond2/public_html/cms/plugins/*"));
 		$mv->add("Path")->input("path")->val("/home/vhosts/raymond2/public_html/cms4_source/plugins");
 		$this->write($this->createForm($mv));
-	}
+	}*/
 }
 
 ?>
