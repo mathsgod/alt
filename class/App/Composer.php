@@ -107,6 +107,14 @@ class Composer
         return [];
     }
 
+    public function lockConfig()
+    {
+        if (file_exists($file = $this->path() . "/composer.lock")) {
+            return json_decode(file_get_contents($file), true);
+        }
+        return [];
+    }
+
     public function phar()
     {
         if (!file_exists($file = $this->path() . "/composer.phar")) {

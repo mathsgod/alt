@@ -13,9 +13,16 @@ class System extends \R\System
 
     public function version()
     {
+        if ($_SESSION["app"]["version"]) return $_SESSION["app"]["version"];
         $composer = new Composer();
-        $ret = $composer->config();
-        return $ret["require"]["hostlink/r-alt"];
+        $ret = $composer->lockConfig();
+        foreach ($ret["packages"] as $package) {
+            if ($package["name"] == "hostlink/r-alt") {
+                $_SESSION["app"]["version"] = $package["version"];
+                return $package["version"];
+            }
+        }
+        return;
     }
 
     public static function Config($name, $category)
