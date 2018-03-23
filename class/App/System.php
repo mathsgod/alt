@@ -13,8 +13,9 @@ class System extends \R\System
 
     public function version()
     {
-        $info = json_decode(file_get_contents($this->root . "/composer/composer.json"), true);
-        return $info["require"]["hostlink/r-alt"];
+        $composer = new Composer();
+        $ret = $composer->config();
+        return $ret["require"]["hostlink/r-alt"];
     }
 
     public static function Config($name, $category)
@@ -71,12 +72,12 @@ class System extends \R\System
         self::$request = $request;
         self::$base = $request->getUri()->getBasePath();
 
-        $b=self::$app->pathInfo();
-        
+        $b = self::$app->pathInfo();
+
         $router = new Router();
         $router->add("GET", "404_not_found", [
             "class" => "_404_not_found",
-            "file" => $b["system_root"]."/pages/404_not_found.php"
+            "file" => $b["system_root"] . "/pages/404_not_found.php"
         ]);
 
         ob_start();
@@ -100,7 +101,7 @@ class System extends \R\System
             }
         }
 
-        
+
         if ($page) {
             $response = new Response(200);
             try {
@@ -215,7 +216,7 @@ class System extends \R\System
 
 
         spl_autoload_register(function ($class) use ($root) {
-            
+
             $class_path = str_replace("\\", DIRECTORY_SEPARATOR, $class);
             $file = realpath($root . "/pages/$class_path/$class.class.php");
             if (is_readable($file)) {
