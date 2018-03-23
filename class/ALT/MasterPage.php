@@ -54,6 +54,11 @@ class MasterPage
         $data["logo-mini"] = \App\Config::_("logo-mini");
         $data["logo"]=\App\Config::_('logo');
         $data["base"] = \App\System::BasePath();
+
+        $firebase=\App::Config("firebase");
+        if($firebase["apiKey"]){
+            $data["firebase"]=true;
+        }
         
 
         $custom_header = \App::TPL("AdminLTE/custom-header.html");
