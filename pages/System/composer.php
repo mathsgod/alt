@@ -104,14 +104,20 @@ class System_composer extends ALT\Page
 
 
         //reset htaccess
-        unlink($composer->path() . "/.htaccess");
-
+        $this->reset_htaccess();
     }
 
-    public function removeVendor()
+    public function reset_htaccess()
     {
-        $folder = getcwd() . "/composer/vendor";
+        $composer = new App\Composer();
+        unlink($composer->path() . "/.htaccess");
+        $content = <<<EOL
+<Files ~ "\.(css|js|jpg|png|woff2|woff|ttf|html)$">
+Allow from all
+</Files>
+Deny from all
+EOL;
+        file_put_contents($composer->path() . "/.htaccess", $content);
 
-        `rm -rf $folder`;
     }
 }
