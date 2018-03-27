@@ -395,14 +395,14 @@
                         </template>
                     </template>
                     <template v-else>
-                        <input type="checkbox" v-if="r[column.field].type=='deletes'" />
-                        <button class="btn btn-xs btn-danger" v-else-if="r[column.field].type=='delete'" @click="deleteRow(r[column.field].uri)"><i class="fa fa-times"></i></button>
-                        <button class="btn btn-xs btn-default" v-else-if="r[column.field].type=='sub-row'" @click="toggleSubRow(index,r)">
+                        <input type="checkbox" v-if="column.cell(r).type=='deletes'"/>
+                        <button class="btn btn-xs btn-danger" v-else-if="column.cell(r).type=='delete'" @click="deleteRow(r[column.field].uri)"><i class="fa fa-times"></i></button>
+                        <button class="btn btn-xs btn-default" v-else-if="column.cell(r).type=='sub-row'" @click="toggleSubRow(index,r)">
                             <i v-if="subRow[index]" class="fa fa-minus"></i>
                             <i v-if="!subRow[index]" class="fa fa-plus"></i>
                         </button>
-                        <a v-else-if="r[column.field].type=='link'" :href="r[column.field].href" v-html="r[column.field].content"></a>
-                        <div v-else v-html="column.getDataValue(r)" style="white-space: pre">
+                        <a v-else-if="column.cell(r).type=='link'" :href="column.cell(r).href" v-html="column.cell(r).content"></a>
+                        <div v-else v-html="column.cell(r).content" style="white-space: pre">
                         </div>
                     </template>
                 </td>
@@ -645,6 +645,22 @@
 
         },
         methods: {
+            cell(r){
+                var cell={
+                    type:"text"
+                };
+
+
+                if(r[this.field]==null){
+                    return cell;
+                }
+                if(typeof r[this.field] == 'string'){
+                    cell.content=r[this.field];
+                    return cell;
+                }
+                return r[this.field];
+
+            },
             display() {
                 return this.isVisible && !this.hide;
             },
@@ -684,7 +700,11 @@
     Vue.component("rt-table", {
         template: `
 <table class="table table-hover table-condensed">
-   <thead is="rt-head" v-on:toggle-child="toggleChild" v-on:toggle-visible="toggleVisible" v-on:sort="sortByColumn" v-on:search="search" :hide-index="hideIndex"><slot></slot></thead>
+   <thead is="rt-head" 
+   v-on:toggle-child="toggleChild" 
+   v-on:toggle-visible="toggleVisible" 
+   v-on:sort="sortByColumn" 
+   v-on:search="search" :hide-index="hideIndex"><slot></slot></thead>
    <tbody ref="body" is="rt-body" :columns="columns" :data="data" v-on:update-data="updateData" v-on:data-deleted="refresh"></tbody>
 </table>
 `,
@@ -808,6 +828,7 @@
             },
             search(data) {
                 this.searchData = data;
+                this.page=1;
                 this.refresh();
             },
             sortByColumn: function (a) {
@@ -901,6 +922,20 @@
 
                     link.click();
                 });
+            },
+            reset(){
+                this.page=1;
+                this.page_size=25;
+
+                this.columns.forEach(o=>{
+                    o.dir=null;
+                });
+
+                this.searchData={};
+                
+                this.sort=null;
+                this.sort_dir=null;
+                this.refresh();
             },
             refresh: function () {
                 var storage = $.localStorage.get(this.dataUrl)||{};

@@ -17,7 +17,7 @@ class MasterPage
 
     public function __invoke($request, $response)
     {
-        $data=$this->data;
+        $data = $this->data;
      
         // get the data
         $data["lang"] = \My::Language();
@@ -52,14 +52,18 @@ class MasterPage
 
         $data["company"] = \App\Config::_("company");
         $data["logo-mini"] = \App\Config::_("logo-mini");
-        $data["logo"]=\App\Config::_('logo');
+        $data["logo"] = \App\Config::_('logo');
         $data["base"] = \App\System::BasePath();
 
-        $firebase=\App::Config("firebase");
-        if($firebase["apiKey"]){
-            $data["firebase"]=true;
+        $firebase = \App::Config("firebase");
+        if ($firebase["apiKey"]) {
+            $data["firebase"] = true;
         }
-        
+
+        if (\App::Config("link", "no-cache")) {
+            $data["t"] = time();
+        }
+
 
         $custom_header = \App::TPL("AdminLTE/custom-header.html");
         $data["custom_header"] = \App::TPL("AdminLTE/custom-header.html")->getOutputContent();
@@ -85,9 +89,9 @@ class MasterPage
             $group_icon = array_merge($group_icon, parse_ini_file($ini));
         }
 
-        $path=$request->getUri()->getPath();
-        if($path[0]=="/")$path=substr($path,1);
-        $current_module=$request->getAttribute("module");
+        $path = $request->getUri()->getPath();
+        if ($path[0] == "/") $path = substr($path, 1);
+        $current_module = $request->getAttribute("module");
         foreach ($ms as $modulegroup_name => $modules) {
             if (is_array($modules)) {
                 if (!sizeof($modules)) {
@@ -110,7 +114,7 @@ class MasterPage
 
                 $menu["label"] = \App::T($modulegroup_name);
                 $menu["link"] = "#";
-                $menu["icon"] = $group_icon[$modulegroup_name]?$group_icon[$modulegroup_name]:"fa fa-link";
+                $menu["icon"] = $group_icon[$modulegroup_name] ? $group_icon[$modulegroup_name] : "fa fa-link";
 
                 if ($current_module->group == $modulegroup_name) {
                     $menu["active"] = true;
@@ -149,7 +153,7 @@ class MasterPage
                 $menu = [];
                 $menu["label"] = $module->translate($module->name);
                 $menu["icon"] = $module->icon;
-                
+
                 if ($current_module->name == $module->name) {
                     $menu["active"] = true;
                 }
@@ -158,7 +162,7 @@ class MasterPage
                     $menu["submenu"] = $links;
                 } else {
                     $menu["link"] = $links[0]["link"];
-                    $menu["target"]=$links[0]["target"];
+                    $menu["target"] = $links[0]["target"];
                 }
             }
 
@@ -167,13 +171,13 @@ class MasterPage
         $data["sidebar_menu"] = $sidebar_menu;
 
         extract(\App::_()->pathInfo());
-        $system=$system_base;
+        $system = $system_base;
         $data["script"][] = "$system/js/cookie.js";
         $data["script"][] = "$system/js/jquery.storageapi.min.js";
 
 
-        if (file_exists(getcwd()."/system/{$version}/plugins/RT/locale/".$data["lang"].".js")) {
-            $data["script"][] = "system/{$version}/plugins/RT/locale/".$data["lang"].".js";
+        if (file_exists(getcwd() . "/system/{$version}/plugins/RT/locale/" . $data["lang"] . ".js")) {
+            $data["script"][] = "system/{$version}/plugins/RT/locale/" . $data["lang"] . ".js";
         }
 
         $data["script"][] = "$system/plugins/RT/rt.js";
@@ -205,11 +209,11 @@ class MasterPage
 
         $data["favs"] = [];
         // my fav
-        $ds=\App\UI::find(["user_id=" . \App::UserID(), "uri='fav'"]);
-        $ds=$ds->usort(function ($a, $b) {
-            if ($a->content()["sequence"]>$b->content()["sequence"]) {
+        $ds = \App\UI::find(["user_id=" . \App::UserID(), "uri='fav'"]);
+        $ds = $ds->usort(function ($a, $b) {
+            if ($a->content()["sequence"] > $b->content()["sequence"]) {
                 return 1;
-            } elseif ($a->content()["sequence"]<$b->content()["sequence"]) {
+            } elseif ($a->content()["sequence"] < $b->content()["sequence"]) {
                 return -1;
             }
             return 0;
@@ -219,7 +223,7 @@ class MasterPage
             $data["favs"][] = $content;
         }
 
-        $stream=new Stream($this->_template->render($data));
+        $stream = new Stream($this->_template->render($data));
 
 
         return $response->withBody($stream);
@@ -252,14 +256,13 @@ class MasterPage
         }
         // translate function
         $function = new \Twig_SimpleFunction('_', function ($a) use ($translate_res) {
-                $lang = \App::User()->language;
+            $lang = \App::User()->language;
             if ($text = $translate_res[$lang][$a]) {
                 return $text;
             }
 
-                return $a;
-        }
-            );
+            return $a;
+        });
         $this->_twig["environment"]->addFunction($function);
 
         $this->_template = $this->_twig["environment"]->loadTemplate(basename($template_file));

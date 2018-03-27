@@ -198,8 +198,7 @@ class Module extends Model
                     "label" => $this->translate($k),
                     "link" => $v,
                     "icon" => "fa fa-link",
-                    "active" => ($path == $v),
-                    "target" => $v["target"]
+                    "active" => ($path == $v)
                 ];
             }
         }

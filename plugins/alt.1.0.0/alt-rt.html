@@ -40,7 +40,7 @@
 
             <div class="pull-left btn-group">
                 <button @click="$refs.table.refresh()" class="btn btn-default btn-sm" type="button" title="重新載入" data-toggle="tooltip">
-                    <span class="icon glyphicon glyphicon-refresh"></span>
+                    <i class="fa fa-sync-alt"></i>
                 </button>
             </div>
 
@@ -48,10 +48,14 @@
                 <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
                     <span class="icon glyphicon glyphicon-th-list"></span>
                 </button>
-                <ul class="dropdown-menu">
-                    <li v-for="col in columns" v-if="col.title">
-                        <a href="#" class="small" data-value="option1" tabIndex="-1" @click.prevent="col.toggleVisiable()">
+                <ul class="dropdown-menu" ref="column_menu">
+                    <!-- li v-for="(col,key) in columns" v-if="col.title" :key="key">
+                        <a href="#" class="small" data-value="option1" tabIndex="-1" @click.prevent="col.toggleVisible()">
                             <input type="checkbox" v-model="col.isVisible" />&nbsp;{{col.title}}</a>
+                    </li -->
+                    <li v-for="(col,key) in columnSequence" v-if="getColumn(col).title" :key="key" :data-field="col">
+                        <a href="#" class="small" data-value="option1" tabIndex="-1" @click.prevent="getColumn(col).toggleVisible()">
+                            <input type="checkbox" v-model="getColumn(col).isVisible" />&nbsp;{{getColumn(col).title}}</a>
                     </li>
                 </ul>
             </div>
@@ -67,8 +71,12 @@
             </div>
 
             <div class="pull-left btn-group">
-                <button @click="toggleResponsive" class="btn btn-default btn-sm" type="button" title="Responsive" data-toggle="tooltip">
+                <button @click="toggleResponsive" :class="{active:tableResponsive}" class="btn btn-default btn-sm" type="button" title="Responsive" data-toggle="tooltip">
                     <i class="fa fa-tv"></i>
+                </button>
+
+                <button @click="resetLocaStorage" class="btn btn-default btn-sm" type="button" title="clear cache" data-toggle="tooltip">
+                    <i class="fa fa-times-circle"></i>
                 </button>
             </div>
 
@@ -86,6 +94,8 @@
                     </li>
                 </ul>
             </div>
+
+
 
             <div class="pull-left btn-group" v-if="$slots.buttons">
                 <slot name="buttons"></slot>
@@ -135,6 +145,23 @@
             });
             //window.addEventListener('resize', this.resize);
 
+            
+            this.columns.forEach(o=>{
+                this.columnSequence.push(o.field);
+            });
+
+            //console.log(this.columnSequence);
+            new Sortable(this.$refs.column_menu, {
+            /*    group: 'widget',
+                /*onAdd: this.onAdd,*/
+                onRemove: this.onRemoveColumnSequence,
+                /*onEnd: this.onEnd,
+                onStart: this.onStart,*/
+                onUpdate: this.onUpdateColumnSequence
+            });
+
+            
+
         },
         computed: {
 
@@ -151,7 +178,8 @@
                 total: 0,
                 page_size: this.pageSize,
                 page_count: 0,
-                page: this.pageNumber
+                page: this.pageNumber,
+                columnSequence:[]
             };
 
             if(typeof storage.responsive !== "undefined"){
@@ -165,6 +193,24 @@
             return data;
         },
         methods: {
+            onRemoveColumnSequence: function (evt) {
+                this.columnSequence.splice(evt.oldIndex, 1);
+            },
+            onUpdateColumnSequence(evt){
+                var field=evt.item.dataset.field;
+                this.columnSequence.splice(evt.oldIndex,1);
+                this.columnSequence.splice(evt.nexIndex,0,field);
+
+            },
+            getColumn(field){
+                return this.columns.find(c=>{
+                    return c.field==field;
+                });
+            },
+            resetLocaStorage(){
+                $.localStorage.remove(this.source);
+                this.$refs.table.reset();
+            },
             showExport() {
                 return this.exportXlsx || this.exportCsv;
             },

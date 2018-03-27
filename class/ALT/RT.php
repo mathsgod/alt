@@ -576,6 +576,7 @@ class RT implements \JsonSerializable
         $c = new RTColumn();
         $c->align("center");
         $c->index("[dels]");
+        $c->width(28);
         $column->descriptor[] = function ($obj) {
             if ($obj->canDelete()) {
                 return "del";
