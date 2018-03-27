@@ -4,8 +4,14 @@
             <div style="position: relative; clear: both;">
 
                 <div :style="tableContainerStyle">
-                    <rt-table class="rt table-bordered" :responsive="tableResponsive" :sort-field="sortField" :sort-dir="sortDir" :cell-url="cellUrl"
-                        :page-number="page" :page-size="page_size" v-on:resized="resized" :data-url="source" ref="table" v-on:refreshed="refreshed"
+                    <rt-table class="rt table-bordered" 
+                        :responsive="tableResponsive" 
+                        :sort-field="sortField" 
+                        :sort-dir="sortDir" 
+                        :cell-url="cellUrl"
+                        :selectable="selectable"
+                        :page-number="page" 
+                        :page-size="page_size" v-on:resized="resized" :data-url="source" ref="table" v-on:refreshed="refreshed"
                         v-on:loading="$refs.box.showLoading()" v-on:loaded="$refs.box.hideLoading()">
                         <slot></slot>
                     </rt-table>
@@ -130,7 +136,7 @@
             }, pageNumber: {
                 type: Number,
                 default: 1
-            }
+            },selectable:Boolean
         }, created: function () {
 
         }, mounted: function () {

@@ -371,7 +371,7 @@
         template: `
     <tbody>
         <template v-for="(r,index) in data">
-            <tr :style="getStyle(r)">
+            <tr :style="getStyle(r)" @click="rowClicked(r)" :class="{active:r._selected}">
                 <td v-if="hasHideColumn">
                     <button class="btn btn-default btn-xs" @click="toggleRowChild(index)" @mouseenter="mouseEnter(index)" @mouseleave="mouseLeave(index)">
                         <i v-if="!showIndex[index]" class="fa fa-chevron-up"></i>
@@ -454,6 +454,11 @@
             }
         },
         methods: {
+            rowClicked(data) {
+                if (!this.$parent.selectable) return;
+                data._selected = !data._selected;
+                this.$forceUpdate();
+            },
             getCellStyle(col, index, data) {
                 var style = {};
                 if (col.align) {
@@ -645,17 +650,17 @@
 
         },
         methods: {
-            cell(r){
-                var cell={
-                    type:"text"
+            cell(r) {
+                var cell = {
+                    type: "text"
                 };
 
 
-                if(r[this.field]==null){
+                if (r[this.field] == null) {
                     return cell;
                 }
-                if(typeof r[this.field] == 'string'){
-                    cell.content=r[this.field];
+                if (typeof r[this.field] == 'string') {
+                    cell.content = r[this.field];
                     return cell;
                 }
                 return r[this.field];
@@ -726,7 +731,7 @@
             pageNumber: {
                 type: Number,
                 default: 1
-            }
+            }, selectable: Boolean
         },
         watch: {
             page: function () {
@@ -739,7 +744,7 @@
         data: function () {
             var storage = $.localStorage.get(this.dataUrl);
 
-            var data= {
+            var data = {
                 draw: 0,
                 page: 1,
                 data: [],
@@ -752,16 +757,16 @@
                 hideIndex: -1
             };
 
-            if(storage){
-                if(storage.page){
-                    data.page=storage.page;
+            if (storage) {
+                if (storage.page) {
+                    data.page = storage.page;
                 }
-    
-                if(storage.order.column){
-                    data.sort=storage.order.column;
+
+                if (storage.order.column) {
+                    data.sort = storage.order.column;
                 }
-                if(storage.order.dir){
-                    data.sort_dir=storage.order.dir;
+                if (storage.order.dir) {
+                    data.sort_dir = storage.order.dir;
                 }
             }
 
@@ -784,11 +789,11 @@
 
             this.refresh();
 
-            this.columns.forEach(o=>{
-                if(o.field==this.sort){
-                    o.dir=this.sort_dir;
-                }else{
-                    o.dir=null;
+            this.columns.forEach(o => {
+                if (o.field == this.sort) {
+                    o.dir = this.sort_dir;
+                } else {
+                    o.dir = null;
                 }
             });
 
@@ -828,7 +833,7 @@
             },
             search(data) {
                 this.searchData = data;
-                this.page=1;
+                this.page = 1;
                 this.refresh();
             },
             sortByColumn: function (a) {
@@ -923,24 +928,24 @@
                     link.click();
                 });
             },
-            reset(){
-                this.page=1;
-                this.page_size=25;
+            reset() {
+                this.page = 1;
+                this.page_size = 25;
 
-                this.columns.forEach(o=>{
-                    o.dir=null;
+                this.columns.forEach(o => {
+                    o.dir = null;
                 });
 
-                this.searchData={};
-                
-                this.sort=null;
-                this.sort_dir=null;
+                this.searchData = {};
+
+                this.sort = null;
+                this.sort_dir = null;
                 this.refresh();
             },
             refresh: function () {
-                var storage = $.localStorage.get(this.dataUrl)||{};
-                storage.page=this.page;
-                storage.order= {
+                var storage = $.localStorage.get(this.dataUrl) || {};
+                storage.page = this.page;
+                storage.order = {
                     column: this.sort,
                     dir: this.sort_dir
                 };
