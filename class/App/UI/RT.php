@@ -8,7 +8,9 @@ class RT extends \ALT\RT
     public function __construct($objects, $module, $request)
     {
         $this->_module = $module;
-        if (is_string($module)) $this->_module = \App\Module::_($module);
+        if (is_string($module)) {
+            $this->_module = \App\Module::_($module);
+        }
         $this->bind($objects);
         parent::__construct($request);
     }

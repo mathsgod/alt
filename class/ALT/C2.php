@@ -1,6 +1,7 @@
 <?php
 
 namespace ALT;
+use Exception;
 
 class C2 extends \P\HTMLElement
 {
@@ -60,19 +61,20 @@ class C2 extends \P\HTMLElement
 		return $p;
 	}
 
-	public function ace($field,$mode){
+	public function ace($field, $mode)
+	{
 		$p = p();
 
 		foreach ($this->cell as $cell) {
-			$e=p("textarea");
-			$e->css("height","400px");
-			
-			$e->attr("ace",true);
+			$e = p("textarea");
+			$e->css("height", "400px");
+
+			$e->attr("ace", true);
 			$e->attr('data-field', $field);
 			$e->attr('name', $field);
 
-			if($mode){
-				$e->attr("ace-mode",$mode);
+			if ($mode) {
+				$e->attr("ace-mode", $mode);
 			}
 
 			if ($object = p($cell)->data("object")) {
@@ -87,7 +89,7 @@ class C2 extends \P\HTMLElement
 			$cell->append($e);
 		}
 
-		
+
 		if ($this->createTemplate) {
 			$textarea = p("textarea");
 			$textarea->attr("name", $field);
@@ -199,22 +201,25 @@ class C2 extends \P\HTMLElement
 	{
 		$p = new \P\InputCollection;
 		foreach ($this->cell as $cell) {
-			$input = p("bs-input")->appendTo($cell);
-			$input->attr("name", $field);
-			$input->attr("data-field", $field);
-
-			if ($object = p($cell)->data("object")) {
-				$input->data("object", $object);
-				$input->attr("value", is_object($object) ? $object->$field : $object[$field]);
-
-				if ($this->callback) {
-					call_user_func($this->callback, $object, $input[0]);
+			try{
+				$input = p("bs-input");
+				$input->attr("name", $field);
+				$input->attr("data-field", $field);
+	
+				if ($object = p($cell)->data("object")) {
+					$input->data("object", $object);
+					$input->attr("value", is_object($object) ? $object->$field : $object[$field]);
+	
+					if ($this->callback) {
+						call_user_func($this->callback, $object, $input[0]);
+					}
 				}
+	
+				$p[] = $input[0];
+				$input->appendTo($cell);
+			}catch(Exception $e){
+				$cell->append("<p class='form-control-static'>".$e->getMessage()."</p>");
 			}
-
-
-			$p[] = $input[0];
-
 		}
 
 		if ($this->createTemplate) {
@@ -237,22 +242,26 @@ class C2 extends \P\HTMLElement
 		$p = p();
 
 		foreach ($this->cell as $cell) {
-			$textarea = p("textarea")->appendTo($cell);
-			$textarea->attr('data-field', $field);
-			$textarea->attr('name', $field);
-			$textarea->addClass('form-control');
+			try{
+				$textarea = p("textarea");
+				$textarea->attr('data-field', $field);
+				$textarea->attr('name', $field);
+				$textarea->addClass('form-control');
+	
+				if ($object = p($cell)->data("object")) {
+					$textarea->data("object", $object);
 
-			if ($object = p($cell)->data("object")) {
-				$textarea->data("object", $object);
-				$textarea->text(is_object($object) ? $object->$field : $object[$field]);
-
-				if ($this->callback) {
-					call_user_func($this->callback, $object, $textarea[0]);
+					$textarea->text(is_object($object) ? $object->$field : $object[$field]);
+	
+					if ($this->callback) {
+						call_user_func($this->callback, $object, $textarea[0]);
+					}
 				}
+				$p[] = $textarea[0];
+				$textarea->appendTo($cell);
+			}catch(Exception $e){
+				$cell->append("<p class='form-control-static'>".$e->getMessage()."</p>");
 			}
-
-			$p[] = $textarea[0];
-
 		}
 
 
@@ -456,7 +465,7 @@ class C2 extends \P\HTMLElement
 			$cell->append($is);
 
 			if ($object = p($cell)->data("object")) {
-				$is->setAttribute("value",is_object($object) ? $object->$field : $object[$field]);
+				$is->setAttribute("value", is_object($object) ? $object->$field : $object[$field]);
 
 				if ($this->callback) {
 					call_user_func($this->callback, $object, $is);

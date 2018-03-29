@@ -37,7 +37,7 @@ class RTColumn
     public $max_width = null;
     public $min_width = null;
 
-    public $wrap = true;
+    public $wrap = false;
     public $cell = [];
     public $rt;
     public $overflow;
@@ -713,8 +713,6 @@ class RT implements \JsonSerializable
                     $d["content"] = (string)$result;
                 }
 
-
-
                 if (isset($c->cell["css"])) {
                     if ($css = call_user_func($c->cell["css"], $obj)) {
                         $d['css'] = $css;
@@ -737,7 +735,7 @@ class RT implements \JsonSerializable
                     $r[$c->index] = $d["content"];
                 }
 
-                if ($c->index == "[del]") {
+                if ($c->index === "[del]") {
                     if ($obj->canDelete()) {
                         $r[$c->index] = [];
                         $r[$c->index]["type"] = "delete";
@@ -745,7 +743,7 @@ class RT implements \JsonSerializable
                     } else {
                         $r[$c->index] = "";
                     }
-                } elseif ($c->index == "[dels]") {
+                } elseif ($c->index === "[dels]") {
                     if ($obj->canDelete()) {
                         $r[$c->index] = [];
                         $r[$c->index]["type"] = "deletes";
@@ -874,12 +872,17 @@ class RT implements \JsonSerializable
                 $attr["align"] = $col->align;
             }
 
-            if ($col->index == "[dels]") {
+            if ($col->index === "[dels]") {
                 $attr["type"] = "deletes";
             }
 
             if ($col->index == $this->_attribute["sort-field"]) {
                 $attr["sort-dir"] = $this->_attribute["sort-dir"];
+            }
+
+
+            if($col->wrap){
+                $attr["wrap"]=true;
             }
 
 

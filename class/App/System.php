@@ -57,6 +57,9 @@ class System extends \R\System
 
         $server = self::$request->getServerParams();
         $document_root = $server["DOCUMENT_ROOT"];
+        if(substr($document_root,-1)=="/"){
+            $document_root=substr($document_root,0,-1);
+        }
 
         $composer_base = substr($composer_root, strlen($document_root));
         $composer_base = str_replace(DIRECTORY_SEPARATOR, "/", $composer_base);

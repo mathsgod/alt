@@ -72,7 +72,7 @@ class Page extends \App\Page
                         return;
                     }
                     if ($obj->canUpdate() && $this->module()->show_update) {
-                        $this->navbar()->addButton("", $obj->uri("ae"))->icon("fa fa-pencil")->addClass("btn-warning");
+                        $this->navbar()->addButton("", $obj->uri("ae"))->icon("fa fa-pencil-alt")->addClass("btn-warning");
                     }
                     if ($obj->canDelete() && $this->module()->show_delete) {
                         $this->navbar()->addButton("", $obj->uri("del") . "?redirect=" . $this->module()->name)->addClass("btn-danger confirm")->

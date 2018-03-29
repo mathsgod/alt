@@ -45,7 +45,7 @@ class Tab extends \P\Query
     public function pinable()
     {
         $li = p("li")->addClass("pull-right");
-        $a = p("a")->attr("href", "#")->html('<i class="fa fa-thumb-tack"></i>')->attr('data-widget', "pin")->appendTo($li);
+        $a = p("a")->attr("href", "#")->html('<i class="fa fa-thumbtack"></i>')->attr('data-widget', "pin")->appendTo($li);
         $this->navs->append($li);
     }
 

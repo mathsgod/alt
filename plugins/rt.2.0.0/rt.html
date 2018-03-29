@@ -96,6 +96,12 @@
     }
 </style>
 
+<script>
+var importDoc = document.currentScript.ownerDocument;
+var style = importDoc.querySelector('style');
+document.head.appendChild(style);
+</script>
+
 <template id="rt-info">
     <div>{{from}} - {{to}} of {{total}}</div>
 </template>
@@ -402,7 +408,7 @@
                             <i v-if="!subRow[index]" class="fa fa-plus"></i>
                         </button>
                         <a v-else-if="column.cell(r).type=='link'" :href="column.cell(r).href" v-html="column.cell(r).content"></a>
-                        <div v-else v-html="column.cell(r).content" style="white-space: pre">
+                        <div v-else v-html="column.cell(r).content" :style="column.cell(r).style">
                         </div>
                     </template>
                 </td>
@@ -608,7 +614,8 @@
             resizable: Boolean,
             fixed: Boolean,
             hidden: Boolean,
-            align: String
+            align: String,
+            wrap: Boolean
         }, data: function () {
             return {
                 isVisible: !this.hidden,
@@ -651,19 +658,30 @@
         },
         methods: {
             cell(r) {
-                var cell = {
-                    type: "text"
-                };
 
+                var cell = {
+                    type: "text",
+                };
 
                 if (r[this.field] == null) {
                     return cell;
                 }
+
                 if (typeof r[this.field] == 'string') {
                     cell.content = r[this.field];
-                    return cell;
+                }else{
+                    for(var i in r[this.field]){
+                        cell[i]=r[this.field][i];
+                    }
                 }
-                return r[this.field];
+
+                if(this.wrap){
+                    Vue.set(cell,"style",{
+                        "word-wrap":"break-word",
+                        "white-space":"pre-wrap"
+                    })
+                }
+                return cell;
 
             },
             display() {

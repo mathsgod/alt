@@ -18,5 +18,3 @@ class SystemBackup_index extends ALT\Page {
         $this->write($mtb);
     }
 }
-
-?>

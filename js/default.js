@@ -20,30 +20,65 @@ var vue_init = function () {
 vue_init();
 
 (function ($) {
+    //-- form validation --
+    $.validator.setDefaults({
+        ignore: [],
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error');
+
+            //check tab
+            var tab = $(element).closest(".nav-tabs-custom");
+            if (tab) {
+                var pane = $(element).closest(".tab-pane");
+
+                tab.find("> .tab-content > .tab-pane").removeClass("active");
+                pane.addClass("active");
+                var tab_id = pane.attr("id");
+                tab.find("> ul li").removeClass('active');
+                tab.find("> ul li a[href='#" + tab_id + "']").parent().addClass("active");
+            }
+
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+        },
+        errorElement: 'span',
+        errorClass: 'help-block',
+        errorPlacement: function (error, element) {
+
+            if (element.parent('.input-group').length) {
+                error.insertAfter(element.parent());
+            } else {
+                error.insertAfter(element);
+            }
+        }
+    });
+
+
     var f = function () {
 
-        $("textarea[ace]").each(function(){
-            var $that=$(this);
+        $("textarea[ace]").each(function () {
+            var $that = $(this);
             this.removeAttribute("ace");
 
             $(this).addClass("hide");
-            var $div=$("<div style='height:400px'></div>");
+            var $div = $("<div style='height:400px'></div>");
             $div.insertAfter(this);
 
             var editor = ace.edit($div[0]);
-            var mode=$(this).attr("ace-mode");
-            if(mode){
-                editor.session.setMode("ace/mode/"+mode);
+            var mode = $(this).attr("ace-mode");
+            if (mode) {
+                editor.session.setMode("ace/mode/" + mode);
             }
 
             editor.getSession().setValue($(this).val());
 
-            editor.getSession().on('change',function(){
+            editor.getSession().on('change', function () {
                 console.log(editor.getSession().getValue());
                 $that.val(editor.getSession().getValue());
             });
-            
-            
+
+
         });
 
         $('[data-toggle="popover"]').popover();
@@ -253,40 +288,6 @@ vue_init();
         });
 
 
-        //-- form validation --
-        $.validator.setDefaults({
-            ignore: [],
-            highlight: function (element) {
-                $(element).closest('.form-group').addClass('has-error');
-
-                //check tab
-                var tab = $(element).closest(".nav-tabs-custom");
-                if (tab) {
-                    var pane = $(element).closest(".tab-pane");
-
-                    tab.find("> .tab-content > .tab-pane").removeClass("active");
-                    pane.addClass("active");
-                    var tab_id = pane.attr("id");
-                    tab.find("> ul li").removeClass('active');
-                    tab.find("> ul li a[href='#" + tab_id + "']").parent().addClass("active");
-                }
-
-            },
-            unhighlight: function (element) {
-                $(element).closest('.form-group').removeClass('has-error');
-            },
-            errorElement: 'span',
-            errorClass: 'help-block',
-            errorPlacement: function (error, element) {
-
-                if (element.parent('.input-group').length) {
-                    error.insertAfter(element.parent());
-                } else {
-                    error.insertAfter(element);
-                }
-            }
-        });
-
         $("form").each(function (j, v) {
             $(v).validate();
 
@@ -317,7 +318,7 @@ vue_init();
     });
 
     f();
-})(jQuery)
+})(jQuery);
 
 function closeRoxyDialog() {
     $.fancybox.close();
