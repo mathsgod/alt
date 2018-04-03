@@ -1,3 +1,7 @@
+## 4.11.0
+view as function, sugguested by eric
+administrator can use view as mode to view from another user
+
 ## 4.10.1
 fix document root path
 

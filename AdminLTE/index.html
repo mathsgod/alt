@@ -181,7 +181,15 @@
                             <div class="pull-left">
                                 <a href="User/profile" class="btn btn-default btn-flat">{{_('Profile')}}</a>
                                 <a href="User/setting?layout=top-nav" class="btn btn-default btn-flat">Top-nav</a>
+
+                                {% if allow_viewas %}
+                                <a href="System/viewas" class="btn btn-default btn-flat">View as</a>
+                                {% endif %}
+                                {% if allow_cancel_viewas %}
+                                <a href="cancel_viewas" class="btn btn-default btn-flat">Cancel view as</a>
+                                {% endif %}
                             </div>
+
                             <div class="pull-right">
                                 <a href="System/logout" class="btn btn-default btn-flat">{{_('Sign out')}}</a>
                             </div>

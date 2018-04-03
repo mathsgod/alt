@@ -67,7 +67,7 @@
 		};
 
 		this.showLoading=function(){
-			$this.append($('<div class="overlay"><i class="fa fa-refresh fa-spin"></i></div>'));
+			$this.append($('<div class="overlay"><i class="fa fa-sync-alt fa-spin"></i></div>'));
 		};
 
 		this.hideLoading=function(){
@@ -89,7 +89,7 @@
 			this.reload();
 
 			var $btn=this.header().tools().addButton();
-			$btn.append('<i class="fa fa-refresh"></i>');
+			$btn.append('<i class="fa fa-sync-alt"></i>');
 			$btn.on('click',this.reload.bind(this));
 		}
 

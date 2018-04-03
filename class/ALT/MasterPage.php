@@ -55,6 +55,14 @@ class MasterPage
         $data["logo"] = \App\Config::_('logo');
         $data["base"] = \App\System::BasePath();
 
+        if(\App::User()->isAdmin()){
+            $data["allow_viewas"]=true;
+        }
+
+        if($_SESSION["app"]["org_user"]){
+            $data["allow_cancel_viewas"]=true;
+        }
+
         $firebase = \App::Config("firebase");
         if ($firebase["apiKey"]) {
             $data["firebase"] = true;
