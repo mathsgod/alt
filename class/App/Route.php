@@ -84,12 +84,16 @@ class Route extends \R\Route
         $base = $request->getURI()->getBasePath();
 
 
+        $page=\App::Config("system","pages");
+        if(!$page){
+            $page="pages";
+        }
 
         while (count($qs)) {
             $path = implode("/", $qs);
 
 
-            if (file_exists($file =  $root . $base . "pages/" . $path . "/index.php")) {
+            if (file_exists($file =  $root . $base . $page."/" . $path . "/index.php")) {
                 $this->file = $file;
                 $this->path = implode("/", $qs)."/index";
                 $this->class = implode("_", $qs) . "_index";
@@ -99,7 +103,7 @@ class Route extends \R\Route
             }
 
 
-            if (file_exists($file = $root . "/" . $base . "/pages/" . $path . ".php")) {
+            if (file_exists($file = $root . $base . $page."/" . $path . ".php")) {
                 $this->file = $file;
                 $this->path = $path;
                 $this->class = implode("_", $qs);

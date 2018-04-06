@@ -41,8 +41,15 @@ class Module extends Model
             return self::$_modules;
         }
 
-        foreach (glob(CMS_ROOT . "/pages/*", GLOB_ONLYDIR) as $m) {
+
+        $page = \App::Config("system", "pages");
+        if (!$page) {
+            $page = "pages";
+        }
+
+        foreach (glob(CMS_ROOT . DIRECTORY_SEPARATOR . $page . DIRECTORY_SEPARATOR . "*", GLOB_ONLYDIR) as $m) {
             $b = basename($m);
+
             if (is_readable($m . "/" . $b . ".class.php")) {
                 self::$_modules[$b] = Module::_($b);
                 continue;
@@ -103,6 +110,11 @@ class Module extends Model
         $m->class = $name;
         $m->name = $name;
 
+        $page = \App::Config("system", "pages");
+        if (!$page) {
+            $page = "pages";
+        }
+
         // read system ini
         if (file_exists($path = SYSTEM . "/pages/$name/setting.ini")) {
             foreach (parse_ini_file($path, true) as $k => $v) {
@@ -110,7 +122,7 @@ class Module extends Model
             }
         }
         // read use ini
-        if (file_exists($path = CMS_ROOT . "/pages/$name/setting.ini")) {
+        if (file_exists($path = CMS_ROOT . "/$page/$name/setting.ini")) {
             foreach (parse_ini_file($path, true) as $k => $v) {
                 $m->$k = $v;
             }
@@ -122,7 +134,7 @@ class Module extends Model
                 $m->$k = $v;
             }
         }
-        if (file_exists($path = CMS_ROOT . "/pages/$name/setting.yml")) {
+        if (file_exists($path = CMS_ROOT . "/$page/$name/setting.yml")) {
             $config = Yaml::parseFile($path);
             foreach ($config as $k => $v) {
                 $m->$k = $v;
@@ -147,6 +159,12 @@ class Module extends Model
 
     public function getAction()
     {
+
+        $page = \App::Config("system", "pages");
+        if (!$page) {
+            $page = "pages";
+        }
+
         $name = $this->name;
         if (file_exists(CMS_ROOT . "/" . SYSTEM . "/pages/" . $name)) {
             foreach (glob(CMS_ROOT . "/" . SYSTEM . "/pages/" . $name . "/*.php") as $p) {
@@ -154,8 +172,8 @@ class Module extends Model
                 $action[] = $pi;
             }
         }
-        if (file_exists(CMS_ROOT . "/pages/" . $name)) {
-            foreach (glob(CMS_ROOT . "/pages/" . $name . "/*.php") as $p) {
+        if (file_exists(CMS_ROOT . "/$page/" . $name)) {
+            foreach (glob(CMS_ROOT . "/$page/" . $name . "/*.php") as $p) {
                 $pi = pathinfo($p);
                 $action[] = $pi;
             }

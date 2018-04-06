@@ -403,6 +403,13 @@ class Page extends \R\Page
             $obj->$name = $value;
         } else {
             $obj->bind($data);
+
+            if($files=$this->request->getUploadedFiles()){
+                foreach($files as $name=>$file){
+                    $obj->$name=(string)$file->getStream();
+                }
+
+            }
         }
 
         $obj->save();
