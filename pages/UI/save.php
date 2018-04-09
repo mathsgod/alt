@@ -1,10 +1,30 @@
 <?php
+
 /**
  * Created By: Raymond Chong
  */
 use App\UI;
-class UI_save extends App\Page {
-    public function saveBox() {
+
+class UI_save extends App\Page
+{
+    public function saveBox()
+    {
+
+        $w = [];
+        $w[] = ["uri=?", $_POST["uri"]];
+        $w[] = ["user_id=?", App::UserID()];
+        if (!$ui = UI::first($w)) {
+            $ui = new UI();
+            $ui->user_id = App::UserID();
+            $ui->uri = $_POST["uri"];
+        }
+
+        $ui->layout = json_encode($_POST["layout"]);
+        $ui->save();
+    }
+
+    public function saveGrid()
+    {
         $uri = App::DB()->quote($_POST["uri"]);
 
         $w[] = "user_id=" . App::UserID();
@@ -19,58 +39,46 @@ class UI_save extends App\Page {
         $ui->save();
     }
 
-    public function saveGrid() {
-        $uri = App::DB()->quote($_POST["uri"]);
-
-        $w[] = "user_id=" . App::UserID();
-        $w[] = "uri={$uri}";
-        if (!$ui = UI::first($w)) {
-            $ui = new UI();
-            $ui->user_id = App::UserID();
-            $ui->uri = $_POST["uri"];
-        }
-
-        $ui->layout = $_POST["layout"];
-        $ui->save();
-    }
-
-    public function get() {
+    public function get()
+    {
         $this->write("UI");
     }
 
-    public function saveFav() {
+    public function saveFav()
+    {
         $uri = App::DB()->quote($_POST["uri"]);
         $w[] = "user_id=" . App::UserID();
         $w[] = "uri={$uri}";
-            $ui = new UI();
-            $ui->user_id = App::UserID();
-            $ui->uri = $_POST["uri"];
+        $ui = new UI();
+        $ui->user_id = App::UserID();
+        $ui->uri = $_POST["uri"];
 
-	   	$ui->layout = json_encode($_POST["layout"]);
-    	$ui->save();
+        $ui->layout = json_encode($_POST["layout"]);
+        $ui->save();
     }
 
-    public function post() {
-        if ($_POST["uri"] == "")die();
+    public function post()
+    {
+        if ($_POST["uri"] == "") die();
 
         if ($_POST["type"] == "grid") {
             $this->saveGrid();
             return;
         } elseif ($_POST["type"] == "box") {
-            $this->saveGrid();
+            $this->saveBox();
             return;
         } elseif ($_POST["type"] == "fav") {
             $this->saveFav();
             return;
         }
 
-        if($_POST["RT2"]){
+        if ($_POST["RT2"]) {
             $ui = UI::_($_POST["uri"]);
-            $layout=$ui->layout();
-            $layout["RT2"]["visible"][$_POST["name"]]=$_POST["visible"];
-            $ui->layout= json_encode($layout);
+            $layout = $ui->layout();
+            $layout["RT2"]["visible"][$_POST["name"]] = $_POST["visible"];
+            $ui->layout = json_encode($layout);
             $ui->save();
-            return ["code"=>200];
+            return ["code" => 200];
         }
 
         $uri = App::DB()->quote($_POST["uri"]);
@@ -79,11 +87,11 @@ class UI_save extends App\Page {
             $layout = $ui->layout();
             $layout["visible"] = array();
             $layout["visible"][$column["name"]] = ($column["visible"] == "true");
-            
+
             $ui->layout = json_encode($layout);
             $ui->save();
 
-            return ;
+            return;
         }
 
         if ($_POST["dataTable"]) {
@@ -114,7 +122,7 @@ class UI_save extends App\Page {
                 $o->save();
             }
 
-            return ;
+            return;
         }
 
         $w[] = "user_id=" . App::UserID();
@@ -127,7 +135,7 @@ class UI_save extends App\Page {
         }
         // clear
         $layout = $o->Layout();
-        foreach(json_decode($_POST["data"], true) as $sequence => $value) {
+        foreach (json_decode($_POST["data"], true) as $sequence => $value) {
             $name = $value["index"];
             $layout[$name]["show"] = (bool)$value["checked"];
             $layout[$name]["sequence"] = $sequence;
@@ -137,8 +145,9 @@ class UI_save extends App\Page {
         $o->Save();
     }
 
-    public function reset($uri) {
-        if (!$uri)die();
+    public function reset($uri)
+    {
+        if (!$uri) die();
         $uri = App::db()->quote($uri);
         App::User()->_delete("UI", "uri=$uri");
         return;

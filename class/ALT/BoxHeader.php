@@ -1,15 +1,14 @@
 <?php
 
 namespace ALT;
-class BoxHeader extends \P\HTMLDivElement {
+class BoxHeader extends \P\Element {
 	private $route = null;
 	private $_title = null;
 
 	private $tools = null;
 
 	public function __construct($route) {
-		parent::__construct();
-		$this->classList->add("box-header");
+		parent::__construct("alt-box-header");
 		$this->classList->add("with-border");
 		$this->route = $route;
 	}
@@ -20,11 +19,14 @@ class BoxHeader extends \P\HTMLDivElement {
 	}
 
 	public function setTitle($title) {
-		if (!$this->_title) {
-			$this->_title = p("h3")->addClass('box-title');
-			$this->_title->appendTo($this);
+		if($title){
+			$this->attributes["title"]=$title;
 		}
-		$this->_title->text($title);
+		return $this;
+	}
+
+	public function icon($icon){
+		$this->attributes["icon"]=$icon;
 		return $this;
 	}
 

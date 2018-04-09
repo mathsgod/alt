@@ -7,8 +7,7 @@ class BoxBody extends \P\Query
 
     public function __construct($page)
     {
-        parent::__construct("div");
-        $this->addClass("box-body");
+        parent::__construct("alt-box-body");
         $this->_page = $page;
     }
 

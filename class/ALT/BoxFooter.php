@@ -3,8 +3,7 @@ namespace ALT;
 class BoxFooter extends \P\Query {
     private $_route = null;
     public function __construct($route) {
-        parent::__construct("div");
-        $this->addClass("box-footer");
+        parent::__construct("alt-box-footer");
         $this->_route = $route;
     }
 

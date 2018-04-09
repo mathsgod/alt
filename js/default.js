@@ -1,4 +1,10 @@
 var vue_init = function () {
+    document.querySelectorAll('alt-box').forEach(o => {
+        new Vue({
+            el: o
+        });
+    });
+
     document.querySelectorAll('alt-rt').forEach(o => {
         new Vue({
             el: o
@@ -10,14 +16,24 @@ var vue_init = function () {
         });
     });
 
+    document.querySelectorAll('alt-timeline').forEach(o => {
+        new Vue({
+            el: o
+        });
+    });
+
+
 };
 (function ($) {
     $(document).ajaxComplete(function () {
         setTimeout(vue_init, 0);
     });
-
 })(jQuery);
-vue_init();
+
+document.addEventListener("DOMContentLoaded", function(event) {
+    vue_init();
+});
+
 
 (function ($) {
     //-- form validation --
@@ -488,11 +504,12 @@ function __add_favorite() {
 }
 
 $(function () {
+
     $(".connectedSortable").css("min-height", "0px");
 
     $("[data-widget='pin']").on("click", function (e) {
         e.preventDefault();
-        $(this).find("i").toggleClass("fa-thumb-tack").toggleClass("fa-arrows");
+        $(this).find("i").toggleClass("fa-thumbtack").toggleClass("fa-arrows-alt");
 
         var element = $(this).closest('.ui-sortable');
 
@@ -507,7 +524,7 @@ $(function () {
         //check pin status
         var move = false;
         $("[data-widget='pin']").each(function () {
-            if ($(this).find("i").hasClass("fa-arrows")) {
+            if ($(this).find("i").hasClass("fa-arrows-alt")) {
                 move = true;
             }
         });

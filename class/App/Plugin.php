@@ -30,7 +30,7 @@ class Plugin
         $path[] = [$composer_root . "/vendor/$name", "$composer_base/vendor/$name"];
         $path[] = [$composer_root . "/" . $name, "$composer_base/$name"];
 
-        $path[] = [$cms_root . "/plugins/{$name}", "plugins/$name"];
+        $path[] = [$cms_root . "/plugins/{$name}.*", "plugins","version"];
 
         $path[] = [$system_root . "/plugins/{$name}", $system_base . "/plugins/$name"];
         $path[] = [$system_root . "/plugins/{$name}.*", $system_base . "/plugins", "version"];

@@ -13,7 +13,7 @@ class BoxClassTokenList extends \P\DOMTokenList
     }
 }
 
-class Box extends \P\HTMLDivElement
+class Box extends \P\Element
 {
     private static $NUM = 0;
 
@@ -25,13 +25,13 @@ class Box extends \P\HTMLDivElement
     private $_footer = null;
 
     public $name = "";
-    public $check_acl = false;
+    public $checkACL = false;
 
-    public $pinable=true;
+    public $pinable = true;
 
     public function __construct($page)
     {
-        parent::__construct();
+        parent::__construct("alt-box");
         $this->classList = new BoxClassTokenList;
 
         $this->attributes["box-num"] = self::$NUM;
@@ -47,13 +47,14 @@ class Box extends \P\HTMLDivElement
             $ui = \App\UI::_($uri);
             if ($ui->layout) {
                 $layout = json_decode($ui->layout, true);
-                if ($layout["collapse"]) {
-                    $this->collapsible($layout["collapse"]);
+                if ($layout["collapsed"]) {
+                    $this->collapsible($layout["collapsed"]);
                 }
             }
         }
 
         self::$NUM++;
+
     }
 
     private $collapsible = false;
@@ -66,55 +67,49 @@ class Box extends \P\HTMLDivElement
 
     public function setACL($name)
     {
-        $this->check_acl = true;
-        $this->name = $name;
-        if (!\App::User()->isAdmin()) {
-            return;
-        }
-        $uri = $this->page->action . "/box[$name]";
-        $module = $this->page->module->name;
-        $bd = $this->header()->tools()->addButtonDropdown();
-        p($bd->button())->html("<i class='fa fa-lock'></i>");
-        foreach (\App\UserGroup::find() as $ug) {
-            $w = [];
-            $w[] = ["path=?", $uri];
-            $w[] = ["usergroup_id=?", $ug->usergroup_id];
-            $o = $bd->addItem($ug, "javascript:void(0)");
-            if ($ug->name == 'Administrators') {
-                $o->addClass("disabled");
-                $o->addClass("checked");
-            }
-            if (\App\ACL::Count($w)) {
-                $o->addClass("checked");
-            }
-            $o->find("a")->prepend("<i class='fa fa-check'></i>");
+        $this->checkACL = true;
+        $page = $this->page;
+        $path = $page->path() . "/box[" . $name . "]";
 
-            $o->find("a")->attr("onClick", "
-if($(this).parent().hasClass('checked')){
-	$.ajax('ACL/box?module=" . $module . "&usergroup_id=" . $ug->usergroup_id . "&path=" . urlencode($uri) .
-                "&remove=1" . "');	
-	$(this).parent().removeClass('checked');				
-}else{
-	$.ajax('ACL/box?module=" . $module . "&usergroup_id=" . $ug->usergroup_id . "&path=" . urlencode($uri) . "');
-	$(this).parent().addClass('checked');	
-}");
+        $this->attributes["data-acl-uri"] = $path;
+
+        if (\App::User()->isAdmin()) {
+            $header = $this->header();
+            $ugs = [];
+            foreach (\App\UserGroup::find() as $ug) {
+                if ($ug->name == 'Administrators') {
+                    $ugs[] = [
+                        "usergroup_id" => $ug->usergroup_id,
+                        "name" => $ug->name,
+                        "selected" => true,
+                        "disabled" => true
+                    ];
+                    continue;
+                }
+
+                $u = [];
+                $u["usergroup_id"] = $ug->usergroup_id;
+                $u["name"] = $ug->name;
+                $u["selected"] = false;
+
+                $w = [];
+                $w[] = ["path=?", $path];
+                $w[] = ["usergroup_id=?", $ug->usergroup_id];
+                $w[] = "value='allow'";
+
+                if (\App\ACL::Count($w)) {
+                    $u["selected"] = true;
+                }
+
+                $ugs[] = $u;
+            }
+            $header->attributes[":acl-group"] = $ugs;
         }
     }
 
     public function pinable()
     {
-        if (!$this->pinable) {
-            return $this;
-        }
-        $header = $this->header();
-        foreach (p($header)->find("button") as $btn) {
-            if ($btn->attributes["data-widget"] == "pin") {
-                return $this;
-            }
-        }
-        $btn = $header->tools()->addButton();
-        p($btn)->attr("data-widget", "pin")->append('<i class="fa fa-thumb-tack"></i>');
-
+        $this->header()->attributes["pinable"] = true;
         return $this;
     }
 
@@ -155,7 +150,7 @@ if($(this).parent().hasClass('checked')){
     public function canRead()
     {
 
-        if ($this->check_acl) {
+        if ($this->checkACL) {
             if (\App::User()->isAdmin()) {
                 return true;
             }
@@ -184,42 +179,16 @@ if($(this).parent().hasClass('checked')){
         if (!$this->canRead(\App::User())) {
             return "";
         }
+
         return parent::__toString();
     }
 
-    public function collapsible($collapsed = false)
+    public function collapsible($collapsed)
     {
-        if ($this->collapsible) {
-            if (func_num_args() == 0) {
-                return $this;
-            }
-            p($this->header()->tools())->find("button")->each(function ($i, $o) use ($collapsed) {
-                $p = p($o); if ($p->attr("data-widget") == "collapse") {
-                    if ($collapsed) {
-                        $p->find("i")->removeClass("fa-minus")->addClass("fa-plus");
-                    } else {
-                        $p->find("i")->removeClass("fa-plus")->addClass("fa-minus");
-                    }
-                }
-            }
-            );
+        $this->attributes["collapsible"] = true;
 
-            return $this;
-        }
-        $this->collapsible = true;
-        if ($collapsed) {
-            $this->classList->add("collapsed-box");
-        } else {
-            $this->classList->remove("collapsed-box");
-        }
-
-        $header = $this->header();
-        if ($collapsed) {
-            $btn = $header->tools()->addButton();
-            p($btn)->attr("data-widget", "collapse")->append('<i class="fa fa-plus"></i>');
-        } else {
-            $btn = $header->tools()->addButton();
-            p($btn)->attr("data-widget", "collapse")->append('<i class="fa fa-minus"></i>');
+        if (isset($collapsed)) {
+            $this->attributes["collapsed"] = $collapsed;
         }
 
         return $this;

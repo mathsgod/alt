@@ -1,26 +1,35 @@
 <?
 
-class ACL_box extends App\Page {
+class ACL_box extends App\Page
+{
 
-	public function get($usergroup_id, $path, $module, $remove) {
+	public function post()
+	{
 
-		if ($remove) {
+		$path = $_POST["path"];
+		$module = explode("/", $path)[0];
+		$usergroup_id = $_POST["usergroup_id"];
 
-
-			$w = [];
-			$w[] = ["path=?", $path];
-			$w[] = ["usergroup_id=?", $usergroup_id];
-			foreach (App\ACL::find($w) as $a) {
-				$a->delete();
-			}
-			return;
+		$w = [];
+		$w[] = ["module=?", $module];
+		$w[] = ["path=?", $path];
+		$w[] = ["usergroup_id=?", $usergroup_id];
+		foreach (App\ACL::find($w) as $a) {
+			$a->delete();
 		}
-		$acl = new App\ACL();
-		$acl->module = $module;
-		$acl->usergroup_id = $usergroup_id;
-		$acl->value = "allow";
-		$acl->path = $path;
-		$acl->save();
+
+		if ($_POST["selected"]) {
+			$acl = new App\ACL();
+			$acl->module = $module;
+			$acl->usergroup_id = $usergroup_id;
+			$acl->value = "allow";
+			$acl->path = $path;
+			$acl->save();
+		}
+	}
+
+	public function get()
+	{
 
 	}
 }
