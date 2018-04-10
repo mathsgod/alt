@@ -262,6 +262,19 @@ class Page extends \App\Page
                     $data["script"][] = "js/" . basename($file);
                 }
 
+                $path_info=\App::_()->pathInfo();
+                if(file_exists($path_info["cms_root"]."/pages/".$this->path().".js")){
+                    $data["script"][]="pages/".$this->path().".js";
+
+                }
+                
+                /*if(file_exists()){
+
+                }
+                outP($path_info)
+                outP($this->path());*/
+
+
                 $plugins = new \App\Plugin("angular");
                 $data["angular"] = $plugins->jss();
 

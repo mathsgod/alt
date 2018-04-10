@@ -302,48 +302,6 @@
         </aside>
 
         <script id="sidebar-menu" type="text/json">{{sidebar_menu|json_encode()|raw}}</script>
-        {% verbatim %}
-        <script>
-            new Vue({
-                el: "#_sb",
-                data: {
-                    all_menus: [],
-                    q: ""
-                },
-                created() {
-                    this.all_menus = JSON.parse(document.getElementById("sidebar-menu").text.trim());
-                },computed:{
-                    menus(){
-                        if (this.q == "") {
-                            return this.all_menus;
-                        }
-                        var menus = JSON.parse(JSON.stringify(this.all_menus));
-                        
-                        return this.filterMenu(this.q,menus);
-                    }
-                
-                }, methods: {
-                    filterMenu(text,menu){
-                        var m=[];
-                        for(var i in menu){
-                            if(menu[i].keyword.indexOf(text)>=0){
-                                m.push(menu[i]);
-                                continue;
-                            }
-
-                            menu[i].submenu=this.filterMenu(text,menu[i].submenu);
-                            if(menu[i].submenu.length>0){
-                                m.push(menu[i]);
-                                menu[i].active=true;
-
-                            }
-                        }
-                        return m;
-                    }
-                }
-            });
-        </script>
-        {% endverbatim %}
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">

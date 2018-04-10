@@ -1,3 +1,6 @@
+## 4.14.0
+javascript autoload function
+
 ## 4.11.0
 view as function, sugguested by eric
 administrator can use view as mode to view from another user
