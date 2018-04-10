@@ -8,10 +8,8 @@
     <base href="{{base}}" />
     <title>{{company}} | {{title}}</title>
     <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"> 
-    {% for c in css %}
-    <link rel="stylesheet" href="{{c|raw}}"> 
-    {% endfor %}
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"> {% for c in css %}
+    <link rel="stylesheet" href="{{c|raw}}"> {% endfor %}
     <!-- script src="composer/components/require-built.js"></script -->
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -20,20 +18,12 @@
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
-  
+
     {% for js in jquery %}
-    <script src="{{js|raw}}"></script> 
-    {% endfor %} 
-    {% for js in angular %}
-    <script src="{{js|raw}}"></script> 
-    {% endfor %} 
-    {% for js in vue %}
-    <script src="{{js|raw}}"></script> 
-    {% endfor %} 
-    
-    {% if firebase %}
-    <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
-    {% endif %}
+    <script src="{{js|raw}}"></script> {% endfor %} {% for js in angular %}
+    <script src="{{js|raw}}"></script> {% endfor %} {% for js in vue %}
+    <script src="{{js|raw}}"></script> {% endfor %} {% if firebase %}
+    <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script> {% endif %}
 
     <link id="pb-file" rel="import" href="{{system_base}}/plugins/pb.1.0.0/pb.html?v={{system.version}}&t={{t}}">
     <link id="alt-file" rel="import" href="{{system_base}}/plugins/alt.1.0.0/alt.html?v={{system.version}}&t={{t}}">
@@ -184,8 +174,7 @@
 
                                 {% if allow_viewas %}
                                 <a href="System/viewas" class="btn btn-default btn-flat">View as</a>
-                                {% endif %}
-                                {% if allow_cancel_viewas %}
+                                {% endif %} {% if allow_cancel_viewas %}
                                 <a href="cancel_viewas" class="btn btn-default btn-flat">Cancel view as</a>
                                 {% endif %}
                             </div>
@@ -209,7 +198,7 @@
         <!-- Left side column. contains the logo and sidebar -->
         <aside class="main-sidebar">
             <!-- sidebar: style can be found in sidebar.less -->
-            <section class="sidebar">
+            <section class="sidebar" id="_sb">
                 <!-- Sidebar user panel -->
                 <div class="user-panel">
                     <div class="pull-left image">
@@ -222,17 +211,18 @@
                     </div>
                 </div>
                 <!-- search form -->
-                <!--
-      <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
-              <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-        </div>
-      </form>
-      -->
+
+                <form action="#" method="get" class="sidebar-form">
+                    <div class="input-group">
+                        <input type="text" v-model="q" class="form-control" placeholder="Search...">
+                        <!-- span class="input-group-btn">
+                            <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span -->
+                    </div>
+                </form>
+
                 <!-- /.search form -->
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu">
@@ -259,6 +249,8 @@
                         </ul>
                     </li>
 
+
+
                     {% for fav in favs%}
                     <li class="fav">
                         <a href="{{fav.link}}">
@@ -267,57 +259,91 @@
                         </a>
                     </li>
                     {% endfor %}
+                </ul>
 
+                {% verbatim %}
+                <ul class="sidebar-menu">
                     <li class="header">Main navigation</li>
-                    {% for menu in sidebar_menu %} {% if menu.header %}
-                    <li class="header">{{menu.header}}</li>
-                    {% endif %}
-
-                    <li class="treeview {{menu.active?'active':''}}">
-                        <a href="{{menu.link}}" target="{{menu.target}}">
-                            <i class="{{menu.icon}}"></i>
-                            <span>{{menu.label}}</span>
-                            {% if menu.submenu %}
-                            <span class="pull-right-container">
+                    <li class="treeview" :class="{active:menu.active}" :target="menu.target" v-for="menu in menus">
+                        <a :href="menu.link">
+                            <i :class="menu.icon"></i>
+                            <span v-text="menu.label"></span>
+                            <span class="pull-right-container" v-if="menu.submenu">
                                 <i class="fa fa-angle-left pull-right"></i>
                             </span>
-                            {% endif %}
                         </a>
-
-                        {% if menu.submenu %}
-                        <ul class="treeview-menu">
-                            {% for menu in menu.submenu %}
-                            <li class="{{menu.active?'active':''}}">
-                                <a href="{{menu.link}}" target="{{menu.target}}">
-                                    <i class="{{menu.icon}}"></i> {{menu.label}} {% if menu.submenu %}
-                                    <span class="pull-right-container">
+                        <ul class="treeview-menu" v-if="menu.submenu">
+                            <li v-for="submenu in menu.submenu" :class="{active:submenu.active}">
+                                <a :href="submenu.link">
+                                    <i :class="submenu.icon"></i>
+                                    <span v-text="submenu.label"></span>
+                                    <span class="pull-right-container" v-if="submenu.submenu">
                                         <i class="fa fa-angle-left pull-right"></i>
                                     </span>
-                                    {% endif %}
                                 </a>
-
-                                {% if menu.submenu %}
-                                <ul class="treeview-menu {{menu.active?'active':''}}">
-                                    {% for menu in menu.submenu %}
-                                    <li class="{{menu.active?'active':''}}">
-                                        <a href="{{menu.link}}">
-                                            <i class="{{menu.icon}}"></i> {{menu.label}}</a>
+                                <ul class="treeview-menu" v-if="submenu.submenu">
+                                    <li v-for="submenu in submenu.submenu" :class="{active:submenu.active}">
+                                        <a :href="submenu.link">
+                                            <i :class="submenu.icon"></i>
+                                            <span v-text="submenu.label"></span>
+                                            <span class="pull-right-container" v-if="submenu.submenu">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
                                     </li>
-                                    {% endfor %}
                                 </ul>
-                                {% endif %}
-
                             </li>
-                            {% endfor %}
                         </ul>
-                        {% endif %}
                     </li>
-
-                    {% endfor %}
-
+                </ul>
+                {% endverbatim %}
             </section>
             <!-- /.sidebar -->
         </aside>
+
+        <script id="sidebar-menu" type="text/json">{{sidebar_menu|json_encode()|raw}}</script>
+        {% verbatim %}
+        <script>
+            new Vue({
+                el: "#_sb",
+                data: {
+                    all_menus: [],
+                    q: ""
+                },
+                created() {
+                    this.all_menus = JSON.parse(document.getElementById("sidebar-menu").text.trim());
+                },computed:{
+                    menus(){
+                        if (this.q == "") {
+                            return this.all_menus;
+                        }
+                        var menus = JSON.parse(JSON.stringify(this.all_menus));
+                        
+                        return this.filterMenu(this.q,menus);
+                    }
+                
+                }, methods: {
+                    filterMenu(text,menu){
+                        var m=[];
+                        for(var i in menu){
+                            if(menu[i].keyword.indexOf(text)>=0){
+                                m.push(menu[i]);
+                                continue;
+                            }
+
+                            menu[i].submenu=this.filterMenu(text,menu[i].submenu);
+                            if(menu[i].submenu.length>0){
+                                m.push(menu[i]);
+                                menu[i].active=true;
+
+                            }
+                        }
+                        return m;
+                    }
+                }
+            });
+        </script>
+        {% endverbatim %}
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">

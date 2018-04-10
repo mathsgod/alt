@@ -123,6 +123,7 @@ class MasterPage
                 $menu["label"] = \App::T($modulegroup_name);
                 $menu["link"] = "#";
                 $menu["icon"] = $group_icon[$modulegroup_name] ? $group_icon[$modulegroup_name] : "fa fa-link";
+                $menu["keyword"]=$menu["label"]." ".$modulegroup_name;
 
                 if ($current_module->group == $modulegroup_name) {
                     $menu["active"] = true;
@@ -149,18 +150,23 @@ class MasterPage
                         $submenu["link"] = $links[0]["link"];
                         $submenu["target"] = $links[0]["target"];
                     }
+                    $submenu["keyword"]=$module->keyword();
+
 
                     $menu["submenu"][] = $submenu;
+
                 }
             } else {
                 $module = $modules;
-                $links = $module->getMenuLink($route);
+                $links = $module->getMenuLink($path);
                 if (!sizeof($links)) {
                     continue;
                 }
                 $menu = [];
                 $menu["label"] = $module->translate($module->name);
                 $menu["icon"] = $module->icon;
+                $menu["keyword"] = $module->keyword();
+                
 
                 if ($current_module->name == $module->name) {
                     $menu["active"] = true;

@@ -206,7 +206,8 @@ class Module extends Model
                     "link" => $v["link"],
                     "icon" => $v["icon"],
                     "active" => ($path == $v["link"]),
-                    "target" => $v["target"]
+                    "target" => $v["target"],
+                    "keyword" => $this->translate($k)
                 ];
             } else {
                 if (!ACL::Allow($v)) {
@@ -216,20 +217,33 @@ class Module extends Model
                     "label" => $this->translate($k),
                     "link" => $v,
                     "icon" => "fa fa-link",
-                    "active" => ($path == $v)
+                    "active" => ($path == $v),
+                    "keyword" => $this->translate($k)
                 ];
             }
         }
 
         if ($this->showCreate()) {
             if (ACL::Allow($this->class, "C")) {
-                $links[] = ["label" => $this->translate("Add"), "link" => $this->name . "/ae", "icon" => "fa fa-plus", "active" => ($path == $this->name . "/ae")];
+                $links[] = [
+                    "label" => $this->translate("Add"),
+                    "link" => $this->name . "/ae",
+                    "icon" => "fa fa-plus",
+                    "active" => ($path == $this->name . "/ae"),
+                    "keyword" => ""
+                ];
             }
         }
 
         if ($this->show_list || $this->show_index) {
             if (ACL::Allow($this->name)) {
-                $links[] = ["label" => $this->translate("List"), "link" => $this->name, "icon" => "fa fa-list", "active" => ($path == $this->name)];
+                $links[] = [
+                    "label" => $this->translate("List"),
+                    "link" => $this->name,
+                    "icon" => "fa fa-list",
+                    "active" => ($path == $this->name),
+                    "keyword" => ""
+                ];
             }
         }
 
@@ -240,5 +254,10 @@ class Module extends Model
     {
         $t = Translate::ByModule($this->name, \My::Language());
         return $t[$text] ? $t[$text] : $text;
+    }
+
+    public function keyword()
+    {
+        return $this->name . " " . $this->translate($this->name);
     }
 }
