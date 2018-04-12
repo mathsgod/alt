@@ -2,7 +2,7 @@
 
 namespace App\UI;
 
-class T extends \My\T
+class T extends \ALT\Table
 {
     protected $page;
 

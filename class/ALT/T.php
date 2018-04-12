@@ -48,6 +48,11 @@ class T extends Box
         $p[]=$this->header()->addButton()->icon("fa fa-plus")->addClass("btn-primary")->attr("href", $uri);
         return $p;
     }
+
+    public function formCreate(){
+        $this->table->attr("form-create",true);
+        return $this;
+    }
     
     public function subHTML($label, $callback, $index)
     {

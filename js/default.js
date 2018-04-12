@@ -32,19 +32,23 @@ Vue.component("roxyfileman",{
 });
 
 Vue.component("ckeditor",{
-    template:"<textarea><slot></slot></textarea>",
+    template:"<textarea v-model='value'></textarea>",
+    data(){
+        return {
+            value:this.data
+        };
+    },
+    props:{
+        data:String
+    },
     mounted(){
-        this.$nextTick(function(){
             if (typeof CKEDITOR != 'undefined') {
-                
-                
                 var base = $("base").attr("href");
                 CKEDITOR.config.filebrowserImageBrowseUrl = base + "plugins/RoxyFileman.1.4.5/fileman/index.html?type=image";
                 CKEDITOR.config.filebrowserBrowseUrl = base + "plugins/RoxyFileman.1.4.5/fileman/index.html";
     
                 CKEDITOR.replace(this.$el);
             }
-        });
 
     }
 });

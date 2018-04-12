@@ -1,6 +1,7 @@
 <?php
 
 namespace ALT;
+
 use Exception;
 
 class C2 extends \P\HTMLElement
@@ -201,35 +202,33 @@ class C2 extends \P\HTMLElement
 	{
 		$p = new \P\InputCollection;
 		foreach ($this->cell as $cell) {
-			try{
+			try {
 				$input = p("bs-input");
 				$input->attr("name", $field);
 				$input->attr("data-field", $field);
-	
+
 				if ($object = p($cell)->data("object")) {
 					$input->data("object", $object);
 					$input->attr("value", is_object($object) ? $object->$field : $object[$field]);
-	
+
 					if ($this->callback) {
 						call_user_func($this->callback, $object, $input[0]);
 					}
 				}
-	
+
 				$p[] = $input[0];
 				$input->appendTo($cell);
-			}catch(Exception $e){
-				$cell->append("<p class='form-control-static'>".$e->getMessage()."</p>");
+			} catch (Exception $e) {
+				$cell->append("<p class='form-control-static'>" . $e->getMessage() . "</p>");
 			}
 		}
 
 		if ($this->createTemplate) {
-			$input = p("input");
-			$input->addClass('form-control');
+			$input = p("bs-input");
 			$input->attr("name", $field);
 			$input->attr("data-field", $field);
 
 			$p[] = $input[0];
-
 
 			$this->c_tpl[] = $input[0];
 
@@ -237,27 +236,28 @@ class C2 extends \P\HTMLElement
 		return $p;
 	}
 
-	public function roxyfileman(){
+	public function roxyfileman()
+	{
 		$p = new \P\InputCollection;
 		foreach ($this->cell as $cell) {
-			try{
+			try {
 				$input = p("roxyfileman");
 				$input->attr("name", $field);
 				$input->attr("data-field", $field);
-	
+
 				if ($object = p($cell)->data("object")) {
 					$input->data("object", $object);
 					$input->attr("value", is_object($object) ? $object->$field : $object[$field]);
-	
+
 					if ($this->callback) {
 						call_user_func($this->callback, $object, $input[0]);
 					}
 				}
-	
+
 				$p[] = $input[0];
 				$input->appendTo($cell);
-			}catch(Exception $e){
-				$cell->append("<p class='form-control-static'>".$e->getMessage()."</p>");
+			} catch (Exception $e) {
+				$cell->append("<p class='form-control-static'>" . $e->getMessage() . "</p>");
 			}
 		}
 
@@ -281,25 +281,27 @@ class C2 extends \P\HTMLElement
 		$p = p();
 
 		foreach ($this->cell as $cell) {
-			try{
-				$textarea = p("ckeditor");
+			try {
+				$textarea = p("textarea");
+				$textarea->attr("is","ckeditor");
 				$textarea->attr('data-field', $field);
 				$textarea->attr('name', $field);
 				$textarea->addClass('form-control');
-	
+
 				if ($object = p($cell)->data("object")) {
 					$textarea->data("object", $object);
 
-					$textarea->text(is_object($object) ? $object->$field : $object[$field]);
-	
+					//$textarea->text(is_object($object) ? $object->$field : $object[$field]);
+					$textarea->attr("data",is_object($object) ? $object->$field : $object[$field]);
+
 					if ($this->callback) {
 						call_user_func($this->callback, $object, $textarea[0]);
 					}
 				}
 				$p[] = $textarea[0];
 				$textarea->appendTo($cell);
-			}catch(Exception $e){
-				$cell->append("<p class='form-control-static'>".$e->getMessage()."</p>");
+			} catch (Exception $e) {
+				$cell->append("<p class='form-control-static'>" . $e->getMessage() . "</p>");
 			}
 		}
 
@@ -322,25 +324,25 @@ class C2 extends \P\HTMLElement
 		$p = p();
 
 		foreach ($this->cell as $cell) {
-			try{
+			try {
 				$textarea = p("textarea");
 				$textarea->attr('data-field', $field);
 				$textarea->attr('name', $field);
 				$textarea->addClass('form-control');
-	
+
 				if ($object = p($cell)->data("object")) {
 					$textarea->data("object", $object);
 
 					$textarea->text(is_object($object) ? $object->$field : $object[$field]);
-	
+
 					if ($this->callback) {
 						call_user_func($this->callback, $object, $textarea[0]);
 					}
 				}
 				$p[] = $textarea[0];
 				$textarea->appendTo($cell);
-			}catch(Exception $e){
-				$cell->append("<p class='form-control-static'>".$e->getMessage()."</p>");
+			} catch (Exception $e) {
+				$cell->append("<p class='form-control-static'>" . $e->getMessage() . "</p>");
 			}
 		}
 
