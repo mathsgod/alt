@@ -8,6 +8,10 @@ class Composer
     {
     }
 
+    public function auth(){
+        return json_decode(file_get_contents($this->path()."/auth.json"),true);
+    }
+
     public function installed()
     {
         $ret = self::exec("show -f json");

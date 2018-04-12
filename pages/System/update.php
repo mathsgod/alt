@@ -3,21 +3,29 @@
 class System_update extends ALT\Page
 {
 
+    public function getLastestVersion()
+    {
+        $v = $this->getVersionList();
+        return $v[0];
+    }
+
     public function getVersionList()
     {
 
-        $auth=App\Composer::Auth();
-        $username=$auth["http-basic"]["raymond2.hostlink.com.hk"]["username"];
-        $password=$auth["http-basic"]["raymond2.hostlink.com.hk"]["password"];
-        
+        $composer = new App\Composer();
+
+        $auth = $composer->auth();
+        $username = $auth["http-basic"]["raymond2.hostlink.com.hk"]["username"];
+        $password = $auth["http-basic"]["raymond2.hostlink.com.hk"]["password"];
+
         $context = stream_context_create(array(
             'http' => array(
-                'header'  => "Authorization: Basic " . base64_encode("$username:$password")
+                'header' => "Authorization: Basic " . base64_encode("$username:$password")
             )
         ));
-        
-        $repo=json_decode(file_get_contents("https://raymond2.hostlink.com.hk/repo/packages.json", false, $context), true);
-        return array_reverse( array_keys($repo["packages"]["hostlink/r-alt"]) );
+
+        $repo = json_decode(file_get_contents("https://raymond2.hostlink.com.hk/bitbucket/repo/packages.json", false, $context), true);
+        return array_reverse(array_keys($repo["packages"]["hostlink/r-alt"]));
     }
 
     public static function GetDirectorySize($path)
@@ -193,19 +201,7 @@ class System_update extends ALT\Page
 
         $this->write("<h4>Use compose to update system: <a href='System/composer'>composer</a></h4>");
         $this->write("<h4>Your current system: " . App::Version() . "</h4>");
-
-        $t = $this->createT($this->getVersionList());
-        $t->add("Version", function ($version) {
-            return $version;
-        }
-        );
-
-        $t->add("", function ($version) {
-                return BS\Button::_()->href("System/update/selectSystem?version=$version")->html("Install")->addClass("btn-primary")->addClass('confirm btn-xs');
-        });
-        
-        $t->header("System");
-        $this->write($t);
+        $this->write("<h4>Lasted version: " . $this->getLastestVersion() . "</h4>");
 
 /*		$t->add("Size", function ($path) {
 			try {
@@ -263,25 +259,21 @@ class System_update extends ALT\Page
         $t->add("Size", 'size');
         $t->add("Download")->button()->html("<i class='fa fa-download'></i>")->href(function ($obj) {
             return "System/update/download?plugins=" . $obj["name"];
-        }
-        )->addClass("btn-primary");
+        })->addClass("btn-primary");
         $this->write($t);
 
         $t = $this->createT(glob(CMS_ROOT . "/plugins/*"));
         $t->header("Installed plugins");
         $t->add("Name", function ($i) {
             return basename($i);
-        }
-        );
+        });
         $t->add("Permission", function ($s) {
             return substr(sprintf('%o', fileperms($s)), -4);
-        }
-        );
+        });
         $t->add("")->button()->html("<i class='fa fa-times'></i>")->href(function ($obj) {
             $s = basename($obj);
             return "System/update/deletePlugin?name=$s";
-        }
-        )->addClass("btn-danger");
+        })->addClass("btn-danger");
         $this->write($t);
     }
 }
