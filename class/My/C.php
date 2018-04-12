@@ -145,7 +145,43 @@ class C extends \P\HTMLElement {
 		}
 		return $p;
     }
-    
+	
+	public function ckeditor($field){
+		$p = p();
+
+		foreach ($this->cell as $cell) {
+			$textarea = p("ckeditor")->appendTo($cell);
+			$textarea->attr('data-field', $field);
+			$textarea->attr('name', $field);
+			$textarea->addClass('form-control');
+
+			if ($object = p($cell)->data("object")) {
+				$textarea->data("object", $object);
+				$textarea->text(is_object($object) ? $object->$field : $object[$field]);
+
+				if ($this->callback) {
+					call_user_func($this->callback, $object, $textarea[0]);
+				}
+			}
+
+			$p[] = $textarea[0];
+
+		}
+
+
+		if ($this->createTemplate) {
+			$textarea = p("ckeditor");
+			$textarea->addClass('form-control');
+			$textarea->attr("name", $field);
+			$textarea->attr("data-field", $field);
+
+			$p[] = $textarea[0];
+			$this->c_tpl[] = $textarea[0];
+		}
+
+		return $p;
+	}
+
 	public function textarea($field) {
 		$p = p();
 

@@ -237,6 +237,86 @@ class C2 extends \P\HTMLElement
 		return $p;
 	}
 
+	public function roxyfileman(){
+		$p = new \P\InputCollection;
+		foreach ($this->cell as $cell) {
+			try{
+				$input = p("roxyfileman");
+				$input->attr("name", $field);
+				$input->attr("data-field", $field);
+	
+				if ($object = p($cell)->data("object")) {
+					$input->data("object", $object);
+					$input->attr("value", is_object($object) ? $object->$field : $object[$field]);
+	
+					if ($this->callback) {
+						call_user_func($this->callback, $object, $input[0]);
+					}
+				}
+	
+				$p[] = $input[0];
+				$input->appendTo($cell);
+			}catch(Exception $e){
+				$cell->append("<p class='form-control-static'>".$e->getMessage()."</p>");
+			}
+		}
+
+		if ($this->createTemplate) {
+			$input = p("roxyfileman");
+			$input->addClass('form-control');
+			$input->attr("name", $field);
+			$input->attr("data-field", $field);
+
+			$p[] = $input[0];
+
+
+			$this->c_tpl[] = $input[0];
+
+		}
+		return $p;
+	}
+
+	public function ckeditor($field)
+	{
+		$p = p();
+
+		foreach ($this->cell as $cell) {
+			try{
+				$textarea = p("ckeditor");
+				$textarea->attr('data-field', $field);
+				$textarea->attr('name', $field);
+				$textarea->addClass('form-control');
+	
+				if ($object = p($cell)->data("object")) {
+					$textarea->data("object", $object);
+
+					$textarea->text(is_object($object) ? $object->$field : $object[$field]);
+	
+					if ($this->callback) {
+						call_user_func($this->callback, $object, $textarea[0]);
+					}
+				}
+				$p[] = $textarea[0];
+				$textarea->appendTo($cell);
+			}catch(Exception $e){
+				$cell->append("<p class='form-control-static'>".$e->getMessage()."</p>");
+			}
+		}
+
+
+		if ($this->createTemplate) {
+			$textarea = p("ckeditor");
+			$textarea->addClass('form-control');
+			$textarea->attr("name", $field);
+			$textarea->attr("data-field", $field);
+
+			$p[] = $textarea[0];
+			$this->c_tpl[] = $textarea[0];
+		}
+
+		return $p;
+	}
+
 	public function textarea($field)
 	{
 		$p = p();

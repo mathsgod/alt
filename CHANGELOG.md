@@ -1,3 +1,10 @@
+## 4.15.0
+```php
+$e=$this->createE();
+$e->add("CKEDITOR")->ckeditor("field");
+$e->add("ROXY FILEMAN")->roxyfileman("field");
+```
+
 ## 4.14.0
 javascript autoload function
 
