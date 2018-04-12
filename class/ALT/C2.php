@@ -236,7 +236,7 @@ class C2 extends \P\HTMLElement
 		return $p;
 	}
 
-	public function roxyfileman()
+	public function roxyfileman($field)
 	{
 		$p = new \P\InputCollection;
 		foreach ($this->cell as $cell) {

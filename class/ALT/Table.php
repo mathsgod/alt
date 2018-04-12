@@ -1,6 +1,7 @@
 <?php
 
 namespace ALT;
+use My\Func;
 class Table extends \P\Query {
 	public $objects;
 	public $tr;
@@ -44,7 +45,7 @@ class Table extends \P\Query {
 		$column = new C("th");
 		$this->columns[] = $column;
 
-		if ($this->hasClass("form-create")) {
+		if ($this->attr("form-create")) {
 			$column->createTemplate = true;
 		}
 
@@ -53,11 +54,13 @@ class Table extends \P\Query {
 		$th->text($label);
 		$column->cell = new \P\Query;
 		$i = 0;
+
 		foreach ($this->objects as $k => $obj) {
 			$tr = $this->tr[$i++];
 			$td = p("td")->appendTo($tr);
 			$td->data("object", $obj);
 			$column->cell[] = $td[0];
+
 			if ($getter) {
 				if ($getter instanceof \Closure) {
 					$td->html(call_user_func_array($getter, [$obj, $k]));

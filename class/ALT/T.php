@@ -50,7 +50,7 @@ class T extends Box
     }
 
     public function formCreate(){
-        $this->table->attr("form-create",true);
+        $this->table->add("form-create",true);
         return $this;
     }
     
