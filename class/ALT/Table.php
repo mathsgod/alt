@@ -42,7 +42,7 @@ class Table extends \P\Query {
 
 	public function add($label, $getter) {
 
-		$column = new C("th");
+		$column = new C2("th");
 		$this->columns[] = $column;
 
 		if ($this->attr("form-create")) {
@@ -88,8 +88,8 @@ class Table extends \P\Query {
 			} else {
 				$node->attributes["name"] = "{$fn}[$id][$field]";
 			}
-		}
-		;
+		};
+
 
 		return $column;
 	}

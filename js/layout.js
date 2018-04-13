@@ -6,17 +6,66 @@ new Vue({
 	},
 	created() {
 		this.all_menus = JSON.parse(document.getElementById("sidebar-menu").text.trim());
+
+		var id = 1;
+
+		this.all_menus.forEach(m => {
+			m.id = id;
+			id++;
+			if (m.submenu) {
+				m.submenu.forEach(n => {
+					n.id = id;
+					id++;
+					if (n.submenu) {
+						n.submenu.forEach(o => {
+							o.id = id;
+							id++;
+						});
+					}
+				});
+			}
+		});
+
 	}, computed: {
 		menus() {
 			if (this.q == "") {
 				return this.all_menus;
 			}
 			var menus = JSON.parse(JSON.stringify(this.all_menus));
-
+			$.AdminLTE.tree('.sidebar');
 			return this.filterMenu(this.q, menus);
 		}
 
 	}, methods: {
+		clickMenu(event, menu) {
+			return;
+			console.log(menu);
+			if (menu.submenu.length > 0) {
+
+				this.all_menus.forEach(m => {
+					if (m.id == menu.id) {
+						m.active = !m.active;
+					}
+
+					m.submenu.forEach(m => {
+						if (m.id == menu.id) {
+							m.active = !m.active;
+						}
+
+						m.submenu.forEach(m => {
+							if (m.id == menu.id) {
+								m.active = !m.active;
+							}
+
+						});
+
+					});
+
+				});
+
+				event.preventDefault();
+			}
+		},
 		filterMenu(text, menu) {
 			var m = [];
 			for (var i in menu) {

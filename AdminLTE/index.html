@@ -25,6 +25,8 @@
     <script src="{{js|raw}}"></script> {% endfor %} {% if firebase %}
     <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script> {% endif %}
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"></script> 
+
     <link id="pb-file" rel="import" href="{{system_base}}/plugins/pb.1.0.0/pb.html?v={{system.version}}&t={{t}}">
     <link id="alt-file" rel="import" href="{{system_base}}/plugins/alt.1.0.0/alt.html?v={{system.version}}&t={{t}}">
     <link id="rt-file" rel="import" href="{{system_base}}/plugins/rt.2.0.0/rt.html?v={{system.version}}&t={{t}}">
@@ -264,8 +266,8 @@
                 {% verbatim %}
                 <ul class="sidebar-menu">
                     <li class="header">Main navigation</li>
-                    <li class="treeview" :class="{active:menu.active}" :target="menu.target" v-for="menu in menus">
-                        <a :href="menu.link">
+                    <li class="treeview" :class="{active:menu.active}" v-for="menu in menus">
+                        <a :href="menu.link" :target="menu.target" style="cursor: pointer;" @click="clickMenu($event,menu)">
                             <i :class="menu.icon"></i>
                             <span v-text="menu.label"></span>
                             <span class="pull-right-container" v-if="menu.submenu">
@@ -274,21 +276,18 @@
                         </a>
                         <ul class="treeview-menu" v-if="menu.submenu">
                             <li v-for="submenu in menu.submenu" :class="{active:submenu.active}">
-                                <a :href="submenu.link">
+                                <a :href="submenu.link" :target="menu.target" style="cursor: pointer;" @click="clickMenu($event,submenu)">
                                     <i :class="submenu.icon"></i>
                                     <span v-text="submenu.label"></span>
-                                    <span class="pull-right-container" v-if="submenu.submenu">
+                                    <span class="pull-right-container" v-if="submenu.submenu" v-if="menu.submenu">
                                         <i class="fa fa-angle-left pull-right"></i>
                                     </span>
                                 </a>
                                 <ul class="treeview-menu" v-if="submenu.submenu">
                                     <li v-for="submenu in submenu.submenu" :class="{active:submenu.active}">
-                                        <a :href="submenu.link">
+                                        <a :href="submenu.link" :target="menu.target" style="cursor: pointer;">
                                             <i :class="submenu.icon"></i>
                                             <span v-text="submenu.label"></span>
-                                            <span class="pull-right-container" v-if="submenu.submenu">
-                                                <i class="fa fa-angle-left pull-right"></i>
-                                            </span>
                                         </a>
                                     </li>
                                 </ul>

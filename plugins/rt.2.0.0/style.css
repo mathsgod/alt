@@ -1,0 +1,95 @@
+table.rt {
+    margin-bottom: 0px;
+}
+
+table.rt .ui-resizable-e {
+    right: 0px;
+}
+
+table.rt tbody input {
+    padding-left: 1px;
+    padding-right: 1px;
+    height: 22px;
+}
+
+
+table.rt .unselectable {
+    user-select: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+}
+
+table.rt td,
+table.rt th {
+    white-space: nowrap;
+    padding: 1px 2px 1px 2px!important;
+}
+
+table.rt thead .date.input-group {
+    width: 1px;
+    float: left;
+}
+
+table.rt thead select {
+    padding: 0px 1px;
+    height: 25px;
+}
+
+table.rt thead input.search {
+    padding-left: 1px;
+    padding-right: 1px;
+    height: 25px!important;
+}
+
+table.rt thead input.date {
+    width: 80px;
+    float: left;
+    padding-left: 1px;
+    padding-right: 1px;
+    height: 25px!important;
+}
+
+table.rt thead .search-clear-btn {
+    height: 25px!important;
+    padding: 5px 5px!important;
+}
+
+table.rt thead .select2-selection {
+    padding-left: 1px;
+    padding-right: 1px;
+    height: 25px;
+}
+
+table.rt thead .select2-selection__rendered {
+    padding-left: 2px!important;
+    margin-top: -9px!important;
+}
+
+table.rt .select2-selection__arrow {
+    top: -3px!important;
+}
+
+table.rt th.sortable {
+    cursor: pointer;
+    background: url(images/sort_both.png) no-repeat center right;
+}
+
+table.rt th.sorting_desc {
+    background: url(images/sort_desc.png) no-repeat center right;
+}
+
+table.rt th.sorting_asc {
+    background: url(images/sort_asc.png) no-repeat center right;
+}
+
+table.rt tbody tr.child {
+    white-space: normal;
+    word-break: break-all;
+}
+
+table.rt tbody tr.child ul {
+    display: inline-block;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}

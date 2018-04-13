@@ -224,7 +224,8 @@ class C2 extends \P\HTMLElement
 		}
 
 		if ($this->createTemplate) {
-			$input = p("bs-input");
+			$input = p("input");
+			$input->addClass("form-control");
 			$input->attr("name", $field);
 			$input->attr("data-field", $field);
 
