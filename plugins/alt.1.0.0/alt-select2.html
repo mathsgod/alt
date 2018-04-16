@@ -1,0 +1,11 @@
+<script>
+    Vue.component("select2", {
+        template: `<select class="form-control"><slot></slot></select>`,
+        created(){
+            
+        },
+        mounted() {
+            $(this.$el).select2();
+        }
+    });
+</script>

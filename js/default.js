@@ -1,7 +1,7 @@
-Vue.component("roxyfileman",{
-    template:"<bs-input/>",
-    mounted(){
-        this.$nextTick(function(){
+Vue.component("roxyfileman", {
+    template: "<bs-input/>",
+    mounted() {
+        this.$nextTick(function () {
             $(this.$el).on("click", function () {
                 var d = new Date().getTime();
                 d = "roxy_" + d;
@@ -31,24 +31,24 @@ Vue.component("roxyfileman",{
     }
 });
 
-Vue.component("ckeditor",{
-    template:"<textarea v-model='value'></textarea>",
-    data(){
+Vue.component("ckeditor", {
+    template: "<textarea v-model='value'></textarea>",
+    data() {
         return {
-            value:this.data
+            value: this.data
         };
     },
-    props:{
-        data:String
+    props: {
+        data: String
     },
-    mounted(){
-            if (typeof CKEDITOR != 'undefined') {
-                var base = $("base").attr("href");
-                CKEDITOR.config.filebrowserImageBrowseUrl = base + "plugins/RoxyFileman.1.4.5/fileman/index.html?type=image";
-                CKEDITOR.config.filebrowserBrowseUrl = base + "plugins/RoxyFileman.1.4.5/fileman/index.html";
-    
-                CKEDITOR.replace(this.$el);
-            }
+    mounted() {
+        if (typeof CKEDITOR != 'undefined') {
+            var base = $("base").attr("href");
+            CKEDITOR.config.filebrowserImageBrowseUrl = base + "plugins/RoxyFileman.1.4.5/fileman/index.html?type=image";
+            CKEDITOR.config.filebrowserBrowseUrl = base + "plugins/RoxyFileman.1.4.5/fileman/index.html";
+
+            CKEDITOR.replace(this.$el);
+        }
 
     }
 });
@@ -80,15 +80,25 @@ var vue_init = function () {
 
 
 };
-(function ($) {
-    $(document).ajaxComplete(function () {
-        setTimeout(vue_init, 0);
-    });
-})(jQuery);
-
-document.addEventListener("DOMContentLoaded", function(event) {
-    vue_init();
+document.addEventListener("DOMContentLoaded", function (event) {
+    console.log('domcontentloaded');
+//    vue_init();
 });
+
+window.addEventListener('WebComponentsReady', function (e) {
+    // imports are loaded and elements have been registered
+    console.log("WebComponentsReady");
+     vue_init();
+});
+
+window.addEventListener('HTMLImportsLoaded', function (e) {
+    // all imports loaded
+    console.log("HTMLImportsLoaded");
+});
+
+(function ($) {
+    $(document).ajaxComplete(vue_init);
+})(jQuery);
 
 
 (function ($) {
@@ -376,7 +386,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
             CKEDITOR.config.filebrowserImageBrowseUrl = base + "plugins/RoxyFileman.1.4.5/fileman/index.html?type=image";
             CKEDITOR.config.filebrowserBrowseUrl = base + "plugins/RoxyFileman.1.4.5/fileman/index.html";
 
-            
+
             /*$("textarea.ccc").not("._ckeditor").each(function (i, o) {
                 $(o).addClass("_ckeditor");
                 CKEDITOR.replace(o);
@@ -390,7 +400,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
         setTimeout(f, 0);
     });
 
-    f();
+    document.addEventListener("DOMContentLoaded",function(){
+        console.log('dom');
+        setTimeout(f,0);
+    });
 })(jQuery);
 
 function closeRoxyDialog() {
@@ -430,12 +443,12 @@ function closeRoxyDialog() {
 
 
         //Select2
-        $("select.select2").each(function (i, o) {
+        /*$("select.select2").each(function (i, o) {
             $(o).removeClass("select2").addClass("_select2");
             $(o).select2();
-        });
+        });*/
 
-        $("[datepicker]").not("._datepicker").each(function () {
+/*        $("[datepicker]").not("._datepicker").each(function () {
             var options = {
                 format: 'yyyy-mm-dd',
                 todayHighlight: true,
@@ -446,7 +459,7 @@ function closeRoxyDialog() {
             if ($(this).attr("data-inputClass")) options["inputClass"] = $(this).attr("data-inputClass");
             $(this).datepicker(options);
         });
-        $("[datepicker]").addClass("_datepicker");
+        $("[datepicker]").addClass("_datepicker");*/
 
 
         //roxy fileman

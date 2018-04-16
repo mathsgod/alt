@@ -1,0 +1,44 @@
+<script>
+    Vue.component("alt-datepicker", {
+        template: `
+<div class="input-group">
+    <span class="input-group-addon">
+        <i class="far fa-calendar-alt"></i>
+    </span>
+    <input is="datepicker" />
+</div>
+`,
+        props: {
+            type:Boolean
+        }
+    });
+
+    Vue.component("datepicker", {
+        template: `
+<input class="datetimepicker form-control">
+</input>`,
+        props: {
+            format: {
+                type: String,
+                default: "yyyy-mm-dd"
+            },
+            todayHighlight: {
+                type: Boolean,
+                default: true
+            },
+            todayBtn: {
+                type: String,
+                default: "linked"
+            },
+            autoclose: {
+                type: Boolean,
+                default: true
+            }
+        },
+        created() {
+        },
+        mounted() {
+            $(this.$el).datepicker(this._props);
+        }
+    });
+</script>

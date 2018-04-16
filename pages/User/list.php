@@ -1,7 +1,7 @@
 <?php
 use App\User;
 
-class User_list extends App\Page
+class User_list extends ALT\Page
 {
     public function get()
     {

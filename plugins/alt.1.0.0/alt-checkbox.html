@@ -1,0 +1,27 @@
+<script>
+    Vue.component("icheck", {
+        template: `<input />`,
+        props: {
+            checkboxClass: {
+                type: String,
+                default: 'icheckbox_square-blue'
+            },
+            radioClass: {
+                type: String,
+                default: 'iradio_square-blue'
+            }
+        },
+        created() {
+
+        },
+        mounted() {
+
+            $(this.$el).iCheck(this._props);
+
+            $(this.$el).on('ifClicked', function () {
+                $(this.$el).trigger("click");
+            });
+
+        }
+    });
+</script>

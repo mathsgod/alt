@@ -595,9 +595,9 @@ class C2 extends \P\HTMLElement
 			p($cell)->append($cb);
 
 			$input = $cb->find("input");
+			$input->attr("is","icheck");
 			$input->attr("name", $field);
 			$input->attr("data-field", $field);
-			$input->addClass("iCheck");
 			$input->val(1);
 
 			if ($object = p($cell)->data("object")) {
@@ -643,8 +643,7 @@ class C2 extends \P\HTMLElement
 
 
 			$input = p("input")->appendTo($div);
-			$input->addClass("datetimepicker form-control");
-			$input->attr("format", "YYYY-MM-DD");
+			$input->attr("is","datepicker");
 			$input->attr("name", $field);
 			$input->attr("data-field", $field);
 			if ($object = p($cell)->data("object")) {
@@ -664,8 +663,7 @@ class C2 extends \P\HTMLElement
 			$addon->append('<i class="fa fa-calendar"></i>');
 
 			$input = p("input")->appendTo($div);
-			$input->addClass('datetimepicker form-control');
-			$input->attr("format", "YYYY-MM-DD");
+			$input->attr("is","datepicker");
 			$input->attr("name", $field);
 			$input->attr("data-field", $field);
 
@@ -861,7 +859,7 @@ class C2 extends \P\HTMLElement
 
 		foreach ($this->cell as $cell) {
 			$select = p("select")->appendTo($cell);
-			$select->addClass("select2 form-control");
+			$select->attr("is","select2");
 			$select->attr("data-field", $field);
 			$select->attr("name", $field);
 
