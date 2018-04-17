@@ -242,7 +242,7 @@ class C2 extends \P\HTMLElement
 		$p = new \P\InputCollection;
 		foreach ($this->cell as $cell) {
 			try {
-				$input = p("roxyfileman");
+				$input = p("roxyfileman")->appendTo($cell);
 				$input->attr("name", $field);
 				$input->attr("data-field", $field);
 
@@ -256,7 +256,6 @@ class C2 extends \P\HTMLElement
 				}
 
 				$p[] = $input[0];
-				$input->appendTo($cell);
 			} catch (Exception $e) {
 				$cell->append("<p class='form-control-static'>" . $e->getMessage() . "</p>");
 			}
@@ -283,7 +282,7 @@ class C2 extends \P\HTMLElement
 
 		foreach ($this->cell as $cell) {
 			try {
-				$textarea = p("textarea");
+				$textarea = p("textarea")->appendTo($cell);
 				$textarea->attr("is","ckeditor");
 				$textarea->attr('data-field', $field);
 				$textarea->attr('name', $field);
@@ -300,7 +299,6 @@ class C2 extends \P\HTMLElement
 					}
 				}
 				$p[] = $textarea[0];
-				$textarea->appendTo($cell);
 			} catch (Exception $e) {
 				$cell->append("<p class='form-control-static'>" . $e->getMessage() . "</p>");
 			}
@@ -326,7 +324,7 @@ class C2 extends \P\HTMLElement
 
 		foreach ($this->cell as $cell) {
 			try {
-				$textarea = p("textarea");
+				$textarea = p("textarea")->appendTo($cell);
 				$textarea->attr('data-field', $field);
 				$textarea->attr('name', $field);
 				$textarea->addClass('form-control');
@@ -341,7 +339,6 @@ class C2 extends \P\HTMLElement
 					}
 				}
 				$p[] = $textarea[0];
-				$textarea->appendTo($cell);
 			} catch (Exception $e) {
 				$cell->append("<p class='form-control-static'>" . $e->getMessage() . "</p>");
 			}
