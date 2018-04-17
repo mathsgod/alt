@@ -61,7 +61,8 @@
         "vakata/jstree": "jsTree is jquery plugin, that provides interactive trees.",
         "google/apiclient": "Client library for Google APIs",
         "ktamas77/firebase-php": "Firebase PHP Client",
-        "php-console/php-console": "Server side PHP library for Google Chrome extension \"PHP Console\""
+        "php-console/php-console": "Server side PHP library for Google Chrome extension \"PHP Console\"",
+        "box/spout": "PHP Library to read and write spreadsheet files (CSV, XLSX and ODS), in a fast and scalable way"
     },
     "type": "library",
     "license": "proprietary",
