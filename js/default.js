@@ -53,8 +53,13 @@ Vue.component("ckeditor", {
     }
 });
 
-
 var vue_init = function () {
+    document.querySelectorAll("alt-table").forEach(o => {
+        new Vue({
+            el: o
+        });
+    });
+
     document.querySelectorAll('alt-box').forEach(o => {
         new Vue({
             el: o
@@ -78,28 +83,32 @@ var vue_init = function () {
         });
     });
 
-
+    document.querySelectorAll("roxyfileman").forEach(o => {
+        new Vue({
+            el: o
+        });
+    });
+    document.querySelectorAll("ckeditor").forEach(o => {
+        new Vue({
+            el: o
+        });
+    });
 };
 document.addEventListener("DOMContentLoaded", function (event) {
     console.log('domcontentloaded');
-//    vue_init();
+    vue_init();
+    setInterval(vue_init, 500);
 });
 
 window.addEventListener('WebComponentsReady', function (e) {
     // imports are loaded and elements have been registered
     console.log("WebComponentsReady");
-     vue_init();
 });
 
 window.addEventListener('HTMLImportsLoaded', function (e) {
     // all imports loaded
     console.log("HTMLImportsLoaded");
 });
-
-(function ($) {
-    $(document).ajaxComplete(vue_init);
-})(jQuery);
-
 
 (function ($) {
     //-- form validation --
@@ -385,12 +394,6 @@ window.addEventListener('HTMLImportsLoaded', function (e) {
             var base = $("base").attr("href");
             CKEDITOR.config.filebrowserImageBrowseUrl = base + "plugins/RoxyFileman.1.4.5/fileman/index.html?type=image";
             CKEDITOR.config.filebrowserBrowseUrl = base + "plugins/RoxyFileman.1.4.5/fileman/index.html";
-
-
-            /*$("textarea.ccc").not("._ckeditor").each(function (i, o) {
-                $(o).addClass("_ckeditor");
-                CKEDITOR.replace(o);
-            });*/
         }
         //--------------
 
@@ -400,16 +403,14 @@ window.addEventListener('HTMLImportsLoaded', function (e) {
         setTimeout(f, 0);
     });
 
-    document.addEventListener("DOMContentLoaded",function(){
-        console.log('dom');
-        setTimeout(f,0);
+    document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(f, 0);
     });
 })(jQuery);
 
 function closeRoxyDialog() {
     $.fancybox.close();
 }
-
 (function ($) {
     var f = function () {
         if ($.jstree != undefined) {
@@ -448,18 +449,18 @@ function closeRoxyDialog() {
             $(o).select2();
         });*/
 
-/*        $("[datepicker]").not("._datepicker").each(function () {
-            var options = {
-                format: 'yyyy-mm-dd',
-                todayHighlight: true,
-                todayBtn: "linked",
-                autoclose: true
-            };
-            if ($(this).attr("data-format")) options["format"] = $(this).attr("data-format");
-            if ($(this).attr("data-inputClass")) options["inputClass"] = $(this).attr("data-inputClass");
-            $(this).datepicker(options);
-        });
-        $("[datepicker]").addClass("_datepicker");*/
+        /*        $("[datepicker]").not("._datepicker").each(function () {
+                    var options = {
+                        format: 'yyyy-mm-dd',
+                        todayHighlight: true,
+                        todayBtn: "linked",
+                        autoclose: true
+                    };
+                    if ($(this).attr("data-format")) options["format"] = $(this).attr("data-format");
+                    if ($(this).attr("data-inputClass")) options["inputClass"] = $(this).attr("data-inputClass");
+                    $(this).datepicker(options);
+                });
+                $("[datepicker]").addClass("_datepicker");*/
 
 
         //roxy fileman

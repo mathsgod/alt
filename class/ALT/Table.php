@@ -79,9 +79,7 @@ class Table extends \P\Query {
 
 			$tr = p($node)->closest("tr");
 		
-			//$id = $tr->attr("data-index");
-
-			$id=$object->id();
+			$id = $tr->attr("data-index");
 
 			$fn = "_u";
 			if ($form_name)

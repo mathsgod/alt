@@ -3,6 +3,7 @@
 namespace ALT;
 
 use Exception;
+use My\Func;
 
 class C2 extends \P\HTMLElement
 {
@@ -203,7 +204,7 @@ class C2 extends \P\HTMLElement
 		$p = new \P\InputCollection;
 		foreach ($this->cell as $cell) {
 			try {
-				$input = p("bs-input");
+				$input = p("bs-input")->appendTo($cell);
 				$input->attr("name", $field);
 				$input->attr("data-field", $field);
 
@@ -217,7 +218,6 @@ class C2 extends \P\HTMLElement
 				}
 
 				$p[] = $input[0];
-				$input->appendTo($cell);
 			} catch (Exception $e) {
 				$cell->append("<p class='form-control-static'>" . $e->getMessage() . "</p>");
 			}
