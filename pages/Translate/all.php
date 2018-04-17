@@ -75,11 +75,12 @@ class Translate_all extends ALT\Page {
             }
         }
 
-        $myt = new App\UI\T($ts, $this->route);
+        $myt = $this->createT($ts);
 
-        $myt->addClass('form-create');
+        $myt->formCreate();
 
-        $myt->row()->attr("index", function($o) {
+
+        $myt->table->row()->attr("index", function($o) {
                 return $o["translate_id"];
             }
             );

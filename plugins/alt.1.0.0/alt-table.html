@@ -1,0 +1,186 @@
+<script>
+    Vue.component('alt-table', {
+        template: "<table><slot></slot></table>",
+        props: {
+            formCreate: Boolean,
+        },
+        data() {
+            return {
+            }
+        }, mounted() {
+            if (this.formCreate) {
+                var o = this.$el;
+
+                var $table = $(o);
+                if ($table.prop("tagName") != "TABLE") $table = $table.find("table:first");
+
+                var form_name = $table.attr('form-name');
+                var form_addbottom = $table.attr('form-addbottom') == "";
+                var max_row = $table.attr("max-row") ? $table.attr("max-row") : -1;
+
+                var tr = $table.find("tr:first");
+                var a = $("<a href='javascript:void(0)' class='btn btn-xs btn-primary'><i class='fa fa-plus'/></a>");
+                var th = $("<th style='text-align:center;width:36px' align='center'>").prependTo(tr);
+                th.append(a);
+
+                var del_index = [];
+                $table.find("tr").each(function (i, o) {
+                    if (i == 0) return;
+                    var $tr = $(o);
+                    var $td = $("<td style='text-align:center' align='center'>").prependTo($tr);
+                    var a = $("<a href='javascript:void(0)' class='btn btn-xs btn-danger'><i class='fa fa-minus' /></a>").prependTo($td);
+                    a.on('click', function () {
+                        var del_input = $("<input type='hidden' />");
+                        if (form_name != undefined) {
+                            del_input.attr('name', form_name + '[d][]');
+                        } else {
+                            del_input.attr('name', '_d[]');
+                        }
+                        del_input.val($tr.attr("index"));
+                        if ($tr.attr("index")) {
+                            $table.after(del_input);
+                        }
+
+                        $tr.remove();
+                    });
+
+                });
+
+                var index = 0;
+                $(a).on("click",function(){
+                    var $table = $(o);
+                    //count row
+                    if (max_row > 0) {
+                        if ($table.find("tbody tr").length >= max_row) {
+                            return false;
+                        }
+                    }
+                    var tr = $table.find("tr:first");
+                    var new_tr = $("<tr>");
+                    $(tr).find("th").each(function (i, o) {
+                        if (i == 0) {
+                            var a = $("<a href='javascript:void(0)' class='btn btn-xs btn-warning'><i class='fa fa-minus' /></a>");
+                            var td = $("<td>").appendTo(new_tr);
+                            td.attr("align", "center");
+                            a.appendTo(td);
+
+                            a.on('click', function () {
+                                new_tr.remove();
+                            });
+                        } else {
+                            var div = $("<div>");
+                            div.append($(o).attr("c-tpl"));
+                            div.find("input,textarea,select").each(function (i, obj) {
+                                var name = $(obj).attr("name");
+                                var index_of = name.indexOf("[]");
+                                if (form_name != undefined) {
+                                    if (index_of >= 0) {
+                                        $(obj).attr('name', form_name + '[c][' + index + '][' + name.substring(0, index_of) + '][]');
+                                    } else {
+                                        $(obj).attr('name', form_name + '[c][' + index + '][' + name + ']');
+                                    }
+                                } else {
+                                    if (index_of >= 0) {
+                                        $(obj).attr('name', '_c[' + index + '][' + name.substring(0, index_of) + '][]');
+                                    } else {
+                                        $(obj).attr('name', '_c[' + index + '][' + name + ']');
+                                    }
+
+                                }
+
+                            });
+
+                            new_tr.append("<td><div class='form-group no-margin'>" + div.html() + "</div></td>");
+                        }
+                    });
+                    if (form_addbottom) {
+                        $table.append(new_tr);
+                    } else {
+                        if ($table.find("tbody")) {
+                            $table.find("tbody").prepend(new_tr);
+                        } else {
+                            tr.after(new_tr);
+                        }
+                    }
+
+                    index++;
+
+                    $(".datetimepicker").each(function (i, o) {
+                        $(o).dp();
+                    });
+
+                    return false;
+                });
+
+            }
+        }, methods: {
+        }
+    });
+
+    Vue.component('alt-table-body', {
+        render(createElement) {
+            var rows = this.$parent.newRows.map(r => {
+                return createElement("alt-row")
+            });
+
+            return createElement('tbody', [rows, this.$slots.default]);
+        }, methods: {
+        }
+    });
+
+    Vue.component('alt-row', {
+        render(createElement) {
+            var n = createElement("td", [createElement("button", {
+                class: ["btn btn-danger btn-xs"],
+                on: {
+                    click: this.onClickRemoveRow
+                }, domProps: {
+                    innerHTML: "<i class='fa fa-minus'></i>"
+                }
+            })]);
+            return createElement('tr', [n, this.$slots.default]);
+        },
+        props: {
+            dataIndex: String
+        }, methods: {
+            onClickRemoveRow() {
+                this.$parent.addRow();
+
+            }
+        }
+
+    });
+
+    Vue.component('alt-head-row', {
+        render(createElement) {
+            var n = createElement("th", [createElement("button", {
+                class: ["btn btn-primary btn-xs"],
+                on: {
+                    click: this.onClickAddRow
+                }, domProps: {
+                    innerHTML: "<i class='fa fa-plus'></i>"
+                }
+            })]);
+
+            return createElement('tr', [n, this.$slots.default]);
+        },
+        data() {
+            return {
+                type: String
+            }
+        }, methods: {
+            onClickAddRow() {
+                this.$parent.addRow();
+            }
+        }
+    });
+
+    Vue.component('alt-column', {
+        template: "<th><slot></slot></th>"
+    });
+
+    Vue.component('alt-cell', {
+        template: "<td><slot></slot></td>"
+    });
+
+</script>

@@ -24,14 +24,9 @@
     <script src="{{js|raw}}"></script> {% endfor %} {% if firebase %}
     <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js" defer></script> {% endif %}
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"></script>  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"></script> {% for js in vue %}
+    <script src="{{js|raw}}"></script> {% endfor %}
 
-    {% for js in vue %}
-    <script src="{{js|raw}}"></script> 
-    {% endfor %}
-
-    {% for src in script %}
-    <script src="{{src|raw}}" defer></script> {% endfor %}
 
     <link id="pb-file" rel="import" href="{{system_base}}/plugins/pb.1.0.0/pb.html?v={{system.version}}&t={{t}}">
     <link id="alt-file" rel="import" href="{{system_base}}/plugins/alt.1.0.0/alt.html?v={{system.version}}&t={{t}}">
@@ -610,6 +605,9 @@
     <!-- ./wrapper -->
 
 
+
+    {% for src in script %}
+    <script src="{{src|raw}}" defer></script> {% endfor %}
 
 </body>
 

@@ -17,6 +17,7 @@ class Table extends \P\Query {
 		$this->columns = p();
 		$this->tr = p();
 
+
 		foreach ($objects as $k => $obj) {
 			$tr = p("tr")->appendTo($this->tbody);
 			$tr->data("object", $obj);
@@ -75,9 +76,12 @@ class Table extends \P\Query {
 		$column->callback = function ($object, $node)use ($form_name) {
 			$field = $node->attributes["data-field"];
 
-			$tr = p($node)->closest("tr");
 
-			$id = $tr->attr("data-index");
+			$tr = p($node)->closest("tr");
+		
+			//$id = $tr->attr("data-index");
+
+			$id=$object->id();
 
 			$fn = "_u";
 			if ($form_name)
