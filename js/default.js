@@ -1,5 +1,5 @@
 Vue.component("roxyfileman", {
-    template: "<bs-input/>",
+    template: "<bs-input></bs-input>",
     mounted() {
         this.$nextTick(function () {
             $(this.$el).on("click", function () {
@@ -88,6 +88,7 @@ var vue_init = function () {
             el: o
         });
     });
+
     document.querySelectorAll("ckeditor").forEach(o => {
         new Vue({
             el: o
