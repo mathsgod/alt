@@ -4,6 +4,9 @@ use App\Composer;
 
 class App
 {
+    public static $app;
+
+
     public static $system_mode = false;
 
     private static $_sv = [];
@@ -12,7 +15,7 @@ class App
 
     public static function Loader()
     {
-        return App\System::$app->loader;
+        return self::$app->loader;
     }
 
     public static function Log()
@@ -47,14 +50,7 @@ class App
 
     public static function Version()
     {
-        return App\System::$app->version();
-
-        foreach (App\Composer::Info() as $info) {
-            if ($info["name"] == "hostlink/r-alt") {
-                return $info["version"];
-            }
-        }
-        return "0.0.0";
+        return self::_()->version();
     }
 
     public static function User()
@@ -173,14 +169,14 @@ class App
 
         extract(self::_()->pathInfo());
 
-        if(is_readable($f=$cms_root."/".$uri)){
+        if (is_readable($f = $cms_root . "/" . $uri)) {
             return $f;
         }
 
-        if (is_readable($f=$system_root."/".$uri)) {
+        if (is_readable($f = $system_root . "/" . $uri)) {
             return $f;
         }
-        
+
 
     }
 
@@ -207,7 +203,7 @@ class App
 
     public static function DB()
     {
-        return App\System::$app->db();
+        return self::$app->db;
     }
 
     public static function Module()
@@ -294,11 +290,12 @@ class App
 
     public static function _()
     {
-        return App\System::$app;
+        return App::$app;
     }
 
-    public static function SystemBase(){
-        $p=self::_()->pathInfo();
+    public static function SystemBase()
+    {
+        $p = self::_()->pathInfo();
         return $p["system_base"];
     }
 }

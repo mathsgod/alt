@@ -25,10 +25,10 @@ class Config extends Model {
     public static function All() {
         if (sizeof(self::$_config))return self::$_config;
         // system config
-        $config = parse_ini_file(System::Root() . "/config.ini", true);
+        $config = \App::_()->config;
 
         // user config
-        foreach(parse_ini_file(CMS_ROOT . "/config.ini", true) as $cat => $ar) {
+        foreach($config as $cat => $ar) {
             foreach($ar as $k => $v) {
             	if($cat=="user"){
             		$v=str_replace("{username}",\App::User()->username,$v);

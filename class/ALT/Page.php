@@ -2,7 +2,7 @@
 
 namespace ALT;
 
-use TemplatePower;
+use R\Psr7\Request;
 use R\Psr7\Response;
 use R\Psr7\Stream;
 
@@ -56,16 +56,16 @@ class Page extends \App\Page
         return $this->_navbar;
     }
 
-    public function __invoke($request, $response)
+    public function __invoke(Request $request, Response $response)
     {
-        $action=$request->getAttribute("action");
-        $this->request=$request;
-        if ($request->getMethod()=="get") {
-            if ($action=="index") {
-                \App::SavePlace();
-            } elseif ($action=="v") {
-                $obj=$this->object();
-                
+        $action = $request->getAttribute("action");
+        $this->request = $request;
+        if ($request->getMethod() == "get") {
+            if ($action == "index") {
+                $this->app->savePlace();
+            } elseif ($action == "v") {
+                $obj = $this->object();
+
                 if (is_a($obj, "App\Model")) {
                     if (!$obj->canRead()) {
                         \App::AccessDeny();
@@ -75,12 +75,11 @@ class Page extends \App\Page
                         $this->navbar()->addButton("", $obj->uri("ae"))->icon("fa fa-pencil-alt")->addClass("btn-warning");
                     }
                     if ($obj->canDelete() && $this->module()->show_delete) {
-                        $this->navbar()->addButton("", $obj->uri("del") . "?redirect=" . $this->module()->name)->addClass("btn-danger confirm")->
-                            icon("fa fa-times");
+                        $this->navbar()->addButton("", $obj->uri("del") . "?redirect=" . $this->module()->name)->addClass("btn-danger confirm")->icon("fa fa-times");
                     }
                 }
-                \App::SavePlace();
-            } elseif ($action=="ae") {
+                $this->app->savePlace();
+            } elseif ($action == "ae") {
                 if ($this->id()) {
                     if (!\App\ACL::Allow($this->module()->class, "U")) {
                         \App::AccessDeny();
@@ -96,19 +95,19 @@ class Page extends \App\Page
         }
 
         if ($request->isAccept("text/html") && $request->getMethod() == "get") {
-            $this->master = new MasterPage();
-            $this->header["name"]=$this->module()->name;
+            $this->master = new MasterPage($this->app);
+            $this->header["name"] = $this->module()->name;
         }
 
-        $response=parent::__invoke($request, $response);
-        
+        $response = parent::__invoke($request, $response);
+
         if ($request->isAccept("application/json")) {
             if ($request->getMethod() == "get" && $action == "index") {
                 return $response;
             }
         }
 
-        if ($request->getMethod()=="post") {
+        if ($request->getMethod() == "post") {
             return $response;
         }
 
@@ -157,20 +156,20 @@ class Page extends \App\Page
                 $this->addLib("bootstrap-iconpicker");
                 $this->addLib("bootstrap-select/bootstrap-select");
 
-                
-                try{
+
+                try {
                     new \App\Plugin("datatables/datatables");
                     $this->addLib("datatables/datatables");
-                }catch(\Exception $e){
-                    
+                } catch (\Exception $e) {
+
                 }
 
-                $data=[];
-                $data["title"]=$this->module()->name;
+                $data = [];
+                $data["title"] = $this->module()->name;
 
                 if (count($this->header)) {
                     $header = [];
-                    $header["title"]=$this->header["title"];
+                    $header["title"] = $this->header["title"];
                     $header["name"] = $this->translate($this->header["name"]);
                     $header["icon"] = $this->header["icon"];
                     $header["description"] = $this->header["description"];
@@ -182,8 +181,7 @@ class Page extends \App\Page
                             if (!\App::ACL($o->attr("href"))) {
                                 $o->remove();
                             }
-                        }
-                        );
+                        });
                         if ($this->_navbar->find("a")->size() || $this->_navbar->find("button")->size()) {
                             $data["navbar"] = (string )$this->_navbar;
                         }
@@ -211,23 +209,23 @@ class Page extends \App\Page
                 $data["jquery"] = $plugins->jss();
 
                 //jquery ui
-                $jqueryui=new \App\Plugin("jquery-ui");
-                $data["jquery"]=\array_merge($data["jquery"],$jqueryui->jss());
-                foreach($jqueryui->csss() as $css){
-                    $data["css"][]=$css;
+                $jqueryui = new \App\Plugin("jquery-ui");
+                $data["jquery"] = \array_merge($data["jquery"], $jqueryui->jss());
+                foreach ($jqueryui->csss() as $css) {
+                    $data["css"][] = $css;
                 }
 
-                $plugins=new \App\Plugin("Sortable");
-                $data["jquery"]=array_merge($data["jquery"],$plugins->jss());
+                $plugins = new \App\Plugin("Sortable");
+                $data["jquery"] = array_merge($data["jquery"], $plugins->jss());
 
 
 
                 extract(\App::_()->pathInfo());
-                $system=$system_base;
+                $system = $system_base;
 
-                $data["system_base"]=$system_base;
+                $data["system_base"] = $system_base;
 
-                
+
                 $plugins = new \App\Plugin("vue");
                 $data["vue"] = $plugins->jss();
 
@@ -235,7 +233,7 @@ class Page extends \App\Page
                 $data["vue"][] = "$system/js/vue.draggable.js";*/
 
 
-                
+
 
                 $data["script"][] = "$system/AdminLTE/dist/js/app.js";
 
@@ -253,7 +251,7 @@ class Page extends \App\Page
 
                 $data["script"][] = "$system/js/vue.img-box.js";
 
-                
+
                 $data["script"][] = "$system/js/layout.js";
                 $data["script"][] = "$system/js/default.js";
 
@@ -262,9 +260,9 @@ class Page extends \App\Page
                     $data["script"][] = "js/" . basename($file);
                 }
 
-                $path_info=\App::_()->pathInfo();
-                if(file_exists($path_info["cms_root"]."/pages/".$this->path().".js")){
-                    $data["script"][]="pages/".$this->path().".js";
+                $path_info = \App::_()->pathInfo();
+                if (file_exists($path_info["cms_root"] . "/pages/" . $this->path() . ".js")) {
+                    $data["script"][] = "pages/" . $this->path() . ".js";
 
                 }
                 
@@ -278,15 +276,15 @@ class Page extends \App\Page
                 $plugins = new \App\Plugin("angular");
                 $data["angular"] = $plugins->jss();
 
-                
-                $data["content"].= $echo_content;
-                $data["content"].= (string)$response;
-                
+
+                $data["content"] .= $echo_content;
+                $data["content"] .= (string)$response;
+
                 $data["css"][] = "$system/AdminLTE/dist/css/AdminLTE.css";
                 $data["css"][] = "$system/AdminLTE/dist/css/skins/_all-skins.min.css";
 
-         
-                
+
+
 
                 $data["css"][] = "$system/css/default.css";
 
@@ -311,10 +309,10 @@ class Page extends \App\Page
                 foreach ($data as $k => $v) {
                     $this->master->assign($k, $v);
                 }
-           
-        
-                $response=new Response(200);
-                $request=$request->withAttribute("module", $this->module());
+
+
+                $response = new Response(200);
+                $request = $request->withAttribute("module", $this->module());
                 return $this->master->__invoke($request, $response);
                 
                 //return $response->withBody(new Stream($this->master_tpl($request,$response)));
@@ -354,8 +352,8 @@ class Page extends \App\Page
 
     public function createGrid($sizes)
     {
-        $route=$this->request->getAttribute("route");
-        $action=$route->action;
+        $route = $this->request->getAttribute("route");
+        $action = $route->action;
 
         $grid = new Grid();
         $uri = $this->module()->name . "/" . $action . "/grid[" . $grid->attr('grid-num') . "]";

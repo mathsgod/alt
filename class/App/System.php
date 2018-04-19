@@ -49,28 +49,7 @@ class System extends \R\System
         }
     }
 
-    public function pathInfo()
-    {
-        $s = $this->loader->getPrefixesPsr4()["ALT\\"][0];
-        $s = explode("/../", $s, 2)[0];
-        $composer_root = dirname(dirname($s));
-
-        $server = self::$request->getServerParams();
-        $document_root = $server["DOCUMENT_ROOT"];
-        if(substr($document_root,-1)=="/"){
-            $document_root=substr($document_root,0,-1);
-        }
-
-        $composer_base = substr($composer_root, strlen($document_root));
-        $composer_base = str_replace(DIRECTORY_SEPARATOR, "/", $composer_base);
-
-        $cms_root = CMS_ROOT;
-        $system_root = SYSTEM;
-        $system_base = substr($system_root, strlen($document_root));
-        $system_base = str_replace(DIRECTORY_SEPARATOR, "/", $system_base);
-
-        return compact("composer_base", "composer_root", "document_root", "cms_root", "system_root", "system_base");
-    }
+  
 
     public static function Run($root, $composer, $logger)
     {
@@ -132,81 +111,9 @@ class System extends \R\System
         }
     }
 
-    public static function BasePath()
-    {
-
-        return "//" . $_SERVER["SERVER_NAME"] . self::$request->getUri()->getBasePath();
-    }
-
     public static function Logined()
     {
         return (boolean)$_SESSION["app"]["login"];
-    }
-
-    public static function Login($username, $password, $code)
-    {
-        if ($username == "") {
-            throw new \Exception("Username cannot be empty", 400);
-        }
-        if ($password == "") {
-            throw new \Exception("Password cannot be empty", 400);
-        }
-
-        //check AuthLock
-        if (AuthLock::IsLock()) {
-            throw new \Exception("IP locked 180 seconds", 403);
-        }
-
-        $sth = self::$app->db()->prepare("select user_id,password from User where username=:username and status=0");
-        $sth->execute([":username" => $username]);
-        $row = $sth->fetch();
-        $sth->closeCursor();
-        if (is_null($row)) {
-            AuthLock::Add();
-            throw new \Exception("Login error", 403);
-        }
-        $user_id = $row["user_id"];
-        $p = $row["password"];
-
-        if (Util::Encrypt($password, $p) != $p) {
-            AuthLock::Add();
-            throw new \Exception("Login error", 403);
-        }
-        $user = new User($user_id);
-
-        if (\App::Config("user", "2-step verification")->value) {
-            $need_check = true;
-            if ($setting = $user->setting()) {
-                if (in_array($_SERVER["REMOTE_ADDR"], $setting["2-step_ip_white_list"])) {
-                    $need_check = false;
-                }
-            }
-
-            if ($need_check && !System::IP2StepExemptCheck($_SERVER['REMOTE_ADDR'])) {
-                if (($code == "" || !$user->checkCode($code)) && $user->secret != "") {
-                    throw new \Exception("2-step verification", 403);
-                }
-            }
-        }
-
-        if ($user->expiry_date && strtotime($user->expiry_date) < time()) {
-            AuthLock::Add();
-            throw new \Exception("Login error", 403);
-        }
-
-        $_SESSION["app"]["user_id"] = $user_id;
-
-        $_SESSION["app"]["user"] = $user;
-
-        $_SESSION["app"]["login"] = true;
-
-        $user->createUserLog("SUCCESS");
-
-        $user->online();
-
-        self::FlushMessage();
-
-        AuthLock::Clear();
     }
 
     public static function Init($root, $loader, $logger)
@@ -294,23 +201,6 @@ class System extends \R\System
         return false;
     }
 
-    public static function SavePlace()
-    {
-
-        $uri = self::$request->getURI();
-        $path = $uri->getPath();
-
-        if ($path[0] == "/") {
-            $path = substr($path, 1);
-        }
-
-
-        if ($query = $uri->getQuery()) {
-            $_SESSION["app"]["redirect"] = $path . "?" . $query;
-        } else {
-            $_SESSION["app"]["redirect"] = $path;
-        }
-    }
 
     public static function Language()
     {

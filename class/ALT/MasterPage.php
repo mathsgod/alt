@@ -14,7 +14,6 @@ class MasterPage
         $this->data[$name] = $value;
     }
 
-
     public function __invoke($request, $response)
     {
         $data = $this->data;
@@ -53,14 +52,14 @@ class MasterPage
         $data["company"] = \App\Config::_("company");
         $data["logo-mini"] = \App\Config::_("logo-mini");
         $data["logo"] = \App\Config::_('logo');
-        $data["base"] = \App\System::BasePath();
+        $data["base"] = $this->app->basePath()."/";
 
-        if(\App::User()->isAdmin()){
-            $data["allow_viewas"]=true;
+        if (\App::User()->isAdmin()) {
+            $data["allow_viewas"] = true;
         }
 
-        if($_SESSION["app"]["org_user"]){
-            $data["allow_cancel_viewas"]=true;
+        if ($_SESSION["app"]["org_user"]) {
+            $data["allow_cancel_viewas"] = true;
         }
 
         $firebase = \App::Config("firebase");
@@ -123,7 +122,7 @@ class MasterPage
                 $menu["label"] = \App::T($modulegroup_name);
                 $menu["link"] = "#";
                 $menu["icon"] = $group_icon[$modulegroup_name] ? $group_icon[$modulegroup_name] : "fa fa-link";
-                $menu["keyword"]=$menu["label"]." ".$modulegroup_name;
+                $menu["keyword"] = $menu["label"] . " " . $modulegroup_name;
 
                 if ($current_module->group == $modulegroup_name) {
                     $menu["active"] = true;
@@ -150,7 +149,7 @@ class MasterPage
                         $submenu["link"] = $links[0]["link"];
                         $submenu["target"] = $links[0]["target"];
                     }
-                    $submenu["keyword"]=$module->keyword();
+                    $submenu["keyword"] = $module->keyword();
 
 
                     $menu["submenu"][] = $submenu;
@@ -166,7 +165,7 @@ class MasterPage
                 $menu["label"] = $module->translate($module->name);
                 $menu["icon"] = $module->icon;
                 $menu["keyword"] = $module->keyword();
-                
+
 
                 if ($current_module->name == $module->name) {
                     $menu["active"] = true;
@@ -243,8 +242,9 @@ class MasterPage
         return $response->withBody($stream);
     }
 
-    public function __construct()
+    public function __construct($app)
     {
+        $this->app = $app;
         $user = \App::User();
         $setting = json_decode($user->setting, true);
 

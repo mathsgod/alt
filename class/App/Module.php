@@ -73,7 +73,9 @@ class Module extends Model
     public static function ByPath($path)
     {
         $ps = explode("/", $path);
-        $file = System::Loader()->findFile($path);
+        $ps=array_values(array_filter($ps,"strlen"));
+    
+        $file = \App::Loader()->findFile($path);
         if ($file) {
             //find setting.ini
             $p = explode("/", dirname($file));
@@ -96,6 +98,7 @@ class Module extends Model
         }
         if (!$m) {
             $p = explode("/", $path);
+            $p=array_values(array_filter($p,"strlen"));
             $m = self::_($p[0]);
         }
 

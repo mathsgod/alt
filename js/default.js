@@ -54,42 +54,7 @@ Vue.component("ckeditor", {
 });
 
 var vue_init = function () {
-    document.querySelectorAll("alt-table").forEach(o => {
-        new Vue({
-            el: o
-        });
-    });
-
-    document.querySelectorAll('alt-box').forEach(o => {
-        new Vue({
-            el: o
-        });
-    });
-
-    document.querySelectorAll('alt-rt').forEach(o => {
-        new Vue({
-            el: o
-        });
-    });
-    document.querySelectorAll('alt-e').forEach(o => {
-        new Vue({
-            el: o
-        });
-    });
-
-    document.querySelectorAll('alt-timeline').forEach(o => {
-        new Vue({
-            el: o
-        });
-    });
-
-    document.querySelectorAll("roxyfileman").forEach(o => {
-        new Vue({
-            el: o
-        });
-    });
-
-    document.querySelectorAll("ckeditor").forEach(o => {
+    document.querySelectorAll("alt-table,alt-box,alt-rt,alt-e,alt-timeline,roxyfileman,ckeditor,[is]").forEach(o => {
         new Vue({
             el: o
         });
@@ -340,6 +305,9 @@ window.addEventListener('HTMLImportsLoaded', function (e) {
         });
         $(".connectedSortable").not("._connectedSortable").addClass("_connectedSortable");
 
+
+
+
         //fancybox
         if ($.fancybox) {
             $(".fancybox").each(function () {
@@ -400,13 +368,9 @@ window.addEventListener('HTMLImportsLoaded', function (e) {
 
     };
 
-    $(document).ajaxComplete(function () {
-        setTimeout(f, 0);
-    });
-
-    document.addEventListener("DOMContentLoaded", function () {
-        setTimeout(f, 0);
-    });
+    $(document).ajaxComplete(f);
+    document.addEventListener("DOMContentLoaded", f);
+    f();
 })(jQuery);
 
 function closeRoxyDialog() {
@@ -547,35 +511,13 @@ function closeRoxyDialog() {
             });
         }
     };
-    $(document).ajaxComplete(function () {
-        setTimeout(f, 0);
-    });
-    $(f);
+    $(document).ajaxComplete(f);
+    f();
     setInterval(f, 300);
-
 })(jQuery);
 
 (function ($) {
     PNotify.prototype.options.styling = "fontawesome";
-})(jQuery);
-
-function __add_favorite() {
-    var label = prompt("請輸入標籤", window.document.title);
-    if (label != undefined && label != "") {
-        $.post("UI/save", {
-            type: "fav",
-            uri: "fav",
-            layout: {
-                label: label,
-                link: window.self.location.toString()
-            }
-        }).done(function () {
-            window.self.location.reload();
-        });
-    }
-}
-
-$(function () {
 
     $(".connectedSortable").css("min-height", "0px");
 
@@ -614,4 +556,20 @@ $(function () {
         element.sortable("disable");
         element.find(".ui-sortable-handle").css("cursor", "");
     });
-});
+})(jQuery);
+
+function __add_favorite() {
+    var label = prompt("請輸入標籤", window.document.title);
+    if (label != undefined && label != "") {
+        $.post("UI/save", {
+            type: "fav",
+            uri: "fav",
+            layout: {
+                label: label,
+                link: window.self.location.toString()
+            }
+        }).done(function () {
+            window.self.location.reload();
+        });
+    }
+}

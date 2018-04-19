@@ -20,7 +20,6 @@
   <![endif]-->
 
     {% for js in jquery %}
-    <script src="{{js|raw}}"></script> {% endfor %} {% for js in angular %}
     <script src="{{js|raw}}"></script> {% endfor %} {% if firebase %}
     <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js" defer></script> {% endif %}
 
@@ -63,25 +62,25 @@
                     <span class="sr-only">Toggle navigation</span>
                 </a>
 
-                <div class="navbar-custom-menu" ng-app="ALT" ng-controller="NavBarController">
+                <div class="navbar-custom-menu" id="alt-navbar">
                     <ul class="nav navbar-nav">
                         {% verbatim %}
                         <!-- Messages: style can be found in dropdown.less-->
                         <li class="dropdown messages-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="far fa-envelope"></i>
-                                <span class="label label-success" ng-if="messages.length>0">{{messages.length}}</span>
+                                <span class="label label-success" v-if="messages.length>0" v-text="messages.length"></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="header">You have {{messages.length}} messages</li>
                                 <li>
                                     <!-- inner menu: contains the actual data -->
                                     <ul class="menu">
-                                        <li ng-repeat="msg in messages">
+                                        <li v-for="msg in messages">
 
-                                            <a href="{{msg.href}}">
+                                            <a :href="msg.href">
                                                 <div class="pull-left">
-                                                    <img width="40" height="40" ng-src="{{msg.image}}" class="img-circle" alt="User Image">
+                                                    <img width="40" height="40" :src="msg.image" class="img-circle" alt="User Image">
                                                 </div>
                                                 <h4>
                                                     {{msg.label}}
@@ -101,15 +100,15 @@
                         <li class="dropdown notifications-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="far fa-bell"></i>
-                                <span class="label label-warning" ng-hide="notifications.length==0">{{notifications.length}}</span>
+                                <span class="label label-warning" v-if="notifications.length>0" v-text="notifications.length"></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="header">You have {{notifications.length}} notifications</li>
                                 <li>
                                     <ul class="menu">
-                                        <li ng-repeat="n in notifications">
-                                            <a href="{{n.href}}">
-                                                <i ng-class="n.icon"></i> {{n.label}}</a>
+                                        <li v-for="n in notifications">
+                                            <a :href="n.href">
+                                                <i :class="n.icon"></i> {{n.label}}</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -123,14 +122,14 @@
                         <li class="dropdown tasks-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="far fa-flag"></i>
-                                <span class="label label-danger" ng-hide="tasks.length==0">{{tasks.length}}</span>
+                                <span class="label label-danger" v-if="tasks.length>0" v-text="tasks.length"></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="header">You have {{tasks.length}} tasks</li>
                                 <li>
                                     <!-- inner menu: contains the actual data -->
                                     <ul class="menu">
-                                        <li ng-repeat="n in tasks" ng-bind-html="n">
+                                        <li v-for="n in tasks" v-html="n">
                                         </li>
                                     </ul>
                                 </li>
@@ -157,39 +156,25 @@
                                         <small>Member since {{user.join_date}}</small>
                                     </p>
                                 </li>
-                                <!-- Menu Body -->
-                                <!-- li class="user-body">
-                <div class="row">
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Followers</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Sales</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Friends</a>
-                  </div>
-                </div>
-                <!-- /.row -->
-                        </li -->
-                        <!-- Menu Footer-->
-                        <li class="user-footer">
-                            <div class="pull-left">
-                                <a href="User/profile" class="btn btn-default btn-flat">{{_('Profile')}}</a>
-                                <a href="User/setting?layout=top-nav" class="btn btn-default btn-flat">Top-nav</a>
 
-                                {% if allow_viewas %}
-                                <a href="System/viewas" class="btn btn-default btn-flat">View as</a>
-                                {% endif %} {% if allow_cancel_viewas %}
-                                <a href="cancel_viewas" class="btn btn-default btn-flat">Cancel view as</a>
-                                {% endif %}
-                            </div>
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="User/profile" class="btn btn-default btn-flat">{{_('Profile')}}</a>
+                                        <a href="User/setting?layout=top-nav" class="btn btn-default btn-flat">Top-nav</a>
 
-                            <div class="pull-right">
-                                <a href="System/logout" class="btn btn-default btn-flat">{{_('Sign out')}}</a>
-                            </div>
-                        </li>
-                        </ul>
+                                        {% if allow_viewas %}
+                                        <a href="System/viewas" class="btn btn-default btn-flat">View as</a>
+                                        {% endif %} {% if allow_cancel_viewas %}
+                                        <a href="cancel_viewas" class="btn btn-default btn-flat">Cancel view as</a>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="pull-right">
+                                        <a href="System/logout" class="btn btn-default btn-flat">{{_('Sign out')}}</a>
+                                    </div>
+                                </li>
+                            </ul>
                         </li>
                         <!-- Control Sidebar Toggle Button -->
                         <li>

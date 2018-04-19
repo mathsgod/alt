@@ -242,7 +242,8 @@ class C2 extends \P\HTMLElement
 		$p = new \P\InputCollection;
 		foreach ($this->cell as $cell) {
 			try {
-				$input = p("roxyfileman")->appendTo($cell);
+				$input = p("input")->appendTo($cell);
+				$input->attr("is","roxyfileman");
 				$input->attr("name", $field);
 				$input->attr("data-field", $field);
 
@@ -262,7 +263,8 @@ class C2 extends \P\HTMLElement
 		}
 
 		if ($this->createTemplate) {
-			$input = p("roxyfileman");
+			$input = p("input");
+			$input->attr("is","roxyfileman");
 			$input->addClass('form-control');
 			$input->attr("name", $field);
 			$input->attr("data-field", $field);
@@ -482,7 +484,7 @@ class C2 extends \P\HTMLElement
 	{
 		$p = new \BS\ButtonCollection;
 		foreach ($this->cell as $cell) {
-			$btn = new \APP\UI\Button();
+			$btn = new \App\UI\Button();
 			$btn->classList->add("btn-xs");
 			p($cell)->append($btn);
 			if ($object = p($cell)->data("object")) {

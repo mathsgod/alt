@@ -1,4 +1,14 @@
 new Vue({
+	el:"#alt-navbar",
+	data:{
+		messages:[],
+		notifications:[],
+		tasks:[]
+	}
+});
+
+
+new Vue({
 	el: "#_sb",
 	data: {
 		all_menus: [],
@@ -87,47 +97,6 @@ new Vue({
 });
 
 
-angular.module("ALT", ['ngSanitize']).controller("NavBarController", function ($scope, $window, $sce) {
-	$scope.messages = [];
-	$scope.notifications = [];
-	$scope.tasks = [];
-
-	$scope.addTaskHTML = function (html) {
-		$scope.tasks.push($sce.getTrustedHtml(html));
-	}
-
-});
-
-var ALT = {};
-ALT.Messages = {
-
-	//data.label, data.description, data.href, data.time, data.image
-	add: function (data) {
-		scope = angular.element("[ng-controller='NavBarController']").scope();
-		if (!data.image) data.image = "User/image?dummy=1";
-		scope.$apply(function () {
-
-			scope.messages.push(data);
-		});
-	}
-};
-
-ALT.Tasks = {
-	addHTML: function (html) {
-		scope = angular.element("[ng-controller='NavBarController']").scope();
-		scope.addTaskHTML(html);
-		scope.$apply();
-	}
-};
-
-ALT.Notifications = {
-	add: function (data) {
-		scope = angular.element("[ng-controller='NavBarController']").scope();
-		scope.$apply(function () {
-			scope.notifications.push(data);
-		});
-	}
-};
 
 $(function () {
 	function change_layout(cls) {

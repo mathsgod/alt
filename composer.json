@@ -25,8 +25,8 @@
     },
     "require": {
         "php": ">=5.6",
-        "hostlink/r-psr7": "1.*",
-        "hostlink/r": "1.*",
+        "hostlink/r-psr7": "2.*",
+        "hostlink/r": "2.*",
         "hostlink/r-p": "1.*",
         "hostlink/r-bs": "1.*",
         "hostlink/r-db": "1.*",
@@ -50,6 +50,9 @@
         "phpmailer/phpmailer": "6.*",
         "symfony/yaml": "3.*",
         "monolog/monolog": "1.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
     },
     "suggest": {
         "ckeditor/ckeditor": "JavaScript WYSIWYG web text editor.",
@@ -75,5 +78,5 @@
         }
     ],
     "minimum-stability": "stable",
-    "version": "4.15.0"
+    "version": "5.0.0"
 }

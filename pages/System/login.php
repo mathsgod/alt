@@ -8,7 +8,7 @@ class System_login extends R\Page
         $code = $_POST["code"];
 
         try {
-            \App\System::Login($username, $password, $code);
+            $this->app->login($username, $password, $code);
         } catch (Exception $e) {
             return ["code" => 400, "message" => $e->getMessage()];
         }
@@ -19,7 +19,7 @@ class System_login extends R\Page
     public function get()
     {
         // redirect to dashboard
-        \App::Redirect("");
+        $this->_redirect("");
     }
 
     public function forget_password()

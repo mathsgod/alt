@@ -60,8 +60,7 @@ class Page extends \R\Page
     public function path()
     {
         $route = $this->request->getAttribute("route");
-        return $route->path;
-        //return $this->request->getUri()->getPath();
+        return substr($route->path, 1);
     }
 
     public function id()
@@ -152,6 +151,8 @@ class Page extends \R\Page
     public function __invoke($request, $response)
     {
         $this->request = $request;
+        $this->request = $this->request->withAttribute("module", $this->module());
+
         if (\App\System::Logined()) {
             \App::User()->online();
         }
@@ -404,9 +405,9 @@ class Page extends \R\Page
         } else {
             $obj->bind($data);
 
-            if($files=$this->request->getUploadedFiles()){
-                foreach($files as $name=>$file){
-                    $obj->$name=(string)$file->getStream();
+            if ($files = $this->request->getUploadedFiles()) {
+                foreach ($files as $name => $file) {
+                    $obj->$name = (string)$file->getStream();
                 }
 
             }

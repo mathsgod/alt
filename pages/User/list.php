@@ -6,13 +6,14 @@ class User_list extends ALT\Page
     public function get()
     {
         // outp(App\User::find());
-        
+
         $rt = $this->createRT([$this, "ds"]);
         //$rt->attr("selectable",true);
 //        $rt->attr("responsive",false);
         //$rt->attr("page-size",50);
         $rt->attr("cell-url", "User");
         $rt->key("user_id");
+        $rt->addView();
         $rt->addEdit();
         $rt->addDel();
 

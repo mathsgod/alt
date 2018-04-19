@@ -5,7 +5,7 @@ abstract class Model extends \R\Model
 {
     public static function __db()
     {
-        return System::$app->db();
+        return \App::DB();
     }
 
     public function bind($rs)
@@ -153,12 +153,17 @@ abstract class Model extends \R\Model
         //check const
         $c=new \ReflectionClass($class);
         if ($const=$c->getConstants()) {
-            if (array_key_exists($function, $const)) {
-                $decamlize=function($string) {
-                    return strtolower(preg_replace(['/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/'], '$1_$2', $string));
-                };
-                $field=$decamlize($function);
+            
+            $decamlize=function($string) {
+                return strtolower(preg_replace(['/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/'], '$1_$2', $string));
+            };
+            $field=$decamlize($function);
 
+            if (array_key_exists(strtoupper($field), $const)) {
+                return $const[strtoupper($field)][$this->$field];
+            }
+
+            if (array_key_exists($function, $const)) {
                 return $const[$function][$this->$field];
             }
         }
