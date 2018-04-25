@@ -1,8 +1,5 @@
 <template id="alt-input">
-    <div>
-        <input class="form-control" v-bind="$props" :value="value" :name="name" :type="type"/>
-        <i v-if="required" class="fa fa-asterisk form-control-feedback" style="top:10px"></i>
-    </div>
+    <input class="form-control" v-bind="$props" :value="value" :name="name" :type="type"/>
 </template>
 
 <script>
@@ -14,7 +11,11 @@
             required: Boolean,
             value: String
         }, mounted() {
+            console.log(this);
             if (this.required) {
+                $(this.$el).after('<i class="fa fa-asterisk form-control-feedback" style="top:10px"></i>');
+                
+
                 $(this.$el).closest(".form-group").addClass("has-feedback");
                 if ($(this.$el).closest(".form-group").length == 0) {
                     $(this.$el).css("margin-bottom", "0px");
