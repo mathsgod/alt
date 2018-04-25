@@ -141,22 +141,25 @@ class App
         $route = new App\Route($request, self::Loader());
 
         if ($class = $route->class) {
-            return new $class();
+            return new $class(self::_());
         }
     }
 
     public static function Redirect($uri)
     {
         // get base
-        $base = App\System::$base;
+        $app = self::_();
+
+        $base = $app->base;
+
         if ($_GET["redirect"]) {
             header("location: " . $base . $_GET["redirect"]);
         } elseif ($uri == null) {
-            header("location: " . $base . $_SESSION["app"]["redirect"]);
+            header("location: " . $base . "/" . $_SESSION["app"]["redirect"]);
         } else {
             $data = parse_url($uri);
             if (!$data["scheme"]) {
-                $_url = $base . $uri;
+                $_url = $base . "/" . $uri;
                 header("location: $_url");
             } else {
                 header("location: $url");
@@ -222,7 +225,7 @@ class App
 
     public static function AccessDeny($uri)
     {
-        if (App\System::Logined()) {
+        if (self::$app->logined()) {
             App::Redirect("access_deny");
         } else {
             App::Redirect("?r=$uri");

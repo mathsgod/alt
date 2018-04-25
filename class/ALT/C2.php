@@ -204,7 +204,8 @@ class C2 extends \P\HTMLElement
 		$p = new \P\InputCollection;
 		foreach ($this->cell as $cell) {
 			try {
-				$input = p("bs-input")->appendTo($cell);
+				$input = p("input")->appendTo($cell);
+				$input->attr("is", "alt-input");
 				$input->attr("name", $field);
 				$input->attr("data-field", $field);
 
@@ -224,10 +225,11 @@ class C2 extends \P\HTMLElement
 		}
 
 		if ($this->createTemplate) {
-			$input = p("input");
-			$input->addClass("form-control");
+			$input = p("div");
+			$input->attr("is", "alt-input");
 			$input->attr("name", $field);
 			$input->attr("data-field", $field);
+			$input->attr("value", $this->default[$field]);
 
 			$p[] = $input[0];
 
@@ -239,42 +241,8 @@ class C2 extends \P\HTMLElement
 
 	public function roxyfileman($field)
 	{
-		$p = new \P\InputCollection;
-		foreach ($this->cell as $cell) {
-			try {
-				$input = p("input")->appendTo($cell);
-				$input->attr("is","roxyfileman");
-				$input->attr("name", $field);
-				$input->attr("data-field", $field);
-
-				if ($object = p($cell)->data("object")) {
-					$input->data("object", $object);
-					$input->attr("value", is_object($object) ? $object->$field : $object[$field]);
-
-					if ($this->callback) {
-						call_user_func($this->callback, $object, $input[0]);
-					}
-				}
-
-				$p[] = $input[0];
-			} catch (Exception $e) {
-				$cell->append("<p class='form-control-static'>" . $e->getMessage() . "</p>");
-			}
-		}
-
-		if ($this->createTemplate) {
-			$input = p("input");
-			$input->attr("is","roxyfileman");
-			$input->addClass('form-control');
-			$input->attr("name", $field);
-			$input->attr("data-field", $field);
-
-			$p[] = $input[0];
-
-
-			$this->c_tpl[] = $input[0];
-
-		}
+		$p = $this->input($field);
+		$p->attr("is", "roxyfileman");
 		return $p;
 	}
 
@@ -285,7 +253,7 @@ class C2 extends \P\HTMLElement
 		foreach ($this->cell as $cell) {
 			try {
 				$textarea = p("textarea")->appendTo($cell);
-				$textarea->attr("is","ckeditor");
+				$textarea->attr("is", "ckeditor");
 				$textarea->attr('data-field', $field);
 				$textarea->attr('name', $field);
 				$textarea->addClass('form-control');
@@ -294,7 +262,7 @@ class C2 extends \P\HTMLElement
 					$textarea->data("object", $object);
 
 					//$textarea->text(is_object($object) ? $object->$field : $object[$field]);
-					$textarea->attr("data",is_object($object) ? $object->$field : $object[$field]);
+					$textarea->attr("data", is_object($object) ? $object->$field : $object[$field]);
 
 					if ($this->callback) {
 						call_user_func($this->callback, $object, $textarea[0]);
@@ -463,21 +431,9 @@ class C2 extends \P\HTMLElement
 
 	public function email($field)
 	{
-		$input = $this->input($field);
-		$input->attr("type", "email");
-
-		foreach ($input as $i) {
-			if (!$i->parentNode)
-				continue;
-			$div = p("div")->addClass("input-group");
-
-			p($i)->wrap($div);
-
-			$addon = p("span")->addClass("input-group-addon")->prependTo($div);
-			$addon->append("<i class='far fa-envelope'></i>");
-
-		}
-		return $input;
+		$p=$this->input($field);
+		$p->attr("is","alt-email");
+		return $p;
 	}
 
 	public function button()
@@ -496,41 +452,60 @@ class C2 extends \P\HTMLElement
 		return $p;
 	}
 
-	public function tokenField($field)
+	public function tokenField($field, $options)
 	{
-		$p = $this->input($field);
-		$p->attr("type", "hidden");
 
 		$p = new \P\SelectCollection();
 		foreach ($this->cell as $cell) {
 
-			$is = new \BS\TokenField();
-			p($is)->appendTo($cell);
-			$is->attr("data-field", $field)->attr("name", $field . "[]");
+			$input = p("input")->appendTo($cell);
+			$input->attr("type", "hidden");
+			$input->attr("name", $field);
 
+			$e = p("select2")->appendTo($cell);
+			$e->attr("name", $field . "[]");
+			$e->attr("data-tags", "true");
+			$e->attr("multiple", true);
+
+
+			$data = [];
+			$value = [];
 			if ($object = p($cell)->data("object")) {
 				$value = is_object($object) ? $object->$field : $object[$field];
-
-				if ($value != "") {
-					$is->attr("data-value", explode(",", $value));
-				} else {
-					$is->attr("data-value", "");
+				if (is_string($value)) {
+					$value = explode(",", $value);
 				}
 
-				if ($this->callback) {
-					call_user_func($this->callback, $object, $is);
+				foreach ($value as $v) {
+					$data[] = [
+						"id" => $v,
+						"text" => $v,
+						"selected" => true
+					];
 				}
-
+			}
+			foreach ($options as $v) {
+				if (!in_array($v, $value)) {
+					$data[] = [
+						"id" => $v,
+						"text" => $v
+					];
+				}
 			}
 
-			$p[] = $is;
+
+			$e->attr("data-data", $data);
+			$p[] = $e;
 		}
 
 		if ($this->createTemplate) {
-			$is = new \BS\TokenField();
-			$is->attr("data-field", $field)->attr("name", $field . "[]");
-			$p[] = $is;
-			$this->c_tpl[] = $is;
+			$e = p("select2");
+			$e->attr("name", $field);
+			$e->attr("data-tags", "true");
+			$e->attr("multiple", true);
+
+			$p[] = $e;
+			$this->c_tpl[] = $e;
 		}
 
 		return $p;
@@ -594,7 +569,7 @@ class C2 extends \P\HTMLElement
 			p($cell)->append($cb);
 
 			$input = $cb->find("input");
-			$input->attr("is","icheck");
+			$input->attr("is", "icheck");
 			$input->attr("name", $field);
 			$input->attr("data-field", $field);
 			$input->val(1);
@@ -636,87 +611,71 @@ class C2 extends \P\HTMLElement
 		$p = new \P\InputCollection;
 		foreach ($this->cell as $cell) {
 
-			$div = p("div")->addClass("input-group")->appendTo($cell);
-			$addon = p("div")->addClass("input-group-addon")->appendTo($div);
-			$addon->append('<i class="far fa-calendar-alt"></i>');
-
-
-			$input = p("input")->appendTo($div);
-			$input->attr("is","datepicker");
-			$input->attr("name", $field);
-			$input->attr("data-field", $field);
+			$div = p("div")->appendTo($cell);
+			$div->attr("is", "alt-date");
+			$div->attr("name", $field);
+			$div->attr("data-field", $field);
 			if ($object = p($cell)->data("object")) {
-				$input->data("object", $object);
-				$input->val(is_object($object) ? $object->$field : $object[$field]);
+				$div->data("object", $object);
+				$div->attr("value", is_object($object) ? $object->$field : $object[$field]);
 
 				if ($this->callback) {
-					call_user_func($this->callback, $object, $input[0]);
+					call_user_func($this->callback, $object, $div[0]);
 				}
+				$p[] = $div[0];
 			}
-			$p[] = $input[0];
+
 		}
 
 		if ($this->createTemplate) {
-			$div = p("div")->addClass("input-group");
-			$addon = p("div")->addClass("input-group-addon")->appendTo($div);
-			$addon->append('<i class="fa fa-calendar"></i>');
 
-			$input = p("input")->appendTo($div);
-			$input->attr("is","datepicker");
-			$input->attr("name", $field);
-			$input->attr("data-field", $field);
-
-			$p[] = $input[0];
-
+			$div = p("div")->attr("is", "alt-date");
+			$div->attr("name", $field);
+			$div->attr("data-field", $field);
+			$p[] = $div[0];
 			$this->c_tpl[] = $div[0];
-
 		}
 		return $p;
 	}
 
 	public function time($field)
 	{
-		$p = p();
-		foreach ($this->cell as $cell) {
-			$div = p("div")->addClass("input-group bootstrap-timepicker")->appendTo($cell);
-			$addon = p("div")->addClass("input-group-addon")->appendTo($div);
-			$addon->append('<i class="fa fa-clock-o"></i>');
-
-			$input = p("input")->appendTo($div);
-			$input->addClass('form-control timepicker');
-			$input->attr("name", $field);
-			$input->attr("data-field", $field);
-			if ($object = p($cell)->data("object")) {
-				$input->val(is_object($object) ? $object->$field : $object[$field]);
-
-
-				if ($this->callback) {
-					call_user_func($this->callback, $object, $input[0]);
-				}
-			}
-
-
-			$p[] = $input;
-		}
-
-		if ($this->createTemplate) {
-			$div = p("div")->addClass("input-group bootstrap-timepicker");
-			$addon = p("div")->addClass("input-group-addon")->appendTo($div);
-			$addon->append('<i class="fa fa-clock-o"></i>');
-			$input = p("input")->appendTo($div);
-			$input->addClass('form-control timepicker');
-			$input->attr("name", $field);
-			$input->attr("data-field", $field);
-			$this->c_tpl[] = $div;
-		}
-
+		$p = $this->datetime($field);
+		$p->attr("format", "HH:mm");
+		$p->attr("icon", "far fa-clock");
 		return $p;
 	}
 
-	public function datetime($index = null)
+	public function datetime($field = null)
 	{
-		$p = $this->input($index);
-		$p->addClass("datetimepicker");
+		$p = new \P\InputCollection;
+		foreach ($this->cell as $cell) {
+
+			$div = p("div")->appendTo($cell);
+			$div->attr("is", "alt-datetime");
+			$div->attr("name", $field);
+			$div->attr("data-field", $field);
+			if ($object = p($cell)->data("object")) {
+				$div->data("object", $object);
+				$div->attr("value", is_object($object) ? $object->$field : $object[$field]);
+
+				if ($this->callback) {
+					call_user_func($this->callback, $object, $div[0]);
+				}
+				$p[] = $div[0];
+			}
+
+		}
+
+		if ($this->createTemplate) {
+
+			$div = p("div")->attr("is", "alt-datetime");
+			$div->attr("icon", "far fa-clock-alt");
+			$div->attr("name", $field);
+			$div->attr("data-field", $field);
+			$p[] = $div[0];
+			$this->c_tpl[] = $div[0];
+		}
 		return $p;
 	}
 
@@ -730,14 +689,18 @@ class C2 extends \P\HTMLElement
 			$input->attr("name", $field);
 
 			$select = p("select")->appendTo($cell);
-			$select->addClass("form-control multiselect");
-			$select->attr("multiple", true);
+			$select->attr("is", "alt-multiselect");
 			$select->attr("data-field", $field);
 			$select->attr("name", $field);
 
 			if ($object = p($cell)->data("object")) {
 				$select->data("object", $object);
-				$select->attr("data-value", is_object($object) ? $object->$field : $object[$field]);
+
+				$value = is_object($object) ? $object->$field : $object[$field];
+				if (is_string($value)) {
+					$value = explode(",", $value);
+				}
+				$select->attr("data-value", $value);
 				if ($this->callback) {
 					call_user_func($this->callback, $object, $input[0]);
 					call_user_func($this->callback, $object, $select[0]);
@@ -748,10 +711,7 @@ class C2 extends \P\HTMLElement
 
 			$p[] = $select[0];
 		}
-
-
 		return $p;
-
 	}
 
 	public function multiSelectPicker($field)
@@ -858,7 +818,7 @@ class C2 extends \P\HTMLElement
 
 		foreach ($this->cell as $cell) {
 			$select = p("select")->appendTo($cell);
-			$select->attr("is","select2");
+			$select->attr("is", "select2");
 			$select->attr("data-field", $field);
 			$select->attr("name", $field);
 

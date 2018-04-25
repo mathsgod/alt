@@ -1,0 +1,28 @@
+<template id="alt-input">
+    <div>
+        <input class="form-control" v-bind="$props" :value="value" :name="name" :type="type"/>
+        <i v-if="required" class="fa fa-asterisk form-control-feedback" style="top:10px"></i>
+    </div>
+</template>
+
+<script>
+    Vue.component("alt-input", {
+        template: document.currentScript.ownerDocument.getElementById("alt-input"),
+        props: {
+            type: String,
+            name: String,
+            required: Boolean,
+            value: String
+        }, mounted() {
+            if (this.required) {
+                $(this.$el).closest(".form-group").addClass("has-feedback");
+                if ($(this.$el).closest(".form-group").length == 0) {
+                    $(this.$el).css("margin-bottom", "0px");
+
+                    $(this.$el).addClass("form-group has-feedback");
+                }
+                //   $(this.$el).closest("form").validate()
+            }
+        }
+    });
+</script>

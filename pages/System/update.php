@@ -56,21 +56,7 @@ class System_update extends ALT\Page
         API::output($this->globr(CMS_ROOT . file_get_contents(CMS_ROOT . "version"), "*"));
     }
 
-    public function selectSystem($version)
-    {
-        //App\Composer::Check();
-        //App\Composer::InstallSystemRequire();
-
-//		if ($system) {
-//			file_put_contents(CMS_ROOT . "/version", $system);
-//		}
-//		App::Redirect("System/update");
-
-        App\Composer::Run("require hostlink/r-alt:$version");
-        App::Msg("System updated");
-        App::Redirect("System/update");
-    }
-
+    
     public function download($system, $plugins)
     {
         if ($system) {

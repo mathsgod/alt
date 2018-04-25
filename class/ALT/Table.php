@@ -8,6 +8,8 @@ class Table extends \P\Query {
 	public $tbody;
 	public $thead;
 	public $columns;
+	public $default;
+
 	public function __construct($objects) {
         parent::__construct("table");
         $this->attr("is","alt-table");
@@ -44,6 +46,8 @@ class Table extends \P\Query {
 	public function add($label, $getter) {
 
 		$column = new C2("th");
+		$column->default=$this->default;
+		
 		$this->columns[] = $column;
 
 		if ($this->attr("form-create")) {

@@ -107,7 +107,6 @@ class App extends \R\App
             $page = new $class($this);
         }
 
-
         if ($page) {
             $response = new Response(200);
             try {

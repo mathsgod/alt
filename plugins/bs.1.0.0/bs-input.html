@@ -5,10 +5,14 @@
     Vue.component("bs-input", {
         template: document.currentScript.ownerDocument.getElementById("bs-input"),
         props: {
+            required: Boolean,
+            value: String,
             type: {
                 type: String,
                 default: "text"
             }
+        }, mounted() {
+
         }
     });
 </script>

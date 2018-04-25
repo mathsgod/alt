@@ -85,15 +85,14 @@ class Route extends \R\Route
         $root = $request->getServerParams()["DOCUMENT_ROOT"];
         $base = $request->getURI()->getBasePath();
 
-
         $page = \App::Config("system", "pages");
         if (!$page) {
-            $page = "pages";
+            $page = "/pages";
         }
 
         while (count($qs)) {
             $path = implode("/", $qs);
-
+ 
 
             if (file_exists($file = $root . $base . $page . $path . "/index.php")) {
                 $this->file = $file;

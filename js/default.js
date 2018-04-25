@@ -46,24 +46,59 @@ Vue.component("ckeditor", {
             var base = $("base").attr("href");
             CKEDITOR.config.filebrowserImageBrowseUrl = base + "plugins/RoxyFileman.1.4.5/fileman/index.html?type=image";
             CKEDITOR.config.filebrowserBrowseUrl = base + "plugins/RoxyFileman.1.4.5/fileman/index.html";
-
             CKEDITOR.replace(this.$el);
         }
-
     }
 });
 
+
+
 var vue_init = function () {
-    document.querySelectorAll("alt-table,alt-box,alt-rt,alt-e,alt-timeline,roxyfileman,ckeditor,[is]").forEach(o => {
+    document.querySelectorAll("alt-table").forEach(o => {
         new Vue({
             el: o
         });
     });
+    document.querySelectorAll("alt-box").forEach(o => {
+        new Vue({
+            el: o
+        });
+    });
+    document.querySelectorAll("alt-rt").forEach(o => {
+        new Vue({
+            el: o
+        });
+    });
+    document.querySelectorAll("alt-e").forEach(o => {
+        new Vue({
+            el: o
+        });
+    });
+    document.querySelectorAll("alt-timeline").forEach(o => {
+        new Vue({
+            el: o
+        });
+    });
+    document.querySelectorAll("roxyfileman").forEach(o => {
+        new Vue({
+            el: o
+        });
+    });
+    document.querySelectorAll("ckeditor").forEach(o => {
+        new Vue({
+            el: o
+        });
+    });
+    document.querySelectorAll("[is]").forEach(o => {
+        new Vue({
+            el: o
+        });
+    });
+    setTimeout(vue_init,500);
 };
 document.addEventListener("DOMContentLoaded", function (event) {
     console.log('domcontentloaded');
     vue_init();
-    setInterval(vue_init, 500);
 });
 
 window.addEventListener('WebComponentsReady', function (e) {
@@ -389,30 +424,29 @@ function closeRoxyDialog() {
             });
         }
 
-        $("input[required]").not("._required").each(function (i, o) {
-            $(o).addClass('_required');
-            var formgroup = $(o).closest(".form-group");
-            if (formgroup.length == 0) {
-                formgroup = $("<div>");
-                formgroup.addClass("no-margin form-group has-feedback");
-                $(o).wrap(formgroup);
-            }
-            formgroup.addClass("has-feedback");
-
-            var $span = '<i class="fa fa-asterisk form-control-feedback" />';
-            if ($(o).closest('.input-group').length == 1) {
-                $(o).closest('.input-group').after($span);
-            } else {
-                $(o).after($span);
-            }
-        });
+                //Select2
 
 
-        //Select2
-        /*$("select.select2").each(function (i, o) {
-            $(o).removeClass("select2").addClass("_select2");
-            $(o).select2();
-        });*/
+
+        /*        $("input[required]").not("._required").each(function (i, o) {
+                    $(o).addClass('_required');
+                    var formgroup = $(o).closest(".form-group");
+                    if (formgroup.length == 0) {
+                        formgroup = $("<div>");
+                        formgroup.addClass("no-margin form-group has-feedback");
+                        $(o).wrap(formgroup);
+                    }
+                    formgroup.addClass("has-feedback");
+        
+                    var $span = '<i class="fa fa-asterisk form-control-feedback" />';
+                    if ($(o).closest('.input-group').length == 1) {
+                        $(o).closest('.input-group').after($span);
+                    } else {
+                        $(o).after($span);
+                    }
+                });*/
+
+
 
         /*        $("[datepicker]").not("._datepicker").each(function () {
                     var options = {

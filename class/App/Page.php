@@ -153,7 +153,7 @@ class Page extends \R\Page
         $this->request = $request;
         $this->request = $this->request->withAttribute("module", $this->module());
 
-        if (\App\System::Logined()) {
+        if ($this->app->logined()) {
             \App::User()->online();
         }
 
@@ -302,7 +302,7 @@ class Page extends \R\Page
         if ($query = $uri->getQuery()) {
             $s .= "?$query";
         }
-        return $s;
+        return substr($s,1);
     }
 
     public function createForm($content = null, $multipart = false)

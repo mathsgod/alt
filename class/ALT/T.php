@@ -26,7 +26,7 @@ class T extends Box
     {
         return $this->table->add($label, $getter);
     }
-    
+
     public function addChildRow($label, $getter)
     {
         return $this->table->addChildRow($label, $getter);
@@ -41,33 +41,47 @@ class T extends Box
     {
         return $this->table->addDel();
     }
-    
+
     public function setCreate($uri)
     {
-        $p=new \P\AnchorCollection();
-        $p[]=$this->header()->addButton()->icon("fa fa-plus")->addClass("btn-primary")->attr("href", $uri);
+        $p = new \P\AnchorCollection();
+        $p[] = $this->header()->addButton()->icon("fa fa-plus")->addClass("btn-primary")->attr("href", $uri);
         return $p;
     }
 
-    public function formCreate(){
-        $this->table->attr("form-create",true);
+    public function formCreate($options, $default)
+    {
+        $this->table->attr("form-create", true);
+
+        if (is_string($options)) {
+            $opt = [
+                "name" => $options,
+                "default" => $default
+            ];
+        } else {
+            $opt = $options;
+        }
+
+        $this->table->attr("form-name", $opt["name"]);
+        $this->table->default=$opt["default"];
+
         return $this;
     }
-    
+
     public function subHTML($label, $callback, $index)
     {
-        $url=$callback[0]->path()."/".$callback[1];
+        $url = $callback[0]->path() . "/" . $callback[1];
         return $this->table->add($label, function ($o) use ($url, $index) {
             if (is_object($o)) {
                 if ($index) {
-                    $url.="?".http_build_query([$index=> $o->$index]);
+                    $url .= "?" . http_build_query([$index => $o->$index]);
                 } else {
-                    $url.="?".http_build_query(["id"=> $o->ID()]);
+                    $url .= "?" . http_build_query(["id" => $o->ID()]);
                 }
             } else {
-                $url.="?".http_build_query([$index=> $o[$index]]);
+                $url .= "?" . http_build_query([$index => $o[$index]]);
             }
-            
+
             return "<button class='btn btn-xs btn-primary table-childrow-btn table-childrow-close' data-url='$url' data-target=''><i class='fa fa-chevron-up'></i></button>";
         });
     }
