@@ -205,7 +205,6 @@ class C2 extends \P\HTMLElement
 		foreach ($this->cell as $cell) {
 			try {
 				$input = p("input")->appendTo($cell);
-				$input->addClass("form-control");
 				$input->attr("is", "alt-input");
 				$input->attr("name", $field);
 				$input->attr("data-field", $field);

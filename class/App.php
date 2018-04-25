@@ -88,7 +88,7 @@ class App
 
     public static function SavePlace()
     {
-        App\System::SavePlace();
+        self::_()->savePlace();
     }
 
     public static function Config($category = null, $name = null)
