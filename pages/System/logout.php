@@ -5,9 +5,7 @@ class System_logout extends App\Page
 {
     public function get()
     {
-        if (App\System::Logined()) {
-
-
+        if ($this->app->logined()) {
             if ($_SESSION["app"]["org_user"]) {
                 $_SESSION["app"]["user"] = new App\User($_SESSION["app"]["org_user"]->user_id);
                 unset($_SESSION["app"]["org_user"]);

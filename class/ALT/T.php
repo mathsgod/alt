@@ -32,6 +32,11 @@ class T extends Box
         return $this->table->addChildRow($label, $getter);
     }
 
+    public function addView()
+    {
+        return $this->table->addView();
+    }
+
     public function addEdit()
     {
         return $this->table->addEdit();
@@ -63,7 +68,7 @@ class T extends Box
         }
 
         $this->table->attr("form-name", $opt["name"]);
-        $this->table->default=$opt["default"];
+        $this->table->default = $opt["default"];
 
         return $this;
     }

@@ -1,8 +1,12 @@
 <?php
 use App\UserGroup;
-class UserGroup_list extends App\Page {
-    public function get() {
+
+class UserGroup_list extends App\Page
+{
+    public function get()
+    {
         $rt = $this->createRT([$this, "ds"]);
+        $rt->addView();
         $rt->addEdit();
         $rt->addDel();
         $rt->key("usergroup_id");
@@ -15,21 +19,20 @@ class UserGroup_list extends App\Page {
         $this->write($rt);
     }
 
-    public function ds($rt) {
+    public function ds($rt)
+    {
         $w = $rt->where();
         $d["total"] = UserGroup::Count($w);
         $d["data"] = UserGroup::find($w, $rt->order(), $rt->limit());
         return $d;
     }
 
-    public function user($id) {
+    public function user($id)
+    {
         $ug = new UserGroup($id);
         $t = $this->createT($ug->User());
 
-        $t->add("Username")->a("username")->href(function($o) {
-                return $o->uri("v");
-            }
-            );
+        $t->add("Username", "username")->alink("v");
         $t->add("First name", "first_name");
         $t->add("Last name", "last_name");
         $t->add("Email", "email");

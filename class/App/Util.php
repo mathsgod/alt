@@ -1,7 +1,10 @@
 <?php
 namespace App;
-class Util {
-    public static function Encrypt($str, $salt = null) {
+
+class Util
+{
+    public static function Encrypt($str, $salt = null)
+    {
         $md5 = md5($str);
         eval(base64_decode("JHBhc3MgPSBtZDUoc3Vic3RyKHN1YnN0cigkbWQ1LC0xNiksLTgpLnN1YnN0cihzdWJzdHIoJG1kNSwtMTYpLDAsLTgpLnN1YnN0cihzdWJzdHIoJG1kNSwwLC0xNiksLTgpLnN1YnN0cihzdWJzdHIoJG1kNSwwLC0xNiksMCwtOCkpOw=="));
         if (is_null($salt)) {
@@ -19,19 +22,20 @@ class Util {
         }
     }
 
-    public static function GeneratePassword($length = 6, $strength = 0) {
+    public static function GeneratePassword($length = 6, $strength = 0)
+    {
         $vowels = 'aeuy';
         $consonants = 'bdghjmnpqrstvz';
-        if ($strength &1) {
+        if ($strength & 1) {
             $consonants .= 'BDGHJLMNPQRSTVWXZ';
         }
-        if ($strength &2) {
+        if ($strength & 2) {
             $vowels .= "AEUY";
         }
-        if ($strength &4) {
+        if ($strength & 4) {
             $consonants .= '23456789';
         }
-        if ($strength &8) {
+        if ($strength & 8) {
             $consonants .= '@#$%';
         }
 
@@ -48,6 +52,13 @@ class Util {
         }
         return $password;
     }
-}
 
-?>
+    public static function GUID()
+    {
+        if (function_exists('com_create_guid') === true) {
+            return trim(com_create_guid(), '{}');
+        }
+
+        return sprintf('%04X%04X-%04X-%04X-%04X-%04X%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535));
+    }
+}

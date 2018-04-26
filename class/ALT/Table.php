@@ -104,6 +104,18 @@ class Table extends \P\Query {
 		return $this->tr;
 	}
 
+	public function addView(){
+		$column = $this->add();
+		$column->width(29);
+		$as = $column->a()->addClass("btn btn-xs btn-info confirm")->removeClass("btn-default")->html("<i class='fa fa-search'></i>");
+		foreach ($as as $a) {
+			if ($object = p($a)->parent()->data("object")) {
+				p($a)->attr('href', $object->uri('v'));
+			}
+		}
+		return $as;
+	}
+
 	public function addDel() {
 		$column = $this->add();
 		$column->width(20);

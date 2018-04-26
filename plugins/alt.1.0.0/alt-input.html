@@ -11,10 +11,8 @@
             required: Boolean,
             value: String
         }, mounted() {
-            console.log(this);
             if (this.required) {
                 $(this.$el).after('<i class="fa fa-asterisk form-control-feedback" style="top:10px"></i>');
-                
 
                 $(this.$el).closest(".form-group").addClass("has-feedback");
                 if ($(this.$el).closest(".form-group").length == 0) {
