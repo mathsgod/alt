@@ -2,7 +2,7 @@
 allow check login information
 
 ```php
-App::_();
+new App\App(__DIR__,$loader);
 App\User::Login($username,$password);
 ```
 
