@@ -140,8 +140,12 @@ class Page extends \R\Page
         }
     }
 
-    public function _redirect()
+    public function _redirect($uri)
     {
+        if($uri){
+            $this->response = $this->response->withHeader("Location", $uri);
+            return;
+        }
         $header = $this->request->getHeader("Referer");
         if ($h = $header[0]) {
             $this->response = $this->response->withHeader("Location", $h);

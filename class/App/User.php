@@ -13,6 +13,29 @@ class User extends Model
         }
     }
 
+    public static function Login($username, $password, $code)
+    {
+        $sth = self::__db()->prepare("select user_id,password from User where username=:username and status=0");
+        $sth->execute([":username" => $username]);
+        $row = $sth->fetch();
+        $sth->closeCursor();
+        if (is_null($row)) {
+            return false;
+        }
+
+        if (Util::Encrypt($password, $row["password"]) != $row["password"]) {
+            return false;
+        }
+
+        $user = new User($row["user_id"]);
+        if ($user->expiry_date && strtotime($user->expiry_date) < time()) {
+            return false;
+        }
+
+
+        return $user;
+    }
+
     public static function _($username)
     {
         return self::first([["username=?", $username]]);

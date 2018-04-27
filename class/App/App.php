@@ -164,7 +164,7 @@ class App extends \R\App
         }
         $user = new User($user_id);
 
-        if (\App::Config("user", "2-step verification")->value) {
+        if ($this->config["user"]["2-step verification"]) {
             $need_check = true;
             if ($setting = $user->setting()) {
                 if (in_array($_SERVER["REMOTE_ADDR"], $setting["2-step_ip_white_list"])) {
@@ -197,6 +197,10 @@ class App extends \R\App
         AuthLock::Clear();
     }
 
+    public function addMessage($message,$type="success"){
+        $_SESSION["app"]["message"][] = [$message, $type];
+    }
+    
     public function flushMessage()
     {
         $msg = $_SESSION["app"]["message"];

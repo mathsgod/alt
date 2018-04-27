@@ -1,3 +1,11 @@
+## 5.2.0
+allow check login information
+
+```php
+App::_();
+App\User::Login($username,$password);
+```
+
 ## 5.1.0
 Rewrite front translate function
 

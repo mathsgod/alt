@@ -310,8 +310,14 @@ class Page extends \App\Page
                     $this->master->assign($k, $v);
                 }
 
-
+                $headers=$response->getHeaders();
                 $response = new Response(200);
+                foreach($headers as $name=>$value){
+                    foreach($value as $v){
+                        $response=$response->withHeader($name,$v);
+                    }
+                }
+
                 $request = $request->withAttribute("module", $this->module());
                 return $this->master->__invoke($request, $response);
                 
