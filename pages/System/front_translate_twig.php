@@ -6,112 +6,11 @@ use App;
 use My\TreeView;
 use WebClient;
 
-require_once (__dir__ . "/str_chinese.php");
+require_once(__dir__ . "/str_chinese.php");
 //require_once (__dir__ . "/accesstokenauthentication.php");
 
 class System_front_translate_twig extends \ALT\Page
 {
-    public function googleTranslate()
-    {
-        $p = [];
-        $p["client"] = "gtx";
-        $p["sl"] = $_POST["from"];
-        $p["tl"] = $_POST["to"];
-        $p["dt"] = "t";
-        $p["q"] = $_POST["text"];
-
-        $wc=new WebClient();
-        $wc->xhr->setRequestHeader("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36");
-        $wc->get("https://translate.googleapis.com/translate_a/single?" . http_build_query($p));
-
-        return ["text"=>$wc->responseJSON[0][0][0]];
-    }
-
-    public function microsoft()
-    {
-        Config::_("microsoft-translate-client-id", $_POST["client_id"]);
-        Config::_("microsoft-translate-client-secret", $_POST["client_secret"]);
-        App::Redirect("System/front_translate_twig");
-    }
-
-    public function microsoftTranslate()
-    {
-        $post = json_decode(file_get_contents("php://input"), true);
-        $from = $post["from"];
-        $to = $post["to"];
-        $text = $post["text"];
-        $accessToken = $post["accessToken"];
-
-        $translatorObj = new HTTPTranslator();
-        $authHeader = "Authorization: Bearer " . $accessToken;
-
-        $url = "http://api.microsofttranslator.com/v2/Http.svc/Translate?text=" . urlencode($text) . "&from=$from&to=$to";
-        $strResponse = $translatorObj->curlRequest($url, $authHeader);
-
-        $xmlObj = simplexml_load_string($strResponse);
-        return (string )$xmlObj;
-    }
-
-    public function getMicrosoftAccessToken()
-    {
-        $clientID = (string )App\Config::_("microsoft-translate-client-id");
-        $clientSecret = (string )App\Config::_("microsoft-translate-client-secret");
-
-        return $this->microsoft_access_token($clientID, $clientSecret);
-    }
-
-    public function microsoft_access_token($clientID, $clientSecret)
-    {
-        if (!$clientID) {
-            return "";
-        }
-        if (!$clientSecret) {
-            return "";
-        }
-        try {
-            // Client ID of the application.
-            // $clientID       = "clientId";
-            // Client Secret key of the application.
-            // $clientSecret = "ClientSecret";
-            // OAuth Url.
-            $authUrl = "https://datamarket.accesscontrol.windows.net/v2/OAuth2-13/";
-            // Application Scope Url
-            $scopeUrl = "http://api.microsofttranslator.com";
-            // Application grant type
-            $grantType = "client_credentials";
-            // Create the AccessTokenAuthentication object.
-            $authObj = new AccessTokenAuthentication();
-            // Get the Access token.
-            $accessToken = $authObj->getTokens($grantType, $scopeUrl, $clientID, $clientSecret, $authUrl);
-
-            return $accessToken;
-        } catch (exception $e) {
-            return "";
-            echo "Exception: " . $e->getMessage() . PHP_EOL;
-        }
-    }
-
-    public function t2s()
-    {
-        $post = json_decode(file_get_contents("php://input"), true);
-        $str = $post["str"];
-
-        return ["text" => str_chinese_simp($str)];
-    }
-
-    public function getLocaleFolder()
-    {
-        $frontPage = new SplFileInfo($this->frontPath());
-        return new SplFileInfo($frontPage->getPath() . "/locale");
-    }
-
-    public function getRootPath()
-    {
-        $frontPage = new SplFileInfo($this->frontPath());
-        $basePath = new SplFileInfo($frontPage->getPath());
-        return $basePath;
-    }
-
     public function post()
     {
         $post = json_decode(file_get_contents("php://input"), true);
@@ -119,11 +18,19 @@ class System_front_translate_twig extends \ALT\Page
         $data = $post["data"];
         $file = $post["file"];
 
+
         $frontPage = new SplFileInfo($this->frontPath());
         $basePath = new SplFileInfo($frontPage->getPath());
 
         $fi = pathinfo($file);
         foreach ($this->getLang() as $lang) {
+
+            if ($_POST["lang"]) {
+                if ($_POST["lang"] != $lang) {
+                    continue;
+                }
+            }
+
             if (!file_exists($po_file = $basePath . "/locale/$lang/LC_MESSAGES/" . $fi["dirname"] . "/" . $fi["filename"] . ".po")) {
                 mkdir(dirname($po_file), 0777, true);
                 file_put_contents($po_file, "");
@@ -155,6 +62,49 @@ class System_front_translate_twig extends \ALT\Page
             `msgfmt -o $mo $po_file`;
         }
         return $msg;
+    }
+
+    public function googleTranslate()
+    {
+        $p = [];
+        $p["client"] = "gtx";
+        $p["sl"] = $_POST["from"];
+        $p["tl"] = $_POST["to"];
+        $p["dt"] = "t";
+        $p["q"] = $_POST["text"];
+
+        $options = [
+            "ssl" => [
+                "verify_peer" => false,
+                "verify_peer_name" => false,
+                "header" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36"
+            ]
+        ];
+        $resp = file_get_contents("https://translate.googleapis.com/translate_a/single?" . http_build_query($p), false, stream_context_create($options));
+
+        $resp = json_decode($resp, true);
+
+        return ["text" => $resp[0][0][0]];
+    }
+
+    public function t2s()
+    {
+        $post = json_decode(file_get_contents("php://input"), true);
+        $str = $post["str"];
+
+        return ["text" => str_chinese_simp($str)];
+    }
+
+    public function getLocaleFolder()
+    {
+        return new SplFileInfo(realpath($this->root . "/../locale"));
+    }
+
+    public function getRootPath()
+    {
+        $frontPage = new SplFileInfo($this->frontPath());
+        $basePath = new SplFileInfo($frontPage->getPath());
+        return $basePath;
     }
 
     public function getLang()
@@ -204,8 +154,7 @@ class System_front_translate_twig extends \ALT\Page
             $twig["env"]->addExtension($twig["pot"]);
             $function = new \Twig_SimpleFunction('_', function ($a, $b) {
                 return "";
-            }
-            );
+            });
             $twig["env"]->addFunction($function);
             $twig["tpl"] = $twig["env"]->loadTemplate($file);
             $twig["tpl"]->render([]);
@@ -257,7 +206,7 @@ class System_front_translate_twig extends \ALT\Page
 
     public function frontPath()
     {
-        return realpath(getcwd() . "/../pages");
+        return realpath($this->app->root . "/../pages");
     }
 
     public function readAllFile($path)
@@ -274,8 +223,9 @@ class System_front_translate_twig extends \ALT\Page
 
     public function renderTree($path, $tree)
     {
+
         $fpath = $this->frontPath();
-        $file=[];
+        $file = [];
         foreach (glob($path . "/*") as $p) {
             $pi = pathinfo($p);
             if (is_file($p)) {
@@ -283,7 +233,7 @@ class System_front_translate_twig extends \ALT\Page
                 if ($spl->getExtension() != "twig" && $spl->getExtension() != "tpl") {
                     continue;
                 }
-                $file[]=$spl;
+                $file[] = $spl;
             } else {
                 $folder = $tree->addFolder($pi["basename"]);
                 $folder->icon("far fa-folder text-yellow");
@@ -292,32 +242,35 @@ class System_front_translate_twig extends \ALT\Page
         }
 
         foreach ($file as $spl) {
-            $basename=$spl->getBaseName();
+            $basename = $spl->getBaseName();
             $f = $tree->addFile($basename);
-            $path=$spl->getPathname();
+            $path = $spl->getPathname();
             $file = substr($path, strlen($fpath) + 1);
             $f->a()->attr("onClick", "onClickFile('$file')");
         }
     }
 
+
     public function get()
     {
-        $data = [];
 
-        // ms trans
-        $data["ms_trans_client_id"] = App\Config::_("microsoft-translate-client-id");
-        $data["ms_trans_client_secret"] = App\Config::_("microsoft-translate-client-secret");
+
+        $data = [];
 
         // get locale folder
         $locale_folder = $this->getLocaleFolder();
+
         if (!$locale_folder->isWritable()) {
-            App::Msg("Cannot write to locale, please create and change the permission of folder ({$locale_folder}) to 0777",
-                "danger");
+            App::Msg(
+                "Cannot write to locale, please create and change the permission of folder ({$locale_folder}) to 0777",
+                "danger"
+            );
             return;
         }
 
+
         $this->addLib("vakata/jstree");
-        
+
         $tree = new TreeView();
         $this->renderTree($this->frontPath(), $tree);
         $data["tree"] = $tree;

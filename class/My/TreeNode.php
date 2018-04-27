@@ -27,7 +27,7 @@ class TreeNode extends \P\HTMLElement {
 		}
 
 		$node = new TreeNode();
-		$node->label->textContent = $text;
+		$node->label->data = $text;
 		$node->icon("far fa-folder-o");
 
 		$this->ul->append($node);
@@ -41,7 +41,7 @@ class TreeNode extends \P\HTMLElement {
 		}
 
 		$node = new TreeNode();
-		$node->label->textContent = $text;
+		$node->label->data = $text;
 		$node->icon("far fa-file");
 		$this->ul->append($node);
 

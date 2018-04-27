@@ -10,87 +10,98 @@
 
     <div class="col-md-10">
 
-        {% verbatim %}
-        <div id="twig" ng-controller="TwigController">
+        <div id="div1">
 
             <div class="box box-primary">
                 <div class="box-body">
                     <table class="table table-condensed table-hover">
                         <thead>
                             <tr>
-                                <td>Value</td>
-                                <td ng-repeat="lang in langs">
-                                    {{lang}}
-                                </td>
+                                <th>Source</th>
+                                <th v-for="lang in langs" v-text="lang">
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-show="file">
-                                <td><button ng-click="onClickTranAll()" class="btn btn-xs btn-success">Translate all</button></td>
-                                <td ng-repeat="lang in langs">
-                                    <button ng-click="onClickTranSource(lang)" class="btn btn-xs btn-success">Source</button>
-                                    <button ng-show="lang=='zh_CN'" ng-click="onClickAllT2S()" class="btn btn-xs btn-success">T2S</button>
-                                    <button ng-show="lang=='en_US'" ng-click="onClickAllT2E()" class="btn btn-xs btn-success">T2E</button>
-                                    <button ng-show="lang=='zh_HK'" ng-click="onClickAllE2T()" class="btn btn-xs btn-success">E2T</button>
+                            <tr v-if="file">
+                                <td>
+                                    <button @click.prevent="onClickTranAll" class="btn btn-xs btn-primary">Translate all</button>
+                                </td>
+                                <td v-for="lang in langs">
+                                    <button @click.prevent="copyFromSource(lang)" class="btn btn-xs btn-primary">Copy from source</button>
+                                    <button @click.prevent="onClickTranSource(lang)" class="btn btn-xs btn-primary">Tran from Source</button>
+
+                                    <button v-if="lang=='zh_CN'" @click.prevent="onClickAllT2S()" class="btn btn-xs btn-primary">T2S</button>
+                                    <button v-if="lang=='en_US'" @click.prevent="onClickAllT2E()" class="btn btn-xs btn-primary">T2E</button>
+                                    <button v-if="lang=='zh_HK'" @click.prevent="onClickAllE2T()" class="btn btn-xs btn-primary">E2T</button>
+                                    <button @click="saveTran(lang)" class="btn btn-xs btn-success">
+                                        <i class="fa fa-save"></i> Save</button>
                                 </td>
                             </tr>
-                            <tr ng-repeat="d in data" ng-Click="onClickData(d)" ng-class="selected_data==d?'active':''">
-                                <td style="width:200px">
-                                    {{d.msgid}}
+                            <tr v-for="d in renderData">
+
+                                <td v-if="d.edit" :colspan="langs.length + 1">
+                                    
+                                    <textarea v-model="selected_data.msgstr[selected_lang]" class="form-control" style="height:500px" :placeholder="selected_lang"></textarea>
+                                    <button @click="onClickTran(d,selected_lang)" class="btn btn-xs btn-success">Source</button>
+                                    <button v-if="selected_lang=='zh_CN'" @click.prevent="onClickT2S(d)" class="btn btn-xs btn-success">T2S</button>
+                                    <button v-if="selected_lang=='en_US'" @click.prevent="onClickT2E(d)" class="btn btn-xs btn-success">T2E</button>
+                                    <button v-if="selected_lang=='zh_HK'" @click.prevent="onClickE2T(d)" class="btn btn-xs btn-success">E2T</button>
                                 </td>
-                                <td ng-repeat="lang in langs">
-                                    <div ng-if="selected_data==d">
-                                        <textarea ng-model="d.msgstr[lang]" class="form-control" style="height:150px" ng-attr-lang="{{lang}}" ng-attr-placeholder="{{lang}}"></textarea>
-                                        <button ng-click="onClickTran(d,lang)" class="btn btn-xs btn-success">Source</button>
-                                        <button ng-show="lang=='zh_CN'" ng-click="onClickT2S(d)" class="btn btn-xs btn-success">T2S</button>
-                                        <button ng-show="lang=='en_US' && microsoft_access_token" ng-click="onClickTC2EN(d)" class="btn btn-xs btn-success">T2E</button>
-                                        <button ng-show="lang=='zh_HK'" ng-click="onClickE2T(d)" class="btn btn-xs btn-success">E2T</button>
-                                    </div>
 
-                                    <div ng-if="selected_data!=d">
-                                        {{d.msgstr[lang]}}
-                                    </div>
+                                <td v-if="!d.edit" style="width:100px" v-text="d.msgid"></td>
 
+                                <td style="cursor:pointer;" v-if="!d.edit" v-for="lang in langs" @click="clickData(d,lang)" :class="{active: ((selected_data==d) && (lang==selected_lang)) }">
+                                    <div style="text-overflow:ellipsis;overflow-y:auto;max-height:100px" v-text="d.msgstr[lang]" >
+                                        
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="box-footer" ng-show="file">
-                    <button ng-click="onClickSave()" class="btn btn-success">Save</button>
+                <div class="box-footer" v-if="file">
+                    <button @click.prevent="saveTran()" class="btn btn-success">Save all</button>
                 </div>
             </div>
 
 
-            <div class="box box-primary">
+            <div class="box box-primary" v-if="unuse">
                 <div class="box-header">
                     <div class="box-title">
                         Unuse
                     </div>
                 </div>
                 <div class="box-body">
-                    <table class="table table-condensed table-hover">
+                    <table class="table table-condensed table-hover" v-for="lang in langs">
                         <thead>
                             <tr>
-                                <td>msgid</td>
-                                <td>msgstr</td>
+                                <th v-text="lang"></th>
                             </tr>
                         </thead>
-                        <tbody ng-repeat="lang in langs">
-                            <tr>
-                                <td colspan="2">{{lang}}</td>
-                            </tr>
-                            <tr ng-repeat="d in unuse[lang]">
-                                <td>{{d.msgid.join('\n')}}</td>
-                                <td>{{d.msgstr.join('\n')}}</td>
+                        <tbody>
+                            <tr v-for="d in unuse[lang]">
+                                <td>
+                                    <table class="table table-condensed table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>msgid</th>
+                                                <th>msgstr</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(msgid,i) in d.msgid">
+                                                <td v-text="msgid"></td>
+                                                <td v-text="d.msgstr[i]"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-
-
-            {% endverbatim %}
 
         </div>
     </div>
@@ -100,6 +111,154 @@
 {% verbatim %}
 
 <script>
+    var vm = new Vue({
+        el: "#div1",
+        data: {
+            file: null,
+            langs: [],
+            data: [],
+            unuse: null,
+            selected_data: null,
+            selected_lang: null
+        }, created() {
+            this.$http.get("System/front_translate_twig/getLang").then((resp) => {
+                this.langs = resp.body;
+            });
+        },computed:{
+            renderData(){
+                var ds=[];
+                this.data.forEach((d)=>{
+                    ds.push(d);
+                    if(this.selected_data == d){
+                        var a=JSON.parse(JSON.stringify(d));
+                        a.edit=true;
+                        ds.push(a);
+                    }
+                });
+                return ds;
+            }
+        }, methods: {
+            copyFromSource(lang) {
+                this.data.forEach((d) => {
+                    d.msgstr[lang] = d.msgid;
+                });
+            },
+            onClickAllE2T() {
+                this.data.forEach(this.onClickE2T);
+            },
+            onClickAllT2E() {
+                this.data.forEach(this.onClickT2E);
+            },
+            onClickAllT2S() {
+                this.data.forEach(this.onClickT2S);
+            },
+            onClickT2E(d) {
+                this.$http.post("System/front_translate_twig/googleTranslate", {
+                    from: "zh-TW",
+                    to: "en",
+                    text: d.msgstr.zh_HK
+                }).then(function (r) {
+                    d.msgstr.en_US = r.data.text;
+                });
+            },
+            onClickT2S(d) {
+                this.$http.post("System/front_translate_twig/t2s", {
+                    str: d.msgstr.zh_HK
+                }).then(function (r) {
+                    d.msgstr.zh_CN = r.data.text;
+                });
+            },
+            onClickE2T(d) {
+                this.$http.post("System/front_translate_twig/googleTranslate", {
+                    from: "en",
+                    to: "zh-TW",
+                    text: d.msgstr.en_US,
+                }).then(function (r) {
+                    d.msgstr.zh_HK = r.data.text;
+                });
+            },
+            onClickTranLang(from, to) {
+                this.$http.post("System/front_translate_twig/googleTranslate", {
+                    from: from,
+                    to: "zh-TW",
+                    text: d.msgstr.en_US,
+                }).then(function (r) {
+                    d.msgstr.zh_HK = r.data.text;
+                });
+            },
+            onClickTranAll() {
+                this.langs.forEach((lang) => {
+                    this.data.forEach((d) => {
+                        this.$http.post("System/front_translate_twig/googleTranslate", {
+                            from: 'auto',
+                            to: lang,
+                            text: d.msgid,
+                        }).then(function (r) {
+                            d.msgstr[lang] = r.data.text;
+                        });
+
+                    });
+                });
+            },
+            saveTran(lang) {
+                if (confirm("Save?")) {
+                    this.$http.post("System/front_translate_twig", {
+                        file: this.file,
+                        data: this.data,
+                        lang: this.lang
+                    }).then(function (data) {
+                        this.selected_data = null;
+                    });
+                }
+
+            },
+            onClickSave() {
+
+            },
+            selectFile(file) {
+                this.file = file;
+                this.$http.get("System/front_translate_twig/getTran", {
+                    params: {
+                        file: file
+                    }
+                }).then(function (resp) {
+                    //console.log(resp);
+                    this.data = resp.body.data;
+                    this.unuse = resp.body.unuse;
+
+                });
+            }, clickData(d, lang) {
+                this.selected_data = d;
+                this.selected_lang = lang;
+            }, onClickTranSource(lang) {
+                if (confirm("Are you sure want to translation from source to " + lang)) {
+                    this.data.forEach((d) => {
+                        this.$http.post("System/front_translate_twig/googleTranslate", {
+                            from: 'auto',
+                            to: lang,
+                            text: d.msgid,
+                        }).then((resp) => {
+                            d.msgstr[lang] = resp.data.text;
+                        });
+                    });
+                }
+            }, onClickTran(d, lang) {
+                this.$http.post("System/front_translate_twig/googleTranslate", {
+                    from: 'auto',
+                    to: lang,
+                    text: d.msgid,
+                }).then(function (r) {
+                    d.msgstr[lang] = r.data.text;
+                });
+            }
+        }
+
+    });
+
+    function onClickFile(file) {
+        vm.selectFile(file);
+    }
+    /*
     var app = angular.module('twig', []).controller('TwigController', function ($scope, $http) {
         console.log("angular start");
 
@@ -234,6 +393,6 @@
     function onClickFile(file) {
         $("#twig").data().$scope.onClickFile(file);
     }
+    */
 
-</script>
-{% endverbatim %}
+</script> {% endverbatim %}

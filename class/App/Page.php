@@ -158,6 +158,7 @@ class Page extends \R\Page
         }
 
         $path = $request->getURI()->getPath();
+        $path=substr($path,1);
 
         if (!ACL::Allow($path)) {
             if ($request->isAccept("text/html")) {
