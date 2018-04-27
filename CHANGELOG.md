@@ -1,3 +1,6 @@
+## 5.1.0
+Rewrite front translate function
+
 ## 4.15.0
 ```php
 $e=$this->createE();

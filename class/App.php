@@ -248,7 +248,7 @@ class App
         if (!$file) {
             throw new Exception("file($file) not found");
         }
-
+        
 
         $content = file_get_contents($file);
         foreach (\App::Language() as $la => $lv) {

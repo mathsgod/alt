@@ -159,19 +159,6 @@ class System_front_translate_twig extends \ALT\Page
             $twig["tpl"] = $twig["env"]->loadTemplate($file);
             $twig["tpl"]->render([]);
             return $twig["pot"]->token_parser->_values;
-        } elseif ($pi["extension"] == "tpl") {
-            $h = \P\Query::ParseFile($this->frontPath() . "/" . $file);
-            $data = [];
-            $text_nodes = $this->getTextNode($h);
-            foreach ($text_nodes as $n) {
-                $n = trim($n);
-                if ($n == "") {
-                    continue;
-                }
-
-                $data[] = ["value" => (string )$n];
-            }
-            return $data;
         }
     }
 
@@ -230,7 +217,7 @@ class System_front_translate_twig extends \ALT\Page
             $pi = pathinfo($p);
             if (is_file($p)) {
                 $spl = new SplFileInfo($p);
-                if ($spl->getExtension() != "twig" && $spl->getExtension() != "tpl") {
+                if ($spl->getExtension() != "twig") {
                     continue;
                 }
                 $file[] = $spl;
@@ -253,8 +240,6 @@ class System_front_translate_twig extends \ALT\Page
 
     public function get()
     {
-
-
         $data = [];
 
         // get locale folder
@@ -267,7 +252,6 @@ class System_front_translate_twig extends \ALT\Page
             );
             return;
         }
-
 
         $this->addLib("vakata/jstree");
 

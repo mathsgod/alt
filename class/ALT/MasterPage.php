@@ -72,8 +72,8 @@ class MasterPage
         }
 
 
-        $custom_header = \App::TPL("AdminLTE/custom-header.html");
-        $data["custom_header"] = \App::TPL("AdminLTE/custom-header.html")->getOutputContent();
+        $custom_header = \App::Path("AdminLTE/custom-header.html");
+        $data["custom_header"] = file_get_contents($custom_header);
 
         $sidebar_menu = [];
         $ms = [];

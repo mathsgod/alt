@@ -43,10 +43,10 @@
                                 <td v-if="d.edit" :colspan="langs.length + 1">
                                     
                                     <textarea v-model="selected_data.msgstr[selected_lang]" class="form-control" style="height:500px" :placeholder="selected_lang"></textarea>
-                                    <button @click="onClickTran(d,selected_lang)" class="btn btn-xs btn-success">Source</button>
-                                    <button v-if="selected_lang=='zh_CN'" @click.prevent="onClickT2S(d)" class="btn btn-xs btn-success">T2S</button>
-                                    <button v-if="selected_lang=='en_US'" @click.prevent="onClickT2E(d)" class="btn btn-xs btn-success">T2E</button>
-                                    <button v-if="selected_lang=='zh_HK'" @click.prevent="onClickE2T(d)" class="btn btn-xs btn-success">E2T</button>
+                                    <button @click="onClickTran(selected_data,selected_lang)" class="btn btn-xs btn-success">Source</button>
+                                    <button v-if="selected_lang=='zh_CN'" @click.prevent="onClickT2S(selected_data)" class="btn btn-xs btn-success">T2S</button>
+                                    <button v-if="selected_lang=='en_US'" @click.prevent="onClickT2E(selected_data)" class="btn btn-xs btn-success">T2E</button>
+                                    <button v-if="selected_lang=='zh_HK'" @click.prevent="onClickE2T(selected_data)" class="btn btn-xs btn-success">E2T</button>
                                 </td>
 
                                 <td v-if="!d.edit" style="width:100px" v-text="d.msgid"></td>
