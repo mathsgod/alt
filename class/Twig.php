@@ -12,9 +12,9 @@ class Twig
 
     public static function _($template_file)
     {
-        $path = getcwd() . "/" . $template_file;
+        $path = $template_file;
 
-        $pi=pathinfo($path);
+        $pi = pathinfo($path);
 
 
         $twig = new \Twig;
