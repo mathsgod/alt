@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ec29821723a5d93e53e8e25f1fdaa035",
+    "content-hash": "83f96fe8209bbe0445f9c840a7ed95b9",
     "packages": [
         {
             "name": "bassjobsen/bootstrap-3-typeahead",
@@ -681,10 +681,10 @@
         },
         {
             "name": "hostlink/r",
-            "version": "2.0.1",
+            "version": "2.1.0",
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/bitbucket/repo/packages/hostlink-r-2.0.1.zip",
+                "url": "https://raymond2.hostlink.com.hk/bitbucket/repo/packages/hostlink-r-2.1.0.zip",
                 "reference": null,
                 "shasum": null
             },

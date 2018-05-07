@@ -1,22 +1,27 @@
 <?php
 namespace App;
-class Mail extends \My\Mail {
-    public function __construct($exceptions = false) {
+
+class Mail extends \My\Mail
+{
+    public function __construct($exceptions = false)
+    {
         parent::__construct($exceptions);
 
-        $smtp = \App::Config("user", "smtp");
+        $config = \App::_()->config["user"];
+        $smtp = $config["smtp"];
 
         if ($smtp && $smtp->value) {
             $this->IsSMTP();
             $this->Host = (string)$smtp;
             $this->SMTPAuth = true;
-            $this->Username = (string)\App::Config("user", "smtp-username");
-            $this->Password = (string)\App::Config("user", "smtp-password");
+            $this->Username = $config["smtp-username"];
+            $this->Password = $config["smtp-password"];
         }
     }
 
-    public function send() {
-        foreach($this->to as $to) {
+    public function send()
+    {
+        foreach ($this->to as $to) {
             $l = new MailLog();
             $l->subject = $this->Subject;
 
@@ -35,5 +40,3 @@ class Mail extends \My\Mail {
         return parent::send();
     }
 }
-
-?>

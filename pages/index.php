@@ -7,25 +7,32 @@ class _index extends ALT\Page\Login
 {
     public function get($r)
     {
+        $config = $this->app->config;
         if ($this->app->logined()) {
-            if (App::User()->secret == "" && App::Config("user", "2-step verification")->value) {
-                \App::Redirect("User/2step?auto_create=1");
+            $user = $this->app->user;
+
+            if ($user->secret == "" && $config["user"]["2-step verification"]) {
+                $this->response = $this->response->withHeader("Location", "User/2step?auto_create=1");
                 return;
             }
 
-            if ($p = App::User()->default_page) {
-                \App::Redirect($p);
+            if ($p = $user->default_page) {
+                $this->response = $this->response->withHeader("Location", $p);
             } else {
-                \App::Redirect("Dashboard");
+                $this->response = $this->response->withHeader("Location", "Dashboard");
             }
+
+            $this->response = $this->response->withHeader("Location", $p);
+
             return;
         }
 
         if ($_COOKIE["app_username"]) {
-            $user = User::first('username=' . App::DB()->quote($_COOKIE["app_username"]));
+            $w = [];
+            $w[] = ["username=?", $_COOKIE["app_username"]];
 
-            if ($user) {
-                header("location: lockscreen?username=" . $_COOKIE["app_username"]);
+            if ($user = User::first($w)) {
+                $this->response = $this->response->withHeader("Location", "lockscreen?username=" . $_COOKIE["app_username"]);
                 return;
             }
         }
@@ -35,17 +42,27 @@ class _index extends ALT\Page\Login
         $this->addLib("driftyco/ionicons");
         $this->addLib("iCheck");
         $this->addLib("bootboxjs");
-        $data["title"] = Config::_("title");
-        $data["company"] = Config::_("company");
-        $data["logo"] = Config::_("logo");
-        $data["version"] = App::Version();
+        $data["title"] = $config["user"]["title"];
+        $data["company"] = $config["user"]["company"];
+        $data["logo"] = $config["user"]["logo"];
+        $data["version"] = $this->app->version();
 
         $data["r"] = $r;
-        if (App::Config("user", "2-step verification")->value && !System::IP2StepExemptCheck($_SERVER['REMOTE_ADDR'])) {
+        if ($config["user"]["2-step verification"] && !System::IP2StepExemptCheck($_SERVER['REMOTE_ADDR'])) {
             $data["ip2step"] = true;
         }
 
         return $data;
+    }
+
+    public function __call($name, $args)
+    {
+        if ($this->app->logined()) {
+            $this->response = $this->response->withHeader("Location", "404_not_found");
+        } else {
+            $base = $this->request->getUri()->getBasePath();
+            $this->response = $this->response->withHeader("Location", $base . "/?r=" . $name);
+        }
     }
 
 }

@@ -241,34 +241,6 @@ class App
         }
     }
 
-    public static function TPL($file)
-    {
-        $file = App::Path($file);
-
-        if (!$file) {
-            throw new Exception("file($file) not found");
-        }
-        
-
-        $content = file_get_contents($file);
-        foreach (\App::Language() as $la => $lv) {
-            if ($la == \My::Language()) {
-                $content = preg_replace("/<:{$la}>([\s\S]*?)<\/:{$la}>/", "$1", $content);
-                $content = preg_replace("/<(\w+):{$la}([^>]*)\/>/", "<$1 $2/>", $content);
-                $content = preg_replace("/<(\w+):{$la}([^>]*)>([\s\S]*?)<\/(\w+):{$la}>/", "<$1 $2>$3</$4>", $content);
-            } else {
-                $content = preg_replace("/<:{$la}>[\s\S]*?<\/:{$la}>/", "", $content);
-                $content = preg_replace("/<(\w+):{$la}([^>]*)\/>/", "", $content);
-                $content = preg_replace("/<(\w+):{$la}([^>]*)>([\s\S]*?)<\/(\w+):{$la}>/", "", $content);
-            }
-        }
-
-
-        $tpl = new \TemplatePower($content, T_BYVAR);
-        $tpl->prepare();
-        return $tpl;
-    }
-
     public static function Skin()
     {
         $version = App::Version();

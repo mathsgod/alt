@@ -31,7 +31,8 @@ class Login extends \R\Page
         $resp = parent::__invoke($request, $response);
 
         if ($request->getMethod() == "get") {
-            $this->_twig["loader"] = new \Twig_Loader_Filesystem(\App\System::Root());
+            $pi = $this->app->pathInfo();
+            $this->_twig["loader"] = new \Twig_Loader_Filesystem($pi["system_root"]);
             $this->_twig["environment"] = new \Twig_Environment($this->_twig["loader"]);
             $this->_template = $this->_twig["environment"]->loadTemplate("AdminLTE/pages/login.html");
         }
@@ -61,7 +62,7 @@ class Login extends \R\Page
             $p = \App::_()->pathInfo();
 
             $data["css"][] = $p["system_base"] . "/AdminLTE/dist/css/AdminLTE.min.css";
-            
+
 
             $data["script"][] = $p["system_base"] . "/js/cookie.js";
             $data["script"][] = $p["system_base"] . "/js/jquery.form.min.js";

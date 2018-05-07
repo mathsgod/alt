@@ -47,6 +47,7 @@ class APCu
 
     public static function GenerateKey($char = "t")
     {
+        return sha1(__FILE__);
         return ftok(__DIR__, $char);
     }
 }

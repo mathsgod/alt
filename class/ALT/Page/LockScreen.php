@@ -25,10 +25,10 @@ class LockScreen extends \R\Page
 
     public function __invoke($request, $response)
     {
+        $app=$this->app;
         if ($request->getMethod() == "get") {
-            $this->_twig["loader"] = new \Twig_Loader_Filesystem(\App\System::Root());
-            $this->_twig["environment"] = new \Twig_Environment($this->_twig["loader"]);
-            $this->_template = $this->_twig["environment"]->loadTemplate("AdminLTE/pages/lockscreen.html");
+            
+            $this->_template=\Twig::_($app->getFile("AdminLTE/pages/lockscreen.html"));
         }
 
         $response = parent::__invoke($request, $response);

@@ -27,7 +27,7 @@ $(function () {
 
 
             if (!timer) {
-                $(targ).html('<div class="box box-solid"><div class="box-body no-padding"><div class="overlay"><i class="fa fa-refresh fa-spin"></i></div></div></div>');
+                $(targ).html('<div class="box box-solid"><div class="box-body no-padding"><div class="overlay"><i class="fa fa-spinner fa-spin"></i></div></div></div>');
             }
 
             that._current_xhr = $.get(loadurl, function (data) {

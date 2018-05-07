@@ -1,8 +1,12 @@
 <?php
 namespace App;
-class Config extends Model {
-    public static function _($name, $value = null) {
-       
+use Cache\Adapter\Apcu\ApcuCachePool;
+
+class Config extends Model
+{
+    public static function _($name, $value = null)
+    {
+
         if ($value != "") {
             $config = self::All()["user"][$name];
             if (!$config instanceof Model) {
@@ -17,36 +21,50 @@ class Config extends Model {
         }
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->value;
     }
 
     private static $_config = [];
-    public static function All() {
-        if (sizeof(self::$_config))return self::$_config;
+    public static function All()
+    {
+        if (sizeof(self::$_config)) return self::$_config;
         // system config
         $config = \App::_()->config;
 
         // user config
-        foreach($config as $cat => $ar) {
-            foreach($ar as $k => $v) {
-            	if($cat=="user"){
-            		$v=str_replace("{username}",\App::User()->username,$v);
-            		$v=str_replace("{language}",\My::Language(),$v);
-            	}
-            	$config[$cat][$k] = $v;
+        foreach ($config as $cat => $ar) {
+            foreach ($ar as $k => $v) {
+                if ($cat == "user") {
+                    $v = str_replace("{username}", \App::User()->username, $v);
+                    $v = str_replace("{language}", \My::Language(), $v);
+                }
+                $config[$cat][$k] = $v;
             }
         }
-        
 
-        
-        foreach(Config::find() as $c) {
+        foreach (Config::find() as $c) {
             $config["user"][$c->name] = $c;
         }
 
         self::$_config = $config;
         return $config;
     }
-}
 
-?>
+    public function save($acl)
+    {
+     
+        $pool = new ApcuCachePool();
+        $pool->deleteItem("config");
+
+        return parent::save($acl);
+    }
+
+    public function delete($acl){
+        $pool = new ApcuCachePool();
+        $pool->deleteItem("config");
+
+        return parent::delete($acl);
+    }
+}

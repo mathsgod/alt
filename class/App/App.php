@@ -5,11 +5,16 @@ namespace App;
 use R\Psr7\Response;
 use R\Psr7\Stream;
 
+use Cache\Adapter\Apcu\ApcuCachePool;
+use Psr\Log\LoggerInterface;
+
 class App extends \R\App
 {
-    public function __construct($root, $loader)
+    public $user;
+
+    public function __construct($root, $loader, $logger)
     {
-        parent::__construct($root, $loader);
+        parent::__construct($root, $loader, $logger);
 
         $p = explode(DIRECTORY_SEPARATOR, __DIR__);
         array_pop($p);
@@ -25,7 +30,6 @@ class App extends \R\App
         $this->loader->addPsr4("", $root . "/class");
         $this->loader->addPsr4("", SYSTEM . "/class");
 
-
         spl_autoload_register(function ($class) use ($root) {
 
             $class_path = str_replace("\\", DIRECTORY_SEPARATOR, $class);
@@ -36,6 +40,56 @@ class App extends \R\App
         });
 
         \App::$app = $this;
+
+        //system config
+        $pi = $this->pathInfo();
+        $file = $pi["system_root"] . "/config.ini";
+        if (file_exists($file)) {
+            $c = parse_ini_file($file, true);
+
+
+            foreach ($c as $n => $v) {
+                foreach ($v as $a => $b) {
+                    if (!isset($this->config[$n][$a])) {
+                        $this->config[$n][$a] = $b;
+                    }
+                }
+
+            }
+        }
+
+        //db config
+        $pool = new ApcuCachePool();
+        if ($pool->hasItem('config')) {
+            $config = $pool->getItem("config")->get();
+        } else {
+            $item = $pool->getItem("config");
+
+            $config = [];
+            foreach (Config::Find() as $c) {
+                $config[$c->name] = $c->value;
+            }
+            $item->set($config);
+            $item->expiresAfter(60);
+            $pool->save($item);
+        }
+
+        foreach ($config as $name => $value) {
+            $this->config["user"][$name] = $value;
+        }
+    }
+
+    public function getFile($file){
+        extract($this->pathInfo());
+
+        if (is_readable($f = $cms_root . "/" . $file)) {
+            return $f;
+        }
+
+        if (is_readable($f = $system_root . "/" . $file)) {
+            return $f;
+        }
+
     }
 
     public function pathInfo()
@@ -61,26 +115,25 @@ class App extends \R\App
         return compact("composer_base", "composer_root", "document_root", "cms_root", "system_root", "system_base");
     }
 
-    public function basePath(){
-        return "//" . $_SERVER["SERVER_NAME"] . $this->request->getUri()->getBasePath();
-    }
-
-    public function log($s)
+    public function basePath()
     {
-        if ($this->logger) {
-            $this->logger->info($s);
-        }
+        return "//" . $_SERVER["SERVER_NAME"] . $this->request->getUri()->getBasePath();
     }
 
     public function run()
     {
-        $this->log("run");
-
+        if ($this->logger) $this->logger->debug("APP::run");
         session_start();
+        
+        //user
+        if (!$_SESSION["app"]["user"]) {
+            $_SESSION["app"]["user"] = new User(2);
+        }
+        $this->user = $_SESSION["app"]["user"];
+
         $this->base = $this->request->getUri()->getBasePath();
 
         $b = $this->pathInfo();
-
 
         $router = new Router();
         $router->add("GET", "404_not_found", [
@@ -99,7 +152,7 @@ class App extends \R\App
 
 
         if (!$class = $route->class) {
-            if (\App::User()->isAdmin()) {
+            if ($this->user->isAdmin()) {
                 $page = new ClassNotExistPage();
             }
         } else {
@@ -195,12 +248,15 @@ class App extends \R\App
         $user->online();
 
         AuthLock::Clear();
+
+        $this->user = $user;
     }
 
-    public function addMessage($message,$type="success"){
+    public function addMessage($message, $type = "success")
+    {
         $_SESSION["app"]["message"][] = [$message, $type];
     }
-    
+
     public function flushMessage()
     {
         $msg = $_SESSION["app"]["message"];
@@ -239,6 +295,22 @@ class App extends \R\App
         }
     }
 
+
+    public function sv($name, $lang)
+    {
+        if (!$lang) $lang = $_SESSION["app"]["user"]->language;
+
+        if ($sv = SystemValue::_($name, $lang)) {
+            return $sv->values();
+        }
+
+        return [];
+    }
+
+    public function user()
+    {
+        return $this->user;
+    }
 
 
 }

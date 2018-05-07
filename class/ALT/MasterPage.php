@@ -52,7 +52,7 @@ class MasterPage
         $data["company"] = \App\Config::_("company");
         $data["logo-mini"] = \App\Config::_("logo-mini");
         $data["logo"] = \App\Config::_('logo');
-        $data["base"] = $this->app->basePath()."/";
+        $data["base"] = $this->app->basePath() . "/";
 
         if (\App::User()->isAdmin()) {
             $data["allow_viewas"] = true;
@@ -200,7 +200,7 @@ class MasterPage
         $data["css"][] = "$system/plugins/RT/css/rt.css";
 
         $data["alerts"] = [];
-        foreach (\App\System::FlushMessage() as $msg) {
+        foreach ($this->app->flushMessage() as $msg) {
             $m = [];
             $m["message"] = $msg[0];
             $m["type"] = $msg[1];
@@ -218,7 +218,7 @@ class MasterPage
             $data["alerts"][] = $m;
         }
 
-        $data["languages"] = \App\System::Language();
+        $data["languages"] = $this->app->current_language;
 
         $data["favs"] = [];
         // my fav
@@ -245,13 +245,14 @@ class MasterPage
     public function __construct($app)
     {
         $this->app = $app;
-        $user = \App::User();
+        $user = $this->app->user;
         $setting = json_decode($user->setting, true);
 
         if ($setting["layout"] == "top-nav") {
-            $template_file = \App::Path("AdminLTE/top-nav.html");
+            $template_file = $app->getFile("AdminLTE/top-nav.html");
+
         } else {
-            $template_file = \App::Path("AdminLTE/index.html");
+            $template_file = $app->getFile("AdminLTE/index.html");
         }
 
         $template_dir = dirname($template_file);
@@ -260,12 +261,12 @@ class MasterPage
         $this->_twig["environment"] = new \Twig_Environment($this->_twig["loader"]);
         $this->_twig["environment"]->addExtension(new \Twig_Extensions_Extension_I18n());
 
-        if ($config = \App::Config("user", "roxy_fileman_path")) {
-            $_SESSION["roxy_fileman_path"] = str_replace("{username}", \App::User()->username, (string)$config);
+        if ($config = $this->app->config["user"]["roxy_fileman_path"]) {
+            $_SESSION["roxy_fileman_path"] = str_replace("{username}", $user->username, $config);
         }
 
         $translate_res = [];
-        foreach (parse_ini_file(\App::Path("translate.ini"), true) as $k => $v) {
+        foreach (parse_ini_file($app->getFile("translate.ini"), true) as $k => $v) {
             $translate_res[$k] = $v;
         }
         // translate function

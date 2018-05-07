@@ -44,7 +44,7 @@ class Page extends \R\Page
         $this->_lib[$name] = $p;
         if ($name == "ckeditor") {
             $path = \App::Config("user", "roxy_fileman_path");
-            $path = str_replace("{username}", \App::User()->username, $path);
+            $path = str_replace("{username}", $this->app->user->username, $path);
             $_SESSION["roxy_fileman_path"] = $path;
             mkdir(System::$root . "$path");
         }
@@ -142,7 +142,7 @@ class Page extends \R\Page
 
     public function _redirect($uri)
     {
-        if($uri){
+        if ($uri) {
             $this->response = $this->response->withHeader("Location", $uri);
             return;
         }
@@ -158,11 +158,11 @@ class Page extends \R\Page
         $this->request = $this->request->withAttribute("module", $this->module());
 
         if ($this->app->logined()) {
-            \App::User()->online();
+            $this->app->user->online();
         }
 
         $path = $request->getURI()->getPath();
-        $path=substr($path,1);
+        $path = substr($path, 1);
 
         if (!ACL::Allow($path)) {
             if ($request->isAccept("text/html")) {
@@ -225,11 +225,6 @@ class Page extends \R\Page
                                 $this->_twig["loader"] = new \Twig_Loader_Filesystem($template_path);
                                 $this->_twig["environment"] = new \Twig_Environment($this->_twig["loader"]);
                                 $this->_template = $this->_twig["environment"]->loadTemplate($template_file);
-                            } else {
-                                try {
-                                    $this->_template = \App::TPL("pages/" . $request->getURI()->getPath() . ".tpl");
-                                } catch (\Exception $e) {
-                                }
                             }
                         }
                     }
@@ -307,7 +302,7 @@ class Page extends \R\Page
         if ($query = $uri->getQuery()) {
             $s .= "?$query";
         }
-        return substr($s,1);
+        return substr($s, 1);
     }
 
     public function createForm($content = null, $multipart = false)

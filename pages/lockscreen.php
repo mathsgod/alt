@@ -4,7 +4,8 @@ use App\System;
 use App\User;
 class lockscreen extends ALT\Page\LockScreen {
     public function get($username) {
-        if (App\System::Logined()) {
+        $app=$this->app;
+        if ($app->logined()) {
         	header("location: index");
             return;
         }
@@ -27,11 +28,11 @@ class lockscreen extends ALT\Page\LockScreen {
         $this->addLib("iCheck");
 
         $data["user"] = $user;
-        $data["company"] = App::Config("user", "company");
-        $data["domain"] = App::Config("user", "domain");
+        $data["company"] = $app->config["user"]["company"];
+        $data["domain"] = $app->config["user"]["domain"];
         $data["name"] = (string)$user;
-        $data["copyright"]["year"] = App::Config("user", "copyright-year");
-        $data["copyright"]["url"] = App::Config("user", "copyright-url");
+        $data["copyright"]["year"] = $app->config["user"]["copyright-year"];
+        $data["copyright"]["url"] = $app->config["user"]["copyright-url"];
 
         return $data;
     }
