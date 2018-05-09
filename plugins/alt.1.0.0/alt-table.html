@@ -3,6 +3,7 @@
         template: "<table><slot></slot></table>",
         props: {
             formCreate: Boolean,
+            formName:String
         },
         data() {
             return {
@@ -14,7 +15,7 @@
                 var $table = $(o);
                 if ($table.prop("tagName") != "TABLE") $table = $table.find("table:first");
 
-                var form_name = $table.attr('form-name');
+                var form_name =this.formName;
                 var form_addbottom = $table.attr('form-addbottom') == "";
                 var max_row = $table.attr("max-row") ? $table.attr("max-row") : -1;
 
@@ -73,7 +74,7 @@
                             div.find("input,textarea,select").each(function (i, obj) {
                                 var name = $(obj).attr("name");
                                 var index_of = name.indexOf("[]");
-                                if (form_name != undefined) {
+                                if (form_name !="") {
                                     if (index_of >= 0) {
                                         $(obj).attr('name', form_name + '[c][' + index + '][' + name.substring(0, index_of) + '][]');
                                     } else {

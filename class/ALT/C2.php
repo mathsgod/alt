@@ -225,7 +225,8 @@ class C2 extends \P\HTMLElement
 		}
 
 		if ($this->createTemplate) {
-			$input = p("div");
+			$input = p("input");
+			$input->addClass("form-control");
 			$input->attr("is", "alt-input");
 			$input->attr("name", $field);
 			$input->attr("data-field", $field);

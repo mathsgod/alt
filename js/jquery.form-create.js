@@ -65,6 +65,7 @@
 						div.find("input,textarea,select").each(function (i, obj) {
 							var name = $(obj).attr("name");
 							var index_of = name.indexOf("[]");
+							console.log(form_name);
 							if (form_name != undefined) {
 								if (index_of >= 0) {
 									$(obj).attr('name', form_name + '[c][' + index + '][' + name.substring(0, index_of) + '][]');

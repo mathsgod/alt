@@ -106,7 +106,7 @@ var vue_init = function () {
             el: o
         });
     });
-    setTimeout(vue_init,500);
+    setTimeout(vue_init,300);
 };
 document.addEventListener("DOMContentLoaded", function (event) {
     console.log('domcontentloaded');

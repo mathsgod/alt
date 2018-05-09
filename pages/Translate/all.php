@@ -1,20 +1,25 @@
 <?php
 use App\Translate;
-class Translate_all extends ALT\Page {
-    public function post() {
+
+class Translate_all extends ALT\Page
+{
+    public function post()
+    {
+
+   
         // delete the removed data
-        foreach($_POST["_d"] as $id) {
+        foreach ($_POST["_d"] as $id) {
             $t = new Translate($id);
             $t->delete();
         }
 
-        foreach($_POST["_u"] as $id => $c) {
+        foreach ($_POST["_u"] as $id => $c) {
             $t = new Translate($id);
-            if ($c["name"] == "")continue;
-            foreach(App::Language() as $v => $l) {
+            if ($c["name"] == "") continue;
+            foreach ($this->app->config["language"] as $v => $l) {
                 $w = [];
                 $w[] = "name='$t->name'";
-                $w[] = $t->module?"module='$t->module'":"module is null";
+                $w[] = $t->module ? "module='$t->module'" : "module is null";
                 $w[] = "language='$v'";
                 $tt = Translate::first($w);
                 $tt->value = $c["value_" . $v];
@@ -22,9 +27,9 @@ class Translate_all extends ALT\Page {
             }
         }
 
-        foreach($_POST["_c"] as $c) {
-            if ($c["name"] == "")continue;
-            foreach(App::Language() as $v => $l) {
+        foreach ($_POST["_c"] as $c) {
+            if ($c["name"] == "") continue;
+            foreach ($this->app->config["language"] as $v => $l) {
                 $t = new Translate();
                 $t->language = $v;
                 $t->name = $c["name"];
@@ -35,18 +40,17 @@ class Translate_all extends ALT\Page {
             }
         }
 
-        App::Redirect("Translate");
+        $this->_redirect("Translate");
     }
 
-    public function get($module = null) {
-        // $this->write($this->header());
-        // $tpl = $this->template();
-        // $tpl->assign("module_select", PSelect2::_("module")->addClass("form-control")->onChange('window.self.location="Translate/all?module="+this.value')->ds(Module::AllModule(), "name", "name")->val($_GET["module"])->mustSelect(false)->name("module"));
-        $select = new My\HTML\Select();
-        $select->attr("index","module");
+    public function get($module = null)
+    {
         
-        $select->attr("name","module");
-        $select->ds(App::Module(), "name", "name");
+        $select = new My\HTML\Select();
+        $select->attr("index", "module");
+
+        $select->attr("name", "module");
+        $select->ds($this->app->getModule(), "name", "name");
         $select->prepend("<option></option>");
         $select->val($module);
         $select->onChange('window.self.location="Translate/all?module="+this.value');
@@ -58,19 +62,21 @@ class Translate_all extends ALT\Page {
             $w[] = "module is null";
         }
 
-        $lang = array_keys(App::Language())[0];
+
+        $langs = $this->app->config["language"];
+        $lang = $this->app->config["language"][0];
 
         $w[] = ["language=?", $lang];
 
         $ts = [];
-        foreach(Translate::find($w) as $t) {
+        foreach (Translate::find($w) as $t) {
             $ts[$t->translate_id]["module"] = $t->module;
             $ts[$t->translate_id]["action"] = $t->action;
             $ts[$t->translate_id]["name"] = $t->name;
             $ts[$t->translate_id]["translate_id"] = $t->translate_id;
 
             $tran = new Translate($t->translate_id);
-            foreach(App::Language() as $lang => $ll) {
+            foreach ($langs as $lang => $ll) {
                 $ts[$t->translate_id]["value_$lang"] = (string)$tran->get("$lang");
             }
         }
@@ -80,14 +86,13 @@ class Translate_all extends ALT\Page {
         $myt->formCreate();
 
 
-        $myt->table->row()->attr("index", function($o) {
-                return $o["translate_id"];
-            }
-            );
+        $myt->table->row()->attr("index", function ($o) {
+            return $o["translate_id"];
+        });
 
         $myt->add("Action")->input("action");
         $myt->add("Name")->input("name");
-        foreach(App::Language() as $v => $l) {
+        foreach ($langs as $v => $l) {
             $myt->add($l)->input("value_$v");
         }
 
@@ -95,5 +100,3 @@ class Translate_all extends ALT\Page {
         $this->write($this->createForm(implode("", $ss)));
     }
 }
-
-?>

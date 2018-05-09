@@ -12,12 +12,12 @@ class Translate_list extends App\Page
 
         $jq->addEdit();
         $jq->addDel();
-        $jq->add("Module", "module")->sort()->SearchOption(App::Module(), "name", "name");
+        $jq->add("Module", "module")->sort()->SearchOption($this->app->getModule(), "name", "name");
         $jq->add("Action", "action")->sort()->search();
         $jq->add("Name", "name")->sort()->search();
 
 
-        foreach (App::Language() as $v => $l) {
+        foreach ($this->app->config["language"] as $v => $l) {
             $jq->add($l, function ($obj) use ($v, $l) {
                     $w[] = "language='$v'";
                     $w[] = "name='$obj->name'";
@@ -34,7 +34,7 @@ class Translate_list extends App\Page
     public function ds($rt)
     {
         $w=$rt->where();
-        $lang=array_keys(App::Language());
+        $lang=array_keys($this->app->config["language"]);
 
         $w[]=["language=?",$lang[0]];
         $data["total"]=App\Translate::Count($w);

@@ -206,7 +206,8 @@ class MasterPage
             $data["alerts"][] = $m;
         }
 
-        $data["languages"] = $app->current_language;
+        
+        $data["languages"] = $app->config["language"];
 
         $data["favs"] = [];
         // my fav
