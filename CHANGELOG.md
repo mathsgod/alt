@@ -1,3 +1,9 @@
+## 5.3.0
+get current user
+```php
+$this->app->user;
+```
+
 ## 5.2.0
 allow check login information
 

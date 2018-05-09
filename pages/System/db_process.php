@@ -2,14 +2,17 @@
 // Created By: Raymond Chong
 // Created Date: 2015-09-22
 // Last Updated:
-class System_db_process extends ALT\Page {
-	public function get() {
+class System_db_process extends ALT\Page
+{
+	public function get()
+	{
 		$this->write('<div id="content1">Loading...</div>');
 	}
 
-	public function data() {
+	public function data()
+	{
 
-		$mv = $this->createT(App::DB()->query("Show Full ProcessList"));
+		$mv = $this->createT($this->app->db->query("Show Full ProcessList"));
 		$mv->add("ID", "Id");
 		$mv->add("User", "User");
 		$mv->add("Host", "Host");
@@ -18,14 +21,14 @@ class System_db_process extends ALT\Page {
 		$mv->add("Time", "Time");
 		$mv->add("State", "State");
 		$mv->add("Info", "Info");
-		$mv->add("Button")->button("Id")->attr("onClick",'onClickKill(this)')->text("Kill");
+		$mv->add("Button")->button("Id")->attr("onClick", 'onClickKill(this)')->text("Kill");
 
 		$this->write($mv);
 	}
 
-	public function kill() {
-		$process_id = $_GET["process_id"];
-		App::DB()->exec("kill $process_id");
+	public function kill($process_id)
+	{
+		$this->app->db->exec("kill $process_id");
 	}
 }
 

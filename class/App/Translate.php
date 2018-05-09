@@ -8,19 +8,19 @@ class Translate extends Model {
 
 		$lang = explode("-", $language);
 
-		if ($ini = \App::Path("translate.ini")) {
+		if ($ini = App::_()->getFile("translate.ini")) {
 			$ini = parse_ini_file($ini, true);
 			if ($ini[$lang[0]])$data = array_merge($data, $ini[$lang[0]]);
 			if ($ini[$language])$data = array_merge($data, $ini[$language]);
 		}
 
-		if ($ini = \App::Path("pages/translate.ini")) {
+		if ($ini = App::_()->getFile("pages/translate.ini")) {
 			$ini = parse_ini_file($ini, true);
 			if ($ini[$lang[0]])$data = array_merge($data, $ini[$lang[0]]);
 			if ($ini[$language])$data = array_merge($data, $ini[$language]);
 		}
 
-		if ($ini = \App::Path("pages/{$module}/translate.ini")) {
+		if ($ini = App::_()->getFile("pages/{$module}/translate.ini")) {
 			$ini = parse_ini_file($ini, true);
 			if ($ini[$lang[0]])$data = array_merge($data, $ini[$lang[0]]);
 			if ($ini[$language])$data = array_merge($data, $ini[$language]);

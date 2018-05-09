@@ -5,11 +5,11 @@ class User_profile extends ALT\Page
     public function post()
     {
         if ($_FILES && $_FILES["file"]["error"] == 0) {
-            $u = App::User();
+            $u = $this->app->user;
             mkdir(getcwd() . "/data/" . $u->username);
             move_uploaded_file($_FILES["file"]["tmp_name"], getcwd() . "/data/" . $u->username . "/profile.image");
         } else {
-            $u = App::User();
+            $u = $this->app->user;
             $u->bind($_POST);
             $u->save();
             App::Msg("User information updated");
@@ -19,9 +19,9 @@ class User_profile extends ALT\Page
 
     public function get()
     {
-        App::SavePlace();
+        $this->app->savePlace();
         $this->header("User profile");
-        $user = App::User();
+        $user = $this->app->user;
         $tpl = $this;
         $tpl->assign("user_id", $user->user_id);
         $tpl->assign("name", $user);
@@ -46,7 +46,7 @@ class User_profile extends ALT\Page
 
     public function getUpdateBox()
     {
-        $o = $this->createE(App::User());
+        $o = $this->createE($this->app->user);
 
         $o->add("First name")->input("first_name")->required();
         $o->add("Last name")->input("last_name");
@@ -59,7 +59,7 @@ class User_profile extends ALT\Page
 
     public function getUserLogBox()
     {
-        $mt = $this->createT(App::User()->UserLog(null, ["userlog_id", "desc"], 10));
+        $mt = $this->createT($this->app->user->UserLog(null, ["userlog_id", "desc"], 10));
         $mt->add("Login time", "login_dt");
         $mt->add("Logout time", "logout_dt");
         $mt->add("IP address", "ip");
@@ -72,7 +72,7 @@ class User_profile extends ALT\Page
 
     public function getUserActionBox()
     {
-        $mt = $this->createT(App::User()->EventLog(null, ["eventlog_id", "desc"], 10));
+        $mt = $this->createT($this->app->user->EventLog(null, ["eventlog_id", "desc"], 10));
         $mt->add("ID", "eventlog_id");
         $mt->add("Class", "class");
         $mt->add("Object ID", "id");

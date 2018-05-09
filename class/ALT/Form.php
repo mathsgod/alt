@@ -16,6 +16,7 @@ class Form extends \My\HTML\Form
     public function __construct($page = null)
     {
         parent::__construct();
+        //$this->attributes["is"]="alt-form"
         $this->page = $page;
         $this->attributes["method"] = "post";
   
@@ -70,7 +71,6 @@ class Form extends \My\HTML\Form
 
     public function addBody($body)
     {
-
         $this->box->body()->append((string )$body);
         return $this;
     }

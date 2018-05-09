@@ -15,7 +15,7 @@ class App
 
     public static function Loader()
     {
-        return self::$app->loader;
+        return self::_()->loader;
     }
 
     public static function Log()
@@ -24,71 +24,9 @@ class App
         return call_user_func_array([$app, "log"], func_get_args());
     }
 
-    public static function Logger()
-    {
-        if (App\System::$app->logger) {
-            return App\System::$app->logger;
-        }
-        if (self::$log) {
-            return self::$log;
-        }
-        $log = new Monolog\Logger("app");
-
-        if (self::Composer()->hasPackage("php-console/php-console")) {
-            $log->pushHandler(new Monolog\Handler\PHPConsoleHandler());
-        }
-        return self::$log = $log;
-    }
-
-    public static function Composer()
-    {
-        if (self::$composer) {
-            return self::$composer;
-        }
-        return self::$composer = new Composer();
-    }
-
-    public static function Version()
-    {
-        return self::_()->version();
-    }
-
     public static function User()
     {
-        if (!$_SESSION["app"]["user"]) {
-            $_SESSION["app"]["user"] = new App\User(2);
-        }
-        return $_SESSION["app"]["user"];
-    }
-
-    public static function SV($name, $lang)
-    {
-        if (!$lang) {
-            $lang = My::Language();
-        }
-        if (self::$_sv[$name]) {
-            return self::$_sv[$name];
-        }
-        if ($sv = App\SystemValue::_($name, $lang)) {
-            self::$_sv[$name] = $sv->values();
-            return $sv->values();
-        }
-        return [];
-    }
-
-    public static function IsSystemMode()
-    {
-        return self::$system_mode;
-    }
-
-    public static function SystemMode()
-    {
-        self::$system_mode = true;
-    }
-
-    public static function SavePlace()
-    {
-        self::_()->savePlace();
+        return self::_()->user;
     }
 
     public static function Config($category = null, $name = null)
@@ -167,31 +105,9 @@ class App
         }
     }
 
-    public static function Path($uri)
-    {
-
-        extract(self::_()->pathInfo());
-
-        if (is_readable($f = $cms_root . "/" . $uri)) {
-            return $f;
-        }
-
-        if (is_readable($f = $system_root . "/" . $uri)) {
-            return $f;
-        }
-
-
-    }
-
-    public static function SystemPath($uri)
-    {
-        $f = App\System::$app->root . "/composer/vendor/hostlink/r-alt/" . $uri;
-        return $f;
-    }
-
     public static function UserID()
     {
-        return $_SESSION["app"]["user"]->user_id;
+        return self::_()->user->user_id;
     }
 
     public static function ACL($uri)
@@ -201,31 +117,12 @@ class App
 
     public static function Msg($message, $type = "success")
     {
-        App\System::Msg($message, $type);
-    }
-
-    public static function DB()
-    {
-        return self::$app->db;
-    }
-
-    public static function Module()
-    {
-        $modules = App\Module::All();
-        usort($modules, function ($a, $b) {
-            if ($a->sequence == $b->sequence) {
-                return 0;
-            }
-            return ($a->sequence < $b->sequence) ? -1 : 1;
-        });
-
-
-        return $modules;
+        self::_()->alert->success($message);
     }
 
     public static function AccessDeny($uri)
     {
-        if (self::$app->logined()) {
+        if (self::_()->logined()) {
             App::Redirect("access_deny");
         } else {
             App::Redirect("?r=$uri");
@@ -253,24 +150,8 @@ class App
         return $skins;
     }
 
-    public static function SystemModeStart()
-    {
-        return self::_()->systemModeStart();
-    }
-
-    public static function SystemModeEnd()
-    {
-        return self::_()->systemModeEnd();
-    }
-
     public static function _()
     {
-        return App::$app;
-    }
-
-    public static function SystemBase()
-    {
-        $p = self::_()->pathInfo();
-        return $p["system_base"];
+        return App\App::_();
     }
 }

@@ -54,6 +54,22 @@ Vue.component("ckeditor", {
 
 
 var vue_init = function () {
+    document.querySelectorAll("select2").forEach(o => {
+        new Vue({
+            el: o
+        });
+    });
+    document.querySelectorAll("alt-e").forEach(o => {
+        new Vue({
+            el: o
+        });
+    });
+    
+    document.querySelectorAll("alt-form").forEach(o => {
+        new Vue({
+            el: o
+        });
+    });
     document.querySelectorAll("alt-table").forEach(o => {
         new Vue({
             el: o
@@ -69,11 +85,7 @@ var vue_init = function () {
             el: o
         });
     });
-    document.querySelectorAll("alt-e").forEach(o => {
-        new Vue({
-            el: o
-        });
-    });
+
     document.querySelectorAll("alt-timeline").forEach(o => {
         new Vue({
             el: o

@@ -263,8 +263,13 @@ class Page extends \App\Page
                 $path_info = \App::_()->pathInfo();
                 if (file_exists($path_info["cms_root"] . "/pages/" . $this->path() . ".js")) {
                     $data["script"][] = "pages/" . $this->path() . ".js";
-
                 }
+
+                if (file_exists($path_info["system_root"] . "/pages/" . $this->path() . ".js")) {
+                    $data["script"][] = $path_info["system_base"] . "/pages/" . $this->path() . ".js";
+                }
+
+
                 
                 /*if(file_exists()){
 
@@ -310,11 +315,11 @@ class Page extends \App\Page
                     $this->master->assign($k, $v);
                 }
 
-                $headers=$response->getHeaders();
+                $headers = $response->getHeaders();
                 $response = new Response(200);
-                foreach($headers as $name=>$value){
-                    foreach($value as $v){
-                        $response=$response->withHeader($name,$v);
+                foreach ($headers as $name => $value) {
+                    foreach ($value as $v) {
+                        $response = $response->withHeader($name, $v);
                     }
                 }
 

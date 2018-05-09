@@ -143,9 +143,16 @@ class Page extends \R\Page
     public function _redirect($uri)
     {
         if ($uri) {
-            $this->response = $this->response->withHeader("Location", $uri);
+            $location = $this->request->getUri()->getBasePath() . "/" . $uri;
+            $this->response = $this->response->withHeader("Location", $location);
             return;
         }
+
+        if($_GET["_referer"]){
+            $this->response = $this->response->withHeader("Location", $_GET["_referer"]);
+            return;
+        }
+
         $header = $this->request->getHeader("Referer");
         if ($h = $header[0]) {
             $this->response = $this->response->withHeader("Location", $h);
@@ -308,7 +315,7 @@ class Page extends \R\Page
     public function createForm($content = null, $multipart = false)
     {
         $request = $this->request;
-        $action = $request->getAttribute("action");
+
         $f = new \ALT\Form($this);
         if ($multipart) {
             $f->attributes["enctype"] = "multipart/form-data";
@@ -317,15 +324,16 @@ class Page extends \R\Page
         $path = $this->path();
         $route = $request->getAttribute("route");
 
-        if (basename($path) == "ae") {
-            $name = $this->module()->name;
-            if ($id = $route->id) {
-                $f->attributes["action"] = $name . "/" . $id;
-            } else {
-                $f->attributes["action"] = $name;
-            }
+        if ($referer = $this->request->getHeader("Referer")[0]) {
+            $params = $this->request->getQueryParams();
+            $params["_referer"] = $referer;
+            $request = $this->request->withQueryParams($params);
+
+            $uri = $request->getUri();
+
+            $f->attributes["action"] = $uri->getBasePath() . $uri->getPath() . "?" . $uri->getQuery();
         } else {
-            $f->attributes["action"] = $this->uri();
+            $f->attributes["action"] = "#";
         }
 
         if ($content) {
@@ -417,8 +425,13 @@ class Page extends \R\Page
         if ($this->request->isAccept("application/json") || $this->request->getHeader("X-Requested-With")) {
             return ["code" => 200];
         } else {
-            \App::Msg($this->module()->name . " " . ($id ? "updated" : "created"));
-            \App::Redirect();
+            $msg = $this->module()->name . " ";
+            if (method_exists($obj, '__toString')) {
+                $msg .= (string)$obj . " ";
+            }
+            $msg .= $id ? "updated" : "created";
+            $this->app->alert->success($msg);
+            $this->_redirect();
         }
     }
 

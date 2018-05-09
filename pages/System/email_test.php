@@ -2,8 +2,10 @@
 // Created By: Raymond Chong
 // Created Date: 30/05/2012
 // Last Updated:
-class System_email_test extends ALT\Page {
-    public function post() {
+class System_email_test extends ALT\Page
+{
+    public function post()
+    {
         $mail = new App\Mail();
         $mail->isSMTP();
         $mail->Subject = $_POST["subject"];
@@ -23,14 +25,15 @@ class System_email_test extends ALT\Page {
         }
 
         if ($mail->send()) {
-            App::Msg("mail sent");
+            $this->app->alert->success("mail sent");
         } else {
-            App::Msg($mail->ErrorInfo);
+            $this->app->alert->danger($mail->ErrorInfo);
         }
-        App::Redirect();
+        $this->_redirect();
     }
 
-    public function get() {
+    public function get()
+    {
         $mv = $this->createE();
         $mv->add("smtp")->input("smtp")->val(App\Config::_("user", "smtp"));
         $mv->add("smtp-username")->input("smtp-username")->val(App\Config::_("user", "smtp-username"));
@@ -48,5 +51,3 @@ class System_email_test extends ALT\Page {
         $this->write($this->createForm($mv));
     }
 }
-
-?>

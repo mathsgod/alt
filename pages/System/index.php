@@ -1,15 +1,17 @@
 <?php
 
-class System_index extends ALT\Page {
-    public function get() {
+class System_index extends ALT\Page
+{
+    public function get()
+    {
         $panel = new BS\Panel("primary");
         $panel->heading("System");
         $panel->collapsible(false);
 
         $list = new BS\ListGroup();
-    	$list->addLinkedItem("Composer")->href("System/composer");
+        $list->addLinkedItem("Composer")->href("System/composer");
 //    	$list->addLinkedItem("Composer (system)")->href("System/composer_system");
-    	$list->addLinkedItem("Bower")->href("System/bower");
+    	//$list->addLinkedItem("Bower")->href("System/bower");
 
         $list->addLinkedItem("Alter table charset")->href("System/alter_table_utf8");
         $list->addLinkedItem("alter table column charset to default")->href("System/alter_table_column_utf8");
@@ -33,7 +35,7 @@ class System_index extends ALT\Page {
         $list->addLinkedItem("Adminer")->href("System/adminer");
 
         $list->addLinkedItem("Front translate")->href("System/front_translate_twig");
-    	$list->addLinkedItem("Unit test")->href("System/phpunit");
+        $list->addLinkedItem("Unit test")->href("System/phpunit");
 
         $panel->body()->append($list);
         // $this->write($panel);

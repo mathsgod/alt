@@ -10,7 +10,13 @@ use Psr\Log\LoggerInterface;
 
 class App extends \R\App
 {
+    private static $app;
     public $user;
+
+    public static function _()
+    {
+        return self::$app;
+    }
 
     public function __construct($root, $loader, $logger)
     {
@@ -20,7 +26,6 @@ class App extends \R\App
         array_pop($p);
         array_pop($p);
         $path = implode(DIRECTORY_SEPARATOR, $p);
-
 
         $root = $this->root;
 
@@ -39,7 +44,7 @@ class App extends \R\App
             }
         });
 
-        \App::$app = $this;
+        self::$app = $this;
 
         //system config
         $pi = $this->pathInfo();
@@ -77,9 +82,12 @@ class App extends \R\App
         foreach ($config as $name => $value) {
             $this->config["user"][$name] = $value;
         }
+
+        $this->alert = new Alert();
     }
 
-    public function getFile($file){
+    public function getFile($file)
+    {
         extract($this->pathInfo());
 
         if (is_readable($f = $cms_root . "/" . $file)) {
@@ -252,11 +260,6 @@ class App extends \R\App
         $this->user = $user;
     }
 
-    public function addMessage($message, $type = "success")
-    {
-        $_SESSION["app"]["message"][] = [$message, $type];
-    }
-
     public function flushMessage()
     {
         $msg = $_SESSION["app"]["message"];
@@ -298,7 +301,7 @@ class App extends \R\App
 
     public function sv($name, $lang)
     {
-        if (!$lang) $lang = $_SESSION["app"]["user"]->language;
+        if (!$lang) $lang = $this->user->language;
 
         if ($sv = SystemValue::_($name, $lang)) {
             return $sv->values();
@@ -310,6 +313,24 @@ class App extends \R\App
     public function user()
     {
         return $this->user;
+    }
+
+    public function getModule()
+    {
+        $modules = Module::All();
+        usort($modules, function ($a, $b) {
+            if ($a->sequence == $b->sequence) {
+                return 0;
+            }
+            return ($a->sequence < $b->sequence) ? -1 : 1;
+        });
+
+        return $modules;
+    }
+
+    public function t($str)
+    {
+        return Translate::_($str, $this->user->language);
     }
 
 

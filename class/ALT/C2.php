@@ -809,6 +809,8 @@ class C2 extends \P\HTMLElement
 		$select = $this->select2($field);
 		$select->attr("multiple", true);
 		$select->attr("name", $field . "[]");
+		$select->attr("is", "multiselect2");
+
 		return $select;
 	}
 
@@ -829,7 +831,6 @@ class C2 extends \P\HTMLElement
 					if (!is_array($data_value)) {
 						$data_value = explode(",", $data_value);
 					}
-
 					$select->attr("data-value", $data_value);
 				} catch (\Exception $e) {
 

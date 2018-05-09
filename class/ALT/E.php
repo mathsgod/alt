@@ -1,7 +1,7 @@
 <?php
 namespace ALT;
 
-class E extends \P\HTMLElement
+class E extends \P\HTMLDivElement
 {
     public $object;
     public $row = [];
@@ -11,7 +11,8 @@ class E extends \P\HTMLElement
 
     public function __construct($object)
     {
-        parent::__construct("alt-e");
+        parent::__construct();
+        $this->attributes["is"]="alt-e";
         $this->object = $object;
         $this->content = p("div")->addClass("col-md-12")->appendTo($this);
         $this->contents[] = $this->content;

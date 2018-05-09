@@ -1,0 +1,11 @@
+<template id="alt-form">
+    <form>
+        <slot></slot>
+    </form>
+</template>
+
+<script>
+    Vue.component("alt-form", {
+        template: document.currentScript.ownerDocument.getElementById("alt-form")
+    });
+</script>

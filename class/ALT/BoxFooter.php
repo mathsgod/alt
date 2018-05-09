@@ -14,5 +14,3 @@ class BoxFooter extends \P\Query {
         return $button;
     }
 }
-
-?>

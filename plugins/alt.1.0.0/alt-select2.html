@@ -1,18 +1,13 @@
 <script>
-    Vue.component("alt-select2", {
+    Vue.component("select2", {
         template: `<select class="form-control"><slot></slot></select>`,
-        created() {
-        },
         mounted() {
             $(this.$el).select2();
         }
     });
 
-    Vue.component("select2", {
-        template: `<select class="form-control"><slot></slot></select>`,
-        created() {
-            console.log("select2 created");
-        },
+    Vue.component("multiselect2", {
+        template: `<select class="form-control" multiple><slot></slot></select>`,
         mounted() {
             $(this.$el).select2();
         }

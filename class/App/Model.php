@@ -3,11 +3,6 @@ namespace App;
 
 abstract class Model extends \R\Model
 {
-    public static function __db()
-    {
-        return \App::DB();
-    }
-
     public function bind($rs)
     {
         foreach (get_object_vars($this) as $key => $val) {
@@ -26,9 +21,8 @@ abstract class Model extends \R\Model
                     if ($key[0] != "_") {
                         if (is_array($rs[$key])) {
                             $this->$key = implode(",", array_filter($rs[$key], function ($o) {
-                                        return $o !== "";
-                            }
-                                    ));
+                                return $o !== "";
+                            }));
                         } else {
                             $this->$key = $rs[$key];
                         }
@@ -76,24 +70,24 @@ abstract class Model extends \R\Model
         return true;
     }
 
-    public function delete($acl=true)
+    public function delete($acl = true)
     {
-        if($acl){
+        if ($acl) {
             if (!$this->canDelete()) {
-                throw new \Exception("Cannot delete [".get_class($this)."]");
+                throw new \Exception("Cannot delete [" . get_class($this) . "]");
             }
         }
-    
+
         EventLog::LogDelete($this);
         return parent::Delete();
     }
-    
+
     public function save($acl = true)
     {
         $new_record = !$this->id();
 
         if ($acl) {
-            if (!ACL::Allow(get_class($this), $new_record?"C":"U")) {
+            if (!ACL::Allow(get_class($this), $new_record ? "C" : "U")) {
                 if ($new_record == "C") {
                     throw new \Exception("Access deny [Create " . get_called_class() . "]");
                 } else {
@@ -151,13 +145,13 @@ abstract class Model extends \R\Model
         $class = get_class($this);
 
         //check const
-        $c=new \ReflectionClass($class);
-        if ($const=$c->getConstants()) {
-            
-            $decamlize=function($string) {
+        $c = new \ReflectionClass($class);
+        if ($const = $c->getConstants()) {
+
+            $decamlize = function ($string) {
                 return strtolower(preg_replace(['/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/'], '$1_$2', $string));
             };
-            $field=$decamlize($function);
+            $field = $decamlize($function);
 
             if (array_key_exists(strtoupper($field), $const)) {
                 return $const[strtoupper($field)][$this->$field];

@@ -1,10 +1,30 @@
 new Vue({
-	el:"#alt-navbar",
-	data:{
-		messages:[],
-		notifications:[],
-		tasks:[]
+	el: "#alt-navbar",
+	data: {
+		messages: [],
+		notifications: [],
+		tasks: []
 	}
+});
+
+Vue.component("alt-sidebar-menu", {
+	template: `
+<ul class="treeview-menu">
+	<li v-for="submenu in menu.submenu" :class="{active:submenu.active}">
+		<a :href="submenu.link" :target="menu.target" style="cursor: pointer;">
+			<i :class="submenu.icon"></i>
+			<span v-text="submenu.label"></span>
+			<span class="pull-right-container" v-if="submenu.submenu">
+				<i class="fa fa-angle-left pull-right"></i>
+			</span>
+		</a>
+		<alt-sidebar-menu v-if="submenu.submenu" :menu="submenu"></alt-sidebar-menu>
+	</li>
+</ul>`,
+	props:{
+		menu:Object
+	}
+
 });
 
 
@@ -49,32 +69,6 @@ new Vue({
 	}, methods: {
 		clickMenu(event, menu) {
 			return;
-			console.log(menu);
-			if (menu.submenu.length > 0) {
-
-				this.all_menus.forEach(m => {
-					if (m.id == menu.id) {
-						m.active = !m.active;
-					}
-
-					m.submenu.forEach(m => {
-						if (m.id == menu.id) {
-							m.active = !m.active;
-						}
-
-						m.submenu.forEach(m => {
-							if (m.id == menu.id) {
-								m.active = !m.active;
-							}
-
-						});
-
-					});
-
-				});
-
-				event.preventDefault();
-			}
 		},
 		filterMenu(text, menu) {
 			var m = [];

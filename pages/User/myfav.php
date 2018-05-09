@@ -19,8 +19,8 @@ class User_myfav extends ALT\Page
 
     public function get()
     {
-        App::SavePlace();
-        $w[] = "user_id=" . App::UserID();
+        $this->app->savePlace();
+        $w[] = ["user_id=?", $this->app->user->user_id];
         $w[] = "uri='fav'";
         $ds = App\UI::find($w)->usort(function ($a, $b) {
             if ($a->content()["sequence"] > $b->content()["sequence"]) {

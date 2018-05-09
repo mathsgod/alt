@@ -5,29 +5,32 @@ use App\Config;
 use App\User;
 use App\UserGroup;
 use App\UserList;
-class User_ae extends ALT\Page {
+
+class User_ae extends ALT\Page
+{
     public static $_Status = [0 => "Active", 1 => "Inactive"];
 
-    public function post() {
-        $obj = $this->object()->bind($_POST);
-        $obj->save();
+    public function post()
+    {
+        parent::post();
 
+        $obj = $this->object();
         if (isset($_POST["usergroup_id"])) {
-            foreach($_POST["usergroup_id"] as $usergroup_id) {
+            foreach ($_POST["usergroup_id"] as $usergroup_id) {
                 $o = new UserList();
                 $o->usergroup_id = $usergroup_id;
                 $o->user_id = $obj->user_id;
                 $o->save();
             }
         }
-        App::Msg("User updated");
-        App::Redirect($obj->uri("v"));
+        //$this->_redirect($obj->uri("v"));
     }
 
-    public function get() {
+    public function get()
+    {
         $obj = $this->object();
         $mv = $this->createE();
-        
+
         $c = $mv->add("Username");
         if (My::User()->isAdmin() || My::User()->isPowerUser() || !$obj->id()) {
             $c->input("username")->required();
@@ -69,23 +72,21 @@ class User_ae extends ALT\Page {
             $mv->addHr();
             $u = UserGroup::_("Users");
 
-            $ugs = UserGroup::find()->filter(function($o)use($obj, &$selected) {
-                    if ($o->name == "Administrators" && !App::User()->isAdmin())return false;
-                    if ($o->hasUser($obj)) {
-                        $selected[] = $o->usergroup_id;
-                    }
-                    return true;
+            $ugs = UserGroup::find()->filter(function ($o) use ($obj, &$selected) {
+                if ($o->name == "Administrators" && !App::User()->isAdmin()) return false;
+                if ($o->hasUser($obj)) {
+                    $selected[] = $o->usergroup_id;
                 }
-                );
+                return true;
+            });
 
-        	$mv->add("User group")->multiSelect2("usergroup_id")->ds($ugs)->val([$u->usergroup_id]);
+            $mv->add("User group")->multiSelect2("usergroup_id")->ds($ugs)->val([$u->usergroup_id]);
         }
         $mv->addHr();
 
-        $mv->add("Language")->select("language")->ds(App::Language());
+        $mv->add("Language")->select("language")->ds($this->app->config["language"]);
         $mv->add("Default page")->input("default_page");
 
-        $form = $this->createForm($mv)->action("");
-        $this->write((string)$form);
+        $this->write($this->createForm($mv));
     }
 }

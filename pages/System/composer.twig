@@ -7,6 +7,7 @@
 			<button class="btn btn-xs btn-primary" @click="run('update hostlink/r-alt')">update hostlink/r-alt</button>
 			<button class="btn btn-xs btn-primary" @click="changeOwner">Change owner</button>
 			<button class="btn btn-xs btn-primary" @click="addRaymondRepo">Add Raymond repo</button>
+			<button class="btn btn-xs btn-primary" @click="updateComposer">Update composer</button>
 		</alt-box-header>
 		<alt-box-body>
 			<input type="text" v-model="cmd" placeholder="update hostlink/r-alt" @keyup.enter="runComposer" class="form-control">
@@ -16,46 +17,59 @@
 		</alt-box-body>
 	</alt-box>
 
-	<alt-box class="box-primary" ref="packageBox1">
-		<alt-box-header>
-			Install packages
-		</alt-box-header>
-		<alt-box-body>
-			<div class="col-md-9">
-				<table class="table table-condensed table-hover">
-					<tr>
-						<th>Name</th>
-						<th>Description</th>
-						<th>Version</th>
-					</tr>
-					<tr v-for="p in installedPackages" v-if="p.version">
-						<td v-text="p.name"></td>
-						<td v-text="p.description"></td>
-						<td v-text="p.version"></td>
-					</tr>
-				</table>
-			</div>
+	<div class="row">
+		<div class="col-md-9">
+			<alt-box class="box-primary" ref="packageBox1">
+				<alt-box-header>
+					Installed packages
+				</alt-box-header>
+				<alt-box-body>
+					<table class="table table-condensed table-hover">
+						<tr>
+							<th>Name</th>
+							<th>Description</th>
+							<th>Version</th>
+							<th></th>
+						</tr>
+						<tr v-for="p in installedPackages" v-if="p.version">
+							<td v-text="p.name"></td>
+							<td v-text="p.description"></td>
+							<td v-text="p.version"></td>
+							<td>
+								<button @click="removePackage(p.name)" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></button>
+							</td>
+						</tr>
+					</table>
+				</alt-box-body>
+			</alt-box>
+		</div>
 
-			<div class="col-md-3">
-				<table class="table table-condensed table-hover">
-					<tr>
-						<th>Name</th>
-						<th></th>
-					</tr>
-					<tr v-for="p in installedPackages" v-if="!p.version">
-						<td v-text="p.name"></td>
-						<td>
-							<button v-if="!p.version" class="btn btn-xs btn-success" @click="requirePackage(p.name)">
-								<i class="fa fa-download"></i>
-							</button>
-						</td>
-					</tr>
-				</table>
+		<div class="col-md-3">
+			<alt-box class="box-primary" ref="packageBox2">
+				<alt-box-header>
+					New packages
+				</alt-box-header>
+				<alt-box-body>
+					<table class="table table-condensed table-hover">
+						<tr>
+							<th>Name</th>
+							<th></th>
+						</tr>
+						<tr v-for="p in installedPackages" v-if="!p.version">
+							<td v-text="p.name"></td>
+							<td>
+								<button v-if="!p.version" class="btn btn-xs btn-success" @click="requirePackage(p.name)">
+									<i class="fa fa-download"></i>
+								</button>
+							</td>
+						</tr>
+					</table>
+				</alt-box-body>
+			</alt-box>
 
-			</div>
+		</div>
+	</div>
 
-		</alt-box-body>
-	</alt-box>
 </div>
 
 <script>
@@ -70,6 +84,12 @@
 		mounted() {
 			this.reloadPackages();
 		}, methods: {
+			updateComposer() {
+				this.composer_output = "loading...";
+				this.$http.post("System/composer/updateComposer").then(resp => {
+					this.composer_output = "";
+				});
+			},
 			addRaymondRepo() {
 				this.composer_output = "loading...";
 				this.$http.post("System/composer/addRaymondRepo").then(resp => {
@@ -84,9 +104,21 @@
 			},
 			reloadPackages() {
 				this.$refs.packageBox1.showLoading();
+				this.$refs.packageBox2.showLoading();
 				this.$http.get("System/composer/installedPackages").then(resp => {
 					this.installedPackages = resp.body;
 					this.$refs.packageBox1.hideLoading();
+					this.$refs.packageBox2.hideLoading();
+				});
+			},
+			removePackage(package){
+				this.composer_output = "loading...";
+				this.$http.post("System/composer/run", {
+					cmd: "remove " + package
+				}).then(resp => {
+					this.cmd = "";
+					this.composer_output = resp.body.output;
+					this.reloadPackages();
 				});
 			},
 			requirePackage(package) {

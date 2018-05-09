@@ -1,7 +1,9 @@
 <?php
 
-class System_tlscheck extends ALT\Page {
-    public function get() {
+class System_tlscheck extends ALT\Page
+{
+    public function get()
+    {
         $ch = curl_init('https://www.howsmyssl.com/a/check');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSLVERSION, 1);
@@ -14,5 +16,3 @@ class System_tlscheck extends ALT\Page {
         outp($json);
     }
 }
-
-?>

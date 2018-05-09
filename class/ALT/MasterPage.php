@@ -16,6 +16,8 @@ class MasterPage
 
     public function __invoke($request, $response)
     {
+        $app = $this->app;
+        $config = $app->config;
         $data = $this->data;
      
         // get the data
@@ -43,15 +45,15 @@ class MasterPage
         $data["user"]["usergroup"] = \App::User()->UserGroup()->implode(",");
 
         $data["system"] = [];
-        $data["system"]["version"] = \App::Version();
+        $data["system"]["version"] = $this->app->version();
 
-        $data["copyright"]["url"] = \App::Config("user", "copyright-url");
-        $data["copyright"]["year"] = \App::Config("user", "copyright-year");
-        $data["copyright"]["name"] = \App::Config("user", "copyright-name");
+        $data["copyright"]["url"] = $config["user"]["copyright-url"];
+        $data["copyright"]["year"] = $config["user"]["copyright-year"];
+        $data["copyright"]["name"] = $config["user"]["copyright-name"];
 
-        $data["company"] = \App\Config::_("company");
-        $data["logo-mini"] = \App\Config::_("logo-mini");
-        $data["logo"] = \App\Config::_('logo');
+        $data["company"] = $config["user"]["company"];
+        $data["logo-mini"] = $config["user"]["logo-mini"];
+        $data["logo"] = $config["user"]["logo"];
         $data["base"] = $this->app->basePath() . "/";
 
         if (\App::User()->isAdmin()) {
@@ -62,26 +64,44 @@ class MasterPage
             $data["allow_cancel_viewas"] = true;
         }
 
-        $firebase = \App::Config("firebase");
+        $firebase = $config["firebase"];
         if ($firebase["apiKey"]) {
             $data["firebase"] = true;
         }
 
-        if (\App::Config("link", "no-cache")) {
+        if ($config["link"]["no-cache"]) {
             $data["t"] = time();
         }
 
 
-        $custom_header = \App::Path("AdminLTE/custom-header.html");
+        $custom_header = $app->getFile("AdminLTE/custom-header.html");
         $data["custom_header"] = file_get_contents($custom_header);
 
-        $sidebar_menu = [];
         $ms = [];
-        foreach (\App::Module() as $m) {
+
+        //group menu to structure
+        $g = function (&$gs, &$m) use (&$g) {
+            if (is_array($gs)) {
+                foreach ($gs as $k => &$v) {
+                    if (is_array($v)) {
+                        $g($v, $m);
+                    } else {
+                        $v[] = $m;
+                    }
+                }
+            }
+        };
+
+        $ms = [];
+        foreach ($app->getModule() as $m) {
             if ($m->hide) {
                 continue;
             }
-            if ($m->group) {
+            if (is_array($m->group)) {
+                $gs = $m->group;
+                $g($gs, $m);
+                $ms = array_merge_recursive($ms, $gs);
+            } elseif ($m->group) {
                 $ms[$m->group][] = $m;
             } else {
                 $ms[] = $m;
@@ -89,101 +109,69 @@ class MasterPage
         }
 
         $group_icon = [];
-        if ($ini = \App::Path("icon.ini")) {
+        if ($ini = $app->getFile("icon.ini")) {
             $group_icon = array_merge($group_icon, parse_ini_file($ini));
         }
-        if ($ini = \App::Path("pages/icon.ini")) {
+        if ($ini = $app->getFile("pages/icon.ini")) {
             $group_icon = array_merge($group_icon, parse_ini_file($ini));
         }
 
         $path = $request->getUri()->getPath();
         if ($path[0] == "/") $path = substr($path, 1);
         $current_module = $request->getAttribute("module");
-        foreach ($ms as $modulegroup_name => $modules) {
-            if (is_array($modules)) {
-                if (!sizeof($modules)) {
-                    continue;
-                }
-                // get links
-                $link_found = false;
-                foreach ($modules as $module) {
-                    $l = $module->getMenuLink($path);
-                    if (sizeof($l)) {
-                        $link_found = true;
-                        break;
+
+
+        $menu_gen = function ($ms) use (&$menu_gen, $app, $path, $current_module, $group_icon) {
+            $sidebar_menu = [];
+            foreach ($ms as $modulegroup_name => $modules) {
+                if (is_array($modules)) {
+
+                    if (!sizeof($modules)) {
+                        continue;
                     }
-                }
-                if (!$link_found) {
-                    continue;
-                }
 
-                $menu = [];
-
-                $menu["label"] = \App::T($modulegroup_name);
-                $menu["link"] = "#";
-                $menu["icon"] = $group_icon[$modulegroup_name] ? $group_icon[$modulegroup_name] : "fa fa-link";
-                $menu["keyword"] = $menu["label"] . " " . $modulegroup_name;
-
-                if ($current_module->group == $modulegroup_name) {
-                    $menu["active"] = true;
-                }
-
-                $menu["submenu"] = [];
-
-                foreach ($modules as $module) {
+                    $menu = [];
+                    $menu["label"] = $app->t($modulegroup_name);
+                    $menu["link"] = "#";
+                    $menu["icon"] = $group_icon[$modulegroup_name] ? $group_icon[$modulegroup_name] : "fa fa-link";
+                    $menu["keyword"] = $menu["label"] . " " . $modulegroup_name;
+                    $menu["active"] = false;
+                    $menu["submenu"] = $menu_gen($modules);
+                    foreach ($menu["submenu"] as $submenu) {
+                        if ($submenu["active"]) {
+                            $menu["active"] = 1;
+                        }
+                    }
+                    $sidebar_menu[] = $menu;
+                } else {
+                    $module = $modules;
                     $links = $module->getMenuLink($path);
                     if (!sizeof($links)) {
                         continue;
                     }
+                    $menu = [];
+                    $menu["label"] = $module->translate($module->name);
+                    $menu["icon"] = $module->icon;
+                    $menu["keyword"] = $module->keyword();
 
-                    $submenu = [];
-                    $submenu["label"] = $module->translate($module->name);
-                    $submenu["icon"] = $module->icon();
                     if ($current_module->name == $module->name) {
-                        $submenu["active"] = true;
+                        $menu["active"] = true;
                     }
 
                     if (sizeof($links) > 1) {
-                        $submenu["submenu"] = $links;
+                        $menu["submenu"] = $links;
                     } else {
-                        $submenu["link"] = $links[0]["link"];
-                        $submenu["target"] = $links[0]["target"];
+                        $menu["link"] = $links[0]["link"];
+                        $menu["target"] = $links[0]["target"];
                     }
-                    $submenu["keyword"] = $module->keyword();
-
-
-                    $menu["submenu"][] = $submenu;
-
-                }
-            } else {
-                $module = $modules;
-                $links = $module->getMenuLink($path);
-                if (!sizeof($links)) {
-                    continue;
-                }
-                $menu = [];
-                $menu["label"] = $module->translate($module->name);
-                $menu["icon"] = $module->icon;
-                $menu["keyword"] = $module->keyword();
-
-
-                if ($current_module->name == $module->name) {
-                    $menu["active"] = true;
-                }
-
-                if (sizeof($links) > 1) {
-                    $menu["submenu"] = $links;
-                } else {
-                    $menu["link"] = $links[0]["link"];
-                    $menu["target"] = $links[0]["target"];
+                    $sidebar_menu[] = $menu;
                 }
             }
+            return $sidebar_menu;
+        };
+        $data["sidebar_menu"] = $menu_gen($ms);
 
-            $sidebar_menu[] = $menu;
-        }
-        $data["sidebar_menu"] = $sidebar_menu;
-
-        extract(\App::_()->pathInfo());
+        extract($app->pathInfo());
         $system = $system_base;
         $data["script"][] = "$system/js/cookie.js";
         $data["script"][] = "$system/js/jquery.storageapi.min.js";
@@ -202,9 +190,9 @@ class MasterPage
         $data["alerts"] = [];
         foreach ($this->app->flushMessage() as $msg) {
             $m = [];
-            $m["message"] = $msg[0];
-            $m["type"] = $msg[1];
-            switch ($msg[1]) {
+            $m["message"] = $msg["message"];
+            $m["type"] = $msg["type"];
+            switch ($msg["type"]) {
                 case "success":
                     $m["icon"] = "fa-check";
                     break;
@@ -218,11 +206,11 @@ class MasterPage
             $data["alerts"][] = $m;
         }
 
-        $data["languages"] = $this->app->current_language;
+        $data["languages"] = $app->current_language;
 
         $data["favs"] = [];
         // my fav
-        $ds = \App\UI::find(["user_id=" . \App::UserID(), "uri='fav'"]);
+        $ds = \App\UI::find(["user_id=" . $app->user->user_id, "uri='fav'"]);
         $ds = $ds->usort(function ($a, $b) {
             if ($a->content()["sequence"] > $b->content()["sequence"]) {
                 return 1;

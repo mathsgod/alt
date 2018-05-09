@@ -75,7 +75,7 @@ class Module extends Model
         $ps = explode("/", $path);
         $ps=array_values(array_filter($ps,"strlen"));
     
-        $file = \App::Loader()->findFile($path);
+        $file = App::_()->loader->findFile($path);
         if ($file) {
             //find setting.ini
             $p = explode("/", dirname($file));
@@ -113,7 +113,7 @@ class Module extends Model
         $m->class = $name;
         $m->name = $name;
 
-        $page = \App::Config("system", "pages");
+        $page = App::_()->config["system"]["page"];
         if (!$page) {
             $page = "pages";
         }

@@ -1,5 +1,5 @@
 <template id="alt-input">
-    <input class="form-control" v-bind="$props" :value="value" :name="name" :type="type"/>
+    <input ref="input" class="form-control" v-bind="$props" :name="name" :type="type" :value="value" v-bind="$props"/>
 </template>
 
 <script>

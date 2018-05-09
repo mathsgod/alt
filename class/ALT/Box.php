@@ -13,7 +13,7 @@ class BoxClassTokenList extends \P\DOMTokenList
     }
 }
 
-class Box extends \P\Element
+class Box extends \P\HTMLDivElement
 {
     private static $NUM = 0;
 
@@ -31,7 +31,8 @@ class Box extends \P\Element
 
     public function __construct($page)
     {
-        parent::__construct("alt-box");
+        parent::__construct();
+        $this->attributes["is"]="alt-box";
         $this->classList = new BoxClassTokenList;
 
         $this->attributes["box-num"] = self::$NUM;

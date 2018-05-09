@@ -263,25 +263,7 @@
                                 <i class="fa fa-angle-left pull-right"></i>
                             </span>
                         </a>
-                        <ul class="treeview-menu" v-if="menu.submenu">
-                            <li v-for="submenu in menu.submenu" :class="{active:submenu.active}">
-                                <a :href="submenu.link" :target="menu.target" style="cursor: pointer;" @click="clickMenu($event,submenu)">
-                                    <i :class="submenu.icon"></i>
-                                    <span v-text="submenu.label"></span>
-                                    <span class="pull-right-container" v-if="submenu.submenu" v-if="menu.submenu">
-                                        <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu" v-if="submenu.submenu">
-                                    <li v-for="submenu in submenu.submenu" :class="{active:submenu.active}">
-                                        <a :href="submenu.link" :target="menu.target" style="cursor: pointer;">
-                                            <i :class="submenu.icon"></i>
-                                            <span v-text="submenu.label"></span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
+                        <alt-sidebar-menu v-if="menu.submenu" :menu="menu"></alt-sidebar-menu>
                     </li>
                 </ul>
                 {% endverbatim %}

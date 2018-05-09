@@ -5,7 +5,7 @@ use R\Set;
 
 class ACL extends Model
 {
-    public static $_ACTION = array("FC", "C", "R", "U", "D");
+    public static $_ACTION = ["FC", "C", "R", "U", "D"];
     public static $_SPECIAL_USER = array(1 => "CREATOR OWNER", 2 => "CREATOR GROUP", 3 => "EVERYONE");
     public static $_Type = ["Normal", "Regexp"];
 
@@ -39,30 +39,31 @@ class ACL extends Model
         if (is_null(self::$_ini)) {
             self::$_ini = parse_ini_file(SYSTEM . "/acl.ini", true);
         }
-        
+
         return self::$_ini;
     }
 
     public static function SettingIni($path)
     {
-        $path=parse_url($path, PHP_URL_PATH);
+        $app = App::_();
+        $path = parse_url($path, PHP_URL_PATH);
         //system path
-        $p=explode("/", $path);
+        $p = explode("/", $path);
 
         while (count($p)) {
-            $path=implode("/", $p);
-            $file=\App::Path("pages/".$path."/setting.ini");
+            $path = implode("/", $p);
+            $file = $app->getFile("pages/" . $path . "/setting.ini");
             if (file_exists($file)) {
                 break;
             }
             array_pop($p);
         }
-        
+
         if ($file) {
-            $ini= parse_ini_file($file, true);
+            $ini = parse_ini_file($file, true);
             return $ini["acl"];
         }
-        
+
         return null;
     }
 
@@ -72,47 +73,40 @@ class ACL extends Model
         $raw_path = $path;
         $p = parse_url($path);
         $path = $p["path"];
-        
-        if (\App::IsSystemMode()) {
-            return true;
-        }
-
-
 
         $ps = explode("/", $path);
         $path = implode("/", array_filter($ps, function ($p) {
-                    return !is_numeric($p);
-        }
-                ));
+            return !is_numeric($p);
+        }));
 
         $ps = explode("/", $path);
-        
+
         if (is_null($user)) {
-            $user = \App::User();
+            $user = App::_()->user;
         } elseif (!($user instanceof User)) {
             $user = new User($user);
         }
 
-       
+
         $result = $user->isAdmin();
         $ugs = $user->UserGroup();
 
         if (!$result) {
-            if ($module=Module::ByPath($path)) {
-                if ($acl=$module->acl) {
+            if ($module = Module::ByPath($path)) {
+                if ($acl = $module->acl) {
                     foreach ($acl as $pattern => $usergroup) {
                         if (fnmatch($pattern, $path)) {
-                            $ugs=$usergroup;
+                            $ugs = $usergroup;
                             break;
                         }
                     }
-                    $usergroups=(array)$user->UserGroup()->map(function ($ug) {
+                    $usergroups = (array)$user->UserGroup()->map(function ($ug) {
                         return $ug->name;
                     });
-        
-        
-                    $inters=Set::Create($usergroups)->intersection($ugs);
-        
+
+
+                    $inters = Set::Create($usergroups)->intersection($ugs);
+
                     if ($inters->count()) {
                         $result = true;
                     }
@@ -154,7 +148,7 @@ class ACL extends Model
         $path = implode("/", $ps);
         // ---------------------------------------------------------------------
         $w = array();
-        $w[] = "module = " . \App::DB()->quote($module);
+        $w[] = "module = " . App::_()->db->quote($module);
         $u = array();
         $u[] = "user_id=" . $user->user_id;
         foreach ($ugs as $ug) {
@@ -167,7 +161,7 @@ class ACL extends Model
 
         $u2 = "action='FC'";
 
-        $path = \App::DB()->quote($path);
+        $path = App::_()->db->quote($path);
         if ($action) {
             $u3[] = "action='$action'";
         } else {
@@ -304,8 +298,8 @@ class ACL extends Model
         if ($module->module_id) {
             $w = array();
             $w[] = "module_id=" . $module->module_id;
-            $w[] = (!$object_id)?"object_id is null":"object_id=" . $object_id . " OR object_id is null";
-            $w[] = is_null($field)?"field is null":"field=" . API::DB()->quote($field) . " OR field is null";
+            $w[] = (!$object_id) ? "object_id is null" : "object_id=" . $object_id . " OR object_id is null";
+            $w[] = is_null($field) ? "field is null" : "field=" . API::DB()->quote($field) . " OR field is null";
             $w[] = "action='FC' OR action=" . API::DB()->quote($action) . "";
 
             $u = array();
@@ -350,7 +344,7 @@ class ACL extends Model
 			?>{$this->code}<?
 		}
 EOT
-            );
+);
         if ($func()) {
             return $this->value;
         }

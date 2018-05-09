@@ -3,6 +3,11 @@ use App\Composer;
 
 class System_composer extends ALT\Page
 {
+    public function updateComposer(){
+        $composer = new App\Composer();
+        $composer->exec("self-update");
+        return [true];
+    }
 
     public function addRaymondRepo()
     {
