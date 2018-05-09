@@ -26,7 +26,7 @@
     "require": {
         "php": ">=5.6",
         "hostlink/r-psr7": "2.*",
-        "hostlink/r": "2.*",
+        "hostlink/r": "^2.2",
         "hostlink/r-p": "1.*",
         "hostlink/r-bs": "1.*",
         "hostlink/r-db": "1.*",

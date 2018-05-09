@@ -15,7 +15,7 @@ class SystemValue_list extends App\Page
         $jq->Order("name", "asc");
         $jq->add("Name", "name")->sort()->search();
 
-        foreach (App::Language() as $v => $l) {
+        foreach ($this->app->config["language"] as $v => $l) {
             $jq->add($l, function ($obj) use ($v) {
                 return SystemValue::_($obj->name, $v);
             })->index("value_$l");

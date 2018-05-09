@@ -14,9 +14,9 @@ class SystemValue_ae extends ALT\Page
                 $obj->language = $lang;
             }
             $obj->value = $val;
-            $obj->Save();
+            $obj->save();
         }
-        App::Redirect();
+        $this->_redirect();
     }
 
     public function get()
@@ -27,11 +27,11 @@ class SystemValue_ae extends ALT\Page
         $mv = $this->createE();
         $mv->add("Name")->input("name")->val($obj->name)->required();
 
-        foreach (App::Language() as $v => $l) {
+        foreach ($this->app->config["language"] as $v => $l) {
             $mv->add("Value " . $l)->textarea()->text(SystemValue::_($obj->name, $v))->attr('name', "value[$v]")->addClass("code");
         }
 
-        
-        $this->write($this->createForm($mv)->action(''));
+
+        $this->write($this->createForm($mv));
     }
 }

@@ -71,7 +71,8 @@ class C2 extends \P\HTMLElement
 			$e = p("textarea");
 			$e->css("height", "400px");
 
-			$e->attr("ace", true);
+			//$e->attr("ace", true);
+			$e->attr("is", "ace");
 			$e->attr('data-field', $field);
 			$e->attr('name', $field);
 

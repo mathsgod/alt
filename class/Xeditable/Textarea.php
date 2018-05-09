@@ -4,7 +4,7 @@ class Textarea extends \P\HTMLAnchorElement {
     public function __construct() {
         parent::__construct();
         $this->setAttribute("href", "javascript:void(0)");
-        $this->setAttribute("xeditable", true);
+        $this->setAttribute("is","x-editable");
         $this->setAttribute("data-mode", "inline");
         $this->setAttribute("data-type", "textarea");
     }

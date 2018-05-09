@@ -1,13 +1,15 @@
 <?php
 
-class Translate_ae extends ALT\Page {
-    public function post() {
+class Translate_ae extends ALT\Page
+{
+    public function post()
+    {
         $obj = $this->object();
         if ($obj->translate_id) {
             $obj->delete();
         }
         // create
-        foreach(App::Language() as $k => $v) {
+        foreach ($this->app->config["language"] as $k => $v) {
             $t = new App\Translate();
             $t->module = $_POST["module"];
             $t->action = $_POST["action"];
@@ -19,7 +21,8 @@ class Translate_ae extends ALT\Page {
         App::Redirect();
     }
 
-    public function get() {
+    public function get()
+    {
         $obj = $this->object();
 
         $e = My::E($obj);
@@ -28,12 +31,10 @@ class Translate_ae extends ALT\Page {
         $e->add("Name")->input("name")->required();
 
         $e->addHr();
-        foreach(App::Language() as $k => $v) {
-            $e->add($v)->input()->attr("name",$k)->val((string)$obj->get($k));
+        foreach ($this->app->config["language"] as $k => $v) {
+            $e->add($v)->input()->attr("name", $k)->val((string)$obj->get($k));
         }
 
         $this->write($this->createForm($e)->action(''));
     }
 }
-
-?>
