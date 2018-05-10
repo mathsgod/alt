@@ -6,6 +6,22 @@ class Translate_all extends ALT\Page
     public function post()
     {
 
+        foreach ($_POST["value"] as $lang => $value) {
+            $t = new Translate();
+            $t->language = $lang;
+            $t->name = $_POST["name"];
+            $t->module = $_POST["module"];
+            $t->action = $_POST["action"];
+            $t->value = $value;
+            $t->save();
+        }
+
+        return ["code" => 200];
+
+
+
+        outp($_POST);
+        die();
    
         // delete the removed data
         foreach ($_POST["_d"] as $id) {
@@ -43,9 +59,96 @@ class Translate_all extends ALT\Page
         $this->_redirect("Translate");
     }
 
-    public function get($module = null)
+    public function modules()
     {
-        
+        return [
+            "modules" => $this->app->getModule(),
+            "languages" => $this->app->config["language"]
+        ];
+    }
+
+    public function removeData($data)
+    {
+        foreach ($data["value"] as $lang => $value) {
+            $w = [];
+            if ($data["module"]) {
+                $w[] = ["module=?", $data["module"]];
+            } else {
+                $w[] = "module is null";
+            }
+            $w[] = ["name=?", $data["name"]];
+            $w[] = ["action=?", $data["action"]];
+
+            foreach (Translate::Find($w) as $t) {
+                $t->delete();
+            }
+        }
+
+        return ["code" => 200];
+
+    }
+    public function update()
+    {
+        $o = new Translate($_POST["translate_id"]);
+        foreach ($_POST["value"] as $language => $value) {
+            $w = [];
+            $w[] = ["name=?", $o->name];
+            $w[] = ["action=?", $o->action];
+            $w[] = ["language=?", $language];
+            $w[] = $_POST["module"] ? ["module=?", $_POST["module"]] : "module is null";
+            if ($t = Translate::First($w)) {
+                $t->action = $_POST["action"];
+                $t->name = $_POST["name"];
+                $t->value = $value;
+                $t->save();
+            }
+        }
+        return ["code" => 200];
+    }
+
+    public function getData($module)
+    {
+        if ($module) {
+            $w[] = ["module=?", $module];
+        } else {
+            $w[] = "module is null";
+        }
+        $data = [];
+        foreach (Translate::Find($w) as $t) {
+            if (!$data[$t->action . '\t' . $t->name]) {
+                $data[$t->action . '\t' . $t->name] = [
+                    "translate_id" => $t->translate_id,
+                    "name" => $t->name,
+                    "action" => $t->action,
+                    "value" => []
+                ];
+            }
+
+            $data[$t->action . '\t' . $t->name]["value"][$t->language] = $t->value;
+        }
+
+        return ["data" => array_values($data)];
+
+    }
+
+    public function data($module)
+    {
+        if ($module) {
+            $w[] = ["module=?", $module];
+        } else {
+            $w[] = "module is null";
+        }
+        return ["data" => Translate::find($w)];
+    }
+
+    public function get()
+    {
+
+        return;
+
+
+
+        return;
         $select = new My\HTML\Select();
         $select->attr("index", "module");
 
