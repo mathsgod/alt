@@ -32,12 +32,10 @@ class System_login extends R\Page
         if (!$email) {
             throw new \Exception("Email cannot be null", 400);
         }
-        $username = \App::DB()->quote($username);
-        $email = \App::DB()->quote($email);
-        $w[] = "username=$username";
-        $w[] = "email=$email";
-        $user = \App\User::first($w);
-        if ($user) {
+
+        $w[] = ["username=?", $username];
+        $w[] = ["email=?", $email];
+        if ($user = \App\User::first($w)) {
             $user->sendPassword();
         }
 
