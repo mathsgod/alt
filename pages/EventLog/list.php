@@ -4,31 +4,38 @@
 // Last Updated: 2013-04-12
 use App\EventLog;
 use App\User;
-class EventLog_list extends App\Page {
-    public function get() {
-        $jq = $this->createRT([$this, "Datasource"]);
-        //$jq->attr("page-number",2);
 
-    	$jq->attr("data-pagination",["top","bottom"]);
-    	//$jq->attr("data-mode","virtual");
+class EventLog_list extends App\Page
+{
+    public function get()
+    {
 
-        $jq->order("eventlog_id", "desc");
-    	//$jq->addDel();
-        $jq->add("ID", "eventlog_id")->sort()->searchRange()->aLink("v");
-        $jq->add("Class", "class")->ss();
-        $jq->add("Object ID", "id")->index("id")->ss();
-        $jq->add("Action", "action")->ss();
-        $jq->add("User", "User()")->index("user_id")->aLink("v")->searchOption(User::find());
-        $jq->add("Created time", "created_time")->sort()->searchDate();
+        $rt = $this->createRT([$this, "Datasource"]);
+        
+        //$rt->attr("page-number",2);
 
-        $this->write($jq);
+        $rt->attr("data-pagination", ["top", "bottom"]);
+    	//$rt->attr("data-mode","virtual");
+
+        $rt->order("eventlog_id", "desc");
+        $rt->addView();
+    	//$rt->addDel();
+        $rt->add("ID", "eventlog_id")->sort()->searchRange()->aLink("v");
+        $rt->add("Class", "class")->ss();
+        $rt->add("Object ID", "id")->index("id")->ss();
+        $rt->add("Action", "action")->ss();
+        $rt->add("User", "User()")->index("user_id")->aLink("v")->searchOption(User::find());
+        $rt->add("Created time", "created_time")->sort()->searchDate();
+
+        $this->write($rt);
     }
 
-    public function DataSource($jq) {
-
-
-        $w = $jq->where();
-        return array("total" => EventLog::Count($w),
-            "data" => EventLog::find($w, $jq->Order(), $jq->Limit()));
+    public function DataSource($rt)
+    {
+        $w = $rt->where();
+        return array(
+            "total" => EventLog::Count($w),
+            "data" => EventLog::find($w, $rt->Order(), $rt->Limit())
+        );
     }
 }

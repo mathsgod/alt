@@ -135,6 +135,25 @@
                             <option v-for="opt in column.searchOption" v-text="opt.label" v-bind:value="opt.value"></option>
                         </select>
                     </template>
+                    <template v-if="column.searchType=='range'">
+                        <div class="input-group input-group-sm">
+                            <input class="search form-control" v-model="search[column.field].from" placeholder="from" :data-field="column.field" data-search="from" @keyup.enter="doSearch()"/>
+                            <span class="input-group-btn">
+                                <button type="button" class="search-clear-btn btn btn-default" @click="clearSearchDate(column,'from')">
+                                    <i class="glyphicon glyphicon-remove"></i>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="input-group input-group-sm">
+                            <input class="search form-control" v-model="search[column.field].to" placeholder="to" :data-field="column.field" data-search="to" @keyup.enter="doSearch()"/>
+                            <span class="input-group-btn">
+                                <button type="button" class="search-clear-btn btn btn-default" @click="clearSearchDate(column,'to')">
+                                    <i class="glyphicon glyphicon-remove"></i>
+                                </button>
+                            </span>
+                        </div>
+    
+                    </template>                    
                </template>
             </td>
         </tr>
@@ -181,6 +200,11 @@
                 if (c.searchType == "multiselect") {
                     this.search[c.field] = [];
                 } else if (c.searchType == "date") {
+                    this.search[c.field] = {
+                        from: "",
+                        to: "",
+                    };
+                } else if(c.searchType=="range"){
                     this.search[c.field] = {
                         from: "",
                         to: "",

@@ -21,7 +21,7 @@ class RTColumn
     public $width;
 
     public $searchable = false;
-    public $searchType = "text";
+    //public $searchType = "text";
     public $searchMultiple = false;
     public $sortable = false;
     public $visible = true;
@@ -299,7 +299,7 @@ class RTColumn
             //$search_remember = $d["search_remember"];
         }
 
-        if ($this->search_type == "date") {
+        if ($this->search_type == "date" || $this->search_type=="range") {
             $data = [];
             if (isset($_GET["search"][$this->index]["from"])) {
                 $data["from"] = $_GET["search"][$this->index]["from"];
@@ -443,11 +443,12 @@ class RTRequest
                 }
             } elseif ($column->search_type == 'range') {
                 if ($value["from"] != "") {
-                    $where[] = ["$name >= ?", $from["value"]];
+                    $where[] = ["$name >= ?", $value["from"]];
                 }
                 if ($value["to"] != "") {
-                    $where[] = ["$name <= ?", $to["value"]];
+                    $where[] = ["$name <= ?", $value["to"]];
                 }
+                
             } elseif ($column->search_type == 'select') {
                 if ($value != "") {
                     $where[] = ["$name = ?", $value];

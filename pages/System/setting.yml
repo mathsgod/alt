@@ -18,3 +18,7 @@ menu:
   Export: 
     link: System/export
     icon: fa fa-download
+  PHPUnit test:
+    link: System/phpunit
+    icon: fa fa-list-alt
+  

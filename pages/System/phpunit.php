@@ -7,13 +7,18 @@ class System_phpunit extends ALT\Page {
     }
 
     public function run() {
-        $phpunit = $this->getPHPUnit() . "/phpunit.phar";
+        // check compser
+        $pi=$this->app->pathInfo();
+        $phpunit =  $pi["composer_root"]. "/vendor/bin/phpunit";
 
-        $s = `php $phpunit --version`;
+        //$s = `$phpunit --version`;
         // $autoload = App::SystemPath("autoload.php");
-        $autoload = App::Path("global.inc.php");
+        //$autoload = App::Path("global.inc.php");
 
-        $s = `php $phpunit --debug --bootstrap $autoload tests `;
+        $composer_autoload=$pi["composer_root"]."/vendor/autoload.php";
+        $s = `$phpunit --debug --bootstrap $composer_autoload tests`;
+
+        return ["content"=>$s];
 
         $this->write("<pre>" . $s . "</pre>");
     	$this->write("<hr/>");
@@ -35,12 +40,14 @@ class System_phpunit extends ALT\Page {
             return;
         }
 
-        if (!is_readable($folder = $this->getPHPUnit())) {
-            $this->callout->warning("PHP unit test phar not found","Please using <a href='System/update'>System/update</a> to install.");
-            return;
-        }
+        return;
 
-        $box = new ALT\Box();
+        //if (!is_readable($folder = $this->getPHPUnit())) {
+            //$this->callout->warning("PHP unit test phar not found","Please using <a href='System/update'>System/update</a> to install.");
+            //return;
+        //}
+
+        $box = $this->createBox();
 
         $box->header("PHP unit test");
         $box->body();
@@ -53,5 +60,3 @@ class System_phpunit extends ALT\Page {
         $this->write($box);
     }
 }
-
-?>

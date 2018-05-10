@@ -129,6 +129,7 @@ Vue.component("rt-head", {
                         <option v-for="opt in column.searchOption" v-text="opt.label" v-bind:value="opt.value"></option>
                     </select>
                 </template>
+              
            </template>
         </td>
     </tr>
