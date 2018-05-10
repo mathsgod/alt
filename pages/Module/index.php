@@ -14,7 +14,7 @@ class Module_index extends ALT\Page
         $nav = new BS\Nav();
         $nav->addClass("nav-pills nav-stacked");
 
-        foreach (App::Module() as $module) {
+        foreach ($this->app->getModule() as $module) {
             $li = $nav->add($module->name, "Module?page={$module->class}");
             $li->find("a")->prepend("<i class='{$module->icon()}'></i> ");
 

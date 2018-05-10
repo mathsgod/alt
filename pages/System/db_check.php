@@ -2,7 +2,7 @@
 
 class System_db_check extends ALT\Page {
 	public function post() {
-		$db = App::DB();
+		$db = $this->app->db;
 		foreach ($this->findSQL() as $sql) {
 			$db->exec($sql);
 		}
@@ -14,7 +14,7 @@ class System_db_check extends ALT\Page {
 		$db_scheme = json_decode(file_get_contents(App::Config("system", "update_source") . "db_scheme.php"), true);
 
 
-		$db = App::DB();
+		$db = $this->app->db;
 
 		$schema = $db->Schema();
 
@@ -140,5 +140,3 @@ class System_db_check extends ALT\Page {
 		return $q;
 	}
 }
-
-?>

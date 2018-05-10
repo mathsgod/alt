@@ -21,9 +21,7 @@ class _index extends ALT\Page\Login
             } else {
                 $this->response = $this->response->withHeader("Location", "Dashboard");
             }
-
-            $this->response = $this->response->withHeader("Location", $p);
-
+            
             return;
         }
 

@@ -23,7 +23,7 @@
 				<alt-box-header>
 					Installed packages
 				</alt-box-header>
-				<alt-box-body>
+				<alt-box-body class="table-responsive">
 					<table class="table table-condensed table-hover">
 						<tr>
 							<th>Name</th>
@@ -36,7 +36,9 @@
 							<td v-text="p.description"></td>
 							<td v-text="p.version"></td>
 							<td>
-								<button @click="removePackage(p.name)" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></button>
+								<button @click="removePackage(p.name)" class="btn btn-xs btn-danger">
+									<i class="fa fa-times"></i>
+								</button>
 							</td>
 						</tr>
 					</table>
@@ -49,7 +51,7 @@
 				<alt-box-header>
 					New packages
 				</alt-box-header>
-				<alt-box-body>
+				<alt-box-body class="table-responsive">
 					<table class="table table-condensed table-hover">
 						<tr>
 							<th>Name</th>
@@ -111,7 +113,7 @@
 					this.$refs.packageBox2.hideLoading();
 				});
 			},
-			removePackage(package){
+			removePackage(package) {
 				this.composer_output = "loading...";
 				this.$http.post("System/composer/run", {
 					cmd: "remove " + package

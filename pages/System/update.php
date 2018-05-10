@@ -56,7 +56,7 @@ class System_update extends ALT\Page
         API::output($this->globr(CMS_ROOT . file_get_contents(CMS_ROOT . "version"), "*"));
     }
 
-    
+
     public function download($system, $plugins)
     {
         if ($system) {
@@ -186,7 +186,7 @@ class System_update extends ALT\Page
         $this->navbar()->addButton("DB check", "System/db_check");
 
         $this->write("<h4>Use compose to update system: <a href='System/composer'>composer</a></h4>");
-        $this->write("<h4>Your current system: " . App::Version() . "</h4>");
+        $this->write("<h4>Your current system: " . $this->app->version() . "</h4>");
         $this->write("<h4>Lasted version: " . $this->getLastestVersion() . "</h4>");
 
 /*		$t->add("Size", function ($path) {
@@ -214,7 +214,7 @@ class System_update extends ALT\Page
 		$t->header("Local");
 		$this->write($t);*/
 
-        $path = App::Config("system", "update_source") . "get3.php";
+        $path = $this->app->config["system"]["update_source"] . "get3.php";
         $source = json_decode(file_get_contents($path), true);
 
 /*		$t = $this->createT($source);
@@ -238,7 +238,7 @@ class System_update extends ALT\Page
 		$this->write($t);*/
 
 
-        $path = App::Config("system", "update_source") . "plugins/get.php";
+        $path = $this->app->config["system"]["update_source"] . "plugins/get.php";
         $t = $this->createT(json_decode(file_get_contents($path), true));
         $t->header("Download new plugins");
         $t->add("Name", 'name');

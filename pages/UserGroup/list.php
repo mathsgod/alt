@@ -32,6 +32,7 @@ class UserGroup_list extends App\Page
         $ug = new UserGroup($id);
         $t = $this->createT($ug->User());
 
+        $t->addView();
         $t->add("Username", "username")->alink("v");
         $t->add("First name", "first_name");
         $t->add("Last name", "last_name");
