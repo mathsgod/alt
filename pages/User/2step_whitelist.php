@@ -14,13 +14,13 @@ class User_2step_whitelist extends ALT\Page
         
         $u->setting=json_encode($setting, JSON_UNESCAPED_UNICODE);
         $u->save();
-        $this->_redirect();
+        $this->redirect();
     }
 
     public function get()
     {
-        $this->callOut("Your current ip address: ".$this->request->getServerParams()["REMOTE_ADDR"]);
-        $o=App::User();
+        $this->callout->info("Your current ip address: ".$this->request->getServerParams()["REMOTE_ADDR"]);
+        $o=$this->app->user;
         $setting=$o->setting();
         $d["2-step_ip_white_list"]=implode("\n",$setting["2-step_ip_white_list"]);
         $e=$this->createE($d);

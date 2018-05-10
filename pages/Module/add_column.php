@@ -4,7 +4,7 @@ class Module_add_column extends ALT\Page
 
     public function post($table)
     {
-        $t = App::DB()->table($table);
+        $t = $this->app->db->table($table);
 
         $type = $_POST["Type"];
         if ($_POST["Length"]) {
@@ -20,8 +20,8 @@ class Module_add_column extends ALT\Page
         }
         $ret = $t->addColumn($_POST["Field"], $type);
 
-        App::Msg($ret);
-        App::Redirect();
+        $this->alert->info($ret);
+        $this->redirect();
     }
 
     public function get($table)

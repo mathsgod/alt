@@ -6,6 +6,6 @@ class Module_del_column extends App\Page
     {
         $ret=$this->app->db->table($table)->dropColumn($field);
         $this->app->alert->info($ret);
-        $this->_redirect();
+        $this->redirect();
     }
 }

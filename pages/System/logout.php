@@ -11,8 +11,8 @@ class System_logout extends App\Page
                 unset($_SESSION["app"]["org_user"]);
             }
 
-            App::User()->offline();
-            $user_id = App::UserID();
+            $this->app->user->offline();
+            $user_id = $this->app->user->user_id;
             $w[] = "user_id=$user_id";
             if ($ul = UserLog::first($w, ["userlog_id", "desc"])) {
                 $ul->logout_dt = date("Y-m-d H:i:s");
@@ -21,6 +21,6 @@ class System_logout extends App\Page
         }
 
         $_SESSION["app"] = [];
-        App::Redirect("");
+        $this->redirect();
     }
 }

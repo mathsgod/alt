@@ -6,7 +6,7 @@ class System_pdo extends ALT\Page
     {
         $this->app->db->query("Delete from pdo_log");
         $this->alert->info("pdo_log cleared");
-        $this->_redirect("System/pdo");
+        $this->redirect("System/pdo");
     }
 
     public function get()

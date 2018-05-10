@@ -46,7 +46,7 @@ class System_csv_import extends ALT\Page
 			$this->app->db->insert($_POST["table"], $o);
 		}
 		$this->alert->info("Import done");
-		$this->_redirect("System/csv_import");
+		$this->redirect("System/csv_import");
 	}
 
 	public function get()

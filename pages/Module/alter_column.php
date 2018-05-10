@@ -7,7 +7,7 @@ class Module_alter_column extends ALT\Page
         $col = $this->app->db->table($table)->columns($field);
         $col->rename($_POST["Field"]);
         $this->app->alert->info("Column field changed");
-        $this->_redirect();
+        $this->redirect();
     }
 
     public function get($table, $field)

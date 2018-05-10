@@ -6,14 +6,14 @@ class Dashboard_holiday extends App\Page
     public function get($start, $end)
     {
 
-        $h=new HL\Holiday(My::Language());
+        $h = new HL\Holiday($this->app->user->language);
 
         foreach ($h->getHoliday($start, $end) as $d) {
             $c = array();
             $c["title"] = $d["name"];
             $c["start"] = $d["date"];
-            $c["color"]="red";
-    
+            $c["color"] = "red";
+
             $holiday[] = $c;
         }
         return $holiday;
