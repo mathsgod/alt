@@ -140,6 +140,10 @@ class Page extends \R\Page
         }
     }
 
+    public function redirect($uri){
+        return $this->_redirect($uri);
+    }
+
     public function _redirect($uri)
     {
         if ($uri) {

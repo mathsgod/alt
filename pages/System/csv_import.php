@@ -3,10 +3,12 @@
 // Created By: Raymond Chong
 // Created Date: 19/2/2010
 // Last Updated:
-class System_csv_import extends ALT\Page {
+class System_csv_import extends ALT\Page
+{
 	public $delimiter = array(",", "\\t");
 
-	public function post() {
+	public function post()
+	{
 		$content = $_POST["content"];
 
 		$columns = array();
@@ -41,16 +43,16 @@ class System_csv_import extends ALT\Page {
 					$o[$col] = $d[$k];
 				}
 			}
-			App::DB()->insert($_POST["table"], $o);
+			$this->app->db->insert($_POST["table"], $o);
 		}
-		App::Msg("Import Done");
-		App::Redirect("System/csv_import");
+		$this->alert->info("Import done");
+		$this->_redirect("System/csv_import");
 	}
 
-	public function get() {
+	public function get()
+	{
 		$mv = $this->createE();
-		$mv->add("Target table")->input("table")->required();
-		;
+		$mv->add("Target table")->input("table")->required();;
 		$mv->add("Delimiter")->select("delimiter")->ds($this->delimiter);
 		$mv->add("Trim Value")->checkbox("trim_value");
 		$mv->add("Column")->textarea("column")->attr("placeholder", "一行一個");
@@ -60,4 +62,3 @@ class System_csv_import extends ALT\Page {
 	}
 }
 
-?>

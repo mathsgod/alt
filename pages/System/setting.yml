@@ -1,0 +1,20 @@
+class: App\System
+group: System
+icon: fa fa-desktop
+
+menu:
+  Update: 
+    link: System/update
+    icon: fa fa-arrow-up
+  Front translate: 
+    link: System/front_translate_twig
+    icon: fa fa-language
+  Composer: 
+    link: System/composer
+    icon: fa fa-cogs
+  DB check: 
+    link: System/db_check
+    icon: fa fa-check-circle
+  Export: 
+    link: System/export
+    icon: fa fa-download

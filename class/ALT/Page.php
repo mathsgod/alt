@@ -8,16 +8,21 @@ use R\Psr7\Stream;
 
 class Page extends \App\Page
 {
-    private $matser_tpl;
-    private $callout = [];
     private $header = [];
+    public $callout;
+
+    public function __construct($app)
+    {
+        parent::__construct($app);
+        $this->callout = new Callout();
+    }
 
     public function addLib($name)
     {
         try {
             return parent::addLib($name);
         } catch (\Exception $e) {
-            $this->callout("Plugins", $e->getMessage(), "warning");
+            $this->callout->warning("Plugins", $e->getMessage());
         }
     }
 
@@ -35,11 +40,6 @@ class Page extends \App\Page
         $b->append("<li><a href='{$this->module()->name}'>" . $this->translate($this->module()->name) .
             "</a></li>");
         return $b;
-    }
-
-    public function callout($title, $description = null, $type = "info")
-    {
-        $this->callout[] = ["title" => $title, "description" => $description, "type" => $type];
     }
 
     public function createTab($prefix)

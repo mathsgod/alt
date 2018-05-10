@@ -7,8 +7,11 @@ use Box\Spout\Writer\WriterFactory;
 use Box\Spout\Common\Type;
 
 use App\Module;
-class System_export extends ALT\Page {
-	public function post() {
+
+class System_export extends ALT\Page
+{
+	public function post()
+	{
 		$module = Module::_($_POST["module"]);
 
 		$name = $module->class;
@@ -38,13 +41,18 @@ class System_export extends ALT\Page {
 		$writer->close();
 	}
 
-	public function get() {
+	public function get()
+	{
+		if (!class_exists("Box\Spout\Writer\WriterFactory")) {
+			$this->callout->danger("Error", "box/spout not found, <a href='System/composer'>install it</a>.");
+			return;
+		}
 		$mv = $this->createE();
-        $data=App::Module();
-        usort($data,function($a,$b){
-            return $a->name>$b->name;
-        });
-		$mv->add("Target table")->select("module")->ds($data, "name", "name");
+		$data = $this->app->getModule();
+		usort($data, function ($a, $b) {
+			return $a->class > $b->class;
+		});
+		$mv->add("Target table")->select("module")->ds($data, "class", "name");
 		$mv->add("Format")->select("format")->ds(["Excel" => "Excel", "CSV" => "CSV"]);
 
 		$this->write($this->createForm($mv));

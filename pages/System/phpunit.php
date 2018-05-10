@@ -2,6 +2,7 @@
 
 class System_phpunit extends ALT\Page {
     public function getPHPUnit() {
+
         return glob(getcwd() . "/plugins/phpunit.*")[0];
     }
 
@@ -27,13 +28,15 @@ class System_phpunit extends ALT\Page {
 
     public function get() {
         // check compser
-        if (!is_readable($folder = getcwd() . "/composer/vendor/phpunit")) {
-            $this->callOut("Warning", "PHP unit test not found!<br/>Please using <a href='System/composer'>System/composer</a> to install.", "warning");
+        $pi=$this->app->pathInfo();
+
+        if (!is_readable($folder =  $pi["composer_root"]. "/vendor/phpunit")) {
+            $this->callout->warning("PHP unit test not found","Please using <a href='System/composer'>System/composer</a> to install.");
             return;
         }
 
         if (!is_readable($folder = $this->getPHPUnit())) {
-            $this->callOut("Warning", "PHP unit test phar not found!<br/>Please using <a href='System/update'>System/update</a> to install.", "warning");
+            $this->callout->warning("PHP unit test phar not found","Please using <a href='System/update'>System/update</a> to install.");
             return;
         }
 

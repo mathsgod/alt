@@ -26,9 +26,9 @@ class System_index extends ALT\Page
         $list->addLinkedItem("Shell")->href("System/shell");
         $list->addLinkedItem("CSV import")->href("System/csv_import");
         $list->addLinkedItem("Export")->href("System/export");
-        $list->addLinkedItem("WebAPI log")->href("System/webapi");
+        //$list->addLinkedItem("WebAPI log")->href("System/webapi");
         $list->addLinkedItem("PDO log")->href("System/pdo");
-        $list->addLinkedItem("wikiParser")->href("System/wikiParser");
+        //$list->addLinkedItem("wikiParser")->href("System/wikiParser");
         $list->addLinkedItem("DB Check")->href("System/db_check");
         $list->addLinkedItem("DB migration")->href("System/db_migration");
         $list->addLinkedItem("Composer")->href("System/composer");

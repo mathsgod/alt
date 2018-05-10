@@ -29,24 +29,33 @@ class System_email_test extends ALT\Page
         } else {
             $this->app->alert->danger($mail->ErrorInfo);
         }
-        $this->_redirect();
+        $this->redirect();
     }
 
     public function get()
     {
-        $mv = $this->createE();
-        $mv->add("smtp")->input("smtp")->val(App\Config::_("user", "smtp"));
-        $mv->add("smtp-username")->input("smtp-username")->val(App\Config::_("user", "smtp-username"));
-        $mv->add("smtp-password")->input("smtp-password")->val(App\Config::_("user", "smtp-password"));
-        $mv->add("return-path")->input("return-path")->val(App\Config::_("user", "return-path"));
+        $config = $this->app->config["user"];
+
+        $config["sender"] = "raymond@hostlink.com.hk";
+        $config["receiver"] = "raymond@hostlink.com.hk";
+        $config["cc"] = "";
+        $config["bcc"] = "";
+        $config["subject"] = "subject";
+        $config["content"] = "This is a test mail";
+
+        $mv = $this->createE($config);
+        $mv->add("smtp")->input("smtp");
+        $mv->add("smtp-username")->input("smtp-username");
+        $mv->add("smtp-password")->input("smtp-password");
+        $mv->add("return-path")->input("return-path");
 
         $mv->addHr();
-        $mv->add("Sender")->input("sender")->val("raymond@hostlink.com.hk");
-        $mv->add("Receiver")->input("receiver")->Val("raymond@hostlink.com.hk");
-        $mv->add("CC")->input("cc")->val("raymond@hostlink.com.hk");
-        $mv->add("BCC")->input("bcc")->val("raymond@hostlink.com.hk");
-        $mv->add("Subject")->input("subject")->val("subject");
-        $mv->add("Content")->textarea("content")->html("This is a test mail");
+        $mv->add("Sender")->input("sender");
+        $mv->add("Receiver")->input("receiver");
+        $mv->add("CC")->input("cc");
+        $mv->add("BCC")->input("bcc");
+        $mv->add("Subject")->input("subject");
+        $mv->add("Content")->textarea("content");
 
         $this->write($this->createForm($mv));
     }

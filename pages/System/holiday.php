@@ -2,11 +2,9 @@
 
 class System_holiday extends App\Page
 {
-    public function get()
+    public function get($language = "zh-hk")
     {
-        $composer=App::Composer();
-
-        $holiday=new HL\Holiday("zh-hk");
-        outP($holiday->getHoliday("2000-01-01", "2016-01-01"));
+        $holiday = new HL\Holiday($language);
+        return $holiday->getHoliday("2000-01-01", date("Y-m-d"));
     }
 }

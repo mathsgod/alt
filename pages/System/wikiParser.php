@@ -2,6 +2,7 @@
 
 class System_wikiParser extends ALT\Page {
     public function get() {
+        return;
         $wp = $this->addLib("wikiParser");
         $content = file_get_contents(CMS_ROOT . $wp . "/examples/example.wiki");
         $c1 = nl2br($content);
@@ -23,5 +24,3 @@ EOT
             );
     }
 }
-
-?>

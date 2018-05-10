@@ -1,25 +1,25 @@
 <?php
 
-class System_pdo extends ALT\Page {
-    public function clear() {
-        App::DB()->query("Delete from pdo_log");
-        App::Msg("pdo_log cleared");
-        App::Redirect("System/pdo");
+class System_pdo extends ALT\Page
+{
+    public function clear()
+    {
+        $this->app->db->query("Delete from pdo_log");
+        $this->alert->info("pdo_log cleared");
+        $this->_redirect("System/pdo");
     }
 
-    public function get() {
+    public function get()
+    {
         $h = $this->navBar();
         $h->addButton("Clear pdo", "System/pdo/clear");
 
-        $mt = $this->createT(App::DB()->query("select * from pdo_log"));
+        $mt = $this->createT($this->app->db->query("select * from pdo_log"));
         $mt->add("SQL", "sql");
-        $mt->add("Date", function($obj) {
-                return $obj["date"];
-            }
-            );
+        $mt->add("Date", function ($obj) {
+            return $obj["date"];
+        });
 
         $this->write($mt);
     }
 }
-
-?>

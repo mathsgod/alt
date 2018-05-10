@@ -12,8 +12,9 @@
 
 <textarea class='form-control' id='result' style='width:100%' rows='40'></textarea>
 
-<!-- START IGNORE -->
-<script language="javascript">
+{% verbatim %}
+   
+<script>
 $('#command').bind('keypress',function(e){
 	var code = e.keyCode || e.which;
 	if(code == 13) {
@@ -27,4 +28,4 @@ $('#command').bind('keypress',function(e){
 	}
 });
 </script>
-<!-- END IGNORE -->
+{% endverbatim %}

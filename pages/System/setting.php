@@ -9,7 +9,6 @@ class System_Setting extends ALT\Page {
     }
 
     public function get() {
-        outp(App::Config("user"));
 
         $v = My::E(App::Config("user"));
         $v->add("Forget password email subject")->input("forget pwd email/subject");

@@ -9,7 +9,7 @@ new Vue({
 
 Vue.component("alt-sidebar-menu", {
 	template: `
-<ul class="treeview-menu">
+<ul class="treeview-menu" :data-keyword="menu.keyword">
 	<li v-for="submenu in menu.submenu" :class="{active:submenu.active}">
 		<a :href="submenu.link" :target="menu.target" style="cursor: pointer;">
 			<i :class="submenu.icon"></i>

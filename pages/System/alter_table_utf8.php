@@ -5,11 +5,11 @@ class System_alter_table_utf8 extends ALT\Page
 
     public function post()
     {
-        $charset=$_POST["charset"];
+        $charset = $_POST["charset"];
 
         foreach (App::DB()->query("SHOW CHARACTER SET")->fetchAll() as $c) {
-            if ($c["Charset"]==$charset) {
-                $collation=$c["Default collation"];
+            if ($c["Charset"] == $charset) {
+                $collation = $c["Default collation"];
                 break;
             }
         }
@@ -30,15 +30,16 @@ class System_alter_table_utf8 extends ALT\Page
     public function get()
     {
 
-        $e=$this->createE();
+        $e = $this->createE();
 
-        $charset=array_map(function ($o) {
+        $charset = array_map(function ($o) {
             return $o["Charset"];
-        }, App::DB()->query("SHOW CHARACTER SET")->fetchAll());
+        }, $this->app->db->query("SHOW CHARACTER SET")->fetchAll());
 
         sort($charset);
 
-        $e->add("Charset")->select("charset")->options($charset);
+        $s=$e->add("Charset")->select("charset")->options($charset);
+
 
         $this->write($this->createForm($e));
     }
