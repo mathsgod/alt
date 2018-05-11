@@ -18,9 +18,9 @@ class Module_add_column extends ALT\Page
         } else {
             $constraint = "NULL";
         }
-        $ret = $t->addColumn($_POST["Field"], $type);
+        $t->addColumn($_POST["Field"], $type);
 
-        $this->alert->info($ret);
+        $this->app->alert->success("Column added");
         $this->redirect();
     }
 

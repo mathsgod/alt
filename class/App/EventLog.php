@@ -15,7 +15,7 @@ class EventLog extends Model {
         if ($class == "App\EventLog") return;
 
         $r["id"] = $object->id();
-        $r["user_id"] = \App::UserID();
+        $r["user_id"] = \App::_()->user->user_id;
         $r["class"] = $class;
         $r["action"] = "Delete";
         $r["target"] = json_encode($object);
@@ -57,5 +57,3 @@ class EventLog extends Model {
         self::__db()->insert("EventLog", $r);
     }
 }
-
-?>

@@ -17,7 +17,7 @@ class SystemValue_list extends App\Page
 
         foreach ($this->app->config["language"] as $v => $l) {
             $jq->add($l, function ($obj) use ($v) {
-                return SystemValue::_($obj->name, $v);
+                return nl2br(SystemValue::_($obj->name, $v));
             })->index("value_$l");
         }
 

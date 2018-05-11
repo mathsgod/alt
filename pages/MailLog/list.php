@@ -28,11 +28,9 @@ class MailLog_list extends App\Page {
     }
 
     public function ds($r) {
-        $s = $r->search();
+        $w = $r->where();
 
         return ["total" => App\MailLog::Count($w),
         "data" => App\MailLog::Find($w, $r->order(), $r->limit())];
     }
 }
-
-?>

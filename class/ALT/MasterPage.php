@@ -187,25 +187,8 @@ class MasterPage
 
         $data["css"][] = "$system/plugins/RT/css/rt.css";
 
-        $data["alerts"] = [];
-        foreach ($this->app->flushMessage() as $msg) {
-            $m = [];
-            $m["message"] = $msg["message"];
-            $m["type"] = $msg["type"];
-            switch ($msg["type"]) {
-                case "success":
-                    $m["icon"] = "fa-check";
-                    break;
-                case "warning":
-                    $m["icon"] = "fa-exclamation-triangle";
-                    break;
-                case "danger":
-                    $m["icon"] = "fa-exclamation-circle";
-                    break;
-            }
-            $data["alerts"][] = $m;
-        }
-
+        $data["alerts"] = $this->app->flushMessage();
+       
         
         $data["languages"] = $app->config["language"];
 

@@ -7,7 +7,8 @@ class Alert
     {
         $_SESSION["app"]["message"][] = [
             "type" => "info",
-            "message" => $message
+            "message" => $message,
+            "icon" => "fa fa-info"
         ];
     }
 
@@ -15,17 +16,26 @@ class Alert
     {
         $_SESSION["app"]["message"][] = [
             "type" => "success",
-            "message" => $message
+            "message" => $message,
+            "icon" => "fa fa-check"
         ];
-
     }
 
     public function danger($message)
     {
         $_SESSION["app"]["message"][] = [
             "type" => "danger",
-            "message" => $message
+            "message" => $message,
+            "icon"=>"fa fa-exclamation-circle"
         ];
     }
 
+    public function warning($message)
+    {
+        $_SESSION["app"]["message"][] = [
+            "type" => "warning",
+            "message" => $message,
+            "icon"=>"fa fa-exclamation-triangle"
+        ];
+    }
 }

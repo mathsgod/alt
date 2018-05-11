@@ -173,7 +173,14 @@ class App extends \R\App
             try {
                 $response = $page($request->withMethod($route->method), $response);
             } catch (\Exception $e) {
-                \App::Redirect("404_not_found?msg=" . $e->getMessage());
+                $this->alert->danger($e->getMessage());
+
+                $header = $this->request->getHeader("Referer");
+                if ($h = $header[0]) {
+                    $response = $response->withHeader("Location", $h);
+                }
+                
+                //\App::Redirect("404_not_found?msg=" . $e->getMessage());
             }
 
             foreach ($response->getHeaders() as $name => $values) {
@@ -185,6 +192,24 @@ class App extends \R\App
             \App::Redirect("404_not_found");
         } else {
             \App::Redirect("");
+        }
+    }
+
+    public function redirect($url){
+        if ($uri) {
+            $location = $this->request->getUri()->getBasePath() . "/" . $uri;
+            $this->response = $this->response->withHeader("Location", $location);
+            return;
+        }
+
+        if($_GET["_referer"]){
+            $this->response = $this->response->withHeader("Location", $_GET["_referer"]);
+            return;
+        }
+
+        $header = $this->request->getHeader("Referer");
+        if ($h = $header[0]) {
+            $this->response = $this->response->withHeader("Location", $h);
         }
     }
 

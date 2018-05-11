@@ -9,5 +9,3 @@ class MailLog_index extends ALT\Page {
         $this->write($tab);
     }
 }
-
-?>

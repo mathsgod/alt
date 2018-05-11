@@ -38,7 +38,7 @@ class EventLog_v extends ALT\Page {
                 return "<dl>".implode("",$str)."</dl>";
             }
             );
-        $mv->add("Remark", "remark");
+        $mv->add("Remark", "remark")->css("white-space","pre");
 
         $this->write($mv);
     }

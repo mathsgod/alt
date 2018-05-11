@@ -26,10 +26,10 @@
     "require": {
         "php": ">=5.6",
         "hostlink/r-psr7": "2.*",
-        "hostlink/r": "^2.2",
+        "hostlink/r": "^2.3",
         "hostlink/r-p": "1.*",
         "hostlink/r-bs": "1.*",
-        "hostlink/r-db": "1.*",
+        "hostlink/r-db": "^1.3",
         "hostlink/holiday-hk": "1.*",
         "hostlink/weather": "1.*",
         "hostlink/html": "1.*",
@@ -78,5 +78,5 @@
         }
     ],
     "minimum-stability": "stable",
-    "version": "5.4.2"
+    "version": "5.4.3"
 }

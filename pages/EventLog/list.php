@@ -10,7 +10,7 @@ class EventLog_list extends App\Page
     public function get()
     {
 
-        $rt = $this->createRT([$this, "Datasource"]);
+        $rt = $this->createRT([$this, "ds"]);
         
         //$rt->attr("page-number",2);
 
@@ -30,7 +30,7 @@ class EventLog_list extends App\Page
         $this->write($rt);
     }
 
-    public function DataSource($rt)
+    public function ds($rt)
     {
         $w = $rt->where();
         return array(
