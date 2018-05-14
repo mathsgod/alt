@@ -132,6 +132,8 @@ class App extends \R\App
     {
         if ($this->logger) $this->logger->debug("APP::run");
         session_start();
+
+
         
         //user
         if (!$_SESSION["app"]["user"]) {
@@ -141,12 +143,15 @@ class App extends \R\App
 
         $this->base = $this->request->getUri()->getBasePath();
 
-        $b = $this->pathInfo();
+        $pi = $this->pathInfo();
+
+        //load plugins
+        $this->plugins_setting=\Symfony\Component\Yaml\Yaml::parseFile($pi["system_root"]."/plugins.yml");
 
         $router = new Router();
         $router->add("GET", "404_not_found", [
             "class" => "_404_not_found",
-            "file" => $b["system_root"] . "/pages/404_not_found.php"
+            "file" => $pi["system_root"] . "/pages/404_not_found.php"
         ]);
 
         ob_start();

@@ -44,6 +44,7 @@ class Login extends \R\Page
             }
 
 
+
             $p = new \App\Plugin("components/jquery");
             $data["jquery"] = $p->jss();
 

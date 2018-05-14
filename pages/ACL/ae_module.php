@@ -110,12 +110,13 @@ class ACL_ae_module extends ALT\Page {
     }
 
     public function get() {
-        App::SavePlace();
+        $this->app->savePlace();
+        //App::SavePlace();
 
         $this->header("Module ACL");
 
         $mv = $this->createE(null);
-        $ms = App::Module();
+        $ms = $this->app->getModule();
         usort($ms, function($a, $b) {
                 return $a->class > $b->class;
             }
@@ -131,7 +132,7 @@ class ACL_ae_module extends ALT\Page {
             return ;
         }
 
-        $w[] = "module = " . App::DB()->quote($_GET["module"]);
+        $w[] = "module = " . $this->app->db->quote($_GET["module"]);
 
         $mt = $this->createT(ACL::find($w));
         $mt->addDel();

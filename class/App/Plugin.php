@@ -36,7 +36,17 @@ class Plugin
         $path[] = [$system_root . "/plugins/{$name}.*", $system_base . "/plugins", "version"];
         $path[] = [$system_root . "/AdminLTE/plugins/{$name}", $system_base . "/AdminLTE/plugins/$name"];
 
-        $ini_file = $system_root . "/plugins.ini";
+        $yml_file = $system_root . "/plugins.yml";
+
+        $config = \App::_()->plugins_setting;
+        if ($config[$name]) {
+            $this->setting = $config[$name];
+        }
+
+        if ($setting=parse_ini_file($cms_root . "/plugins.ini", true)[$name]) {
+            $this->setting = $setting;
+        }
+
 
         $found = false;
         foreach ($path as $p) {
@@ -50,14 +60,6 @@ class Plugin
 
                 if ($p[2] == "version") {
                     $this->base .= "/" . basename($f);
-                }
-                // read ini
-                $ini = parse_ini_file($ini_file, true);
-                $this->setting = $ini[$name];
-
-                $ini2 = parse_ini_file($cms_root . "/plugins.ini", true);
-                if ($ini2[$name]) {
-                    $this->setting = $ini2[$name];
                 }
 
                 $found = true;

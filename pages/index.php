@@ -7,6 +7,7 @@ class _index extends ALT\Page\Login
 {
     public function get($r)
     {
+ 
         $config = $this->app->config;
         if ($this->app->logined()) {
             $user = $this->app->user;
