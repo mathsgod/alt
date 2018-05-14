@@ -92,7 +92,7 @@ class ACL_ae_module extends ALT\Page {
             if ($usergroup_id)$r["usergroup_id"] = $usergroup_id;
             if ($special_user)$r["special_user"] = $special_user;
             $r["value"] = "allow";
-            App::DB()->insert(ACL, $r);
+            $this->app->db->insert(ACL, $r);
         }
 
         foreach($_POST["deny_path"] as $path) {
@@ -103,7 +103,7 @@ class ACL_ae_module extends ALT\Page {
             if ($usergroup_id)$r["usergroup_id"] = $usergroup_id;
             if ($special_user)$r["special_user"] = $special_user;
             $r["value"] = "deny";
-            App::DB()->insert(ACL, $r);
+            $this->app->db->insert(ACL, $r);
         }
 
         App::Redirect();
@@ -174,7 +174,7 @@ class ACL_ae_module extends ALT\Page {
 
         $mt->add("Allow", function($action)use($module, $user_id, $usergroup_id, $special_user) {
                 $c = p("input")->attr("type", "checkbox")->attr("name", "allow[$action]")->addClass("allow");
-                $w[] = "module=" . App::DB()->quote($module->class);
+                $w[] = "module=" . $this->app->db->quote($module->class);
                 $w[] = "action='$action'";
                 $w[] = "value='allow'";
                 if ($user_id) {
@@ -194,7 +194,7 @@ class ACL_ae_module extends ALT\Page {
 
         $mt->add("Deny", function($action)use($module, $user_id, $usergroup_id, $special_user) {
                 $c = p("input")->attr("type", "checkbox")->attr("name", "deny[$action]")->addClass("deny");
-                $w[] = "module=" . App::DB()->quote($module->class);
+                $w[] = "module=" . $this->app->db->quote($module->class);
                 $w[] = "action='$action'";
                 $w[] = "value='deny'";
                 if ($user_id) {
