@@ -148,6 +148,16 @@ class App extends \R\App
         //load plugins
         $this->plugins_setting=\Symfony\Component\Yaml\Yaml::parseFile($pi["system_root"]."/plugins.yml");
 
+        foreach($this->plugins_setting as $name=>$value){
+            if($value["locale"][$this->user->language]){
+
+                $this->plugins_setting[$name]=array_merge_recursive($this->plugins_setting[$name],$value["locale"][$this->user->language]);
+            }
+        }
+
+
+//outp($this->plugins_setting);
+//die();
         $router = new Router();
         $router->add("GET", "404_not_found", [
             "class" => "_404_not_found",

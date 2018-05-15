@@ -14,6 +14,13 @@ class Page extends \R\Page
     public $_lib = [];
     private $data = [];
 
+    protected $alert;
+
+    public function __construct(App $app){
+        parent::__construct($app);
+        $this->alert=$app->alert;
+    }
+
     public function _log($message, $array)
     {
         $log = \App::Logger();
@@ -435,7 +442,7 @@ class Page extends \R\Page
             }
             $msg .= $id ? "updated" : "created";
             $this->app->alert->success($msg);
-            $this->_redirect();
+            $this->redirect();
         }
     }
 

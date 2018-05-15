@@ -15,9 +15,6 @@ fullcalendar/fullcalendar:
   require: ['components/moment']
   css: ['dist/fullcalendar.min.css']
   js: ['dist/fullcalendar.min.js','gcal.min.js']
-  locale:
-    zh-hk:
-      js: ['locale/zh-tw.js']
 
 components/jquery:
   js: ['jquery.min.js']

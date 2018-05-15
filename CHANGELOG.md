@@ -1,3 +1,16 @@
+## 5.4.6
+```php
+public Testing_index extends ALT\Page{
+    function get(){
+        $this->alert->info("info");
+        $this->alert->danger("danger");
+        $this->alert->warning("warning");
+        $this->alert->success("success");
+    }
+}
+```
+
+---
 ## 5.3.0
 - multi menu group
 - get current user
