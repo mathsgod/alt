@@ -34,7 +34,7 @@ class Mail extends \My\Mail
 
             $l->host = $this->Host;
 
-            $l->save();
+            $l->save(false);
         }
 
         return parent::send();

@@ -72,16 +72,19 @@ class System_front_translate_twig extends \ALT\Page
         $p["tl"] = $_POST["to"];
         $p["dt"] = "t";
         $p["q"] = $_POST["text"];
+        $p["ie"] = "UTF-8";
+        $p["oe"] = "UTF-8";
 
+      
         $options = [
             "ssl" => [
                 "verify_peer" => false,
                 "verify_peer_name" => false,
-                "header" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36"
+                "header" => "user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36"
             ]
         ];
-        $resp = file_get_contents("https://translate.googleapis.com/translate_a/single?" . http_build_query($p), false, stream_context_create($options));
 
+        $resp = file_get_contents("https://translate.googleapis.com/translate_a/single?" . http_build_query($p), false, stream_context_create($options));
         $resp = json_decode($resp, true);
 
         return ["text" => $resp[0][0][0]];
