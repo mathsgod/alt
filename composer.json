@@ -33,6 +33,7 @@
         "hostlink/holiday-hk": "^1.2.1",
         "hostlink/weather": "1.*",
         "hostlink/html": "1.*",
+        "mathsgod/translate": "1.*",
         "twig/twig": "*",
         "twig/extensions": "*",
         "sepia/po-parser": "5.*",
@@ -78,5 +79,5 @@
         }
     ],
     "minimum-stability": "stable",
-    "version": "5.4.8"
+    "version": "5.4.9"
 }

@@ -66,6 +66,11 @@ class System_front_translate_twig extends \ALT\Page
 
     public function googleTranslate()
     {
+
+        $t=new R\Translate;
+
+        return ["text"=>$t->translate($_POST["text"],$_POST["from"],$_POST["to"])];
+
         $p = [];
         $p["client"] = "gtx";
         $p["sl"] = $_POST["from"];
