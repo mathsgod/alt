@@ -133,7 +133,7 @@ class MasterPage
                     $menu = [];
                     $menu["label"] = $app->t($modulegroup_name);
                     $menu["link"] = "#";
-                    $menu["icon"] = $group_icon[$modulegroup_name] ? $group_icon[$modulegroup_name] : "fa fa-link";
+                    $menu["icon"] = $group_icon[$modulegroup_name] ? $group_icon[$modulegroup_name] : "fa fa-link fa-fw";
                     $menu["keyword"] = $menu["label"] . " " . $modulegroup_name;
                     $menu["active"] = false;
                     $menu["submenu"] = $menu_gen($modules);

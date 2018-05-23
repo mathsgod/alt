@@ -83,8 +83,8 @@
         <tr>
             <th v-if="hasHideColumn" class="width:29px;max-width:29px">
                 <button class="btn btn-default btn-xs" @click="toggleChild">
-                    <i v-if="!showChild" class="fa fa-chevron-up"></i>
-                    <i v-if="showChild" class="fa fa-chevron-down"></i>
+                    <i v-if="!showChild" class="fa fa-fw fa-chevron-up"></i>
+                    <i v-if="showChild" class="fa fa-fw fa-chevron-down"></i>
                 </button>
             </th>
             <slot></slot>
@@ -300,8 +300,8 @@
             <tr :style="getStyle(r)" @click="rowClicked(r)" :class="{active:r._selected}">
                 <td v-if="hasHideColumn">
                     <button class="btn btn-default btn-xs" @click="toggleRowChild(index)" @mouseenter="mouseEnter(index)" @mouseleave="mouseLeave(index)">
-                        <i v-if="!showIndex[index]" class="fa fa-chevron-up"></i>
-                        <i v-if="showIndex[index]" class="fa fa-chevron-down"></i>
+                        <i v-if="!showIndex[index]" class="fa fa-fw fa-chevron-up"></i>
+                        <i v-if="showIndex[index]" class="fa fa-fw fa-chevron-down"></i>
                     </button>
                 </td>
                 <td v-for="column in columns" @click="cellClicked(column,index,r)" v-if="column.display()"
@@ -322,10 +322,10 @@
                     </template>
                     <template v-else>
                         <input type="checkbox" v-if="column.cell(r).type=='deletes'"/>
-                        <button class="btn btn-xs btn-danger" v-else-if="column.cell(r).type=='delete'" @click="deleteRow(r[column.field].uri)"><i class="fa fa-times"></i></button>
+                        <button class="btn btn-xs btn-danger" v-else-if="column.cell(r).type=='delete'" @click="deleteRow(r[column.field].uri)"><i class="fa fa-fw fa-times"></i></button>
                         <button class="btn btn-xs btn-default" v-else-if="column.cell(r).type=='sub-row'" @click="toggleSubRow(index,r)">
-                            <i v-if="subRow[index]" class="fa fa-minus"></i>
-                            <i v-if="!subRow[index]" class="fa fa-plus"></i>
+                            <i v-if="subRow[index]" class="fa fa-fw fa-minus"></i>
+                            <i v-if="!subRow[index]" class="fa fa-fw fa-plus"></i>
                         </button>
                         <a v-else-if="column.cell(r).type=='link'" :href="column.cell(r).href" v-html="column.cell(r).content"></a>
                         <div v-else v-html="column.cell(r).content" :style="column.cell(r).style">
@@ -509,7 +509,7 @@
         <div :title="title" style="overflow:hidden">{{title}}</div>
         <div ref="resizer"></div>
         <template v-if="type=='deletes'">
-           <button class='btn btn-xs btn-danger' @click="$emit('deletes')"><i class='fa fa-times'></i></button>
+           <button class='btn btn-xs btn-danger' @click="$emit('deletes')"><i class='fa fa-fw fa-times'></i></button>
         </template>
 </th>`,
         props: {

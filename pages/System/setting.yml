@@ -1,6 +1,6 @@
 class: App\System
 group: System
-icon: fa fa-desktop
+icon: fa fa-desktop fa-fw
 
 menu:
   Update: 

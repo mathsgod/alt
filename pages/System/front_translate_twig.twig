@@ -256,7 +256,7 @@
             },tranSrcIfEmpty(lang){
                 if (confirm("Are you sure want to translation from source to " + lang)) {
                     this.data.forEach((d) => {
-                        if(d.msgstr[lang].length==0){
+                        if (d.msgstr[lang]== null || d.msgstr[lang].length == 0) {
                             this.$http.post("System/front_translate_twig/googleTranslate", {
                                 from: 'auto',
                                 to: lang,

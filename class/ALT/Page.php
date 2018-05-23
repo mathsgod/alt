@@ -36,7 +36,7 @@ class Page extends \App\Page
     public function breadcrumb()
     {
         $b = p("ol")->addClass('breadcrumb');
-        $b->append('<li><a href=""><i class="fa fa-dashboard"></i> Home</a></li>');
+        $b->append('<li><a href=""><i class="fa fa-home"></i> '.$this->translate('Home').'</a></li>');
         $b->append("<li><a href='{$this->module()->name}'>" . $this->translate($this->module()->name) .
             "</a></li>");
         return $b;

@@ -7,7 +7,7 @@ class Module extends Model
 {
     private static $_modules = [];
     public $group;
-    public $icon = "fa fa-link";
+    public $icon = "fa fa-fw fa-link";
     public $class;
     public $menu = [];
     public $sequence = PHP_INT_MAX;
@@ -25,7 +25,7 @@ class Module extends Model
     public function icon()
     {
         if (!$this->icon) {
-            return "fa fa-link";
+            return "fa fa-fw fa-link";
         }
         return $this->icon;
     }
@@ -219,7 +219,7 @@ class Module extends Model
                 $links[] = [
                     "label" => $this->translate($k),
                     "link" => $v,
-                    "icon" => "fa fa-link",
+                    "icon" => "fa fa-fw fa-link",
                     "active" => ($path == $v),
                     "keyword" => $this->translate($k)
                 ];
@@ -231,7 +231,7 @@ class Module extends Model
                 $links[] = [
                     "label" => $this->translate("Add"),
                     "link" => $this->name . "/ae",
-                    "icon" => "fa fa-plus",
+                    "icon" => "fa fa-fw fa-plus",
                     "active" => ($path == $this->name . "/ae"),
                     "keyword" => ""
                 ];
@@ -243,7 +243,7 @@ class Module extends Model
                 $links[] = [
                     "label" => $this->translate("List"),
                     "link" => $this->name,
-                    "icon" => "fa fa-list",
+                    "icon" => "fa fa-fw fa-list",
                     "active" => ($path == $this->name),
                     "keyword" => ""
                 ];

@@ -531,7 +531,7 @@ class RT implements \JsonSerializable
             $uri = $obj->uri('ae');
             if ($obj->canUpdate() && \App::ACL($uri)) {
                 // return "<a href=\"{$uri}\">" . Icon::_("edit") . "</a>";
-                return "<a href=\"{$uri}\" class='btn btn-xs btn-warning'><i class='fa fa-pencil-alt'/></a>";
+                return "<a href=\"{$uri}\" class='btn btn-xs btn-warning'><i class='fa fa-fw fa-pencil-alt'/></a>";
             }
         };
         $column->align("center");
@@ -549,7 +549,7 @@ class RT implements \JsonSerializable
         $column->descriptor[] = function ($obj) {
             $uri = $obj->uri('v');
             if ($obj->canRead() && \App::ACL($uri)) {
-                return "<a href=\"{$uri}\" class='btn btn-xs btn-info'><i class='fa fa-search'/></a>";
+                return "<a href=\"{$uri}\" class='btn btn-xs btn-info'><i class='fa fa-fw fa-search'/></a>";
             }
         };
         $column->align("center");

@@ -226,13 +226,13 @@
                         <ul class="treeview-menu">
                             <li class=" ">
                                 <a href="javascript:__add_favorite();">
-                                    <i class="fa fa-plus text-aqua"></i>
+                                    <i class="fa fa-fw fa-plus text-aqua"></i>
                                     <span>add</span>
                                 </a>
                             </li>
                             <li class=" ">
                                 <a href="User/myfav">
-                                    <i class="fa fa-heart"></i>
+                                    <i class="fa fa-fw fa-heart"></i>
                                     <span>manage</span>
                                 </a>
                             </li>
@@ -245,7 +245,7 @@
                     {% for fav in favs%}
                     <li class="fav">
                         <a href="{{fav.link}}">
-                            <i class="fa {{fav.icon?fav.icon:'fa-link'}} {{fav.color?fav.color:''}}"></i>
+                            <i class="fa fa-fw {{fav.icon?fav.icon:'fa-link'}} {{fav.color?fav.color:''}}"></i>
                             <span>{{fav.label}}</span>
                         </a>
                     </li>
