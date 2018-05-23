@@ -44,6 +44,9 @@ class Login extends \R\Page
             }
 
 
+            
+            $p = new \App\Plugin("vue");
+            $data["vue"]=$p;
 
             $p = new \App\Plugin("components/jquery");
             $data["jquery"] = $p->jss();

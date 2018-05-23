@@ -37,7 +37,7 @@
 							<td v-text="p.version"></td>
 							<td>
 								<button @click="removePackage(p.name)" class="btn btn-xs btn-danger">
-									<i class="fa fa-times"></i>
+									<i class="fa fa-fw fa-times"></i>
 								</button>
 							</td>
 						</tr>
@@ -61,7 +61,7 @@
 							<td v-text="p.name"></td>
 							<td>
 								<button v-if="!p.version" class="btn btn-xs btn-success" @click="requirePackage(p.name)">
-									<i class="fa fa-download"></i>
+									<i class="fa fa-fw fa-download"></i>
 								</button>
 							</td>
 						</tr>

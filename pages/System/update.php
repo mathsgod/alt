@@ -103,7 +103,7 @@ class System_update extends ALT\Page
         $t->header("Download new plugins");
         $t->add("Name", 'name');
         $t->add("Size", 'size');
-        $t->add("Download")->button()->html("<i class='fa fa-download'></i>")->href(function ($obj) {
+        $t->add("Download")->button()->html("<i class='fa fa-fw fa-download'></i>")->href(function ($obj) {
             return "System/update/download?plugins=" . $obj["name"];
         })->addClass("btn-primary");
         $this->write($t);
@@ -116,7 +116,7 @@ class System_update extends ALT\Page
         $t->add("Permission", function ($s) {
             return substr(sprintf('%o', fileperms($s)), -4);
         });
-        $t->add("")->button()->html("<i class='fa fa-times'></i>")->href(function ($obj) {
+        $t->add("")->button()->html("<i class='fa fa-fw fa-times'></i>")->href(function ($obj) {
             $s = basename($obj);
             return "System/update/deletePlugin?name=$s";
         })->addClass("btn-danger");
