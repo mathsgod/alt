@@ -1,3 +1,12 @@
+## 5.4.11
+config.ini
+
+default allow user full control module
+```
+user_default_acl=1
+```
+
+
 ## 5.4.6
 ```php
 public Testing_index extends ALT\Page{
