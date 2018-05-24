@@ -89,6 +89,18 @@ class ACL extends Model
 
 
         $result = $user->isAdmin();
+        if(!$result){
+            if($user->isUser()){
+                $result=App::_()->config["system"]["user_default_acl"];
+
+                //if module is system, set false
+                $module = Module::ByPath($path);
+                if(startsWith($module->class,"App")){
+                    $result=false;
+                }
+            }
+        }
+
         $ugs = $user->UserGroup();
 
         if (!$result) {
