@@ -64,7 +64,7 @@ var vue_init = function () {
             el: o
         });
     });
-    
+
     document.querySelectorAll("alt-form").forEach(o => {
         new Vue({
             el: o
@@ -106,7 +106,7 @@ var vue_init = function () {
             el: o
         });
     });
-    setTimeout(vue_init,300);
+    setTimeout(vue_init, 300);
 };
 document.addEventListener("DOMContentLoaded", function (event) {
     console.log('domcontentloaded');
@@ -436,7 +436,7 @@ function closeRoxyDialog() {
             });
         }
 
-                //Select2
+        //Select2
 
 
 
@@ -607,15 +607,17 @@ function closeRoxyDialog() {
 function __add_favorite() {
     var label = prompt("請輸入標籤", window.document.title);
     if (label != undefined && label != "") {
-        $.post("UI/save", {
-            type: "fav",
-            uri: "fav",
+        $.post("UI/save/saveFav", {
             layout: {
                 label: label,
-                link: window.self.location.toString()
+                link: self.location.pathname + self.location.search
             }
-        }).done(function () {
-            window.self.location.reload();
+        }).done(function (resp) {
+            if (resp.code == 200) {
+                window.self.location.reload();
+            } else {
+                alert("error add fav");
+            }
         });
     }
 }

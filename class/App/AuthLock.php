@@ -9,7 +9,6 @@ class AuthLock extends Model
         $w[]=["ip=?",$ip];
         $w[]="value>=3";
         $w[]="date_add(time,Interval 180 second) > now()";
-
         return AuthLock::First($w);
     }
 

@@ -46,15 +46,15 @@ class UI_save extends App\Page
 
     public function saveFav()
     {
-        $uri = App::DB()->quote($_POST["uri"]);
-        $w[] = "user_id=" . App::UserID();
-        $w[] = "uri={$uri}";
-        $ui = new UI();
-        $ui->user_id = App::UserID();
-        $ui->uri = $_POST["uri"];
+        //$w[] = "user_id=" . $this->app->user->user_id;
+        //$w[] = ["uri=?",$_POST["uri"]];
 
+        $ui = new UI();
+        $ui->user_id = $this->app->user->user_id;
+        $ui->uri = 'fav';
         $ui->layout = json_encode($_POST["layout"]);
         $ui->save();
+        return ["code" => 200];
     }
 
     public function post()

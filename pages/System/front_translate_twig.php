@@ -67,9 +67,9 @@ class System_front_translate_twig extends \ALT\Page
     public function googleTranslate()
     {
 
-        $t=new R\Translate;
+        $t = new R\Translate;
 
-        return ["text"=>$t->translate($_POST["text"],$_POST["from"],$_POST["to"])];
+        return ["text" => $t->translate($_POST["text"], $_POST["from"], $_POST["to"])];
 
         $p = [];
         $p["client"] = "gtx";
@@ -80,7 +80,7 @@ class System_front_translate_twig extends \ALT\Page
         $p["ie"] = "UTF-8";
         $p["oe"] = "UTF-8";
 
-      
+
         $options = [
             "ssl" => [
                 "verify_peer" => false,
@@ -254,10 +254,7 @@ class System_front_translate_twig extends \ALT\Page
         $locale_folder = $this->getLocaleFolder();
 
         if (!$locale_folder->isWritable()) {
-            App::Msg(
-                "Cannot write to locale, please create and change the permission of folder ({$locale_folder}) to 0777",
-                "danger"
-            );
+            $this->callout->danger("", "Cannot write to locale, please create and change the permission of folder ({$locale_folder}) to 0777");
             return;
         }
 

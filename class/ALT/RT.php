@@ -395,10 +395,10 @@ class RTRequest
                 }
 
                 if ($col->sort_callback instanceof \Closure) {
-                    $order[] = "(" . call_user_func($col->sort_callback) . ") " . $dir;
+                    $order["(" . call_user_func($col->sort_callback) . ")"] = $dir;
                 } else {
                     if (in_array($column["column"], $columns_index)) {
-                        $order[] = $column["column"] . ' ' . $dir;
+                        $order[$column["column"]] =  $dir;
                     }
                 }
             }

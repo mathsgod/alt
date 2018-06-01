@@ -74,7 +74,9 @@ class E extends \P\HTMLDivElement
 
     public function add($label, $getter)
     {
-        $form_group = new C2("bs-form-group");
+        $form_group = new C2("div");
+        $form_group->setAttribute("is","bs-form-group");
+        $form_group->classList->add('form-group');
         $form_group->setAttribute("label", $label);
 
         $this->content->append($form_group);

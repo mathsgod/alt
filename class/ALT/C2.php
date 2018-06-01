@@ -207,6 +207,7 @@ class C2 extends \P\HTMLElement
 			try {
 				$input = p("input")->appendTo($cell);
 				$input->attr("is", "alt-input");
+				$input->addClass("form-control");
 				$input->attr("name", $field);
 				$input->attr("data-field", $field);
 
