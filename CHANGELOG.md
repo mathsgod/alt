@@ -1,3 +1,29 @@
+## 5.5.0
+- translation fixed
+
+- config.ini
+module seqeuence
+
+- build in datatable
+
+```php
+public function get(){
+    $dt=$this->createDT([$this,"ds"]);
+    $dt->add("ID","user_id");
+    $dt->add("Username","username");
+    $this->write($dt);
+}
+
+public function ds(){
+    $r=$this->createResponse(App\User::Query());
+    $r->add("user_id","user_id");
+    $r->add("username","User()");
+    return $r;
+}
+```
+
+---
+
 ## 5.4.11
 config.ini
 

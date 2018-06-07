@@ -69,20 +69,30 @@ class Translate_all extends ALT\Page
 
     public function removeData($data)
     {
-        foreach ($data["value"] as $lang => $value) {
-            $w = [];
-            if ($data["module"]) {
-                $w[] = ["module=?", $data["module"]];
-            } else {
-                $w[] = "module is null";
-            }
-            $w[] = ["name=?", $data["name"]];
-            $w[] = ["action=?", $data["action"]];
-
-            foreach (Translate::Find($w) as $t) {
-                $t->delete();
-            }
+        $o = new Translate($data["translate_id"]);
+        $o->delete();
+/*
+        $w = [];
+        if ($o->module) {
+            $w[] = ["module=?", $o->module];
+        } else {
+            $w[] = "module is null";
         }
+
+        $w[] = ["name=?", $o->name];
+
+        if($o->action){
+            $w[] = ["action=?", $o->action];
+        }else{
+            $w[] = "action is null";
+        }
+
+        foreach (Translate::Find($w) as $t) {
+            outp($t);
+            //$t->delete();
+        }
+
+        die();*/
 
         return ["code" => 200];
 
@@ -93,7 +103,7 @@ class Translate_all extends ALT\Page
         foreach ($_POST["value"] as $language => $value) {
             $w = [];
             $w[] = ["name=?", $o->name];
-            $w[] = ["action=?", $o->action];
+            $w[] = $o->action?["action=?", $o->action]:"action is null";
             $w[] = ["language=?", $language];
             $w[] = $_POST["module"] ? ["module=?", $_POST["module"]] : "module is null";
             if ($t = Translate::First($w)) {

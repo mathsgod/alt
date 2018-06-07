@@ -113,6 +113,7 @@ class Module extends Model
         $m->class = $name;
         $m->name = $name;
 
+        $app=App::_();
         $page = App::_()->config["system"]["page"];
         if (!$page) {
             $page = "pages";
@@ -124,6 +125,16 @@ class Module extends Model
                 $m->$k = $v;
             }
         }
+
+        // read config
+
+        if($config=$app->config["module"][$name]){
+            foreach($config as $k=>$v){
+                $m->$k=$v;
+            }
+        }
+        
+
         // read use ini
         if (file_exists($path = CMS_ROOT . "/$page/$name/setting.ini")) {
             foreach (parse_ini_file($path, true) as $k => $v) {

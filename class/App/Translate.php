@@ -71,20 +71,20 @@ class Translate extends Model {
 
 	public function delete() {
 		// delete other
-		$w[] = "name='$this->name'";
+		$w[] = ["name=?",$this->name];
 		if ($this->module) {
-			$w[] = "module=" . self::__db()->quote($this->module);
+			$w[] = ["module=?",$this->module];
 		} else {
 			$w[] = "module is null";
 		}
 
 		if ($this->action) {
-			$w[] = "action=" . self::__db()->quote($this->action);
+			$w[] = ["action=?",$this->action];
 		} else {
 			$w[] = "action is null";
 		}
 
-		Translate::__from()->where($w)->delete();
+		Translate::Query()->where($w)->delete()->execute();
 	}
 
 	public function get($language) {

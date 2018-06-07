@@ -24,7 +24,7 @@
                     <tr>
                         <td>
                             <button @click="addNew" class="btn btn-xs btn-success">
-                                <i class="fa fa-plus"></i>
+                                <i class="fa fa-plus fa-fw"></i>
                             </button>
                         </td>
                         <td>
@@ -42,18 +42,18 @@
                         <td>
                             <div v-if="editRecord!=d">
                                 <button @click="removeData(d)" class="btn btn-xs btn-danger">
-                                    <i class="fa fa-times"></i>
+                                    <i class="fa fa-times fa-fw"></i>
                                 </button>
                                 <button @click="editData(d)" class="btn btn-xs btn-warning">
-                                    <i class="fa fa-pencil-alt"></i>
+                                    <i class="fa fa-pencil-alt fa-fw"></i>
                                 </button>
                             </div>
                             <div v-else>
                                 <button @click="updateData(editRecord)" class="btn btn-xs btn-success">
-                                    <i class="fa fa-check"></i>
+                                    <i class="fa fa-check fa-fw"></i>
                                 </button>
                                 <button @click="editRecord=null" class="btn btn-xs btn-warning">
-                                    <i class="fa fa-undo-alt"></i>
+                                    <i class="fa fa-undo-alt fa-fw"></i>
                                 </button>
                             </div>
                         </td>
