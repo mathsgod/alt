@@ -170,4 +170,13 @@ abstract class Model extends \R\Model
         }
         return parent::__call($function, $args);
     }
+
+    public static function Query(){
+        $q= new Query(get_called_class());
+        $q->select();
+        $q->from(self::_table()->name);
+        return $q;
+    }
+
+
 }

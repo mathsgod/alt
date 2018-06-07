@@ -157,12 +157,7 @@ class Page extends \App\Page
                 $this->addLib("bootstrap-select/bootstrap-select");
 
 
-                try {
-                    new \App\Plugin("datatables/datatables");
-                    $this->addLib("datatables/datatables");
-                } catch (\Exception $e) {
-
-                }
+                $this->addLib("DataTables");
 
                 $data = [];
                 $data["title"] = $this->module()->name;
@@ -333,10 +328,13 @@ class Page extends \App\Page
         }
     }
 
-    public function createBox()
+    public function createBox($body)
     {
         $box = new Box($this);
         $box->classList->add("box-primary");
+        if($body){
+            $box->body()->append($body);
+        }
         return $box;
     }
 

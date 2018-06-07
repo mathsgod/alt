@@ -8,9 +8,9 @@
 	height: 500px;
 }
 
-.box-body .dataTables_wrapper{
+/*.box-body .dataTables_wrapper{
 	margin:15px
-}
+}*/
 
 table.content-wrap tbody>tr>td{
 	word-wrap: break-word;
@@ -49,3 +49,9 @@ span.select2{
 .bootstrap-datetimpicker-widget{
 	z-index:99995
 }
+
+/*.dataTable tbody td{
+	padding-left:1px !important;
+	padding-right:1px !important;
+	padding-top:3px !important;
+} */

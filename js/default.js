@@ -59,6 +59,11 @@ var vue_init = function () {
             el: o
         });
     });
+    document.querySelectorAll("alt-datatables").forEach(o => {
+        new Vue({
+            el: o
+        });
+    });
     document.querySelectorAll("alt-e").forEach(o => {
         new Vue({
             el: o
@@ -375,10 +380,10 @@ window.addEventListener('HTMLImportsLoaded', function (e) {
 
 
         //Datatable
-        $(".DataTable").each(function (i, o) {
+/*        $(".DataTable").each(function (i, o) {
             $(o).removeClass("DataTable").addClass("_DataTable");
             $(o).DataTable();
-        });
+        });*/
 
         //Multiselect
         $("select.multiselect").each(function (i, o) {

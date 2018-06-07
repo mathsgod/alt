@@ -66,7 +66,8 @@
         "google/apiclient": "Client library for Google APIs",
         "ktamas77/firebase-php": "Firebase PHP Client",
         "php-console/php-console": "Server side PHP library for Google Chrome extension \"PHP Console\"",
-        "box/spout": "PHP Library to read and write spreadsheet files (CSV, XLSX and ODS), in a fast and scalable way"
+        "box/spout": "PHP Library to read and write spreadsheet files (CSV, XLSX and ODS), in a fast and scalable way",
+        "datatables/datatables": "DataTables is a plug-in for the jQuery Javascript library. It is a highly flexible tool, based upon the foundations of progressive enhancement, which will add advanced interaction controls to any HTML table."
     },
     "type": "library",
     "license": "proprietary",

@@ -261,20 +261,7 @@ class Page extends \R\Page
                         $content .= $echo_content;
                         $content .= $this->_template->render($data);
                         $response->setHeader("Content-Type", "text/html; charset=UTF-8");
-                    } elseif ($this->_template instanceof \TemplatePower) {
-                        $data = $this->data;
-                        $ret = $response->getBody()->getContents();
-                        if (is_array($ret)) {
-                            $data = array_merge($data, $ret);
-                        } else {
-                            $content = $ret;
-                        }
-                        foreach ($data as $name => $value) {
-                            $this->_template->assign($name, $value);
-                        }
-                        $content .= $this->_template->getOutputContent();
-                        $response->setHeader("Content-Type", "text/html; charset=UTF-8");
-                    } else {
+                    }  else {
                         $content = $echo_content;
                         $content .= (string)$response;
                     }
@@ -353,6 +340,10 @@ class Page extends \R\Page
         return $f;
     }
 
+    public function createDataTables($objects){
+        return new UI\DataTables($this,$objects);
+    }
+
 
     public function createT($objects)
     {
@@ -368,6 +359,23 @@ class Page extends \R\Page
     {
         return new UI\Button($this);
     }
+
+    public function createDT($objects){
+
+        if($objects instanceof \Iterator){
+            $dt = new \App\UI\DataTables($objects);
+        }else{
+            
+            $dt = new \App\UI\DataTables();
+            $dt->serverSide=true;
+            $dt->ajax["url"]=(string)$objects[0]->request->getURI()."/".$objects[1];
+            //$dt->searching=false;
+
+            
+        }
+        return $dt;
+    }
+
 
     public function createRT($objects, $module)
     {

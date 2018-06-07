@@ -19,7 +19,6 @@ class Table extends \P\Query {
 		$this->columns = p();
 		$this->tr = p();
 
-
 		foreach ($objects as $k => $obj) {
 			$tr = p("tr")->appendTo($this->tbody);
 			$tr->data("object", $obj);

@@ -1,3 +1,7 @@
+DataTables:
+  js: ['datatables.min.js']
+  css: ['datatables.min.css']
+  
 Sortable:
   js: ['Sortable.min.js']
 
@@ -63,7 +67,7 @@ multiselect:
 
 datatables/datatables:
   js: ['media/js/jquery.dataTables.min.js','media/js/dataTables.bootstrap.min.js']
-  css: ['media/js/dataTables.bootstrap.min.css']
+  css: ['media/css/dataTables.bootstrap.min.css']
 
 fastclick:
   js: ['fastclick.min.js']
