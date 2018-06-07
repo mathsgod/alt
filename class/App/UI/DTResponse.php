@@ -38,6 +38,8 @@ class DTResponse implements JsonSerializable
         $c->type = "edit";
         $c->data = "__edit__";
         $c->name = "__edit__";
+        $c->className[]="text-center";
+        $c->width="1px";
         $c->descriptor[] = function ($obj) {
             if (!$obj->canUpdate()) {
                 return;
@@ -57,6 +59,8 @@ class DTResponse implements JsonSerializable
         $c->type = "view";
         $c->data = "__view__";
         $c->name = "__view__";
+        $c->className[]="text-center";
+        $c->width="1px";
         $c->descriptor[] = function ($obj) {
             if (!$obj->canRead()) {
                 return;
@@ -77,6 +81,8 @@ class DTResponse implements JsonSerializable
         $c->type = "del";
         $c->data = "__del__";
         $c->name = "__del__";
+        $c->width="1px";
+        $c->className[]="text-center";
         $c->descriptor[] = function ($obj) {
             if (!$obj->canDelete()) {
                 return;
@@ -85,7 +91,7 @@ class DTResponse implements JsonSerializable
             $a->i->class("fa fa-times fa-fw");
             return $a;
         };
-        $this->_columns["__view__"] = $c;
+        $this->_columns["__del__"] = $c;
         return $c;
     }
 
@@ -135,6 +141,7 @@ class DTResponse implements JsonSerializable
 
         $source->limit($this->start . "," . $this->length);
 
+        
         $data = [];
         foreach ($source as $obj) {
             $d = [];

@@ -365,15 +365,16 @@ class Page extends \R\Page
         if($objects instanceof \Iterator){
             $dt = new \App\UI\DataTables($objects);
         }else{
-            
             $dt = new \App\UI\DataTables();
             $dt->serverSide=true;
             $dt->ajax["url"]=(string)$objects[0]->request->getURI()."/".$objects[1];
-            //$dt->searching=false;
-
-            
+            $dt->boxStyle();
         }
         return $dt;
+    }
+
+    public function createDTResponse($query){
+        return new \App\UI\DTResponse($query);
     }
 
 

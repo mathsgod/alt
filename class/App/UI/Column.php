@@ -17,7 +17,13 @@ class Column implements JsonSerializable
     public $alink = null;
     public $descriptor = [];
     public $width = null;
-    public $className = null;
+    public $className = [];
+
+    public function gf($descriptor)
+    {
+        $this->descriptor[] = $descriptor;
+        return $this;
+    }
 
     public function alink($alink = null)
     {
@@ -114,7 +120,7 @@ class Column implements JsonSerializable
         $data["searchType"] = $this->searchType;
         $data["searchOption"] = $this->_searchOption();
         if ($this->width) $data["width"] = $this->width;
-        if ($this->className) $data["className"] = $this->className;
+        if ($this->className) $data["className"] = implode(" ", $this->className);
         return $data;
     }
 

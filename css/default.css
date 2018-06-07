@@ -50,8 +50,18 @@ span.select2{
 	z-index:99995
 }
 
-/*.dataTable tbody td{
-	padding-left:1px !important;
-	padding-right:1px !important;
-	padding-top:3px !important;
-} */
+.dataTable .search-row input{
+	padding-left: 1px;
+    padding-right: 1px;
+    height: 25px!important;
+}
+
+.dataTable .search-row select{
+	padding: 0px 1px;
+    height: 25px;
+}
+
+.dataTable tbody td{
+	white-space: nowrap;
+    padding: 1px 2px 1px 2px!important;
+}

@@ -14,6 +14,20 @@ class DataTables extends \P\HTMLElement
     public $searching = true;
     public $ordering = true;
     public $responsive = false;
+    public $processing = true;
+    public $scrollX = false;
+    public $order = [];
+
+    public $response = null;
+
+    public $_order = [];
+    public $select = true;
+
+    public $dom = "<'row'<'col-sm-6'l><'col-sm-6'>><'row'<'col-sm-12'tr>><'row'<'col-sm-5'i><'col-sm-7'p>>";
+
+    public $buttons = ['print', 'copy', 'excel', 'pdf'];
+
+    public $fixedHeader = ["header" => true];
 
     public function __construct($objects)
     {
@@ -21,40 +35,44 @@ class DataTables extends \P\HTMLElement
 
         $this->objects = $objects;
      //   $this->attributes["is"] = "alt-datatables";
+
+        $this->response = new DTResponse($objects);
+    }
+
+    public function boxStyle()
+    {
+        $this->dom = "<'box no-border'<'box-body'" .
+            "<'row'<'col-sm-6'l><'col-sm-6'>>" .
+            "<'row'<'col-sm-12'tr>>" .
+            "<'row'<'col-sm-5'i><'col-sm-7'p>>" .
+            "<'row'<'col-sm-12'B>>" .
+            ">>";
+        return $this;
+    }
+
+    public function order($data, $dir)
+    {
+        $this->_order[] = [$data, $dir];
+        return $this;
     }
 
     public function addEdit()
     {
-        $c = new Column();
-        $c->title = "";
-        $c->type = "edit";
-        $c->data = "__edit__";
-        $c->name = "__edit__";
-        $c->width = "10px";
+        $c = $this->response->addEdit();
         $this->columns[] = $c;
         return $c;
     }
 
     public function addView()
     {
-        $c = new Column();
-        $c->title = "";
-        $c->type = "view";
-        $c->data = "__view__";
-        $c->name = "__view__";
-        $c->width = "10px";
+        $c = $this->response->addView();
         $this->columns[] = $c;
         return $c;
     }
 
     public function addDel()
     {
-        $c = new Column();
-        $c->title = "";
-        $c->type = "del";
-        $c->data = "__del__";
-        $c->name = "__del__";
-        $c->width = "10px";
+        $c = $this->response->addDel();
         $this->columns[] = $c;
         return $c;
     }
@@ -87,7 +105,7 @@ class DataTables extends \P\HTMLElement
         foreach ($this->objects as $k => $obj) {
             $d = [];
             foreach ($this->columns as $col) {
-                $d[$col->index()] = $col->getData($obj, $k);
+                $d[$col->data] = (string)$col->getData($obj, $k);
             }
             $data[] = $d;
         }
@@ -101,6 +119,29 @@ class DataTables extends \P\HTMLElement
         $this->attributes["data-columns"] = $this->columns;
         $this->attributes["data-paging"] = $this->paging ? "true" : "false";
         $this->attributes["data-responsive"] = $this->responsive ? "true" : "false";
+        $this->attributes["data-processing"] = $this->processing ? "true" : "false";
+        $this->attributes["data-scroll-x"] = $this->scrollX ? "true" : "false";
+        $this->attributes["data-dom"] = $this->dom;
+        $this->attributes[":buttons"] = $this->buttons;
+
+        $this->attributes["data-select"] = $this->select ? "true" : "false";
+
+        if ($this->fixedHeader) {
+            $this->attributes["data-fixed-header"] = $this->fixedHeader;
+        }
+
+        $order = [];
+        foreach ($this->_order as $o) {
+            foreach ($this->columns as $i => $c) {
+                if ($c->data == $o[0]) {
+                    $order[] = [$i, $o[1]];
+                    continue;
+                }
+            }
+        }
+
+
+        $this->attributes["data-order"] = $order;
 
         if ($this->ajax) {
             if ($this->serverSide) {
@@ -117,6 +158,9 @@ class DataTables extends \P\HTMLElement
         } else {
             $this->attributes["data-data"] = $this->_data();
         }
+
+
+
 
         return parent::__toString();
     }

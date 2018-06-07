@@ -113,19 +113,32 @@ var vue_init = function () {
     });
     setTimeout(vue_init, 300);
 };
+
+var vue_start=false;
 document.addEventListener("DOMContentLoaded", function (event) {
     console.log('domcontentloaded');
-    vue_init();
+    if(!vue_start){
+        vue_start=true;
+        vue_init();
+    }
 });
 
 window.addEventListener('WebComponentsReady', function (e) {
     // imports are loaded and elements have been registered
     console.log("WebComponentsReady");
+    if(!vue_start){
+        vue_start=true;
+        vue_init();
+    }
 });
 
 window.addEventListener('HTMLImportsLoaded', function (e) {
     // all imports loaded
     console.log("HTMLImportsLoaded");
+    if(!vue_start){
+        vue_start=true;
+        vue_init();
+    }
 });
 
 (function ($) {

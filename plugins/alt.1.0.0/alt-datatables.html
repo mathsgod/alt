@@ -14,30 +14,35 @@
             }
         },
         props: {
-
+            buttons:Array
         },
         mounted() {
             this.columns = JSON.parse(this.$attrs["data-columns"]);
-            this.table = $(this.$el).DataTable({
-                "dom":
-                    "<'box'<'box-body'" +
-                    "<'row'<'col-sm-6'l><'col-sm-6'>>" +
-                    "<'row'<'col-sm-12'tr>>" +
-                    "<'row'<'col-sm-5'i><'col-sm-7'p>>" +
-                    ">>"
+
+            var buttons=[];
+            this.buttons.forEach((o)=>{
+                if(typeof o == "object"){
+                    eval("o.action="+o.action+";");
+                }
+                buttons.push(o);
             });
 
-            this.table.on("preXhr.dt",()=>{
+            this.table = $(this.$el).DataTable({
+                buttons:buttons
+            });
+
+
+            /*this.table.on("preXhr.dt",()=>{
                 $(this.$el).closest('.box').data("box").showLoading()
             });
 
             this.table.on("xhr.dt",()=>{
                 $(this.$el).closest('.box').data("box").hideLoading()
-            });
+            });*/
 
 
             var thead = $("<thead>");
-            var tr = $("<tr class='search'>").appendTo(thead);
+            var tr = $("<tr class='search-row'>").appendTo(thead);
             $(this.$el).find("thead").after(thead);
 
             if (this.isSearchable()) {
