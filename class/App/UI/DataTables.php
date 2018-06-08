@@ -23,7 +23,7 @@ class DataTables extends \P\HTMLElement
     public $_order = [];
     public $select = true;
     public $pageLength = 10;
-    public $autoWidth = false;
+    public $autoWidth = true;
 
     public $dom = "<'row'<'col-sm-12'f>><'row'<'col-sm-12'tr>><'row'<'col-sm-7'p><'col-sm-5'i>><'row'<'col-sm-6'B><'col-sm-6'l>>";
 

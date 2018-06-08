@@ -3,6 +3,11 @@ namespace App;
 
 abstract class Model extends \R\Model
 {
+    
+    public function _app(){
+        return \App::_();
+    }
+
     public function bind($rs)
     {
         foreach (get_object_vars($this) as $key => $val) {
@@ -162,6 +167,18 @@ abstract class Model extends \R\Model
             }
         }
 
+        if($static=$c->getStaticProperties()){
+            $decamlize = function ($string) {
+                return strtolower(preg_replace(['/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/'], '$1_$2', $string));
+            };
+            $field = $decamlize($function);
+
+            $f="_".$field;
+            if (array_key_exists($f, $static)) {
+                return $static[$f][$this->$field];
+            }
+        }
+        
         $f = "_" . $function;
 
         if (property_exists($class, $f)) {
@@ -176,6 +193,10 @@ abstract class Model extends \R\Model
         $q->select();
         $q->from(self::_table()->name);
         return $q;
+    }
+
+    public static function _sv($name){
+        return self::_app()->sv($name);
     }
 
 
