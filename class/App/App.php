@@ -343,8 +343,11 @@ class App extends \R\App
     {
         if (!$lang) $lang = $this->user->language;
 
+        if($this->_sv[$name][$lang])return $this->_sv[$name][$lang];
+
         if ($sv = SystemValue::_($name, $lang)) {
-            return $sv->values();
+            $this->_sv[$name][$lang]=$sv->values();
+            return $this->_sv[$name][$lang];
         }
 
         return [];

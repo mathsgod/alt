@@ -1,3 +1,35 @@
+## 5.5.3
+auto load system value
+```php
+public Testing extends App\Model{
+    static $status; //it will auto load systemvalue : self::_sv("Testing/status");
+}
+```
+also can get value from function
+
+```php
+$t=new Testing(1);
+echo $t->status(); // equal=>  Testing::$status[$t->status];
+```
+
+---
+
+## 5.5.2
+sv updated
+```php
+public Testing extends App\Model{
+
+    static $_status;
+
+    public function __construct($id){
+        parent::__construct($id);
+        self::$_status=self::_sv("status");
+    }
+}
+```
+
+---
+
 ## 5.5.0
 - translation fixed
 
