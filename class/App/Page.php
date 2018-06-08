@@ -16,9 +16,10 @@ class Page extends \R\Page
 
     protected $alert;
 
-    public function __construct(App $app){
+    public function __construct(App $app)
+    {
         parent::__construct($app);
-        $this->alert=$app->alert;
+        $this->alert = $app->alert;
     }
 
     public function _log($message, $array)
@@ -147,7 +148,8 @@ class Page extends \R\Page
         }
     }
 
-    public function redirect($uri){
+    public function redirect($uri)
+    {
         return $this->_redirect($uri);
     }
 
@@ -159,7 +161,7 @@ class Page extends \R\Page
             return;
         }
 
-        if($_GET["_referer"]){
+        if ($_GET["_referer"]) {
             $this->response = $this->response->withHeader("Location", $_GET["_referer"]);
             return;
         }
@@ -261,7 +263,7 @@ class Page extends \R\Page
                         $content .= $echo_content;
                         $content .= $this->_template->render($data);
                         $response->setHeader("Content-Type", "text/html; charset=UTF-8");
-                    }  else {
+                    } else {
                         $content = $echo_content;
                         $content .= (string)$response;
                     }
@@ -340,8 +342,9 @@ class Page extends \R\Page
         return $f;
     }
 
-    public function createDataTables($objects){
-        return new UI\DataTables($this,$objects);
+    public function createDataTables($objects)
+    {
+        return new UI\DataTables($this, $objects);
     }
 
 
@@ -360,20 +363,22 @@ class Page extends \R\Page
         return new UI\Button($this);
     }
 
-    public function createDT($objects){
-
-        if($objects instanceof \Iterator){
-            $dt = new \App\UI\DataTables($objects);
-        }else{
-            $dt = new \App\UI\DataTables();
-            $dt->serverSide=true;
-            $dt->ajax["url"]=(string)$objects[0]->request->getURI()."/".$objects[1];
+    public function createDT($objects)
+    {
+        if ($objects instanceof \Iterator || $objects instanceof \IteratorAggregate) {
+            $dt = new \App\UI\DataTables($objects, $this);
+        } else {
+            $dt = new \App\UI\DataTables(null, $this);
+            $dt->serverSide = true;
+            $dt->ajax["url"] = (string)$objects[0]->request->getURI() . "/" . $objects[1];
             $dt->boxStyle();
+            $dt->pageLength=25;
         }
         return $dt;
     }
 
-    public function createDTResponse($query){
+    public function createDTResponse($query)
+    {
         return new \App\UI\DTResponse($query);
     }
 

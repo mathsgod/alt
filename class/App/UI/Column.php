@@ -19,6 +19,16 @@ class Column implements JsonSerializable
     public $width = null;
     public $className = [];
 
+    public $format=null;
+    public $searchCallback=null;
+
+
+    public function format($format)
+    {
+        $this->format = $format;
+        return $this;
+    }
+
     public function gf($descriptor)
     {
         $this->descriptor[] = $descriptor;
@@ -44,9 +54,26 @@ class Column implements JsonSerializable
         return $this;
     }
 
+    public function sort(){
+        return $this->order();
+    }
+
     public function order()
     {
         $this->orderable = true;
+        return $this;
+    }
+
+    public function searchCallBack($callback){
+        $this->searchable = true;
+        $this->searchCallback = $callback;
+        return $this;
+    }
+
+    public function searchSelect2($objects, $display_member, $value_member){
+        $this->searchable = true;
+        $this->searchOptions = array($objects, $display_member, $value_member);
+        $this->searchType = 'select2';
         return $this;
     }
 
@@ -98,6 +125,12 @@ class Column implements JsonSerializable
                 $htmlspecialchars = true;
             }
         }
+
+        if ($this->format) {
+            $result = \My\Func::_($this->format)->call($result);
+            $htmlspecialchars = false;
+        }
+
 
         if ($this->alink && $last_obj) {
             $htmlspecialchars = false;

@@ -5,62 +5,51 @@ class User_list2 extends ALT\Page
 {
     public function get()
     {
-        $rt = new ALT\RT();
-        $rt->bind([$this, "ds"]);
-        $rt->attr("cell-url", "User");
-        $rt->key("user_id");
+        $rt = $this->createDT([$this, "ds"]);
+        $rt->addView();
         $rt->addEdit();
         $rt->addDel();
-        $rt->attr("responsive",false);
-/*        $rt->row()->style(function () {
-            return ["background-color" => "red"];
-        });*/
 
-        $rt->order("username","desc");
+        $rt->order("username", "desc");
 
-        $rt->add("Username", "username")->fixed();//->search()->alink("v")->sort()->nowrap();
-/*        $rt->add("User group", function ($obj) {
-            return $obj->UserGroup()->implode(",");
-        })->searchOption(App\UserGroup::find(), null, "usergroup_id")->searchCallback(function ($v) {
-            return ["user_id in (select user_id from UserList where usergroup_id=?)", $v];
-        });*/
+        $rt->add("Username", "username")->ss();
 
-        $rt->add("User group", function ($obj) {
-            return $obj->UserGroup()->implode(",");
-        });/*->searchMultiple(App\UserGroup::find(), null, "usergroup_id")->searchCallback(function ($v) {
-            return ["user_id in (select user_id from UserList where usergroup_id=?)", $v];
-        });*/
+        $rt->add("User group", "usergroup_id")->searchOption(App\UserGroup::find());
 
-        $rt->add("First name", "first_name");//->ss();
-        $rt->add("Last name", "last_name");//->ss();
-        $rt->add("Phone", "phone");//->ss()->editable();
-        $rt->add("Email", "email");//->ss();//->overflow("hidden");
-        $rt->add("Status", "Status()");//->index("status")->sort()->searchSelect2(User::$_Status)->editable("select", User::$_Status);
-        $rt->add("Expiry date", "expiry_date");//->sort()->searchDate();
-        $rt->add("Join date", "join_date");//->sort()->searchDate()->editable("date");
+        $rt->add("First name", "first_name")->ss();//->ss();
+        $rt->add("Last name", "last_name")->ss();//->ss();
+        $rt->add("Phone", "phone")->ss();//->ss()->editable();
+        $rt->add("Email", "email")->ss();//->ss();//->overflow("hidden");
+        $rt->add("Status", "status")->sort()->searchSelect2(User::$_Status);
+        $rt->add("Expiry date", "expiry_date")->sort()->searchDate();
+        $rt->add("Join date", "join_date")->sort()->searchDate();//->editable("date");
         $rt->add("Language", "language");//->nowrap()->sort();
         $rt->add("Skin", "skin");//->nowrap()->sort();
+        $rt->add("Online", "is_online");
 
 //        $rt->subHTML([$this, "test"]);
         $this->write($rt);
     }
 
-    public function ds($rt)
+    public function ds()
     {
-        $w = $rt->where();
-        return [
-            "total" => App\User::Count($w),
-            "data" => App\User::Find($w, $rt->order(), $rt->limit())
-        ];
-    }
+        $r = $this->createDTResponse(App\User::Query());
+        $r->fields = ["username", "first_name", "last_name", "phone", "email", "epxiry_date", "join_date", "language", "skin"];
+        $r->addView();
+        $r->addEdit();
+        $r->addDel();
+        $r->add("usergroup_id", function ($obj) {
+            return $obj->UserGroup()->implode(",");
+        })->searchCallback(function ($v) {
+            return ["user_id in (select user_id from UserList where usergroup_id=?)", $v];
+        });
 
-    public function test($id)
-    {
-        $rt = new ALT\RT();
-        $rt->bind([$this, "ds"]);
-        $rt->add("Username", "username");
-        $this->write($rt);
-    }
+        $r->add("status", "Status()");
 
+        $r->add("is_online","isOnline()")->format('tick');
+
+
+        return $r;
+    }
 
 }

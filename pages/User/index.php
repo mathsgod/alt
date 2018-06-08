@@ -12,6 +12,9 @@ class User_index extends ALT\Page
         }
         //$tab->add("All user", "list", - 1)->addBadge("a")->addClass("bg-yellow");
         $tab->add("All user", "list", -1);//->addClass("bg-yellow");
+
+
+        $tab->add("Test DT","list2");
         
         //$tab->add("Test","list2");
         $this->write($tab);

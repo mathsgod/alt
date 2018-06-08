@@ -24,23 +24,27 @@
 					Installed packages
 				</alt-box-header>
 				<alt-box-body class="table-responsive">
-					<table class="table table-condensed table-hover">
-						<tr>
-							<th>Name</th>
-							<th>Description</th>
-							<th>Version</th>
-							<th></th>
-						</tr>
-						<tr v-for="p in installedPackages" v-if="p.version">
-							<td v-text="p.name"></td>
-							<td v-text="p.description"></td>
-							<td v-text="p.version"></td>
-							<td>
-								<button @click="removePackage(p.name)" class="btn btn-xs btn-danger">
-									<i class="fa fa-fw fa-times"></i>
-								</button>
-							</td>
-						</tr>
+					<table class="table table-condensed table-hover" data-searching="true">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Description</th>
+								<th>Version</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for="p in installedPackages" v-if="p.version">
+								<td v-text="p.name"></td>
+								<td v-text="p.description"></td>
+								<td v-text="p.version"></td>
+								<td>
+									<button @click="removePackage(p.name)" class="btn btn-xs btn-danger">
+										<i class="fa fa-fw fa-times"></i>
+									</button>
+								</td>
+							</tr>
+						</tbody>
 					</table>
 				</alt-box-body>
 			</alt-box>

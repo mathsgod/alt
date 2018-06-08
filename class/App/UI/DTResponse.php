@@ -7,21 +7,23 @@ use Exception;
 class DTResponse implements JsonSerializable
 {
 
-    public $_columns = [];
+    public $fields = [];
     public $source = null;
+
+    public $_columns = [];
 
     public function __construct($source)
     {
         $this->source = $source;
         $this->draw = $_GET["draw"];
-        $this->columns = $_GET["columns"];
+        $this->request["columns"] = $_GET["columns"];
         $this->order = $_GET["order"];
         $this->start = $_GET["start"];
         $this->length = $_GET["length"];
         $this->search = $_GET["search"];
 
         foreach ($_GET["_columns"] as $i => $c) {
-            $this->columns[$i] = array_merge($this->columns[$i], $c);
+            $this->request["columns"][$i] = array_merge($this->request["columns"][$i], $c);
         }
     }
 
@@ -108,44 +110,17 @@ class DTResponse implements JsonSerializable
 
     public function data()
     {
-        $source = clone $this->source;
-
-        foreach ($this->order as $o) {
-            $c = $this->columns[$o["column"]];
-            if ($c["orderable"] == "false") continue;
-            $source->orderBy($c["data"] . " " . $o["dir"]);
+        foreach($this->fields as $c){
+            $this->add($c,$c);
         }
 
-        foreach ($this->columns as $k => $c) {
-            if ($c["searchable"] == "false") continue;
-            if ($value = $c["search"]["value"]) {
-                if ($c["searchType"] == "text") {
-                    $w = [];
-                    $w[] = [$c["data"] . " like ?", "%$value%"];
-                    $source->where($w);
-                } elseif ($c["searchType"] == "select") {
-                    $w = [];
-                    $w[] = [$c["data"] . " = ?", $value];
-                    $source->where($w);
-                } elseif ($c["searchType"] == "date"){
-                    $value=json_decode($value,true);
-                    $field=$c["data"];
-                    $w=[];
-                    $w[]=["date(`$field`) between ? and ?",[$value["from"],$value["to"]]];
-
-
-                    $source->where($w);
-                }
-            }
-        }
-
+        $source = $this->filteredSource();
         $source->limit($this->start . "," . $this->length);
 
-        
         $data = [];
         foreach ($source as $obj) {
             $d = [];
-            foreach ($this->columns as $k => $c) {
+            foreach ($this->request["columns"] as $k => $c) {
                 try {
                     if (array_key_exists($c["name"], $this->_columns)) {
                         $col = $this->_columns[$c["name"]];
@@ -168,23 +143,49 @@ class DTResponse implements JsonSerializable
         return $this->source->count();
     }
 
-    public function recordsFiltered()
-    {
+    public function filteredSource(){
         $source = clone $this->source;
-        foreach ($this->columns as $k => $c) {
+
+        foreach ($this->order as $o) {
+            $c = $this->request["columns"][$o["column"]];
+            if ($c["orderable"] == "false") continue;
+            $source->orderBy($c["data"] . " " . $o["dir"]);
+        }
+
+        foreach ($this->request["columns"] as $k => $c) {
+            if ($c["searchable"] == "false") continue;
+            $column=$this->_columns[$c["name"]];
+            
             if ($value = $c["search"]["value"]) {
-                if ($c["searchType"] == "text") {
+                if($column->searchCallback){
+                    $w=[];
+                    $w[] = call_user_func($column->searchCallback, $value);
+                    $source->where($w);
+                }elseif ($c["searchType"] == "text") {
                     $w = [];
                     $w[] = [$c["data"] . " like ?", "%$value%"];
                     $source->where($w);
-                } elseif ($c["searchType"] == "select") {
+                } elseif ($c["searchType"] == "select" || $c["searchType"] == "select2") {
                     $w = [];
                     $w[] = [$c["data"] . " = ?", $value];
+                    $source->where($w);
+                } elseif ($c["searchType"] == "date"){
+                    $value=json_decode($value,true);
+                    $field=$c["data"];
+                    $w=[];
+                    $w[]=["date(`$field`) between ? and ?",[$value["from"],$value["to"]]];
                     $source->where($w);
                 }
             }
         }
 
+        $source->limit($this->start . "," . $this->length);
+        return $source;
+    }
+
+    public function recordsFiltered()
+    {
+        $source = $this->filteredSource();
         return $source->count();
     }
 

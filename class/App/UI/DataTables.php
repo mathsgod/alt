@@ -13,7 +13,7 @@ class DataTables extends \P\HTMLElement
     public $serverSide = false;
     public $searching = true;
     public $ordering = true;
-    public $responsive = false;
+    public $responsive = true;
     public $processing = true;
     public $scrollX = false;
     public $order = [];
@@ -22,31 +22,37 @@ class DataTables extends \P\HTMLElement
 
     public $_order = [];
     public $select = true;
+    public $pageLength = 10;
+    public $autoWidth = false;
 
-    public $dom = "<'row'<'col-sm-6'l><'col-sm-6'>><'row'<'col-sm-12'tr>><'row'<'col-sm-5'i><'col-sm-7'p>>";
+    public $dom = "<'row'<'col-sm-12'f>><'row'<'col-sm-12'tr>><'row'<'col-sm-7'p><'col-sm-5'i>><'row'<'col-sm-6'B><'col-sm-6'l>>";
 
-    public $buttons = ['print', 'copy', 'excel', 'pdf'];
+    //public $buttons = ['print', 'copy', 'excel', 'pdf'];
+    public $buttons = [];
 
-    public $fixedHeader = ["header" => true];
+    public $fixedHeader = ["header" => false];
 
-    public function __construct($objects)
+    public $_page=null;
+
+    public function __construct($objects,$page)
     {
-        parent::__construct("alt-datatables");
+        parent::__construct("div");
+        $this->attributes["is"] = "alt-datatables";   
 
         $this->objects = $objects;
-     //   $this->attributes["is"] = "alt-datatables";
+        $this->_page=$page;
+     
 
         $this->response = new DTResponse($objects);
     }
 
     public function boxStyle()
     {
-        $this->dom = "<'box no-border'<'box-body'" .
-            "<'row'<'col-sm-6'l><'col-sm-6'>>" .
-            "<'row'<'col-sm-12'tr>>" .
-            "<'row'<'col-sm-5'i><'col-sm-7'p>>" .
-            "<'row'<'col-sm-12'B>>" .
-            ">>";
+        $this->dom = "<'box no-border'" .
+            "<'box-body no-padding'tr>" .
+            "<'box-footer'<'row'<'col-sm-7'p><'col-sm-5'i>>" .
+            "<'row'<'col-sm-6'B><'col-sm-6'l>>>" .
+            ">";
         return $this;
     }
 
@@ -80,7 +86,13 @@ class DataTables extends \P\HTMLElement
     public function add($title, $getter)
     {
         $c = new Column();
-        $c->title = $title;
+
+        if($this->_page){
+            $c->title = $this->_page->translate($title);
+        }else{
+            $c->title = $title;
+        }
+        
         $c->descriptor[] = $getter;
 
 
@@ -94,7 +106,14 @@ class DataTables extends \P\HTMLElement
 
         $c->data = str_replace(["(", ")"], "_", $c->data);
 
+
+        
+        if(!$this->serverSide){
+            $c->orderable=true;
+        }
+
         $this->columns[] = $c;
+
 
         return $c;
     }
@@ -123,8 +142,11 @@ class DataTables extends \P\HTMLElement
         $this->attributes["data-scroll-x"] = $this->scrollX ? "true" : "false";
         $this->attributes["data-dom"] = $this->dom;
         $this->attributes[":buttons"] = $this->buttons;
-
         $this->attributes["data-select"] = $this->select ? "true" : "false";
+
+        $this->attributes["data-page-length"] = $this->pageLength;
+
+        $this->attributes["data-auto-width"]=$this->autoWidth ? "true" : "false";
 
         if ($this->fixedHeader) {
             $this->attributes["data-fixed-header"] = $this->fixedHeader;
@@ -139,7 +161,6 @@ class DataTables extends \P\HTMLElement
                 }
             }
         }
-
 
         $this->attributes["data-order"] = $order;
 
