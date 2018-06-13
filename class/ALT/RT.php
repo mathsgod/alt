@@ -75,6 +75,7 @@ class RTColumn
         $this->editable = true;
         $this->edit_type = $type;
         $this->edit_data = $data;
+        
         return $this;
     }
 

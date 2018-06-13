@@ -202,6 +202,10 @@ class Page extends \R\Page
             return parent::__invoke($request, $response);
         }
 
+        if ($request->getQueryParams()["_rt"]) {
+            $rt = new UI\RTResponse();
+            $request = $request->withQueryParams(["rt" => $rt]);
+        }
 
         ob_start();
         $response = parent::__invoke($request, $response);
@@ -372,7 +376,7 @@ class Page extends \R\Page
             $dt->serverSide = true;
             $dt->ajax["url"] = (string)$objects[0]->request->getURI() . "/" . $objects[1];
             $dt->boxStyle();
-            $dt->pageLength=25;
+            $dt->pageLength = 25;
         }
         return $dt;
     }
@@ -386,6 +390,15 @@ class Page extends \R\Page
     public function createRT($objects, $module)
     {
         $rt = new UI\RT($objects, $module ? $module : $this->module(), $this->request);
+        return $rt;
+    }
+
+    public function createRT2($objects, $module)
+    {
+        //$rt = new UI\RT($objects, $module ? $module : $this->module(), $this->request);
+        $rt = new UI\RT2();
+        $rt->ajax["url"] = (string)$objects[0]->request->getURI() . "/" . $objects[1];
+        $rt->pageLength = 25;
         return $rt;
     }
 

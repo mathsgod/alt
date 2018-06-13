@@ -1,3 +1,25 @@
+## 5.6.0
+createRT2
+
+```php
+public Testing extends ALT\Page{
+    public function get(){
+        $rt=$this->createRT2([$this,"ds"]);
+        $rt->add("UserID","user_id");
+        $rt->add("Username","username");
+        $this->write($rt);
+    }
+
+    public function ds($rt){
+        $rt->source=App\User::Query();
+        $rt->fields=["user_id","username"];
+        return $rt;
+    }
+}
+```
+
+---
+
 ## 5.5.3
 auto load system value
 ```php

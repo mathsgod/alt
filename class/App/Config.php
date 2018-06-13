@@ -1,5 +1,6 @@
 <?php
 namespace App;
+
 use Cache\Adapter\Apcu\ApcuCachePool;
 
 class Config extends Model
@@ -54,16 +55,19 @@ class Config extends Model
 
     public function save($acl)
     {
-     
+        $host = $_SERVER["HTTP_HOST"];
         $pool = new ApcuCachePool();
-        $pool->deleteItem("config");
+        $pool->deleteItem($host . "_config");
 
         return parent::save($acl);
     }
 
-    public function delete($acl){
+    public function delete($acl)
+    {
+        $host = $_SERVER["HTTP_HOST"];
+
         $pool = new ApcuCachePool();
-        $pool->deleteItem("config");
+        $pool->deleteItem($host . "_config");
 
         return parent::delete($acl);
     }

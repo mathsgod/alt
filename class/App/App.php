@@ -64,11 +64,12 @@ class App extends \R\App
         }
 
         //db config
+        $host=$_SERVER["HTTP_HOST"];
         $pool = new ApcuCachePool();
         if ($pool->hasItem('config')) {
-            $config = $pool->getItem("config")->get();
+            $config = $pool->getItem($host."_config")->get();
         } else {
-            $item = $pool->getItem("config");
+            $item = $pool->getItem($host."_config");
 
             $config = [];
             foreach (Config::Find() as $c) {

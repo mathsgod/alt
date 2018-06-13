@@ -1,0 +1,619 @@
+<script type="x-template" id="alt-column-search">
+    <td>
+        <input v-if="searchable && searchType=='text'" type="text" class="form-control input-sm search" v-model="search" @keyup.enter="doSearch()" />
+        <input v-if="searchable && searchType=='date'" class="form-control input-sm search" value="" ref="search"/>
+        <select v-if="searchable && searchType=='select'" class="form-control search" ref="search" v-model="search" v-on:change="doSearch()">
+            <option></option>
+            <option v-for="o in searchOption" v-bind:value="o.value" v-text="o.label"></option>
+        </select>
+        <select v-if="searchable && searchType=='multiselect'" multiple class="form-control search" ref="search">
+            <option v-for="o in searchOption" v-bind:value="o.value" v-text="o.label"></option>
+        </select>
+    </td>
+</script>
+
+<script>
+    Vue.component("alt-column-search", {
+        template: document.currentScript.ownerDocument.getElementById("alt-column-search"),
+        props: {
+            data: String,
+            searchOption: Array,
+            searchType: String,
+            searchable: Boolean,
+        }, data() {
+            return {
+                search: ""
+            }
+        }, mounted() {
+            if (this.searchType == "text") {
+                //console.log(this.$refs.search);
+            }
+            if (this.searchType == "multiselect") {
+                var search = $(this.$refs.search);
+                search.multiselect();
+
+                search.on("change", () => {
+                    this.$emit("search", this.data, search.val());
+                });
+
+                return;
+            }
+            if (this.searchType == "date") {
+                var search = $(this.$refs.search);
+                search.daterangepicker({
+                    //singleDatePicker: true,
+                    opens: "center",
+                    showDropdowns: true,
+                    //"autoApply": true,
+                    autoUpdateInput: false,
+                    locale: {
+                        format: 'YYYY-MM-DD',
+                        cancelLabel: 'Clear'
+                    }, ranges: {
+                        'Today': [moment(), moment()],
+                        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                        'This Month': [moment().startOf('month'), moment().endOf('month')],
+                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                    }
+                });
+
+                search.on('apply.daterangepicker', (ev, picker) => {
+
+                    if (picker.startDate.format("YYYY-MM-DD") == picker.endDate.format("YYYY-MM-DD")) {
+                        search.val(picker.startDate.format("YYYY-MM-DD"));
+                    } else {
+                        search.val(picker.startDate.format("YYYY-MM-DD") + " to " + picker.endDate.format("YYYY-MM-DD"));
+                    }
+
+
+                    var s = {};
+                    s.from = picker.startDate.format("YYYY-MM-DD");
+                    s.to = picker.endDate.format("YYYY-MM-DD");
+
+                    this.search = s;
+                    this.doSearch();
+                });
+
+                search.on('cancel.daterangepicker', (ev, picker) => {
+                    search.val("");
+                    this.search = "";
+                    this.doSearch();
+                });
+            }
+        }, methods: {
+            doSearch() {
+                console.log('test');
+                this.$emit("search", this.data, this.search);
+            }
+        }
+
+
+    });
+
+</script>
+
+<script type="x-template" id="rt2-tbody">
+    <tbody>
+        <template v-for="(d,index) in data">
+            <tr>
+                <td v-if="hasHideColumn">
+                    <button class="btn btn-default btn-xs" 
+                        v-on:click="toggleRowChild(index)" 
+                        v-on:mouseenter="mouseEnterRow(index)" 
+                        v-on:mouseleave="mouseLeaveRow(index)">
+                        <i v-if="!showIndex[index]" class="fa fa-fw fa-chevron-up"></i>
+                        <i v-if="showIndex[index]" class="fa fa-fw fa-chevron-down"></i>
+                    </button>
+                </td>
+                <td v-for="column in columns" v-if="column.isDisplay()" v-on:click="onClickCell(column,index)">
+                   <template v-if="isEditMode(column,index)" >
+                        <template v-if="column.editType=='text'">
+                            <input type="text" class="form-control input-sm" v-bind:value="column.getValue(d)" v-on:blur="updateData(index,d,column,$event.target.value)"/>
+                        </template>
+                        <template v-else-if="column.editType=='select'">
+                            <select class="formControl" v-on:blur="updateData(index,d,column,$event.target.value)">
+                                <option v-for="opt in column.editData" v-bind:value="opt.value" v-text="opt.label"
+                                v-bind:selected="opt.value==column.getValue(d).value"></option>
+                            </select>
+                        </template>
+                        <template v-else-if="column.editType=='date'">
+                            <input type="text" class="form-control input-sm" v-bind:value="column.getValue(d)" v-on:blur="updateData(index,d,column,$event.target.value)"/>
+                        </template>
+                    </template>
+                    <template v-else>
+                        <input type="checkbox" v-if="column.type=='deletes'"/>
+                        <button class="btn btn-xs btn-danger" v-else-if="column.type=='delete'" v-on:click="deleteRow(d)"><i class="fa fa-fw fa-times"></i></button>
+                        <button class="btn btn-xs btn-default" v-else-if="column.type=='sub-row'" v-on:click="toggleSubRow(index,r)">
+                            <i v-if="subRow[index]" class="fa fa-fw fa-minus"></i>
+                            <i v-if="!subRow[index]" class="fa fa-fw fa-plus"></i>
+                        </button>
+                        <a v-else-if="column.type=='link'" v-bind:href="column.href" v-html="column.content"></a>
+                        <div v-else v-html="column.getContent(d)" v-bind:style="column.style">
+                        </div>
+                    </template>
+                </td>
+            </tr>
+            <tr class="child" v-show="showChild(index)">
+                <td v-bind:colspan="showColumnCount">
+                    <ul>
+                        <li v-for="column in columns" v-if="column.hide">
+                            <b v-html="column.title"></b>&nbsp;&nbsp;
+                            <span v-html="column.getValue(d)" />
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </template>
+    </tbody>
+</script>
+
+
+<script>
+    Vue.component("rt2-tbody", {
+        template: document.currentScript.ownerDocument.getElementById("rt2-tbody"),
+        props: {
+            data: Array,
+            columns: Array
+        }, data() {
+            return {
+                hoverChild: [],
+                showIndex: [],
+                editMode: false,
+                editColumn: null,
+                editIndex: null
+            };
+        }, computed: {
+            hasHideColumn() {
+                return this.columns.some(o => o.hide);
+            }, showColumnCount() {
+                return this.columns.filter(c => {
+                    return !c.hide;
+                }).length + 1;
+            }
+        }, methods: {
+            isEditMode: function (column, index) {
+                if (!this.editMode) return false;
+                if (this.editColumn == column && this.editIndex == index) {
+                    return true;
+                }
+                return false;
+            },
+            onClickCell: function (column, index, r) {
+                if (!column.editable) return false;
+                this.editMode = true;
+                this.editColumn = column;
+                this.editIndex = index;
+            },
+            showAllChild() {
+                this.data.forEach((o, i) => {
+                    this.showIndex[i] = true;
+                });
+                this.$forceUpdate();
+            },
+            hideAllChild() {
+                this.data.forEach((o, i) => {
+                    this.showIndex[i] = false;
+                });
+                this.$forceUpdate();
+            }, toggleRowChild(index) {
+                this.showIndex[index] = !this.showIndex[index];
+                this.$forceUpdate();
+            },
+            showChild(index) {
+                if (this.hoverChild[index]) return true;
+                return this.showIndex[index];
+            }, mouseLeaveRow(index) {
+                this.hoverChild[index] = false;
+                this.$forceUpdate();
+            }, mouseEnterRow(index) {
+                this.hoverChild[index] = true;
+                this.$forceUpdate();
+            }, updateData(index, r, column, value) {
+                if (!column.editable) return;
+                this.editMode = false;
+
+                if (column.editType == "text") {
+                    if (column.getValue(r) != value) {
+                        r[column.data] = value;
+                        this.$emit("update-data", r._key, column.data, value);
+                    }
+                    return;
+                }
+
+                if (column.editType == "select") {
+                    if (r[column.data].value != value) {
+                        r[column.data].value = value;
+                        r[column.data].content = column.editData[value].label;
+                        this.$emit("update-data", r._key, column.data, value);
+                    }
+                }
+                /* else {
+                    if (r[column.field] != value) {
+                        r[column.field] = value;
+                        this.$emit("update-data", r._key, column.field, value);
+                    }
+                }*/
+            },
+        }
+    });
+</script>
+
+
+<template id="alt-rt2">
+    <div class="box no-border" is="alt-box" ref="box">
+        <div class="box-body no-padding" is="alt-box-body" :class="{'table-responsive':!responsive}">
+            <table class="table table-hover table-condensed table-bordered rt" ref="table">
+                <thead>
+                    <tr>
+                        <td v-if="hasHideColumn">
+                            <button class="btn btn-default btn-xs" v-on:click="toggleChild">
+                                <i v-if="!showChild" class="fa fa-fw fa-chevron-up"></i>
+                                <i v-if="showChild" class="fa fa-fw fa-chevron-down"></i>
+                            </button>
+                        </td>
+                        <th v-for="(column,key) in columns" is="alt-column" v-bind="column.$data" v-if="column.isDisplay()" v-on:order="order" v-on:draw="draw"
+                            ref="column"></th>
+                    </tr>
+                    <tr v-if="isSearchable">
+                        <td v-if="hasHideColumn">
+                        </td>
+                        <td v-for="(column,key) in columns" is="alt-column-search" v-bind="column.$data" v-if="column.isDisplay()" v-on:search="search"></td>
+                    </tr>
+                </thead>
+                <tbody is="rt2-tbody" :data="data()" :columns="columns" ref="tbody" v-on:update-data="updateData"></tbody>
+            </table>
+        </div>
+        <div class="box-footer">
+            <rt-pagination :page="page" :page-count="pageCount" v-on:change-page="gotoPage" v-on:first-page="firstPage" v-on:next-page="nextPage"
+                v-on:prev-page="prevPage" v-on:last-page="lastPage"></rt-pagination>
+
+            <div class="pull-left btn-group">
+                <button @click="draw" class="btn btn-default btn-sm" type="button" title="重新載入" data-toggle="tooltip">
+                    <i class="fa fa-sync-alt"></i>
+                </button>
+            </div>
+
+            <div class="pull-left">
+                <select class="form-control input-sm" @change="onChangePageLength" v-model="local.pageLength">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="500">500</option>
+                </select>
+            </div>
+
+
+            <div class="pull-left dropup">
+                <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+                    <span class="icon glyphicon glyphicon-th-list"></span>
+                </button>
+                <ul class="dropdown-menu" ref="column_menu">
+                    <li v-for="(column,key) in columns" v-if="column.title" :key="key">
+                        <a href="#" class="small" data-value="option1" tabIndex="-1" @click.prevent="column.toggleVisible()">
+                            <input type="checkbox" v-model="column.isVisible" />&nbsp;{{column.title}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+
+            <div class="pull-left btn-group">
+                <button @click="toggleResponsive" :class="{active:responsive}" class="btn btn-default btn-sm" type="button" title="Responsive"
+                    data-toggle="tooltip">
+                    <i class="fa fa-tv"></i>
+                </button>
+
+                <button @click="resetLocaStorage" class="btn btn-default btn-sm" type="button" title="clear cache" data-toggle="tooltip">
+                    <i class="fa fa-times-circle"></i>
+                </button>
+            </div>
+
+
+            <rt-info class="pull-right" v-bind="info"></rt-info>
+        </div>
+    </div>
+</template>
+
+<script type="x-template" id="alt-column">
+    <th v-on:click="click" v-text="title" class="unselectable"
+    v-bind:class="{
+        sortable:orderable,
+        sorting_desc:(orderDir=='desc'),
+        sorting_asc:(orderDir=='asc')
+    }"></th>
+</script>
+
+<script>
+    Vue.component("alt-column", {
+        template: document.currentScript.ownerDocument.getElementById("alt-column"),
+        props: {
+            data: String,
+            title: String,
+            orderable: Boolean,
+            orderDir: String,
+            isVisible: {
+                type: Boolean,
+                default: true
+            }
+        }, data() {
+            return {
+                hide: false,
+                local: {
+                    orderDir: ""
+                }
+            };
+        }, methods: {
+            click() {
+                if (!this.orderable) return;
+                if (this.local.orderDir == "desc") {
+                    this.order("asc");
+                } else {
+                    this.order("desc");
+                }
+                this.draw();
+            }, search(search) {
+                this.local.search = search;
+                return this;
+            }, order(dir) {
+                if (!this.orderable) return this;
+                this.local.orderDir = dir;
+                this.$emit("order", [this.data, dir]);
+                return this;
+            }, draw() {
+                this.$emit("draw");
+                return this;
+            }
+        }
+    });
+
+    Vue.component("alt-rt2", {
+        template: document.currentScript.ownerDocument.getElementById("alt-rt2"),
+        props: {
+            ajax: {
+                type: Object,
+                default: {}
+            }, pageLength: {
+                type: Number,
+                default: 10
+            }, cellUrl: String
+        },
+        data: function () {
+            return {
+                hoverChild: [],
+                total: 0,
+                showChild: false,
+                showIndex: [],
+                local: {
+                    search: [],
+                    draw: 1,
+                    pageLength: this.pageLength,
+                    order: []
+                },
+                page: 1,
+                remoteData: [],
+                columns: [],
+                responsive: this.$attrs.responsive
+            }
+        },
+        created: function () {
+            this.columns = this.$attrs.columns.map(o => {
+                o.hide = false;
+                o.orderDir = "";
+                return new Vue({
+                    data: o,
+                    props: {
+                        isVisible: {
+                            type: Boolean,
+                            default: true
+                        }
+                    },
+                    methods: {
+                        isDisplay() {
+                            return this.isVisible && !this.hide;
+                        },
+                        getContent(d) {
+                            var o = d[this.data];
+                            if (!o) return "";
+                            if (typeof o == "object") {
+                                if (o.type == "raw") {
+                                    return o.content;
+                                } else {
+                                    var div = document.createElement('div');
+                                    var text = document.createTextNode(o.content);
+                                    div.appendChild(text);
+                                    return div.innerHTML;
+                                }
+                            }
+                            var div = document.createElement('div');
+                            var text = document.createTextNode(o);
+                            div.appendChild(text);
+                            return div.innerHTML;
+                        },
+                        getValue(d) {
+                            var o = d[this.data];
+                            if (!o) return "";
+                            if (typeof o == "object") {
+                                if (o.type == "raw") {
+                                    return o.content;
+                                } else {
+                                    return o.value;
+                                }
+                            }
+                            return o;
+                        }, toggleVisible() {
+                            this.isVisible = !this.isVisible;
+                        }
+                    }
+                });
+            });
+        },
+        mounted() {
+
+            if (this.ajax.url) {
+                this.draw();
+            }
+
+            window.addEventListener('resize', this.resize);
+        }, computed: {
+            pageCount() {
+                return Math.ceil(this.total / this.local.pageLength);
+            },
+            info() {
+                return {
+                    from: (this.page - 1) * this.pageLength + 1,
+                    to: Math.min(this.page * this.pageLength, this.total),
+                    total: this.total
+                };
+            }, isSearchable() {
+                return this.columns.some(o => o.searchable);
+            }, hasHideColumn() {
+                return this.columns.some(o => o.hide);
+            }
+        }, methods: {
+            updateData(key, field, value) {
+                if (!this.cellUrl) {
+                    console.log("cell-url not found");
+                    return;
+                }
+                this.$http.post(this.cellUrl, {
+                    _pk: key,
+                    name: field,
+                    value: value
+                }).then((resp) => {
+                    console.log("done");
+                });
+            },
+            resetLocaStorage() {
+
+            },
+            toggleResponsive() {
+                this.responsive = !this.responsive;
+                this.resize();
+            },
+            toggleChild() {
+                this.showChild = !this.showChild;
+                if (this.showChild) {
+                    this.$refs.tbody.showAllChild();
+                } else {
+                    this.$refs.tbody.hideAllChild();
+                }
+                this.$forceUpdate();
+            }, getColumn(index) {
+                return this.columns[index];
+            }, onChangePageLength() {
+                this.page = 1;
+                this.draw();
+            }, gotoPage(page) {
+                this.page = parseInt(page);
+                this.draw();
+            }, firstPage() {
+                this.page = 1;
+                this.draw();
+            }, nextPage() {
+                this.page++;
+                this.draw();
+            }, prevPage() {
+                this.page--;
+                this.draw();
+            }, lastPage() {
+                this.page = this.pageCount;
+                this.draw();
+            }, data() {
+                return this.remoteData;
+            }, order(o) {
+                this.local.order = [{
+                    data: o[0],
+                    dir: o[1]
+                }];
+                this.columns.forEach(c => {
+                    if (c.data != o[0]) {
+                        c.orderDir = "";
+                    } else {
+                        c.orderDir = o[1];
+                    }
+                });
+                return this;
+            }, draw() {
+                this.$refs.box.showLoading();
+                this.local.draw++;
+                this.$http.get(this.ajax.url, {
+                    params: {
+                        _rt: 1,
+                        draw: this.local.draw,
+                        columns: this.columns.map(o => {
+                            return {
+                                data: o.data,
+                                search: {
+                                    value: this.local.search[o.data]
+                                }, searchType: o.searchType
+                            };
+                        }), order: this.local.order,
+                        page: this.page,
+                        length: this.local.pageLength
+                    }
+                }).then(resp => {
+                    this.$refs.box.hideLoading();
+                    try {
+                        this.remoteData = resp.data.data;
+                        this.total = resp.data.total;
+
+                        this.resize();
+                    } catch (e) {
+                        alert(e.message);
+                    }
+                })
+            }, search(name, value) {
+                this.local.search[name] = value;
+                this.draw();
+                return this;
+            }, resize() {
+                this.columns.forEach((c) => {
+                    c.hide = false;
+                });
+
+                if (!this.responsive) return;
+
+                this.$nextTick(function () {
+                    var parentWidth = this.$refs.table.parentElement.offsetWidth;
+                    console.log("parentWidth width", parentWidth);
+
+                    var total = 0; //show 
+                    var hide_index = -1;
+                    var lastIndex = this.columns.length - 1;
+                    this.columns.forEach((c, i) => {
+                        if (hide_index >= 0) return;
+
+                        var c_el = this.$refs.column[i];
+                        var w = c_el.$el.offsetWidth;
+                        total += w;
+
+                        if (total + 32 > parentWidth) {
+                            console.log(i);
+                            hide_index = i;
+                            if (hide_index == lastIndex) {
+                                hide_index = 100;
+                            }
+                            return;
+                        }
+                    });
+
+                    //                    console.log(hide_index);
+                    if (hide_index >= 0) {
+                        this.columns.forEach((c, i) => {
+                            if (i >= hide_index) {
+                                c.hide = true;
+                            }
+                        });
+                    }
+                });
+
+
+            }
+        }
+
+    });
+
+</script>

@@ -1,5 +1,6 @@
 <?php
 use App\User;
+
 class User_index extends ALT\Page
 {
 
@@ -14,7 +15,11 @@ class User_index extends ALT\Page
         $tab->add("All user", "list", -1);//->addClass("bg-yellow");
 
 
-        $tab->add("Test DT","list2");
+        if ($this->app->user->isAdmin()) {
+            $tab->add("Test DT", "list2");
+            $tab->add("Test RT2", "list3");
+
+        }
         
         //$tab->add("Test","list2");
         $this->write($tab);

@@ -25,7 +25,7 @@
     },
     "require": {
         "php": ">=5.6",
-        "hostlink/r-psr7": "2.*",
+        "hostlink/r-psr7": "^2.1",
         "hostlink/r": "^2.4",
         "hostlink/r-p": "1.*",
         "hostlink/r-bs": "1.*",
@@ -80,5 +80,5 @@
         }
     ],
     "minimum-stability": "stable",
-    "version": "5.5.3"
+    "version": "5.6.0"
 }

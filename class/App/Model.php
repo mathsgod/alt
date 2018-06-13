@@ -3,7 +3,6 @@ namespace App;
 
 abstract class Model extends \R\Model
 {
-
     public function __construct($id)
     {
         parent::__construct($id);
@@ -15,7 +14,10 @@ abstract class Model extends \R\Model
                 }
             }
         }
+    }
 
+    public function _db(){
+        return parent::__db();
     }
 
     public function _app()

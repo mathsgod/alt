@@ -75,90 +75,93 @@
             }
         }
     });
+</script>
 
+<script type="x-template" id="rt-head">
+<thead>
+    <tr>
+        <th v-if="hasHideColumn" class="width:29px;max-width:29px">
+            <button class="btn btn-default btn-xs" v-on:click="toggleChild">
+                <i v-if="!showChild" class="fa fa-fw fa-chevron-up"></i>
+                <i v-if="showChild" class="fa fa-fw fa-chevron-down"></i>
+            </button>
+        </th>
+        <slot></slot>
+    </tr>
+    <tr v-if="hasSearchColumn">
+        <td v-if="hasHideColumn">
+        </td>
+        <td v-for="(column,key) in columns" v-bind:key="key" v-if="column.display()">
+            <template v-if="column.searchable">
+                <template v-if="column.searchType=='text'">
+                    <div>
+                        <input v-model="search[column.field]" class="form-control input-sm search" type="text" @keyup.enter="doSearch()" />
+                    </div>
+                </template>
+                <template v-if="column.searchType=='date'">
+                    <div class="date input-group input-group-sm">
+                        <input class="form-control date" placeholder="from" v-bind:data-field="column.field" data-search="from"/>
+                        <span class="input-group-btn">
+                            <button type="button" class="search-clear-btn btn btn-default" v-on:click="clearSearchDate(column,'from')">
+                                <i class="glyphicon glyphicon-remove"></i>
+                            </button>
+                        </span>
+                    </div>
 
+                    <div class="date input-group input-group-sm">
+                        <input class="form-control date" placeholder="to" v-bind:data-field="column.field" data-search="to"/>
+                        <span class="input-group-btn">
+                            <button type="button" class="search-clear-btn btn btn-default" v-on:click="clearSearchDate(column,'to')">
+                                <i class="glyphicon glyphicon-remove"></i>
+                            </button>
+                        </span>
+                    </div>
+                </template>
+                <template v-if="column.searchType=='select'">
+                    <select class="form-control" v-model="search[column.field]" v-on:change="doSearch">
+                        <option></option>
+                        <option v-for="opt in column.searchOption" v-text="opt.label" v-bind:value="opt.value"></option>
+                    </select>
+                </template>
+                <template v-if="column.searchType=='multiselect'">
+                    <select multiple class="form-control" v-on:change="doSearch" search-type="multiselect" v-bind:data-field="column.field">
+                        <option v-for="opt in column.searchOption" v-text="opt.label" v-bind:value="opt.value"></option>
+                    </select>
+                </template>
+                <template v-if="column.searchType=='select2'">
+                    <select class="form-control" v-model="search[column.field]" v-bind:data-field="column.field" search-type="select2">
+                        <option></option>
+                        <option v-for="opt in column.searchOption" v-text="opt.label" v-bind:value="opt.value"></option>
+                    </select>
+                </template>
+                <template v-if="column.searchType=='range'">
+                    <div class="input-group input-group-sm">
+                        <input class="search form-control" v-model="search[column.field].from" placeholder="from" v-bind:data-field="column.field" data-search="from" @keyup.enter="doSearch()"/>
+                        <span class="input-group-btn">
+                            <button type="button" class="search-clear-btn btn btn-default" v-on:click="clearSearchDate(column,'from')">
+                                <i class="glyphicon glyphicon-remove"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div class="input-group input-group-sm">
+                        <input class="search form-control" v-model="search[column.field].to" placeholder="to" v-bind:data-field="column.field" data-search="to" @keyup.enter="doSearch()"/>
+                        <span class="input-group-btn">
+                            <button type="button" class="search-clear-btn btn btn-default" v-on:click="clearSearchDate(column,'to')">
+                                <i class="glyphicon glyphicon-remove"></i>
+                            </button>
+                        </span>
+                    </div>
+
+                </template>                    
+            </template>
+        </td>
+    </tr>
+</thead>
+</script>
+
+<script>
     Vue.component("rt-head", {
-        template: `
-    <thead>
-        <tr>
-            <th v-if="hasHideColumn" class="width:29px;max-width:29px">
-                <button class="btn btn-default btn-xs" @click="toggleChild">
-                    <i v-if="!showChild" class="fa fa-fw fa-chevron-up"></i>
-                    <i v-if="showChild" class="fa fa-fw fa-chevron-down"></i>
-                </button>
-            </th>
-            <slot></slot>
-        </tr>
-        <tr v-if="hasSearchColumn">
-            <td v-if="hasHideColumn">
-            </td>
-            <td v-for="(column,key) in columns" :key="key" v-if="column.display()">
-               <template v-if="column.searchable">
-                   <template v-if="column.searchType=='text'">
-                       <div>
-                            <input v-model="search[column.field]" class="form-control input-sm search" type="text" @keyup.enter="doSearch()" />
-                       </div>
-                   </template>
-                   <template v-if="column.searchType=='date'">
-                       <div class="date input-group input-group-sm">
-                            <input class="form-control date" placeholder="from" :data-field="column.field" data-search="from"/>
-                            <span class="input-group-btn">
-                                <button type="button" class="search-clear-btn btn btn-default" @click="clearSearchDate(column,'from')">
-                                    <i class="glyphicon glyphicon-remove"></i>
-                                </button>
-                            </span>
-                       </div>
-
-                       <div class="date input-group input-group-sm">
-                            <input class="form-control date" placeholder="to" :data-field="column.field" data-search="to"/>
-                            <span class="input-group-btn">
-                                <button type="button" class="search-clear-btn btn btn-default" @click="clearSearchDate(column,'to')">
-                                    <i class="glyphicon glyphicon-remove"></i>
-                                </button>
-                            </span>
-                       </div>
-                   </template>
-                   <template v-if="column.searchType=='select'">
-                       <select class="form-control" v-model="search[column.field]" @change="doSearch">
-                           <option></option>
-                           <option v-for="opt in column.searchOption" v-text="opt.label" v-bind:value="opt.value"></option>
-                       </select>
-                   </template>
-                   <template v-if="column.searchType=='multiselect'">
-                        <select multiple class="form-control" @change="doSearch" search-type="multiselect" :data-field="column.field">
-                            <option v-for="opt in column.searchOption" v-text="opt.label" v-bind:value="opt.value"></option>
-                        </select>
-                   </template>
-                   <template v-if="column.searchType=='select2'">
-                        <select class="form-control" v-model="search[column.field]" :data-field="column.field" search-type="select2">
-                            <option></option>
-                            <option v-for="opt in column.searchOption" v-text="opt.label" v-bind:value="opt.value"></option>
-                        </select>
-                    </template>
-                    <template v-if="column.searchType=='range'">
-                        <div class="input-group input-group-sm">
-                            <input class="search form-control" v-model="search[column.field].from" placeholder="from" :data-field="column.field" data-search="from" @keyup.enter="doSearch()"/>
-                            <span class="input-group-btn">
-                                <button type="button" class="search-clear-btn btn btn-default" @click="clearSearchDate(column,'from')">
-                                    <i class="glyphicon glyphicon-remove"></i>
-                                </button>
-                            </span>
-                        </div>
-                        <div class="input-group input-group-sm">
-                            <input class="search form-control" v-model="search[column.field].to" placeholder="to" :data-field="column.field" data-search="to" @keyup.enter="doSearch()"/>
-                            <span class="input-group-btn">
-                                <button type="button" class="search-clear-btn btn btn-default" @click="clearSearchDate(column,'to')">
-                                    <i class="glyphicon glyphicon-remove"></i>
-                                </button>
-                            </span>
-                        </div>
-    
-                    </template>                    
-               </template>
-            </td>
-        </tr>
-    </thead>
-    `,
+        template: document.currentScript.ownerDocument.getElementById("rt-head"),
         props: {
             hideIndex: Number
         },
@@ -204,7 +207,7 @@
                         from: "",
                         to: "",
                     };
-                } else if(c.searchType=="range"){
+                } else if (c.searchType == "range") {
                     this.search[c.field] = {
                         from: "",
                         to: "",
@@ -293,62 +296,70 @@
         }
     });
 
-    Vue.component("rt-body", {
-        template: `
-    <tbody>
-        <template v-for="(r,index) in data">
-            <tr :style="getStyle(r)" @click="rowClicked(r)" :class="{active:r._selected}">
-                <td v-if="hasHideColumn">
-                    <button class="btn btn-default btn-xs" @click="toggleRowChild(index)" @mouseenter="mouseEnter(index)" @mouseleave="mouseLeave(index)">
-                        <i v-if="!showIndex[index]" class="fa fa-fw fa-chevron-up"></i>
-                        <i v-if="showIndex[index]" class="fa fa-fw fa-chevron-down"></i>
+</script>
+
+
+<script type="x-template" id="rt-body">
+<tbody>
+    <template v-for="(r,index) in data">
+        <tr v-bind:style="getStyle(r)" v-on:click="rowClicked(r)" v-bind:class="{active:r._selected}">
+            <td v-if="hasHideColumn">
+                <button class="btn btn-default btn-xs" v-on:click="toggleRowChild(index)" v-on:mouseenter="mouseEnter(index)" v-on:mouseleave="mouseLeave(index)">
+                    <i v-if="!showIndex[index]" class="fa fa-fw fa-chevron-up"></i>
+                    <i v-if="showIndex[index]" class="fa fa-fw fa-chevron-down"></i>
+                </button>
+            </td>
+            <td v-for="column in columns" v-on:click="cellClicked(column,index,r)" v-if="column.display()"
+            v-bind:style="getCellStyle(column,index,r)" >
+                <template v-if="isEditMode(column,index)" >
+                    <template v-if="column.editType=='text'">
+                        <input type="text" class="form-control input-sm" v-bind:value="getValue(r[column.field])" v-on:blur="updateData(index,r,column,$event.target.value)"/>
+                    </template>
+                    <template v-else-if="column.editType=='select'">
+                        <select class="formControl" v-on:blur="updateData(index,r,column,$event.target.value)">
+                            <option v-for="opt in column.editData" v-bind:value="opt.value" v-text="opt.label"
+                            v-bind:selected="opt.value==r[column.field].value"></option>
+                        </select>
+                    </template>
+                    <template v-else-if="column.editType=='date'">
+                        <input type="text" class="form-control input-sm" v-bind:value="getValue(r[column.field])" v-on:blur="updateData(index,r,column,$event.target.value)"/>
+                    </template>
+                </template>
+                <template v-else>
+                    <input type="checkbox" v-if="column.cell(r).type=='deletes'"/>
+                    <button class="btn btn-xs btn-danger" v-else-if="column.cell(r).type=='delete'" v-on:click="deleteRow(r[column.field].uri)"><i class="fa fa-fw fa-times"></i></button>
+                    <button class="btn btn-xs btn-default" v-else-if="column.cell(r).type=='sub-row'" v-on:click="toggleSubRow(index,r)">
+                        <i v-if="subRow[index]" class="fa fa-fw fa-minus"></i>
+                        <i v-if="!subRow[index]" class="fa fa-fw fa-plus"></i>
                     </button>
-                </td>
-                <td v-for="column in columns" @click="cellClicked(column,index,r)" v-if="column.display()"
-                    :style="getCellStyle(column,index,r)" >
-                    <template v-if="isEditMode(column,index)" >
-                        <template v-if="column.editType=='text'">
-                            <input type="text" class="form-control input-sm" v-bind:value="getValue(r[column.field])" @blur="updateData(index,r,column,$event.target.value)"/>
-                        </template>
-                        <template v-else-if="column.editType=='select'">
-                            <select class="formControl" @blur="updateData(index,r,column,$event.target.value)">
-                                <option v-for="opt in column.editData" v-bind:value="opt.value" v-text="opt.label"
-                                :selected="opt.value==r[column.field].value"></option>
-                            </select>
-                        </template>
-                        <template v-else-if="column.editType=='date'">
-                            <input type="text" class="form-control input-sm" v-bind:value="getValue(r[column.field])" @blur="updateData(index,r,column,$event.target.value)"/>
-                        </template>
-                    </template>
-                    <template v-else>
-                        <input type="checkbox" v-if="column.cell(r).type=='deletes'"/>
-                        <button class="btn btn-xs btn-danger" v-else-if="column.cell(r).type=='delete'" @click="deleteRow(r[column.field].uri)"><i class="fa fa-fw fa-times"></i></button>
-                        <button class="btn btn-xs btn-default" v-else-if="column.cell(r).type=='sub-row'" @click="toggleSubRow(index,r)">
-                            <i v-if="subRow[index]" class="fa fa-fw fa-minus"></i>
-                            <i v-if="!subRow[index]" class="fa fa-fw fa-plus"></i>
-                        </button>
-                        <a v-else-if="column.cell(r).type=='link'" :href="column.cell(r).href" v-html="column.cell(r).content"></a>
-                        <div v-else v-html="column.cell(r).content" :style="column.cell(r).style">
-                        </div>
-                    </template>
-                </td>
-            </tr>
-            <tr class="child" v-show="showChild(index)">
-                <td :colspan="showColumnCount">
-                    <ul>
-                        <li v-for="column in columns" v-if="column.hide">
-                            <b v-html="column.title"></b>&nbsp;&nbsp;<span v-html="getValue(r[column.field])" />
-                        </li>
-                    </ul>
-                </td>
-            </tr>    
-            <tr v-if="subRow[index]">
-                <td :colspan="showColumnCount" v-html="subRow[index]">
-                </td>
-            </tr>
-        </template>
-    </tbody>
-    `,
+                    <a v-else-if="column.cell(r).type=='link'" v-bind:href="column.cell(r).href" v-html="column.cell(r).content"></a>
+                    <div v-else v-html="column.cell(r).content" v-bind:style="column.cell(r).style">
+                    </div>
+                </template>
+            </td>
+        </tr>
+        <tr class="child" v-show="showChild(index)">
+            <td v-bind:colspan="showColumnCount">
+                <ul>
+                    <li v-for="column in columns" v-if="column.hide">
+                        <b v-html="column.title"></b>&nbsp;&nbsp;<span v-html="getValue(r[column.field])" />
+                    </li>
+                </ul>
+            </td>
+        </tr>    
+        <tr v-if="subRow[index]">
+            <td v-bind:colspan="showColumnCount" v-html="subRow[index]">
+            </td>
+        </tr>
+    </template>
+</tbody>
+</script>
+
+<script>
+
+
+    Vue.component("rt-body", {
+        template: document.currentScript.ownerDocument.getElementById("rt-body"),
         props: {
             columns: Array,
             data: Array,
@@ -497,21 +508,28 @@
 
         }
     });
+</script>
 
-    Vue.component("rt-column", {
-        template: `<th class="unselectable"
+<script type="x-template" id="rt-column">
+    <th class="unselectable"
         v-if="display()"
-        :class="{
+        v-bind:class="{
             sortable:sortable,
             sorting_desc:(dir=='desc'),
             sorting_asc:(dir=='asc')
-        }" @click='sort' :style="style">
-        <div :title="title" style="overflow:hidden">{{title}}</div>
+        }" v-on:click='sort' v-bind:style="style">
+        <div v-bind:title="title" style="overflow:hidden" v-html="title"></div>
         <div ref="resizer"></div>
         <template v-if="type=='deletes'">
-           <button class='btn btn-xs btn-danger' @click="$emit('deletes')"><i class='fa fa-fw fa-times'></i></button>
+            <button class='btn btn-xs btn-danger' v-on:click="$emit('deletes')"><i class='fa fa-fw fa-times'></i></button>
         </template>
-</th>`,
+    </th>
+</script>
+
+<script>
+
+    Vue.component("rt-column", {
+        template: document.currentScript.ownerDocument.getElementById("rt-column"),
         props: {
             type: String,
             field: String,
@@ -589,16 +607,16 @@
 
                 if (typeof r[this.field] == 'string') {
                     cell.content = r[this.field];
-                }else{
-                    for(var i in r[this.field]){
-                        cell[i]=r[this.field][i];
+                } else {
+                    for (var i in r[this.field]) {
+                        cell[i] = r[this.field][i];
                     }
                 }
 
-                if(this.wrap){
-                    Vue.set(cell,"style",{
-                        "word-wrap":"break-word",
-                        "white-space":"pre-wrap"
+                if (this.wrap) {
+                    Vue.set(cell, "style", {
+                        "word-wrap": "break-word",
+                        "white-space": "pre-wrap"
                     })
                 }
                 return cell;
@@ -639,18 +657,28 @@
         }
     });
 </script>
+
+
+
+<script type="x-template" id="rt-table">
+    <table class="table table-hover table-condensed">
+        <thead is="rt-head" 
+            v-on:toggle-child="toggleChild" 
+            v-on:toggle-visible="toggleVisible" 
+            v-on:sort="sortByColumn" 
+            v-on:search="search" 
+            v-bind:hide-index="hideIndex"><slot></slot></thead>
+        <tbody ref="body" is="rt-body" 
+            v-bind:columns="columns" 
+            v-bind:data="data" 
+            v-on:update-data="updateData" 
+            v-on:data-deleted="refresh"></tbody>
+    </table>
+</script>
+
 <script>
     Vue.component("rt-table", {
-        template: `
-<table class="table table-hover table-condensed">
-   <thead is="rt-head" 
-   v-on:toggle-child="toggleChild" 
-   v-on:toggle-visible="toggleVisible" 
-   v-on:sort="sortByColumn" 
-   v-on:search="search" :hide-index="hideIndex"><slot></slot></thead>
-   <tbody ref="body" is="rt-body" :columns="columns" :data="data" v-on:update-data="updateData" v-on:data-deleted="refresh"></tbody>
-</table>
-`,
+        template: document.currentScript.ownerDocument.getElementById("rt-table"),
         props: {
             dataUrl: {
                 type: String

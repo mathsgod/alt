@@ -19,13 +19,31 @@ class Column implements JsonSerializable
     public $width = null;
     public $className = [];
 
-    public $format=null;
-    public $searchCallback=null;
+    public $format = null;
+    public $searchCallback = null;
 
+    public $editable = false;
+    public $editType = 'text';
+    public $editData;
+
+    public function editable($type = "text", $data)
+    {
+        $this->editable = true;
+        $this->editType = $type;
+        $this->editData = $data;
+        if (is_array($data)) {
+            $this->editData = [];
+            foreach ($data as $k => $v) {
+                $this->editData[] = ["value" => $k, "label" => $v];
+            }
+        }
+        return $this;
+    }
 
     public function format($format)
     {
         $this->format = $format;
+        $this->raw = true;
         return $this;
     }
 
@@ -54,7 +72,8 @@ class Column implements JsonSerializable
         return $this;
     }
 
-    public function sort(){
+    public function sort()
+    {
         return $this->order();
     }
 
@@ -64,13 +83,15 @@ class Column implements JsonSerializable
         return $this;
     }
 
-    public function searchCallBack($callback){
+    public function searchCallBack($callback)
+    {
         $this->searchable = true;
         $this->searchCallback = $callback;
         return $this;
     }
 
-    public function searchSelect2($objects, $display_member, $value_member){
+    public function searchSelect2($objects, $display_member, $value_member)
+    {
         $this->searchable = true;
         $this->searchOptions = array($objects, $display_member, $value_member);
         $this->searchType = 'select2';
@@ -81,6 +102,15 @@ class Column implements JsonSerializable
     {
         $this->searchable = true;
         $this->searchType = 'date';
+        return $this;
+    }
+
+    public function searchMultiple($objects, $display_member, $value_member)
+    {
+        $this->searchable = true;
+        $this->searchOptions = array($objects, $display_member, $value_member);
+        $this->searchType = 'multiselect';
+        $this->searchMultiple = true;
         return $this;
     }
 
@@ -152,6 +182,9 @@ class Column implements JsonSerializable
         $data["searchable"] = $this->searchable;
         $data["searchType"] = $this->searchType;
         $data["searchOption"] = $this->_searchOption();
+        $data["editable"] = $this->editable;
+        $data["editType"] = $this->editType;
+        $data["editData"] = $this->editData;
         if ($this->width) $data["width"] = $this->width;
         if ($this->className) $data["className"] = implode(" ", $this->className);
         return $data;
@@ -159,3 +192,4 @@ class Column implements JsonSerializable
 
 
 }
+
