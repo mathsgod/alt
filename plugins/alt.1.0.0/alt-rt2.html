@@ -187,6 +187,7 @@
                 return this.selectedData.indexOf(d) >= 0;
             },
             onClickRow(d) {
+                if (!this.selectable) return;
                 if (this.isSelected(d)) {
                     var index = this.selectedData.indexOf(d);
                     this.selectedData.splice(index, 1);
@@ -432,7 +433,9 @@
             }
         },
         data: function () {
-            return {
+            var storage = $.localStorage.get(this.ajax.url)||{};
+
+            var data= {
                 hoverChild: [],
                 total: 0,
                 showChild: false,
@@ -447,7 +450,18 @@
                 remoteData: [],
                 columns: [],
                 responsive: this.$attrs.responsive
+            };
+
+            if(typeof storage.responsive !== "undefined"){
+                data.responsive=storage.responsive;
             }
+
+            if(typeof storage.pageLength !== "undefined"){
+                data.local.pageLength=parseInt(storage.pageLength);
+            }
+
+
+            return data;
         },
         created: function () {
             this.columns = this.$attrs.columns.map(o => {
@@ -535,7 +549,7 @@
                 eval(e);
             },
             hasExport() {
-                return true;
+                return this.exports.count > 0;
             },
             exportFile(type) {
                 this.local.draw++;
@@ -586,10 +600,17 @@
                 });
             },
             resetLocaStorage() {
-
+                $.localStorage.remove(this.ajax.url);
+                this.draw();
             },
             toggleResponsive() {
                 this.responsive = !this.responsive;
+
+                //save 
+                var storage = $.localStorage.get(this.ajax.url)||{};
+                storage.responsive=this.responsive;
+                $.localStorage.set(this.ajax.url,storage);
+
                 this.resize();
             },
             toggleChild() {
@@ -603,6 +624,12 @@
             }, getColumn(index) {
                 return this.columns[index];
             }, onChangePageLength() {
+
+                //save 
+                var storage = $.localStorage.get(this.ajax.url)||{};
+                storage.pageLength=this.local.pageLength;
+                $.localStorage.set(this.ajax.url,storage);
+
                 this.page = 1;
                 this.draw();
             }, gotoPage(page) {
@@ -681,12 +708,12 @@
 
                 this.$nextTick(function () {
                     var parentWidth = this.$refs.table.parentElement.offsetWidth;
-//                    console.log("parentWidth width", parentWidth);
+                    //                    console.log("parentWidth width", parentWidth);
 
                     var total = 0; //show 
                     var hide_index = -1;
                     var lastIndex = this.columns.length - 1;
-//                    console.log("last "+lastIndex);
+                    //                    console.log("last "+lastIndex);
                     this.columns.forEach((c, i) => {
                         if (hide_index >= 0) return;
 
@@ -694,7 +721,7 @@
                         var w = c_el.$el.offsetWidth;
                         total += w;
 
-//                        console.log(total);
+                        //                        console.log(total);
                         if (i == lastIndex) {
                             if (total > parentWidth) {
                                 hide_index = i;
@@ -708,7 +735,7 @@
                         }
                     });
 
-//                    console.log(hide_index);
+                    //                    console.log(hide_index);
                     if (hide_index >= 0) {
                         this.columns.forEach((c, i) => {
                             if (i >= hide_index) {
