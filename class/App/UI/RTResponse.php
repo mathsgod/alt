@@ -1,6 +1,9 @@
 <?
 namespace App\UI;
 
+use \Box\Spout\Writer\WriterFactory;
+use \Box\Spout\Common\Type;
+
 use JsonSerializable;
 use Exception;
 
@@ -42,7 +45,7 @@ class RTResponse implements JsonSerializable
     {
         $c = new Column();
         $c->title = "";
-        $c->type = "edit";
+        $c->type = "raw";
         $c->data = "__edit__";
         $c->name = "__edit__";
         $c->className[] = "text-center";
@@ -64,7 +67,7 @@ class RTResponse implements JsonSerializable
     {
         $c = new Column();
         $c->title = "";
-        $c->type = "view";
+        $c->type = "raw";
         $c->data = "__view__";
         $c->name = "__view__";
         $c->className[] = "text-center";
@@ -87,16 +90,16 @@ class RTResponse implements JsonSerializable
     {
         $c = new Column();
         $c->title = "";
-        $c->type = "del";
+        $c->type = "delete";
         $c->data = "__del__";
         $c->name = "__del__";
         $c->width = "1px";
-        $c->raw = true;
         $c->className[] = "text-center";
         $c->descriptor[] = function ($obj) {
             if (!$obj->canDelete()) {
                 return;
             }
+            return $obj->uri("del");
             $a = html("a")->class("btn btn-xs btn-danger confirm")->href($obj->uri("del"));
             $a->i->class("fa fa-times fa-fw");
             return $a;
@@ -123,17 +126,21 @@ class RTResponse implements JsonSerializable
         }
 
         $source = $this->filteredSource();
-        $source->limit([$this->page, $this->length]);
-
+        if($this->page){
+            $source->limit([$this->page, $this->length]);
+        }
         $data = [];
         foreach ($source as $obj) {
             $d = [];
             foreach ($this->request["columns"] as $k => $c) {
                 try {
+                    
                     if (array_key_exists($c["data"], $this->_columns)) {
                         $col = $this->_columns[$c["data"]];
 
-                        if ($col->raw) {
+                        if ($col->type!="text") {
+                            $d[$c["data"]] = ["type" => $col->type, "content" => (string)$col->getData($obj, $k)];
+                        } elseif ($col->raw) {
                             $d[$c["data"]] = ["type" => "raw", "content" => (string)$col->getData($obj, $k)];
                         } else {
                             $v = $col->getData($obj, $k);
@@ -163,6 +170,8 @@ class RTResponse implements JsonSerializable
         }
 
 
+
+
         return $data;
     }
 
@@ -178,7 +187,6 @@ class RTResponse implements JsonSerializable
         foreach ($this->order as $o) {
             $source->orderBy($o["data"] . " " . $o["dir"]);
         }
-
 
         foreach ($this->request["columns"] as $k => $c) {
             $column = $this->_columns[$c["data"]];
@@ -231,10 +239,62 @@ class RTResponse implements JsonSerializable
 
     public function jsonSerialize()
     {
+        if ($_GET["type"]) {
+            $this->exportFile($_GET["type"]);
+            exit();
+            return null;
+        }
+
         return [
             "draw" => $this->draw,
             "data" => $this->data(),
             "total" => $this->recordsFiltered()
         ];
+    }
+
+    public function exportFile($type)
+    {
+
+        switch ($type) {
+            case "xlsx":
+                $t = Type::XLSX;
+                break;
+            case "csv":
+                $t = Type::CSV;
+                break;
+        }
+        $writer = WriterFactory::create($t);
+        $writer->openToFile("php://output");
+        
+        $data = $this->data();
+
+        foreach ($this->request["columns"] as $k => $c) {
+            
+            $col = $this->_columns[$c["data"]];
+           
+            if($col->type!="text")continue;
+
+            $row[] = $c["data"];
+            $cols[] = $c["data"];
+        }
+
+                
+        $writer->addRow($row);
+
+
+        foreach ($data as $d) {
+            $ds = [];
+            foreach ($cols as $c) {
+                if (is_array($d[$c])) {
+                    $ds[$c] = $d[$c]["content"];
+                } else {
+                    $ds[$c] = $d[$c];
+                }
+
+            }
+            $writer->addRow($ds);
+        }
+
+        $writer->close();
     }
 }

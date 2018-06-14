@@ -1,14 +1,12 @@
 <script>
     Vue.component("alt-email", {
         template: `
-<div>
 <div class="input-group">
     <span class="input-group-addon">
         <i class="far fa-envelope"></i>
     </span>
     <input type="email" class="form-control" v-bind="$props" :value="value" :name="name"/>
     <i v-if="required" class="fa fa-asterisk form-control-feedback" style="top:10px"></i>
-</div>
 </div>
     `,
         props: {

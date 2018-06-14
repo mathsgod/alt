@@ -396,8 +396,11 @@ class Page extends \R\Page
     public function createRT2($objects, $module)
     {
         //$rt = new UI\RT($objects, $module ? $module : $this->module(), $this->request);
-        $rt = new UI\RT2();
-        $rt->ajax["url"] = (string)$objects[0]->request->getURI() . "/" . $objects[1];
+        $rt = new UI\RT2(null,$this);
+        $rt->ajax["url"] = (string)$objects[0]->request->getURI()->getPath() . "/" . $objects[1] ."?". $this->request->getUri()->getQuery();
+        $rt->ajax["url"]=substr($rt->ajax["url"],1);
+
+
         $rt->pageLength = 25;
         return $rt;
     }

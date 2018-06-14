@@ -93,3 +93,10 @@ table.rt tbody tr.child ul {
     margin: 0;
     padding: 0;
 }
+
+table.rt  tbody>tr.selected, table.dataTable tbody>tr>.selected{
+    background-color: #08C;
+}
+table.rt tbody tr.selected, table.dataTable tbody th.selected, table.dataTable tbody td.selected{
+    color: white;
+}

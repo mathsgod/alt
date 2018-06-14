@@ -55,6 +55,7 @@ class Column implements JsonSerializable
 
     public function alink($alink = null)
     {
+        $this->raw = true;
         $this->alink = $alink;
         return $this;
     }
@@ -146,6 +147,7 @@ class Column implements JsonSerializable
     public function getData($object, $k)
     {
         $result = $object;
+        $last_obj = $object;
         foreach ($this->descriptor as $descriptor) {
             $result = \My\Func::_($descriptor)->call($result);
             if (is_object($result)) {
@@ -165,7 +167,8 @@ class Column implements JsonSerializable
         if ($this->alink && $last_obj) {
             $htmlspecialchars = false;
 
-            $a = html("a")->href($last_obj->uri($c->alink));
+
+            $a = html("a")->href($last_obj->uri($this->alink));
             $a->text($result);
             $result = $a;
         }

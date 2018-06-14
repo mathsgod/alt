@@ -11,14 +11,19 @@ class RT2 extends \P\HTMLElement
     public $responsive = true;
     public $cellUrl = null;
     public $pageLength = 25;
+    public $selectable = false;
 
-    public function __construct()
+    public $_page = null;
+    public $buttons = [];
+    public $exports = [];
+
+    public function __construct($objects, $page)
     {
         parent::__construct("div");
         $this->attributes["is"] = "alt-rt2";
-
-
         $this->response = new RTResponse();
+
+        $this->_page = $page;
     }
 
     public function order($data, $dir)
@@ -90,6 +95,9 @@ class RT2 extends \P\HTMLElement
         $this->attributes["cell-url"] = $this->cellUrl;
 
         $this->attributes[":page-length"] = $this->pageLength;
+        $this->attributes[":selectable"] = $this->selectable ? "true" : "false";
+        $this->attributes[":buttons"] = $this->buttons;
+        $this->attributes[":exports"] = $this->exports;
         return parent::__toString();
     }
 }

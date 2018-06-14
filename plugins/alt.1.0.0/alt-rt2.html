@@ -97,7 +97,7 @@
 <script type="x-template" id="rt2-tbody">
     <tbody>
         <template v-for="(d,index) in data">
-            <tr>
+            <tr v-on:click="onClickRow(d)" v-bind:class="{selected:isSelected(d)}">
                 <td v-if="hasHideColumn">
                     <button class="btn btn-default btn-xs" 
                         v-on:click="toggleRowChild(index)" 
@@ -124,7 +124,7 @@
                     </template>
                     <template v-else>
                         <input type="checkbox" v-if="column.type=='deletes'"/>
-                        <button class="btn btn-xs btn-danger" v-else-if="column.type=='delete'" v-on:click="deleteRow(d)"><i class="fa fa-fw fa-times"></i></button>
+                        <button class="btn btn-xs btn-danger" v-else-if="d[column.data].type=='delete'" v-on:click="deleteRow(d[column.data].content)"><i class="fa fa-fw fa-times"></i></button>
                         <button class="btn btn-xs btn-default" v-else-if="column.type=='sub-row'" v-on:click="toggleSubRow(index,r)">
                             <i v-if="subRow[index]" class="fa fa-fw fa-minus"></i>
                             <i v-if="!subRow[index]" class="fa fa-fw fa-plus"></i>
@@ -155,14 +155,16 @@
         template: document.currentScript.ownerDocument.getElementById("rt2-tbody"),
         props: {
             data: Array,
-            columns: Array
+            columns: Array,
+            selectable: Boolean
         }, data() {
             return {
                 hoverChild: [],
                 showIndex: [],
                 editMode: false,
                 editColumn: null,
-                editIndex: null
+                editIndex: null,
+                selectedData: []
             };
         }, computed: {
             hasHideColumn() {
@@ -173,6 +175,27 @@
                 }).length + 1;
             }
         }, methods: {
+            deleteRow(uri) {
+                if (confirm("Are your sure?")) {
+                    this.$http.get(uri).then(resp => {
+                        this.$emit("data-deleted");
+                    });
+                }
+
+            },
+            isSelected(d) {
+                return this.selectedData.indexOf(d) >= 0;
+            },
+            onClickRow(d) {
+                if (this.isSelected(d)) {
+                    var index = this.selectedData.indexOf(d);
+                    this.selectedData.splice(index, 1);
+                } else {
+                    this.selectedData.push(d);
+                }
+
+
+            },
             isEditMode: function (column, index) {
                 if (!this.editMode) return false;
                 if (this.editColumn == column && this.editIndex == index) {
@@ -262,7 +285,8 @@
                         <td v-for="(column,key) in columns" is="alt-column-search" v-bind="column.$data" v-if="column.isDisplay()" v-on:search="search"></td>
                     </tr>
                 </thead>
-                <tbody is="rt2-tbody" :data="data()" :columns="columns" ref="tbody" v-on:update-data="updateData"></tbody>
+                <tbody is="rt2-tbody" :selectable="selectable" :data="data()" :columns="columns" ref="tbody" v-on:update-data="updateData"
+                    v-on:data-deleted="draw"></tbody>
             </table>
         </div>
         <div class="box-footer">
@@ -311,6 +335,25 @@
                 </button>
             </div>
 
+            <div class="pull-left dropdown" v-if="hasExport()">
+                <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                    Export
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li v-if="exports.indexOf('xlsx')>=0">
+                        <a href="#" @click.prevent="exportFile('xlsx')">XLSX</a>
+                    </li>
+                    <li v-if="exports.indexOf('csv')>=0">
+                        <a href="#" @click.prevent="exportFile('csv')">CSV</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="pull-left btn-group">
+                <button v-for="(button,index) in buttons" @click="onClickButton(button)" class="btn btn-default btn-sm" type="button" v-text="button.text">
+                </button>
+            </div>
 
             <rt-info class="pull-right" v-bind="info"></rt-info>
         </div>
@@ -378,7 +421,15 @@
             }, pageLength: {
                 type: Number,
                 default: 10
-            }, cellUrl: String
+            }, cellUrl: String,
+            selectable: Boolean,
+            buttons: {
+                type: Array,
+                default: () => { return [] }
+            }, exports: {
+                type: Array,
+                default: () => { return [] }
+            }
         },
         data: function () {
             return {
@@ -473,6 +524,48 @@
                 return this.columns.some(o => o.hide);
             }
         }, methods: {
+            onClickButton(button) {
+                var e = button.action + "(this);";
+                eval(e);
+            },
+            hasExport() {
+                return true;
+            },
+            exportFile(type) {
+                this.local.draw++;
+                this.$http.get(this.ajax.url, {
+                    params: {
+                        _rt: 1,
+                        draw: this.local.draw,
+                        columns: this.columns.map(o => {
+                            return {
+                                data: o.data,
+                                search: {
+                                    value: this.local.search[o.data]
+                                }, searchType: o.searchType
+                            };
+                        }), order: this.local.order,
+                        search: this.searchData,
+                        type: type
+                    },
+                    responseType: 'arraybuffer'
+                }).then(function (response) {
+                    console.log(response);
+                    var headers = response.headers;
+                    var blob = new Blob([response.data], {
+                        type: headers['content-type']
+                    });
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    if (type == "xlsx") {
+                        link.download = "export.xlsx";
+                    } else if (type == "csv") {
+                        link.download = "export.csv";
+                    }
+
+                    link.click();
+                });
+            },
             updateData(key, field, value) {
                 if (!this.cellUrl) {
                     console.log("cell-url not found");
@@ -557,6 +650,10 @@
                 }).then(resp => {
                     this.$refs.box.hideLoading();
                     try {
+                        if (resp.data.draw < this.local.draw) {
+                            return;
+                        }
+
                         this.remoteData = resp.data.data;
                         this.total = resp.data.total;
 

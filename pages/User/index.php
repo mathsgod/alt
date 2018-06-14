@@ -17,7 +17,7 @@ class User_index extends ALT\Page
 
         if ($this->app->user->isAdmin()) {
             $tab->add("Test DT", "list2");
-            $tab->add("Test RT2", "list3");
+//            $tab->add("Test RT2", "list3");
 
         }
         

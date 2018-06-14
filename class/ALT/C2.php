@@ -434,8 +434,42 @@ class C2 extends \P\HTMLElement
 
 	public function email($field)
 	{
-		$p=$this->input($field);
-		$p->attr("is","alt-email");
+		$p = new \P\InputCollection;
+		foreach ($this->cell as $cell) {
+			try {
+				$input = p("input")->appendTo($cell);
+				$input->attr("is", "alt-email");
+				$input->attr("name", $field);
+				$input->attr("data-field", $field);
+
+				if ($object = p($cell)->data("object")) {
+					$input->data("object", $object);
+					$input->attr("value", is_object($object) ? $object->$field : $object[$field]);
+
+					if ($this->callback) {
+						call_user_func($this->callback, $object, $input[0]);
+					}
+				}
+
+				$p[] = $input[0];
+			} catch (Exception $e) {
+				$cell->append("<p class='form-control-static'>" . $e->getMessage() . "</p>");
+			}
+		}
+
+		if ($this->createTemplate) {
+			$input = p("input");
+			$input->addClass("form-control");
+			$input->attr("is", "alt-input");
+			$input->attr("name", $field);
+			$input->attr("data-field", $field);
+			$input->attr("value", $this->default[$field]);
+
+			$p[] = $input[0];
+
+			$this->c_tpl[] = $input[0];
+
+		}
 		return $p;
 	}
 
