@@ -14,7 +14,8 @@ class System_logout extends App\Page
             $this->app->user->offline();
             $user_id = $this->app->user->user_id;
             $w[] = "user_id=$user_id";
-            if ($ul = UserLog::first($w, ["userlog_id", "desc"])) {
+
+            if ($ul = UserLog::first($w, "userlog_id desc")) {
                 $ul->logout_dt = date("Y-m-d H:i:s");
                 $ul->save();
             }
