@@ -12,6 +12,7 @@ class App extends \R\App
 {
     private static $app;
     public $user;
+    public $user_id;
 
     public static function _()
     {
@@ -64,12 +65,12 @@ class App extends \R\App
         }
 
         //db config
-        $host=$_SERVER["HTTP_HOST"];
+        $host = $_SERVER["HTTP_HOST"];
         $pool = new ApcuCachePool();
         if ($pool->hasItem('config')) {
-            $config = $pool->getItem($host."_config")->get();
+            $config = $pool->getItem($host . "_config")->get();
         } else {
-            $item = $pool->getItem($host."_config");
+            $item = $pool->getItem($host . "_config");
 
             $config = [];
             foreach (Config::Find() as $c) {
@@ -85,6 +86,14 @@ class App extends \R\App
         }
 
         $this->alert = new Alert();
+
+       //user
+        if (!$_SESSION["app"]["user"]) {
+            $_SESSION["app"]["user"] = new User(2);
+        }
+        $this->user = $_SESSION["app"]["user"];
+        $this->user_id = $this->user->user_id;
+
     }
 
     public function getFile($file)
@@ -132,27 +141,18 @@ class App extends \R\App
     public function run()
     {
         if ($this->logger) $this->logger->debug("APP::run");
-        session_start();
-
-
-        
-        //user
-        if (!$_SESSION["app"]["user"]) {
-            $_SESSION["app"]["user"] = new User(2);
-        }
-        $this->user = $_SESSION["app"]["user"];
 
         $this->base = $this->request->getUri()->getBasePath();
 
         $pi = $this->pathInfo();
 
         //load plugins
-        $this->plugins_setting=\Symfony\Component\Yaml\Yaml::parseFile($pi["system_root"]."/plugins.yml");
+        $this->plugins_setting = \Symfony\Component\Yaml\Yaml::parseFile($pi["system_root"] . "/plugins.yml");
 
-        foreach($this->plugins_setting as $name=>$value){
-            if($value["locale"][$this->user->language]){
+        foreach ($this->plugins_setting as $name => $value) {
+            if ($value["locale"][$this->user->language]) {
 
-                $this->plugins_setting[$name]=array_merge_recursive($this->plugins_setting[$name],$value["locale"][$this->user->language]);
+                $this->plugins_setting[$name] = array_merge_recursive($this->plugins_setting[$name], $value["locale"][$this->user->language]);
             }
         }
 
@@ -211,14 +211,15 @@ class App extends \R\App
         }
     }
 
-    public function redirect($url){
+    public function redirect($url)
+    {
         if ($uri) {
             $location = $this->request->getUri()->getBasePath() . "/" . $uri;
             $this->response = $this->response->withHeader("Location", $location);
             return;
         }
 
-        if($_GET["_referer"]){
+        if ($_GET["_referer"]) {
             $this->response = $this->response->withHeader("Location", $_GET["_referer"]);
             return;
         }
@@ -344,10 +345,10 @@ class App extends \R\App
     {
         if (!$lang) $lang = $this->user->language;
 
-        if($this->_sv[$name][$lang])return $this->_sv[$name][$lang];
+        if ($this->_sv[$name][$lang]) return $this->_sv[$name][$lang];
 
         if ($sv = SystemValue::_($name, $lang)) {
-            $this->_sv[$name][$lang]=$sv->values();
+            $this->_sv[$name][$lang] = $sv->values();
             return $this->_sv[$name][$lang];
         }
 

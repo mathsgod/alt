@@ -1,6 +1,7 @@
 <script type="x-template" id="alt-column-search">
     <td>
         <input v-if="searchable && searchType=='text'" type="text" class="form-control input-sm search" v-model="search" @keyup.enter="doSearch()" />
+        <input v-if="searchable && searchType=='equal'" type="text" class="form-control input-sm search" v-model="search" @keyup.enter="doSearch()" />
         <input v-if="searchable && searchType=='date'" class="form-control input-sm search" value="" ref="search"/>
         <select v-if="searchable && searchType=='select'" class="form-control search" ref="search" v-model="search" v-on:change="doSearch()">
             <option></option>
@@ -124,7 +125,7 @@
                     </template>
                     <template v-else>
                         <input type="checkbox" v-if="column.type=='deletes'"/>
-                        <button class="btn btn-xs btn-danger" v-else-if="d[column.data].type=='delete'" v-on:click="deleteRow(d[column.data].content)"><i class="fa fa-fw fa-times"></i></button>
+                        <button class="btn btn-xs btn-danger" v-else-if="column.cell(d).type=='delete'" v-on:click="deleteRow(d[column.data].content)"><i class="fa fa-fw fa-times"></i></button>
                         <button class="btn btn-xs btn-default" v-else-if="column.type=='sub-row'" v-on:click="toggleSubRow(index,r)">
                             <i v-if="subRow[index]" class="fa fa-fw fa-minus"></i>
                             <i v-if="!subRow[index]" class="fa fa-fw fa-plus"></i>
@@ -433,9 +434,9 @@
             }
         },
         data: function () {
-            var storage = $.localStorage.get(this.ajax.url)||{};
+            var storage = $.localStorage.get(this.ajax.url) || {};
 
-            var data= {
+            var data = {
                 hoverChild: [],
                 total: 0,
                 showChild: false,
@@ -452,12 +453,12 @@
                 responsive: this.$attrs.responsive
             };
 
-            if(typeof storage.responsive !== "undefined"){
-                data.responsive=storage.responsive;
+            if (typeof storage.responsive !== "undefined") {
+                data.responsive = storage.responsive;
             }
 
-            if(typeof storage.pageLength !== "undefined"){
-                data.local.pageLength=parseInt(storage.pageLength);
+            if (typeof storage.pageLength !== "undefined") {
+                data.local.pageLength = parseInt(storage.pageLength);
             }
 
 
@@ -482,17 +483,26 @@
                         }
                     },
                     methods: {
-                        cell(d){
+                        cell(d) {
                             var cell = {
                                 type: "text"
                             };
 
-                            if(this.wrap){
+                            if (this.wrap) {
                                 Vue.set(cell, "style", {
                                     "word-wrap": "break-word",
                                     "white-space": "pre-wrap"
                                 });
                             }
+
+                            if (d[this.data] == null) {
+                                return cell;
+                            } else {
+                                for (var i in d[this.data]) {
+                                    cell[i] = d[this.data][i];
+                                }
+                            }
+
 
                             return cell;
                         },
@@ -621,9 +631,9 @@
                 this.responsive = !this.responsive;
 
                 //save 
-                var storage = $.localStorage.get(this.ajax.url)||{};
-                storage.responsive=this.responsive;
-                $.localStorage.set(this.ajax.url,storage);
+                var storage = $.localStorage.get(this.ajax.url) || {};
+                storage.responsive = this.responsive;
+                $.localStorage.set(this.ajax.url, storage);
 
                 this.resize();
             },
@@ -640,9 +650,9 @@
             }, onChangePageLength() {
 
                 //save 
-                var storage = $.localStorage.get(this.ajax.url)||{};
-                storage.pageLength=this.local.pageLength;
-                $.localStorage.set(this.ajax.url,storage);
+                var storage = $.localStorage.get(this.ajax.url) || {};
+                storage.pageLength = this.local.pageLength;
+                $.localStorage.set(this.ajax.url, storage);
 
                 this.page = 1;
                 this.draw();

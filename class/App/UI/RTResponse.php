@@ -126,7 +126,7 @@ class RTResponse implements JsonSerializable
         }
 
         $source = $this->filteredSource();
-        if($this->page){
+        if ($this->page) {
             $source->limit([$this->page, $this->length]);
         }
         $data = [];
@@ -134,11 +134,11 @@ class RTResponse implements JsonSerializable
             $d = [];
             foreach ($this->request["columns"] as $k => $c) {
                 try {
-                    
+
                     if (array_key_exists($c["data"], $this->_columns)) {
                         $col = $this->_columns[$c["data"]];
 
-                        if ($col->type!="text") {
+                        if ($col->type != "text") {
                             $d[$c["data"]] = ["type" => $col->type, "content" => (string)$col->getData($obj, $k)];
                         } elseif ($col->raw) {
                             $d[$c["data"]] = ["type" => "raw", "content" => (string)$col->getData($obj, $k)];
@@ -190,7 +190,9 @@ class RTResponse implements JsonSerializable
 
         foreach ($this->request["columns"] as $k => $c) {
             $column = $this->_columns[$c["data"]];
-            if ($value = $c["search"]["value"]) {
+            $value = $c["search"]["value"];
+
+            if ($value !== null && $value !== "") {
 
                 if ($column->searchCallback) {
                     $w = [];
@@ -209,13 +211,11 @@ class RTResponse implements JsonSerializable
                     $w[] = ["$field in (" . implode(",", $s) . ")", $value];
                     $source->where($w);
                     continue;
-                }
-
-                if ($c["searchType"] == "text") {
+                } elseif ($c["searchType"] == "text") {
                     $w = [];
                     $w[] = [$c["data"] . " like ?", "%$value%"];
                     $source->where($w);
-                } elseif ($c["searchType"] == "select" || $c["searchType"] == "select2") {
+                } elseif ($c["searchType"] == "select" || $c["searchType"] == "select2" || $c["searchType"] == "equal") {
                     $w = [];
                     $w[] = [$c["data"] . " = ?", $value];
                     $source->where($w);
@@ -265,20 +265,20 @@ class RTResponse implements JsonSerializable
         }
         $writer = WriterFactory::create($t);
         $writer->openToFile("php://output");
-        
+
         $data = $this->data();
 
         foreach ($this->request["columns"] as $k => $c) {
-            
+
             $col = $this->_columns[$c["data"]];
-           
-            if($col->type!="text")continue;
+
+            if ($col->type != "text") continue;
 
             $row[] = $c["data"];
             $cols[] = $c["data"];
         }
 
-                
+
         $writer->addRow($row);
 
 

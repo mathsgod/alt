@@ -28,6 +28,12 @@ class Column implements JsonSerializable
 
     public $wrap = false;
 
+    public function width($width)
+    {
+        $this->width = $width;
+        return $this;
+    }
+
     public function editable($type = "text", $data)
     {
         $this->editable = true;
@@ -111,6 +117,13 @@ class Column implements JsonSerializable
     {
         $this->searchable = true;
         $this->searchType = 'date';
+        return $this;
+    }
+
+    public function searchEq()
+    {
+        $this->searchable = true;
+        $this->searchType = 'equal';
         return $this;
     }
 

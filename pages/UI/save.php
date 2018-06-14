@@ -12,10 +12,10 @@ class UI_save extends App\Page
 
         $w = [];
         $w[] = ["uri=?", $_POST["uri"]];
-        $w[] = ["user_id=?", App::UserID()];
+        $w[] = ["user_id=?", $this->app->user->user_id];
         if (!$ui = UI::first($w)) {
             $ui = new UI();
-            $ui->user_id = App::UserID();
+            $ui->user_id = $this->app->user->user_id;
             $ui->uri = $_POST["uri"];
         }
 
@@ -25,13 +25,11 @@ class UI_save extends App\Page
 
     public function saveGrid()
     {
-        $uri = App::DB()->quote($_POST["uri"]);
-
-        $w[] = "user_id=" . App::UserID();
-        $w[] = "uri={$uri}";
+        $w[] = ["user_id=?", $this->app->user->user_id];
+        $w[] = ["uri=?", $_POST["uri"]];
         if (!$ui = UI::first($w)) {
             $ui = new UI();
-            $ui->user_id = App::UserID();
+            $ui->user_id = $this->app->user->user_id;
             $ui->uri = $_POST["uri"];
         }
 
@@ -95,12 +93,12 @@ class UI_save extends App\Page
         }
 
         if ($_POST["dataTable"]) {
-            $w[] = "user_id=" . App::UserID();
+            $w[] = "user_id=" . $this->app->user->user_id;
             $w[] = "uri={$uri}";
             $o = UI::find($w)->first();
             if (!$o) {
                 $o = new UI();
-                $o->user_id = App::UserID();
+                $o->user_id = $this->app->user->user_id;
                 $o->uri = $_POST["uri"];
             }
             $layout = $o->layout();
@@ -125,12 +123,12 @@ class UI_save extends App\Page
             return;
         }
 
-        $w[] = "user_id=" . App::UserID();
+        $w[] = "user_id=" . $this->app->user->user_id;
         $w[] = "uri={$uri}";
         $o = UI::find($w)->first();
         if (!$o) {
             $o = new UI();
-            $o->user_id = App::UserID();
+            $o->user_id = $this->app->user->user_id;
             $o->uri = $_POST["uri"];
         }
         // clear
