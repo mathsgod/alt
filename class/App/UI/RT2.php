@@ -16,6 +16,7 @@ class RT2 extends \P\HTMLElement
     public $_page = null;
     public $buttons = [];
     public $exports = [];
+    public $order = [];
 
     public function __construct($objects, $page)
     {
@@ -28,7 +29,7 @@ class RT2 extends \P\HTMLElement
 
     public function order($data, $dir)
     {
-        $this->order = [$data, $dir];
+        $this->order[] = ["data" => $data, "dir" => $dir];
         return $this;
     }
 
@@ -98,6 +99,7 @@ class RT2 extends \P\HTMLElement
         $this->attributes[":selectable"] = $this->selectable ? "true" : "false";
         $this->attributes[":buttons"] = $this->buttons;
         $this->attributes[":exports"] = $this->exports;
+        $this->attributes[":order"] = $this->order;
         return parent::__toString();
     }
 }

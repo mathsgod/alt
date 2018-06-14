@@ -441,7 +441,7 @@
                     search: [],
                     draw: 1,
                     pageLength: this.pageLength,
-                    order: []
+                    order: this.$attrs.order
                 },
                 page: 1,
                 remoteData: [],
@@ -453,6 +453,12 @@
             this.columns = this.$attrs.columns.map(o => {
                 o.hide = false;
                 o.orderDir = "";
+                this.local.order.forEach(ord => {
+                    if (ord.data == o.data) {
+                        o.orderDir = ord.dir;
+                    }
+                });
+
                 return new Vue({
                     data: o,
                     props: {
@@ -550,7 +556,7 @@
                     },
                     responseType: 'arraybuffer'
                 }).then(function (response) {
-                    console.log(response);
+                    //console.log(response);
                     var headers = response.headers;
                     var blob = new Blob([response.data], {
                         type: headers['content-type']
@@ -675,11 +681,12 @@
 
                 this.$nextTick(function () {
                     var parentWidth = this.$refs.table.parentElement.offsetWidth;
-                    console.log("parentWidth width", parentWidth);
+//                    console.log("parentWidth width", parentWidth);
 
                     var total = 0; //show 
                     var hide_index = -1;
                     var lastIndex = this.columns.length - 1;
+//                    console.log("last "+lastIndex);
                     this.columns.forEach((c, i) => {
                         if (hide_index >= 0) return;
 
@@ -687,17 +694,21 @@
                         var w = c_el.$el.offsetWidth;
                         total += w;
 
-                        if (total + 32 > parentWidth) {
-                            console.log(i);
-                            hide_index = i;
-                            if (hide_index == lastIndex) {
-                                hide_index = 100;
+//                        console.log(total);
+                        if (i == lastIndex) {
+                            if (total > parentWidth) {
+                                hide_index = i;
+                                return;
                             }
-                            return;
+                        } else {
+                            if (total + 32 > parentWidth) {
+                                hide_index = i;
+                                return;
+                            }
                         }
                     });
 
-                    //                    console.log(hide_index);
+//                    console.log(hide_index);
                     if (hide_index >= 0) {
                         this.columns.forEach((c, i) => {
                             if (i >= hide_index) {
