@@ -107,7 +107,7 @@
                         <i v-if="showIndex[index]" class="fa fa-fw fa-chevron-down"></i>
                     </button>
                 </td>
-                <td v-for="column in columns" v-if="column.isDisplay()" v-on:click="onClickCell(column,index)">
+                <td v-for="column in columns" v-if="column.isDisplay()" v-on:click="onClickCell(column,index)" v-bind:style="column.cell(d).style">
                    <template v-if="isEditMode(column,index)" >
                         <template v-if="column.editType=='text'">
                             <input type="text" class="form-control input-sm" v-bind:value="column.getValue(d)" v-on:blur="updateData(index,d,column,$event.target.value)"/>
@@ -482,6 +482,20 @@
                         }
                     },
                     methods: {
+                        cell(d){
+                            var cell = {
+                                type: "text"
+                            };
+
+                            if(this.wrap){
+                                Vue.set(cell, "style", {
+                                    "word-wrap": "break-word",
+                                    "white-space": "pre-wrap"
+                                });
+                            }
+
+                            return cell;
+                        },
                         isDisplay() {
                             return this.isVisible && !this.hide;
                         },

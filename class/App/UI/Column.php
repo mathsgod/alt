@@ -26,6 +26,8 @@ class Column implements JsonSerializable
     public $editType = 'text';
     public $editData;
 
+    public $wrap = false;
+
     public function editable($type = "text", $data)
     {
         $this->editable = true;
@@ -57,6 +59,12 @@ class Column implements JsonSerializable
     {
         $this->raw = true;
         $this->alink = $alink;
+        return $this;
+    }
+
+    public function wrap()
+    {
+        $this->wrap = true;
         return $this;
     }
 
@@ -188,6 +196,7 @@ class Column implements JsonSerializable
         $data["editable"] = $this->editable;
         $data["editType"] = $this->editType;
         $data["editData"] = $this->editData;
+        $data["wrap"] = $this->wrap;
         if ($this->width) $data["width"] = $this->width;
         if ($this->className) $data["className"] = implode(" ", $this->className);
         return $data;
