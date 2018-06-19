@@ -142,6 +142,10 @@ class MasterPage
                             $menu["active"] = 1;
                         }
                     }
+                    if(!sizeof($menu["submenu"])){
+                        continue;
+                    }
+
                     $sidebar_menu[] = $menu;
                 } else {
                     $module = $modules;
