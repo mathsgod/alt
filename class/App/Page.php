@@ -20,7 +20,6 @@ class Page extends \R\Page
     {
         parent::__construct($app);
         $this->alert = $app->alert;
-        $this->_object = $this->object();
     }
 
     public function _log($message, $array)
@@ -177,6 +176,8 @@ class Page extends \R\Page
     {
         $this->request = $request;
         $this->request = $this->request->withAttribute("module", $this->module());
+
+        $this->_object=$this->object();
 
         if ($this->app->logined()) {
             $this->app->user->online();
