@@ -183,7 +183,8 @@ class App extends \R\App
             $class = $route->class;
             $page = new $class($this);
         }
-
+        
+        $this->loader->addPsr4("",$pi["cms_root"]."/pages");
         if ($page) {
             $response = new Response(200);
             try {

@@ -59,7 +59,7 @@ class User_profile extends ALT\Page
 
     public function getUserLogBox()
     {
-        $mt = $this->createT($this->app->user->UserLog(null, ["userlog_id", "desc"], 10));
+        $mt = $this->createT($this->app->user->UserLog(null, "userlog_id desc", 10));
         $mt->add("Login time", "login_dt");
         $mt->add("Logout time", "logout_dt");
         $mt->add("IP address", "ip");
@@ -72,7 +72,7 @@ class User_profile extends ALT\Page
 
     public function getUserActionBox()
     {
-        $mt = $this->createT($this->app->user->EventLog(null, ["eventlog_id", "desc"], 10));
+        $mt = $this->createT($this->app->user->EventLog(null, "eventlog_id desc", 10));
         $mt->add("ID", "eventlog_id");
         $mt->add("Class", "class");
         $mt->add("Object ID", "id");
