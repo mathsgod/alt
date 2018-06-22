@@ -28,6 +28,14 @@ class Column implements JsonSerializable
     public $wrap = false;
     public $noHide = false;
 
+    public $align = null;
+
+    public function align($align)
+    {
+        $this->align = $align;
+        return $this;
+    }
+
     public function noHide()
     {
         $this->noHide = true;
@@ -217,6 +225,9 @@ class Column implements JsonSerializable
         $data["editData"] = $this->editData;
         $data["wrap"] = $this->wrap;
         $data["noHide"] = $this->noHide;
+        if($this->align){
+            $data["cellStyle"]["text-align"]=$this->align;
+        }
         if ($this->width) $data["width"] = $this->width;
         if ($this->className) $data["className"] = implode(" ", $this->className);
         return $data;

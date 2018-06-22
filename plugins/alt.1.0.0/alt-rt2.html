@@ -487,12 +487,16 @@
                             var cell = {
                                 type: "text"
                             };
+                            if(this.cellStyle){
+                                cell.style={...cell.style,...this.cellStyle};
+                            }
+                            
 
                             if (this.wrap) {
-                                Vue.set(cell, "style", {
+                                cell.style={...cell.style,...{
                                     "word-wrap": "break-word",
                                     "white-space": "pre-wrap"
-                                });
+                                }};
                             }
 
                             if (d[this.data] == null) {
