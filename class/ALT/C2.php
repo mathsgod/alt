@@ -648,7 +648,7 @@ class C2 extends \P\HTMLElement
 		$p = new \P\InputCollection;
 		foreach ($this->cell as $cell) {
 
-			$div = p("div")->appendTo($cell);
+			$div = p("input")->appendTo($cell);
 			$div->attr("is", "alt-date");
 			$div->attr("name", $field);
 			$div->attr("data-field", $field);
@@ -666,7 +666,7 @@ class C2 extends \P\HTMLElement
 
 		if ($this->createTemplate) {
 
-			$div = p("div")->attr("is", "alt-date");
+			$div = p("input")->attr("is", "alt-date");
 			$div->attr("name", $field);
 			$div->attr("data-field", $field);
 			$p[] = $div[0];
@@ -688,7 +688,7 @@ class C2 extends \P\HTMLElement
 		$p = new \P\InputCollection;
 		foreach ($this->cell as $cell) {
 
-			$div = p("div")->appendTo($cell);
+			$div = p("input")->appendTo($cell);
 			$div->attr("is", "alt-datetime");
 			$div->attr("name", $field);
 			$div->attr("data-field", $field);
@@ -706,7 +706,7 @@ class C2 extends \P\HTMLElement
 
 		if ($this->createTemplate) {
 
-			$div = p("div")->attr("is", "alt-datetime");
+			$div = p("input")->attr("is", "alt-datetime");
 			$div->attr("icon", "far fa-clock-alt");
 			$div->attr("name", $field);
 			$div->attr("data-field", $field);
