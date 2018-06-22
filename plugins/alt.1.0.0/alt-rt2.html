@@ -730,6 +730,69 @@
 
                 if (!this.responsive) return;
 
+                this.$nextTick(() => {
+                    console.log("--");
+                    var parentWidth = this.$refs.table.parentElement.offsetWidth;
+                    console.log("parentWidth", parentWidth);
+
+
+                    var total = () => {
+                        let total = 0;
+                        this.columns.forEach((c, i) => {
+                            if (c.hide) return;
+                            let c_el = this.$refs.column[i];
+                            total += c_el.$el.offsetWidth;
+                        });
+                        if (this.columns.some((c) => {
+                            return c.hide
+                        })) {
+                            total += 32;
+                        }
+                        return total;
+                    };
+
+                    var hideLastColumn = () => {
+                        let columns = this.columns.filter((c) => {
+                            if (c.noHide) {
+                                return false;
+                            }
+                            return !c.hide
+                        });
+                        columns = columns.reverse();
+                        columns[0].hide = true
+                    };
+
+                    var check = () => {
+                        var total = total();
+                        console.log(total);
+                        if (total > parentWidth) {
+                            hideLastColumn();
+                            this.$nextTick(() => {
+                                check();
+                            });
+                        }
+                    }
+
+                    check();
+
+
+
+
+
+                    /*var check=()=>{
+                        this.$nextTick(()=>{
+                            if(this.$refs.table.offsetWidth > parentWidth){
+                                hideLastColumn();
+                            }
+                            check();
+                        });
+                    };*/
+
+                });
+
+                return;
+
+
                 this.$nextTick(function () {
                     var parentWidth = this.$refs.table.parentElement.offsetWidth;
                     //                    console.log("parentWidth width", parentWidth);

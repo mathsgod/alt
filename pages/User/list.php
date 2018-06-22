@@ -8,7 +8,7 @@ class User_list extends ALT\Page
         // outp(App\User::find());
 
         $rt = $this->createRT2([$this, "ds"]);
-        $rt->selectable = true;
+        //$rt->selectable = true;
         $rt->addView();
         $rt->addEdit();
         $rt->addDel();
@@ -30,7 +30,7 @@ class User_list extends ALT\Page
         $rt->add("Expiry date", "expiry_date")->sort()->searchDate();
         $rt->add("Join date", "join_date")->sort()->searchDate();
         $rt->add("Language", "language")->sort();
-        $rt->add("Skin", "skin")->sort();
+        $rt->add("Skin", "skin")->sort()->noHide();
 
         $rt->add("Online", "isonline");
          //$rt->addButton("test")->attr("onClick","window.self.location='User/1/v'");

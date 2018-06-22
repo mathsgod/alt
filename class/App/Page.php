@@ -118,8 +118,9 @@ class Page extends \R\Page
 
         $id = $this->id();
         if (class_exists($class, true)) {
-            return new $class($id);
+            $this->_object = new $class($id);
         }
+        return $this->_object;
     }
 
     public function assign($name, $value)
@@ -177,7 +178,7 @@ class Page extends \R\Page
         $this->request = $request;
         $this->request = $this->request->withAttribute("module", $this->module());
 
-        $this->_object=$this->object();
+        $this->_object = $this->object();
 
         if ($this->app->logined()) {
             $this->app->user->online();

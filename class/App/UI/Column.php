@@ -25,8 +25,14 @@ class Column implements JsonSerializable
     public $editable = false;
     public $editType = 'text';
     public $editData;
-
     public $wrap = false;
+    public $noHide = false;
+
+    public function noHide()
+    {
+        $this->noHide = true;
+        return $this;
+    }
 
     public function width($width)
     {
@@ -210,6 +216,7 @@ class Column implements JsonSerializable
         $data["editType"] = $this->editType;
         $data["editData"] = $this->editData;
         $data["wrap"] = $this->wrap;
+        $data["noHide"] = $this->noHide;
         if ($this->width) $data["width"] = $this->width;
         if ($this->className) $data["className"] = implode(" ", $this->className);
         return $data;

@@ -74,6 +74,7 @@ class Module extends Model
     {
         $ps = explode("/", $path);
         $ps=array_values(array_filter($ps,"strlen"));
+        $path=implode("/",$ps);
     
         $file = App::_()->loader->findFile($path);
         if ($file) {
