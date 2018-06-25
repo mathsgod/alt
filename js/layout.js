@@ -1,9 +1,27 @@
-new Vue({
+var ALT = new Vue({
 	el: "#alt-navbar",
 	data: {
 		messages: [],
 		notifications: [],
 		tasks: []
+	},
+	methods: {
+		addMessage(label, description, href, time, image) {
+			this.messages.push({
+				label: label,
+				description: description,
+				time: time,
+				image: image
+			});
+		}, addNotification(label, icon, href) {
+			this.messages.push({
+				label: label,
+				icon: icon,
+				href: href
+			});
+		}, addTask(content) {
+			this.tasks.push(content);
+		}
 	}
 });
 
@@ -21,8 +39,8 @@ Vue.component("alt-sidebar-menu", {
 		<alt-sidebar-menu v-if="submenu.submenu" :menu="submenu"></alt-sidebar-menu>
 	</li>
 </ul>`,
-	props:{
-		menu:Object
+	props: {
+		menu: Object
 	}
 
 });
