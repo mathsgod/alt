@@ -346,7 +346,7 @@ window.addEventListener('HTMLImportsLoaded', function (e) {
             zIndex: 999999
         });
 
-        $(".connectedSortable").not("._connectedSortable").on("sortstop", function (event, ui) {
+        $(".connectedSortable").not("._connectedSortable").on("sorttstop", function (event, ui) {
 
             var grid = $(this).closest('.grid');
 
