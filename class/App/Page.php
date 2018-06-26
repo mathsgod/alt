@@ -184,10 +184,11 @@ class Page extends \R\Page
             $this->app->user->online();
         }
 
-        $path = $request->getURI()->getPath();
-        $path = substr($path, 1);
+        $route = $request->getAttribute("route");
+        $path = substr($route->path, 1);
+        $method = $route->method;
 
-        if (!ACL::Allow($path)) {
+        if (!ACL::Allow($path) && !ACL::Allow($path . "/" . $method)) {
             if ($request->isAccept("text/html")) {
                 \App::AccessDeny($path);
                 return;

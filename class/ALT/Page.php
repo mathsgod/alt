@@ -378,6 +378,7 @@ class Page extends \App\Page
             foreach (range(1, $s) as $a) {
                 $col = floor(12 / $s);
                 $section = p("section");
+                $section->attr("is","alt-grid-section");
                 $section->addClass("col-md-$col ui-sortable connectedSortable");
                 $row->append($section);
             }

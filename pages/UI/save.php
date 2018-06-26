@@ -33,7 +33,7 @@ class UI_save extends App\Page
             $ui->uri = $_POST["uri"];
         }
 
-        $ui->layout = $_POST["layout"];
+        $ui->layout = json_encode($_POST["layout"]);
         $ui->save();
     }
 
@@ -61,7 +61,7 @@ class UI_save extends App\Page
 
         if ($_POST["type"] == "grid") {
             $this->saveGrid();
-            return;
+            return ["code" => 200];
         } elseif ($_POST["type"] == "box") {
             $this->saveBox();
             return;

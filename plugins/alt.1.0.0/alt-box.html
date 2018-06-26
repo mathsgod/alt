@@ -66,7 +66,8 @@
         template: document.currentScript.ownerDocument.getElementById("alt-box"),
         data: function () {
             return {
-                loading: false
+                loading: false,
+                isPinned: true
             }
         },
         computed: {
@@ -98,10 +99,14 @@
                 h.collapsible = this.collapsible;
                 h.closeable = this.closeable;
                 h.collapsed = this.collapsed;
-                h.dataUrl=this.dataUrl;
+                h.dataUrl = this.dataUrl;
             });
 
             this.header.forEach(h => {
+                h.$on("pinned", (isPinned) => {
+                    this.isPinned = isPinned;
+                });
+
                 h.$on("collapsed", (collapsed) => {
                     var data = {};
                     data.type = "box";
@@ -146,14 +151,14 @@
             dataUrl: String
         },
         methods: {
-            reload:function(){
+            reload: function () {
                 this.showLoading();
-                this.$http.get(this.dataUrl).then(resp=>{
+                this.$http.get(this.dataUrl).then(resp => {
                     this.hideLoading();
                     console.log(this.body[0]);
                     this.body[0].setContent(resp.body);
                 });
-                
+
             },
             showLoading: function () {
                 this.loading = true;
@@ -165,14 +170,14 @@
 
     Vue.component("alt-box-body", {
         template: document.currentScript.ownerDocument.getElementById("alt-box-body"),
-        data(){
+        data() {
             return {
-                content:null
+                content: null
             }
         },
-        methods:{
-            setContent(content){
-                this.content=content;
+        methods: {
+            setContent(content) {
+                this.content = content;
             }
         }
 
@@ -193,7 +198,7 @@
         },
         data() {
             return {
-                dataUrl:"",
+                dataUrl: "",
                 collapsible: false,
                 collapsed: false,
                 closeable: false,
@@ -207,6 +212,7 @@
             togglePin() {
                 this.pinned = !this.pinned;
                 this.$emit("pinned", this.pinned);
+                this.$parent.$emit("pinned", this.pinned);
             },
             toggleCollapse() {
                 this.collapsed = !this.collapsed;

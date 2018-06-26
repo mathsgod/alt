@@ -8,7 +8,9 @@ class BoxHeader extends \P\Element {
 	private $tools = null;
 
 	public function __construct($route) {
-		parent::__construct("alt-box-header");
+		parent::__construct("div");
+		$this->attributes["is"]="alt-box-header";
+		$this->classList->add("box-header");
 		$this->classList->add("with-border");
 		$this->route = $route;
 	}

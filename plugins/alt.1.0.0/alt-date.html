@@ -49,7 +49,7 @@
     <span class="input-group-addon">
         <i :class="icon"></i>
     </span>
-    <input is="datepicker" v-bind="$props" :value="value" :name="name"/>
+    <input is="datepicker" v-bind="$props" :value="value" :name="name" ref="datepicker"/>
     <i v-if="required" class="fa fa-asterisk form-control-feedback" style="top:10px"></i>
 </div>
 </div>
@@ -87,6 +87,11 @@
                     $(this.$el).addClass("form-group has-feedback");
                 }
             }
+            this.datepicker=this.$refs.datepicker.datepicker;
+        }, methods: {
+            setValue(v) {
+                this.$refs.datepicker.$el.value=v;
+            }
         }
     });
 
@@ -110,11 +115,15 @@
                 type: Boolean,
                 default: true
             }
+        }, data() {
+            return {
+                datepicker: null
+            }
         },
         created() {
         },
         mounted() {
-            $(this.$el).datepicker(this._props);
+            this.datepicker=$(this.$el).datepicker(this._props);
         }
     });
 </script>

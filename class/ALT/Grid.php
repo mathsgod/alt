@@ -8,7 +8,8 @@ class Grid extends \P\Query {
 	private $_location = [];
 	public function __construct() {
 		parent::__construct("div");
-		$this->addClass("grid");
+		$this->attr("is","alt-grid");
+		//$this->addClass("grid");
 		$this->attr("grid-num", self::$NUM);
         self::$NUM++;
 	}

@@ -338,7 +338,7 @@ window.addEventListener('HTMLImportsLoaded', function (e) {
 
 
         //Make the dashboard widgets sortable Using jquery UI
-        $(".connectedSortable").not("._connectedSortable").sortable({
+/*        $(".connectedSortable").not("._connectedSortable").sortable({
             placeholder: "sort-highlight",
             connectWith: ".connectedSortable",
             handle: ".box-header, .nav-tabs",
@@ -368,7 +368,7 @@ window.addEventListener('HTMLImportsLoaded', function (e) {
                 uri: grid.attr("data-uri")
             });
         });
-        $(".connectedSortable").not("._connectedSortable").addClass("_connectedSortable");
+        $(".connectedSortable").not("._connectedSortable").addClass("_connectedSortable");*/
 
 
 
@@ -583,7 +583,7 @@ function closeRoxyDialog() {
 (function ($) {
     PNotify.prototype.options.styling = "fontawesome";
 
-    $(".connectedSortable").css("min-height", "0px");
+/*    $(".connectedSortable").css("min-height", "0px");
 
     $("[data-widget='pin']").on("click", function (e) {
         e.preventDefault();
@@ -620,6 +620,7 @@ function closeRoxyDialog() {
         element.sortable("disable");
         element.find(".ui-sortable-handle").css("cursor", "");
     });
+    */
 })(jQuery);
 
 function __add_favorite() {

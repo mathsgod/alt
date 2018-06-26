@@ -1,6 +1,6 @@
 <?php
 
-class access_deny extends ALT\Page
+class _access_deny extends ALT\Page
 {
     public function get()
     {
