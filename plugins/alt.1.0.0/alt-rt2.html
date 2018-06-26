@@ -3,10 +3,20 @@
         <input v-if="searchable && searchType=='text'" type="text" class="form-control input-sm search" v-model="search" @keyup.enter="doSearch()" />
         <input v-if="searchable && searchType=='equal'" type="text" class="form-control input-sm search" v-model="search" @keyup.enter="doSearch()" />
         <input v-if="searchable && searchType=='date'" class="form-control input-sm search" value="" ref="search"/>
-        <select v-if="searchable && searchType=='select'" class="form-control search" ref="search" v-model="search" v-on:change="doSearch()">
+
+        <select v-if="searchable && searchType=='select' && !searchOptGroup" class="form-control search" ref="search" v-model="search" v-on:change="doSearch()">
             <option></option>
             <option v-for="o in searchOption" v-bind:value="o.value" v-text="o.label"></option>
         </select>
+
+        <select v-if="searchable && searchType=='select' && searchOptGroup" class="form-control search" ref="search" v-model="search" v-on:change="doSearch()">
+            <option></option>
+            <optgroup v-for="(label,group) in searchOptGroup" v-bind:label="label">
+                <option v-for="o in searchOption" v-bind:value="o.value" v-text="o.label" v-if="o.group==group"></option>
+            </optgroup>
+
+        </select>
+
         <select v-if="searchable && searchType=='multiselect'" multiple class="form-control search" ref="search">
             <option v-for="o in searchOption" v-bind:value="o.value" v-text="o.label"></option>
         </select>
@@ -21,6 +31,7 @@
             searchOption: Array,
             searchType: String,
             searchable: Boolean,
+            searchOptGroup: Array
         }, data() {
             return {
                 search: ""
@@ -487,16 +498,18 @@
                             var cell = {
                                 type: "text"
                             };
-                            if(this.cellStyle){
-                                cell.style={...cell.style,...this.cellStyle};
+                            if (this.cellStyle) {
+                                cell.style = { ...cell.style, ...this.cellStyle };
                             }
-                            
+
 
                             if (this.wrap) {
-                                cell.style={...cell.style,...{
-                                    "word-wrap": "break-word",
-                                    "white-space": "pre-wrap"
-                                }};
+                                cell.style = {
+                                    ...cell.style, ...{
+                                        "word-wrap": "break-word",
+                                        "white-space": "pre-wrap"
+                                    }
+                                };
                             }
 
                             if (d[this.data] == null) {

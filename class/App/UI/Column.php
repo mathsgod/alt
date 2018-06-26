@@ -30,6 +30,9 @@ class Column implements JsonSerializable
 
     public $align = null;
 
+    public $searchOptGroups = null;
+    public $searchOptValue = null;
+
     public function align($align)
     {
         $this->align = $align;
@@ -158,6 +161,13 @@ class Column implements JsonSerializable
         return $this;
     }
 
+    public function searchOptGroup($groups, $value)
+    {
+        $this->searchOptGroups = $groups;
+        $this->searchOptValue = $value;
+        return $this;
+    }
+
     public function _searchOption()
     {
         $data = [];
@@ -166,12 +176,18 @@ class Column implements JsonSerializable
         if (!$value_member) {
             $value_member = $this->data;
         }
+
         foreach ($this->searchOptions[0] as $k => $v) {
             if (is_object($v)) {
-                $data[] = [
+                $d = [
                     "label" => $display_member ? \My\Func::_($display_member)->call($v) : (string)$v,
                     "value" => \My\Func::_($value_member)->call($v)
                 ];
+                if ($this->searchOptValue) {
+                    $d["group"] = \My\Func::_($this->searchOptValue)->call($v);
+                }
+
+                $data[] = $d;
             } else {
                 $data[] = ['label' => $v, 'value' => $k];
             }
@@ -220,13 +236,14 @@ class Column implements JsonSerializable
         $data["searchable"] = $this->searchable;
         $data["searchType"] = $this->searchType;
         $data["searchOption"] = $this->_searchOption();
+        $data["searchOptGroup"] = $this->searchOptGroups;
         $data["editable"] = $this->editable;
         $data["editType"] = $this->editType;
         $data["editData"] = $this->editData;
         $data["wrap"] = $this->wrap;
         $data["noHide"] = $this->noHide;
-        if($this->align){
-            $data["cellStyle"]["text-align"]=$this->align;
+        if ($this->align) {
+            $data["cellStyle"]["text-align"] = $this->align;
         }
         if ($this->width) $data["width"] = $this->width;
         if ($this->className) $data["className"] = implode(" ", $this->className);
