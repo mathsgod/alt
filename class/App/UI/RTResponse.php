@@ -201,7 +201,7 @@ class RTResponse implements JsonSerializable
                     continue;
                 }
 
-                if ($c["searchType"] == "multiselect") {
+                if ($c["searchMethod"] == "multiple") {
                     $field = $c["data"];
                     $s = [];
                     foreach ($value as $k) {
@@ -211,15 +211,15 @@ class RTResponse implements JsonSerializable
                     $w[] = ["$field in (" . implode(",", $s) . ")", $value];
                     $source->where($w);
                     continue;
-                } elseif ($c["searchType"] == "text") {
+                } elseif ($c["searchMethod"] == "like") {
                     $w = [];
                     $w[] = [$c["data"] . " like ?", "%$value%"];
                     $source->where($w);
-                } elseif ($c["searchType"] == "select" || $c["searchType"] == "select2" || $c["searchType"] == "equal") {
+                } elseif ($c["searchMethod"] == "equal") {
                     $w = [];
                     $w[] = [$c["data"] . " = ?", $value];
                     $source->where($w);
-                } elseif ($c["searchType"] == "date") {
+                } elseif ($c["searchMethod"] == "date") {
                     $field = $c["data"];
                     $w = [];
                     $w[] = ["date(`$field`) between ? and ?", [$value["from"], $value["to"]]];

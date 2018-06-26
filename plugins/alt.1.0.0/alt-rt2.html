@@ -1,3 +1,16 @@
+<style>
+    table.rt>thead button.multiselect {
+        height: 25px;
+        padding: 0px;
+        background-color: white;
+    }
+
+</style>
+<script>
+    var importDoc = document.currentScript.ownerDocument;
+    var style = importDoc.querySelector('style');
+    document.head.appendChild(style);
+</script>
 <script type="x-template" id="alt-column-search">
     <td>
         <input v-if="searchable && searchType=='text'" type="text" class="form-control input-sm search" v-model="search" @keyup.enter="doSearch()" />
@@ -17,9 +30,17 @@
 
         </select>
 
-        <select v-if="searchable && searchType=='multiselect'" multiple class="form-control search" ref="search">
-            <option v-for="o in searchOption" v-bind:value="o.value" v-text="o.label"></option>
+        <select v-if="searchable && searchType=='multiselect'" v-bind:multiple="searchMultiple" class="form-control search" ref="search">
+            <option v-if="!searchMultiple" value="">None selected</option>
+            
+            <option v-if="!searchOptGroup" v-for="o in searchOption" v-bind:value="o.value" v-text="o.label"></option>
+            
+            <optgroup v-if="searchOptGroup" v-for="(label,group) in searchOptGroup" v-bind:label="label">
+                <option v-for="o in searchOption" v-bind:value="o.value" v-text="o.label" v-if="o.group==group"></option>
+            </optgroup>
+    
         </select>
+
     </td>
 </script>
 
@@ -31,7 +52,8 @@
             searchOption: Array,
             searchType: String,
             searchable: Boolean,
-            searchOptGroup: Array
+            searchOptGroup: Array,
+            searchMultiple: Boolean
         }, data() {
             return {
                 search: ""
@@ -42,7 +64,10 @@
             }
             if (this.searchType == "multiselect") {
                 var search = $(this.$refs.search);
-                search.multiselect();
+                search.multiselect({
+                    enableFiltering: true,
+                    buttonWidth:"100%"
+                });
 
                 search.on("change", () => {
                     this.$emit("search", this.data, search.val());
@@ -603,7 +628,7 @@
                                 data: o.data,
                                 search: {
                                     value: this.local.search[o.data]
-                                }, searchType: o.searchType
+                                }, searchMethod: o.searchMethod
                             };
                         }), order: this.local.order,
                         search: this.searchData,
@@ -715,7 +740,7 @@
                                 data: o.data,
                                 search: {
                                     value: this.local.search[o.data]
-                                }, searchType: o.searchType
+                                }, searchMethod: o.searchMethod
                             };
                         }), order: this.local.order,
                         page: this.page,

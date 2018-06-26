@@ -32,6 +32,7 @@ class Column implements JsonSerializable
 
     public $searchOptGroups = null;
     public $searchOptValue = null;
+    public $searchMethod;
 
     public function align($align)
     {
@@ -95,12 +96,14 @@ class Column implements JsonSerializable
     {
         $this->orderable = true;
         $this->searchable = true;
+        $this->searchMethod = "like";
         return $this;
     }
 
     public function search()
     {
         $this->searchable = true;
+        $this->searchMethod = "like";
         return $this;
     }
 
@@ -127,6 +130,7 @@ class Column implements JsonSerializable
         $this->searchable = true;
         $this->searchOptions = array($objects, $display_member, $value_member);
         $this->searchType = 'select2';
+        $this->searchMethod = "equal";
         return $this;
     }
 
@@ -134,6 +138,7 @@ class Column implements JsonSerializable
     {
         $this->searchable = true;
         $this->searchType = 'date';
+        $this->searchMethod = "date";
         return $this;
     }
 
@@ -141,6 +146,16 @@ class Column implements JsonSerializable
     {
         $this->searchable = true;
         $this->searchType = 'equal';
+        $this->searchMethod = "equal";
+        return $this;
+    }
+
+    public function searchSingle($objects, $display_member, $value_member)
+    {
+        $this->searchable = true;
+        $this->searchOptions = array($objects, $display_member, $value_member);
+        $this->searchType = 'multiselect';
+        $this->searchMethod = "equal";
         return $this;
     }
 
@@ -150,6 +165,7 @@ class Column implements JsonSerializable
         $this->searchOptions = array($objects, $display_member, $value_member);
         $this->searchType = 'multiselect';
         $this->searchMultiple = true;
+        $this->searchMethod = "multiple";
         return $this;
     }
 
@@ -158,6 +174,7 @@ class Column implements JsonSerializable
         $this->searchable = true;
         $this->searchOptions = array($objects, $display_member, $value_member);
         $this->searchType = 'select';
+        $this->searchMethod = "equal";
         return $this;
     }
 
@@ -237,6 +254,8 @@ class Column implements JsonSerializable
         $data["searchType"] = $this->searchType;
         $data["searchOption"] = $this->_searchOption();
         $data["searchOptGroup"] = $this->searchOptGroups;
+        $data["searchMultiple"] = $this->searchMultiple;
+        $data["searchMethod"] = $this->searchMethod;
         $data["editable"] = $this->editable;
         $data["editType"] = $this->editType;
         $data["editData"] = $this->editData;
