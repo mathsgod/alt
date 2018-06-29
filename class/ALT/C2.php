@@ -167,7 +167,9 @@ class C2 extends \P\HTMLElement
 	{
 		$p = new \P\InputCollection;
 		foreach ($this->cell as $cell) {
-			$input = p("bs-input")->appendTo($cell);
+			$input = p("input")->appendTo($cell);
+			$input->attr("is", "bs-input");
+			$input->addClass("form-control");
 			$input->attr("type", "password");
 			$input->attr("name", $field);
 			$input->attr("data-field", $field);
@@ -647,7 +649,7 @@ class C2 extends \P\HTMLElement
 	{
 		$p = new \P\InputCollection;
 		foreach ($this->cell as $cell) {
-			try{
+			try {
 				$div = p("input")->appendTo($cell);
 				$div->attr("is", "alt-date");
 				$div->attr("name", $field);
@@ -655,13 +657,13 @@ class C2 extends \P\HTMLElement
 				if ($object = p($cell)->data("object")) {
 					$div->data("object", $object);
 					$div->attr("value", is_object($object) ? $object->$field : $object[$field]);
-	
+
 					if ($this->callback) {
 						call_user_func($this->callback, $object, $div[0]);
 					}
 					$p[] = $div[0];
 				}
-			}catch(Exception $e){
+			} catch (Exception $e) {
 				$cell->append("<p class='form-control-static'>" . $e->getMessage() . "</p>");
 			}
 

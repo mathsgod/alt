@@ -7,6 +7,37 @@ use \Box\Spout\Common\Type;
 use JsonSerializable;
 use Exception;
 
+class Row
+{
+    public $style = null;
+    public $class = null;
+
+    public function style($callback)
+    {
+        $this->style = $callback;
+        return $this;
+    }
+
+    public function class($callback)
+    {
+        $this->class = $callback;
+        return $this;
+    }
+
+    public function getData($obj)
+    {
+        $r = [];
+        if ($this->style) {
+            $r["style"] = call_user_func($this->style, $obj);
+        }
+        if ($this->class) {
+            $r["class"] = call_user_func($this->class, $obj);
+        }
+        return $r;
+
+    }
+}
+
 class RTResponse implements JsonSerializable
 {
     public $fields = [];
@@ -16,6 +47,7 @@ class RTResponse implements JsonSerializable
     public $page = 1;
     public $length;
     public $key;
+    public $row;
 
     public function __construct()
     {
@@ -25,9 +57,8 @@ class RTResponse implements JsonSerializable
         $this->page = $_GET["page"];
         $this->length = $_GET["length"];
         $this->search = $_GET["search"];
+        $this->row = new Row();
     }
-
-
 
     public function key($key)
     {
@@ -100,9 +131,6 @@ class RTResponse implements JsonSerializable
                 return;
             }
             return $obj->uri("del");
-            $a = html("a")->class("btn btn-xs btn-danger confirm")->href($obj->uri("del"));
-            $a->i->class("fa fa-times fa-fw");
-            return $a;
         };
         $this->_columns["__del__"] = $c;
         return $c;
@@ -132,16 +160,19 @@ class RTResponse implements JsonSerializable
         $data = [];
         foreach ($source as $obj) {
             $d = [];
+
+            $d["__row__"] = $this->row->getData($obj);
+
             foreach ($this->request["columns"] as $k => $c) {
                 try {
 
                     if (array_key_exists($c["data"], $this->_columns)) {
                         $col = $this->_columns[$c["data"]];
 
-                        if($col->type=="delete"){
-                            if($content=(string)$col->getData($obj, $k)){
+                        if ($col->type == "delete") {
+                            if ($content = (string)$col->getData($obj, $k)) {
                                 $d[$c["data"]] = ["type" => $col->type, "content" => (string)$content];
-                            }else{
+                            } else {
                                 $d[$c["data"]] = null;
                             }
                         } elseif ($col->type != "text") {

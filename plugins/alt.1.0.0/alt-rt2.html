@@ -133,7 +133,7 @@
 <script type="x-template" id="rt2-tbody">
     <tbody>
         <template v-for="(d,index) in data">
-            <tr v-on:click="onClickRow(d)" v-bind:class="{selected:isSelected(d)}">
+            <tr v-on:click="onClickRow(d)" v-bind:class="getRowClass(d)">
                 <td v-if="hasHideColumn">
                     <button class="btn btn-default btn-xs" 
                         v-on:click="toggleRowChild(index)" 
@@ -211,6 +211,17 @@
                 }).length + 1;
             }
         }, methods: {
+            getRowClass(d){
+                var c=[];
+                if(this.isSelected(d)){
+                    c.push("selected");
+                }
+                if(d.__row__){
+                    c=c.concat(d.__row__.class);
+                }
+
+                return c;
+            },
             deleteRow(uri) {
                 if (confirm("Are your sure?")) {
                     this.$http.get(uri).then(resp => {
