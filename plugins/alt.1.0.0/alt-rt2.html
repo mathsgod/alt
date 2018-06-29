@@ -121,7 +121,6 @@
             }
         }, methods: {
             doSearch() {
-                console.log('test');
                 this.$emit("search", this.data, this.search);
             }
         }
@@ -762,6 +761,7 @@
                     }
                 })
             }, search(name, value) {
+                this.page=1;
                 this.local.search[name] = value;
                 this.draw();
                 return this;
