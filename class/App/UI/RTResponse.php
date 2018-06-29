@@ -138,7 +138,13 @@ class RTResponse implements JsonSerializable
                     if (array_key_exists($c["data"], $this->_columns)) {
                         $col = $this->_columns[$c["data"]];
 
-                        if ($col->type != "text") {
+                        if($col->type=="delete"){
+                            if($content=(string)$col->getData($obj, $k)){
+                                $d[$c["data"]] = ["type" => $col->type, "content" => (string)$content];
+                            }else{
+                                $d[$c["data"]] = null;
+                            }
+                        } elseif ($col->type != "text") {
                             $d[$c["data"]] = ["type" => $col->type, "content" => (string)$col->getData($obj, $k)];
                         } elseif ($col->raw) {
                             $d[$c["data"]] = ["type" => "raw", "content" => (string)$col->getData($obj, $k)];

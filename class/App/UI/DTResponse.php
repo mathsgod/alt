@@ -89,9 +89,6 @@ class DTResponse implements JsonSerializable
             if (!$obj->canDelete()) {
                 return;
             }
-            $a = html("a")->class("btn btn-xs btn-danger confirm")->href($obj->uri("del"));
-            $a->i->class("fa fa-times fa-fw");
-            return $a;
         };
         $this->_columns["__del__"] = $c;
         return $c;
