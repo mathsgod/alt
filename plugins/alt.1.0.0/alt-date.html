@@ -45,13 +45,13 @@
     Vue.component("alt-date", {
         template: `
 <div>
-<div class="input-group">
-    <span class="input-group-addon">
-        <i :class="icon"></i>
-    </span>
-    <input is="datepicker" v-bind="$props" :value="value" :name="name" ref="datepicker"/>
-    <i v-if="required" class="fa fa-asterisk form-control-feedback" style="top:10px"></i>
-</div>
+    <div class="input-group">
+        <span class="input-group-addon">
+            <i :class="icon"></i>
+        </span>
+        <input is="datepicker" ref="datepicker" class="form-control" v-bind="$props"/>
+        <i v-if="required" class="fa fa-asterisk form-control-feedback" style="top:10px"></i>
+    </div>
 </div>
 `,
         props: {
@@ -62,7 +62,7 @@
             name: String,
             required: Boolean,
             type: Boolean,
-            value: String,
+            //            value: String,
             format: {
                 type: String,
                 default: "yyyy-mm-dd"
@@ -87,10 +87,17 @@
                     $(this.$el).addClass("form-group has-feedback");
                 }
             }
-            this.datepicker=this.$refs.datepicker.datepicker;
-        }, methods: {
-            setValue(v) {
-                this.$refs.datepicker.$el.value=v;
+            if (this.$attrs.value) {
+                this.value = this.$attrs.value;
+            }
+        },
+        computed: {
+            value: {
+                get() {
+                    return this.$refs.datepicker.value;
+                }, set(newValue) {
+                    this.$refs.datepicker.value = newValue;
+                }
             }
         }
     });
@@ -117,13 +124,28 @@
             }
         }, data() {
             return {
-                datepicker: null
+                datepicker: null,
+                val: null
             }
         },
         created() {
         },
         mounted() {
-            this.datepicker=$(this.$el).datepicker(this._props);
+            this.val = this.$el.value;
+            this.datepicker = $(this.$el).datepicker(this.$props);
+            this.datepicker.on("change", (o) => {
+                this.val = this.$el.value;
+            });
+
+        }, computed: {
+            value: {
+                get() {
+                    return this.val;
+                }, set(newValue) {
+                    this.val = newValue;
+                    this.$el.value = newValue;
+                }
+            }
         }
     });
 </script>
