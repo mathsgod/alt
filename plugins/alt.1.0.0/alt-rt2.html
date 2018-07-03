@@ -452,7 +452,7 @@
             }, order(dir) {
                 if (!this.orderable) return this;
                 this.local.orderDir = dir;
-                this.$emit("order", [this.data, dir]);
+                this.$emit("order", [this.name, dir]);
                 return this;
             }, draw() {
                 this.$emit("draw");
@@ -728,7 +728,7 @@
                 return this.remoteData;
             }, order(o) {
                 this.local.order = [{
-                    data: o[0],
+                    name: o[0],
                     dir: o[1]
                 }];
                 this.columns.forEach(c => {
