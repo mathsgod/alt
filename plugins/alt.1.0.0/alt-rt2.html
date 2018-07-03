@@ -70,7 +70,7 @@
                 });
 
                 search.on("change", () => {
-                    this.$emit("search", this.data, search.val());
+                    this.$emit("search", this.name, search.val());
                 });
 
                 return;
@@ -121,7 +121,7 @@
             }
         }, methods: {
             doSearch() {
-                this.$emit("search", this.data, this.search);
+                this.$emit("search", this.name, this.search);
             }
         }
 
@@ -516,7 +516,7 @@
                 o.hide = false;
                 o.orderDir = "";
                 this.local.order.forEach(ord => {
-                    if (ord.data == o.data) {
+                    if (ord.name == o.name) {
                         o.orderDir = ord.dir;
                     }
                 });

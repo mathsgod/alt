@@ -8,6 +8,7 @@ class User_list extends ALT\Page
         // outp(App\User::find());
 
         $rt = $this->createRT2([$this, "ds"]);
+
         //$rt->selectable = true;
         $rt->addView();
         $rt->addEdit();

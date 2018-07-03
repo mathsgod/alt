@@ -27,9 +27,9 @@ class RT2 extends \P\HTMLElement
         $this->_page = $page;
     }
 
-    public function order($data, $dir)
+    public function order($name, $dir)
     {
-        $this->order[] = ["data" => $data, "dir" => $dir];
+        $this->order[] = ["name" => $name, "dir" => $dir];
         return $this;
     }
 
