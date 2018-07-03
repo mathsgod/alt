@@ -46,7 +46,7 @@ class User_list extends ALT\Page
 
     public function ds($rt, $t)
     {
-        $rt->fields = ["usergroup", "first_name", "last_name", "phone", "email", "expiry_date", "join_date", "language", "skin"];
+        //$rt->fields = ["usergroup", "first_name", "last_name", "phone", "email", "expiry_date", "join_date", "language", "skin"];
         $rt->cellUrl = "User";
         $rt->key("user_id");
         $rt->add("usergroup_id", function ($obj) {
@@ -58,10 +58,6 @@ class User_list extends ALT\Page
         $rt->add("status", "Status()");
 
         $rt->add("username", "username")->alink("v");
-
-        $rt->addView();
-        $rt->addDel();
-        $rt->addEdit();
 
         if ($t >= 0) $w[] = ["status=?", $t];
         $rt->source = App\User::Query()->where($w);

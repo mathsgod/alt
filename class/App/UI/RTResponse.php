@@ -58,6 +58,20 @@ class RTResponse implements JsonSerializable
         $this->length = $_GET["length"];
         $this->search = $_GET["search"];
         $this->row = new Row();
+
+        foreach ($this->request["columns"] as $column) {
+            if ($column["name"] == "__view__") {
+                $this->addView();
+            }
+
+            if ($column["name"] == "__edit__") {
+                $this->addEdit();
+            }
+
+            if ($column["name"] == "__del__") {
+                $this->addDel();
+            }
+        }
     }
 
     public function key($key)
@@ -76,12 +90,11 @@ class RTResponse implements JsonSerializable
     {
         $c = new Column();
         $c->title = "";
-        $c->type = "raw";
+        $c->type = "html";
         $c->data = "__edit__";
         $c->name = "__edit__";
         $c->className[] = "text-center";
         $c->width = "1px";
-        $c->raw = true;
         $c->descriptor[] = function ($obj) {
             if (!$obj->canUpdate()) {
                 return;
@@ -98,12 +111,11 @@ class RTResponse implements JsonSerializable
     {
         $c = new Column();
         $c->title = "";
-        $c->type = "raw";
+        $c->type = "html";
         $c->data = "__view__";
         $c->name = "__view__";
         $c->className[] = "text-center";
         $c->width = "1px";
-        $c->raw = true;
         $c->descriptor[] = function ($obj) {
             if (!$obj->canRead()) {
                 return;
@@ -163,38 +175,41 @@ class RTResponse implements JsonSerializable
 
             $d["__row__"] = $this->row->getData($obj);
 
+            $object_vars = get_object_vars($obj);
+
             foreach ($this->request["columns"] as $k => $c) {
                 try {
-
-                    if (array_key_exists($c["data"], $this->_columns)) {
-                        $col = $this->_columns[$c["data"]];
+                    if (array_key_exists($c["name"], $this->_columns)) {
+                        $col = $this->_columns[$c["name"]];
 
                         if ($col->type == "delete") {
                             if ($content = (string)$col->getData($obj, $k)) {
-                                $d[$c["data"]] = ["type" => $col->type, "content" => (string)$content];
+                                $d[$c["name"]] = ["type" => $col->type, "content" => (string)$content];
                             } else {
-                                $d[$c["data"]] = null;
+                                $d[$c["name"]] = null;
                             }
                         } elseif ($col->type != "text") {
-                            $d[$c["data"]] = ["type" => $col->type, "content" => (string)$col->getData($obj, $k)];
-                        } elseif ($col->raw) {
-                            $d[$c["data"]] = ["type" => "raw", "content" => (string)$col->getData($obj, $k)];
+                            $d[$c["name"]] = ["type" => $col->type, "content" => (string)$col->getData($obj, $k)];
+                        } elseif ($col->type == "html") {
+                            $d[$c["name"]] = ["type" => "html", "content" => (string)$col->getData($obj, $k)];
                         } else {
                             $v = $col->getData($obj, $k);
 
-                            if (is_array($col->getData($obj, $k))) {
-                                $d[$c["data"]] = $v;
+                            if (is_array($v)) {
+                                $d[$c["name"]] = $v;
                             } else {
-                                $d[$c["data"]] = (string)$v;
+                                $d[$c["name"]] = (string)$v;
                             }
 
                         }
-
+                    } elseif (in_array($c["name"], $object_vars)) {
+                        $name = $c["name"];
+                        $d[$c["name"]] = $obj->$name;
                     } else {
-                        $d[$c["data"]] = null;
+                        $d[$c["name"]] = null;
                     }
                 } catch (Exception $e) {
-                    $d[$c["data"]] = $e->getMessage();
+                    $d[$c["name"]] = $e->getMessage();
                 }
             }
 
@@ -222,11 +237,11 @@ class RTResponse implements JsonSerializable
         $source = clone $this->source;
 
         foreach ($this->order as $o) {
-            $source->orderBy($o["data"] . " " . $o["dir"]);
+            $source->orderBy($o["name"] . " " . $o["dir"]);
         }
 
         foreach ($this->request["columns"] as $k => $c) {
-            $column = $this->_columns[$c["data"]];
+            $column = $this->_columns[$c["name"]];
             $value = $c["search"]["value"];
 
             if ($value !== null && $value !== "") {
@@ -239,7 +254,7 @@ class RTResponse implements JsonSerializable
                 }
 
                 if ($c["searchMethod"] == "multiple") {
-                    $field = $c["data"];
+                    $field = $c["name"];
                     $s = [];
                     foreach ($value as $k) {
                         $s[] = "?";
@@ -250,14 +265,14 @@ class RTResponse implements JsonSerializable
                     continue;
                 } elseif ($c["searchMethod"] == "like") {
                     $w = [];
-                    $w[] = [$c["data"] . " like ?", "%$value%"];
+                    $w[] = [$c["name"] . " like ?", "%$value%"];
                     $source->where($w);
                 } elseif ($c["searchMethod"] == "equal") {
                     $w = [];
-                    $w[] = [$c["data"] . " = ?", $value];
+                    $w[] = [$c["name"] . " = ?", $value];
                     $source->where($w);
                 } elseif ($c["searchMethod"] == "date") {
-                    $field = $c["data"];
+                    $field = $c["name"];
                     $w = [];
                     $w[] = ["date(`$field`) between ? and ?", [$value["from"], $value["to"]]];
                     $source->where($w);

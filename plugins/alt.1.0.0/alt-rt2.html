@@ -4,7 +4,6 @@
         padding: 0px;
         background-color: white;
     }
-
 </style>
 <script>
     var importDoc = document.currentScript.ownerDocument;
@@ -48,6 +47,7 @@
     Vue.component("alt-column-search", {
         template: document.currentScript.ownerDocument.getElementById("alt-column-search"),
         props: {
+            name: String,
             data: String,
             searchOption: Array,
             searchType: String,
@@ -66,7 +66,7 @@
                 var search = $(this.$refs.search);
                 search.multiselect({
                     enableFiltering: true,
-                    buttonWidth:"100%"
+                    buttonWidth: "100%"
                 });
 
                 search.on("change", () => {
@@ -211,13 +211,13 @@
                 }).length + 1;
             }
         }, methods: {
-            getRowClass(d){
-                var c=[];
-                if(this.isSelected(d)){
+            getRowClass(d) {
+                var c = [];
+                if (this.isSelected(d)) {
                     c.push("selected");
                 }
-                if(d.__row__){
-                    c=c.concat(d.__row__.class);
+                if (d.__row__) {
+                    c = c.concat(d.__row__.class);
                 }
 
                 return c;
@@ -421,6 +421,7 @@
     Vue.component("alt-column", {
         template: document.currentScript.ownerDocument.getElementById("alt-column"),
         props: {
+            name: String,
             data: String,
             title: String,
             orderable: Boolean,
@@ -547,11 +548,11 @@
                                 };
                             }
 
-                            if (d[this.data] == null) {
+                            if (d[this.name] == null) {
                                 return cell;
                             } else {
-                                for (var i in d[this.data]) {
-                                    cell[i] = d[this.data][i];
+                                for (var i in d[this.name]) {
+                                    cell[i] = d[this.name][i];
                                 }
                             }
 
@@ -562,10 +563,10 @@
                             return this.isVisible && !this.hide;
                         },
                         getContent(d) {
-                            var o = d[this.data];
+                            var o = d[this.name];
                             if (!o) return "";
                             if (typeof o == "object") {
-                                if (o.type == "raw") {
+                                if (o.type == "html") {
                                     return o.content;
                                 } else {
                                     var div = document.createElement('div');
@@ -580,7 +581,7 @@
                             return div.innerHTML;
                         },
                         getValue(d) {
-                            var o = d[this.data];
+                            var o = d[this.name];
                             if (!o) return "";
                             if (typeof o == "object") {
                                 if (o.type == "raw") {
@@ -635,9 +636,9 @@
                         draw: this.local.draw,
                         columns: this.columns.map(o => {
                             return {
-                                data: o.data,
+                                name: o.name,
                                 search: {
-                                    value: this.local.search[o.data]
+                                    value: this.local.search[o.name]
                                 }, searchMethod: o.searchMethod
                             };
                         }), order: this.local.order,
@@ -731,7 +732,7 @@
                     dir: o[1]
                 }];
                 this.columns.forEach(c => {
-                    if (c.data != o[0]) {
+                    if (c.name != o[0]) {
                         c.orderDir = "";
                     } else {
                         c.orderDir = o[1];
@@ -747,9 +748,9 @@
                         draw: this.local.draw,
                         columns: this.columns.map(o => {
                             return {
-                                data: o.data,
+                                name: o.name,
                                 search: {
-                                    value: this.local.search[o.data]
+                                    value: this.local.search[o.name]
                                 }, searchMethod: o.searchMethod
                             };
                         }), order: this.local.order,
@@ -772,7 +773,7 @@
                     }
                 })
             }, search(name, value) {
-                this.page=1;
+                this.page = 1;
                 this.local.search[name] = value;
                 this.draw();
                 return this;

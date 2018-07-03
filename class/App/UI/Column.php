@@ -69,7 +69,7 @@ class Column implements JsonSerializable
     public function format($format)
     {
         $this->format = $format;
-        $this->raw = true;
+        $this->type = "html";
         return $this;
     }
 
@@ -81,7 +81,7 @@ class Column implements JsonSerializable
 
     public function alink($alink = null)
     {
-        $this->raw = true;
+        $this->type = "html";
         $this->alink = $alink;
         return $this;
     }
