@@ -34,6 +34,34 @@ class Column implements JsonSerializable
     public $searchOptValue = null;
     public $searchMethod;
 
+    public $contents = [];
+
+    public function addEdit()
+    {
+        $this->contents[] = function ($obj) {
+            if (!$obj->canUpdate()) {
+                return;
+            }
+            $a = html("a")->class("btn btn-xs btn-warning")->href($obj->uri("ae"));
+            $a->i->class("fa fa-pencil-alt fa-fw");
+            return $a;
+        };
+        return $this;
+    }
+
+    public function addView()
+    {
+        $this->contents[] = function ($obj) {
+            if (!$obj->canRead()) {
+                return;
+            }
+            $a = html("a")->class("btn btn-xs btn-info")->href($obj->uri("v"));
+            $a->i->class("fa fa-search fa-fw");
+            return $a;
+        };
+        return $this;
+    }
+
     public function align($align)
     {
         $this->align = $align;
@@ -214,6 +242,15 @@ class Column implements JsonSerializable
 
     public function getData($object, $k)
     {
+        if ($this->contents) {
+            $contents = array_map(function ($callable) use ($object) {
+                return (string)call_user_func($callable, $object);
+            }, $this->contents);
+
+            return $contents;
+        }
+
+
         $result = $object;
         $last_obj = $object;
         foreach ($this->descriptor as $descriptor) {

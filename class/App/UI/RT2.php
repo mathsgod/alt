@@ -63,7 +63,6 @@ class RT2 extends \P\HTMLElement
         return $c;
     }
 
-
     public function addEdit()
     {
         $c = $this->response->addEdit();

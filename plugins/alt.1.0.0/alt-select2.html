@@ -3,6 +3,17 @@
         template: `<select class="form-control"><slot></slot></select>`,
         mounted() {
             $(this.$el).select2();
+
+            $(this.$el).on("change", () => {
+                this.$emit('change', this);
+            });
+        },
+        methods: {
+            value() {
+                return this.$el.value;
+            }, empty() {
+                $(this.$el).empty();
+            }
         }
     });
 

@@ -564,7 +564,13 @@
                         },
                         getContent(d) {
                             var o = d[this.name];
+                            
                             if (!o) return "";
+
+                            if(Array.isArray(o)){
+                                return o.join(" ");
+                            }
+
                             if (typeof o == "object") {
                                 if (o.type == "html") {
                                     return o.content;
@@ -575,6 +581,7 @@
                                     return div.innerHTML;
                                 }
                             }
+
                             var div = document.createElement('div');
                             var text = document.createTextNode(o);
                             div.appendChild(text);
@@ -583,6 +590,7 @@
                         getValue(d) {
                             var o = d[this.name];
                             if (!o) return "";
+                            
                             if (typeof o == "object") {
                                 if (o.type == "raw") {
                                     return o.content;
