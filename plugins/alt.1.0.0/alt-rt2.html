@@ -409,7 +409,7 @@
 </template>
 
 <script type="x-template" id="alt-column">
-    <th v-on:click="click" v-text="title" class="unselectable"
+    <th v-on:click="click" v-text="title" class="unselectable" v-bind:style="getStyle()"
     v-bind:class="{
         sortable:orderable,
         sorting_desc:(orderDir=='desc'),
@@ -429,7 +429,7 @@
             isVisible: {
                 type: Boolean,
                 default: true
-            }
+            }, width: Number
         }, data() {
             return {
                 hide: false,
@@ -457,6 +457,13 @@
             }, draw() {
                 this.$emit("draw");
                 return this;
+            }, getStyle() {
+                let style = {};
+                if (this.width) {
+                    style["min-width"] = this.width + "px";
+                }
+                return style;
+
             }
         }
     });
@@ -564,10 +571,10 @@
                         },
                         getContent(d) {
                             var o = d[this.name];
-                            
+
                             if (!o) return "";
 
-                            if(Array.isArray(o)){
+                            if (Array.isArray(o)) {
                                 return o.join(" ");
                             }
 
@@ -590,7 +597,7 @@
                         getValue(d) {
                             var o = d[this.name];
                             if (!o) return "";
-                            
+
                             if (typeof o == "object") {
                                 if (o.type == "raw") {
                                     return o.content;

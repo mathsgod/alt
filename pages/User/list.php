@@ -14,7 +14,7 @@ class User_list extends ALT\Page
         $rt->addEdit();
         $rt->addDel();
 
-        $rt->add("Username", "username")->ss();
+        $rt->add("Username", "username")->ss();//->width(400);
         $rt->add("User group", "usergroup_id")->searchOption(App\UserGroup::find());      
         /*function ($obj) {
             return $obj->UserGroup()->implode(",");
