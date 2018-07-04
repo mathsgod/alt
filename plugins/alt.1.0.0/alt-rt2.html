@@ -429,7 +429,7 @@
             isVisible: {
                 type: Boolean,
                 default: true
-            }, width: Number
+            }, width: String
         }, data() {
             return {
                 hide: false,
@@ -460,7 +460,7 @@
             }, getStyle() {
                 let style = {};
                 if (this.width) {
-                    style["min-width"] = this.width + "px";
+                    style["min-width"] = this.width;
                 }
                 return style;
 
