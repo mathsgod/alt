@@ -60,14 +60,24 @@ class Navbar extends \P\Query
         return $bdd;
     }
 
+    public function addLayoutReset()
+    {
+        $btn = new Button();
+        $this->_content->append($btn);
+        p($btn)->addClass("navbar-btn btn-primary btn-sm");
+        p($btn)->text("Layout reset");
+        $btn->href("UI/reset_layout?uri=".$this->page->path());
+        $btn->icon("fa fa-fw fa-sync");
+        return $btn;
+    }
+
     public function __toString()
     {
 
         $this->_content->find(".btn-group")->find(".btn")->each(function ($i, $o) {
             $o->classList[] = "btn-sm";
             $o->classList[] = "navbar-btn";
-        }
-        );
+        });
 
         return parent::__toString();
     }

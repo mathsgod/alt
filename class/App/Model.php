@@ -16,7 +16,8 @@ abstract class Model extends \R\Model
         }
     }
 
-    public function _db(){
+    public function _db()
+    {
         return parent::__db();
     }
 
@@ -210,11 +211,19 @@ abstract class Model extends \R\Model
         return parent::__call($function, $args);
     }
 
-    public static function Query()
+    public static function Query($query)
     {
         $q = new Query(get_called_class());
         $q->select();
         $q->from(self::_table()->name);
+
+
+        if (is_array($query)) {
+            foreach ($query as $name => $v) {
+                $q->where("$name=?", $v);
+            }
+        }
+
         return $q;
     }
 
