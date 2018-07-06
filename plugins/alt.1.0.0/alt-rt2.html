@@ -159,6 +159,7 @@
                         </template>
                     </template>
                     <template v-else>
+                        <input type="checkbox" v-if="column.type=='checkbox'" is="icheck" />
                         <input type="checkbox" v-if="column.type=='deletes'"/>
                         <button class="btn btn-xs btn-danger" v-else-if="column.cell(d).type=='delete'" v-on:click="deleteRow(d[column.data].content)"><i class="fa fa-fw fa-times"></i></button>
                         <button class="btn btn-xs btn-default" v-else-if="column.type=='sub-row'" v-on:click="toggleSubRow(index,r)">
@@ -409,12 +410,15 @@
 </template>
 
 <script type="x-template" id="alt-column">
-    <th v-on:click="click" v-text="title" class="unselectable" v-bind:style="getStyle()"
+    <th v-on:click="click" class="unselectable" v-bind:style="getStyle()"
     v-bind:class="{
         sortable:orderable,
         sorting_desc:(orderDir=='desc'),
         sorting_asc:(orderDir=='asc')
-    }"></th>
+    }">
+        <input v-if="type=='checkbox'" type="checkbox" is="icheck" v-on:change="checkboxChange"/>
+        <div v-else v-text="title"></div>
+    </th>
 </script>
 
 <script>
@@ -429,7 +433,8 @@
             isVisible: {
                 type: Boolean,
                 default: true
-            }, width: String
+            }, width: String,
+            type:String
         }, data() {
             return {
                 hide: false,
@@ -438,6 +443,9 @@
                 }
             };
         }, methods: {
+            checkboxChange(e){
+                console.log(e.target.checked);
+            },
             click() {
                 if (!this.orderable) return;
                 if (this.local.orderDir == "desc") {

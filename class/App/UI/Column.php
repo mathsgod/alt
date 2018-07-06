@@ -286,6 +286,7 @@ class Column implements JsonSerializable
         $data["name"] = $this->name;
         $data["title"] = $this->title;
         $data["data"] = $this->data;
+        $data["type"] = $this->type;
         $data["orderable"] = $this->orderable;
         $data["searchable"] = $this->searchable;
         $data["searchType"] = $this->searchType;

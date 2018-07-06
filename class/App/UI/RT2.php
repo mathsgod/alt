@@ -84,6 +84,13 @@ class RT2 extends \P\HTMLElement
         return $c;
     }
 
+    public function addCheckbox($field){
+        $c = new Column();
+        $c->type="checkbox";
+        $this->columns[] = $c;
+        return $c;
+    }
+
     public function __toString()
     {
 

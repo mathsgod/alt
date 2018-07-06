@@ -49,6 +49,8 @@ class RTResponse implements JsonSerializable
     public $key;
     public $row;
 
+    public $columns = [];
+
     public function __construct()
     {
         $this->draw = $_GET["draw"];
@@ -166,6 +168,7 @@ class RTResponse implements JsonSerializable
         }
 
         $source = $this->filteredSource();
+
         if ($this->page) {
             $source->limit([$this->page, $this->length]);
         }
@@ -202,9 +205,8 @@ class RTResponse implements JsonSerializable
                             }
 
                         }
-                    } elseif (in_array($c["name"], $object_vars)) {
-                        $name = $c["name"];
-                        $d[$c["name"]] = $obj->$name;
+                    } elseif (array_key_exists($c["name"], $object_vars)) {
+                        $d[$c["name"]] = $object_vars[$c["name"]];
                     } else {
                         $d[$c["name"]] = null;
                     }
@@ -221,15 +223,21 @@ class RTResponse implements JsonSerializable
             $data[] = $d;
         }
 
-
-
-
         return $data;
     }
 
     public function recordsTotal()
     {
         return $this->source->count();
+    }
+
+    public function search()
+    {
+        $search = [];
+        foreach ($this->request["columns"] as $k => $c) {
+            $search[$c["name"]] = $c["search"]["value"];
+        }
+        return $search;
     }
 
     public function filteredSource()
@@ -291,6 +299,23 @@ class RTResponse implements JsonSerializable
 
     public function jsonSerialize()
     {
+        //parse columns
+        foreach ($this->columns as $name => $c) {
+            if (is_string($c)) {
+                $this->add($name, $c);
+            } elseif (is_array($c)) {
+
+                $col=$this->add($name,$c["content"]);
+                if($c["format"]){
+                   $col->format($c["format"]);
+                }
+                if($c["alink"]){
+                    $col->alink($c["alink"]);
+                }
+            }
+        }
+
+
         if ($_GET["type"]) {
             $this->exportFile($_GET["type"]);
             exit();

@@ -18,9 +18,18 @@
 
             $(this.$el).iCheck(this._props);
 
-            $(this.$el).on('ifClicked', function () {
+            $(this.$el).on('ifClicked', (event) => {
                 $(this.$el).trigger("click");
+                this.$emit("click", event);
+            }).on("ifChanged", (event) => {
+                this.$emit("change", event);
+            }).on("ifChecked", (event) => {
+                this.$emit("checked", event);
+            }).on("ifUnchecked", (event) => {
+                this.$emit("unchecked", event);
             });
+
+
 
         }
     });
