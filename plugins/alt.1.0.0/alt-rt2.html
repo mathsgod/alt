@@ -580,7 +580,7 @@
                         getContent(d) {
                             var o = d[this.name];
 
-                            if (!o) return "";
+                            if(o===null)return "";
 
                             if (Array.isArray(o)) {
                                 return o.join(" ");

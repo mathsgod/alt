@@ -22,7 +22,7 @@ class BoxHeader extends \P\Element {
 
 	public function setTitle($title) {
 		if($title){
-			$this->attributes["title"]=$title;
+			p($this)->html($title);
 		}
 		return $this;
 	}

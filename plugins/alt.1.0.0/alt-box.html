@@ -1,8 +1,7 @@
 <template id="alt-box-header">
     <div class="box-header">
         <h3 class="box-title">
-            <i v-if="icon" :class="icon"></i> {{title}}
-            <slot></slot>
+            <i v-if="icon" :class="icon"></i> <slot></slot>
         </h3>
         <div class="box-tools pull-right">
             <slot name="tools"></slot>
@@ -190,7 +189,6 @@
     Vue.component("alt-box-header", {
         template: document.currentScript.ownerDocument.getElementById("alt-box-header"),
         props: {
-            title: String,
             pinable: Boolean,
             acl: Boolean,
             aclGroup: Array,

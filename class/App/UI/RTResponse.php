@@ -245,7 +245,13 @@ class RTResponse implements JsonSerializable
         $source = clone $this->source;
 
         foreach ($this->order as $o) {
-            $source->orderBy($o["name"] . " " . $o["dir"]);
+            $column = $this->_columns[$o["name"]];
+            if($column->sortCallback){
+                $source->orderBy(call_user_func($column->sortCallback) . " " . $o["dir"]);
+            }else{
+                $source->orderBy($o["name"] . " " . $o["dir"]);
+            }
+           
         }
 
         foreach ($this->request["columns"] as $k => $c) {
