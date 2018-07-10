@@ -2,16 +2,13 @@
     Vue.component("bs-form-group", {
         template: `
 <div class="form-group">
-    <label class="col-sm-2 control-label" v-text="label"></label>
-    <div class="col-sm-10">
-        <slot></slot>
-    </div>
+    <slot></slot>
 </div>        
 `,
         props: {
-            label: String
+
         }, mounted() {
-           
+
 
         },
         methods: {

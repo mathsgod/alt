@@ -13,6 +13,7 @@ class E extends \P\HTMLDivElement
     {
         parent::__construct();
         $this->attributes["is"]="alt-e";
+        $this->classList[]="form-horizontal";
         $this->object = $object;
         $this->content = p("div")->addClass("col-md-12")->appendTo($this);
         $this->contents[] = $this->content;
@@ -74,19 +75,19 @@ class E extends \P\HTMLDivElement
 
     public function add($label, $getter)
     {
-        $form_group = new C2("div");
-        $form_group->setAttribute("is","bs-form-group");
-        $form_group->classList->add('form-group');
-        $form_group->setAttribute("label", $label);
+        $form_group=new \App\UI\FormGroup();
+        p($form_group)->append("<label class='col-sm-2 control-label'>$label</label>");
+        
+        $c2 = new C2("div");
+        //$form_group->setAttribute("is","bs-form-group");
+        $c2->classList->add('col-sm-10');
 
-        $this->content->append($form_group);
-        $this->content->append("\n");
 
         $cell = p("div");
-        $cell->appendTo($form_group);
+        $cell->appendTo($c2);
         $cell->data("object", $this->object);
 
-        $form_group->cell[] = $cell[0];
+        $c2->cell[] = $cell[0];
 
         if ($getter) {
             $static = p("p");
@@ -105,13 +106,19 @@ class E extends \P\HTMLDivElement
             $static->appendTo($cell);
         }
 
-        $form_group->callback = function ($object, $node) {
+        $c2->callback = function ($object, $node) {
             if ($node->tagName == "a") {
                 p($node)->wrap(p("p")->addClass("form-control-static"));
             }
         };
 
+        $form_group->childNodes[]=$c2;
 
-        return $form_group;
+        $this->content->append($form_group);
+        $this->content->append("\n");
+
+        
+
+        return $c2;
     }
 }
