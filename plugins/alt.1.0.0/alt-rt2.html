@@ -159,6 +159,8 @@
                         </template>
                     </template>
                     <template v-else>
+                        <div v-if="column.cell(d).type=='html'" v-html="column.getContent(d)"></div>
+                        <div v-if="column.cell(d).type=='text'" v-text="column.getContent(d)"></div>
                         <input type="checkbox" v-if="column.type=='checkbox'" is="icheck" />
                         <input type="checkbox" v-if="column.type=='deletes'"/>
                         <button class="btn btn-xs btn-danger" v-else-if="column.cell(d).type=='delete'" v-on:click="deleteRow(d[column.data].content)"><i class="fa fa-fw fa-times"></i></button>
@@ -167,8 +169,6 @@
                             <i v-if="!subRow[index]" class="fa fa-fw fa-plus"></i>
                         </button>
                         <a v-else-if="column.type=='link'" v-bind:href="column.href" v-html="column.content"></a>
-                        <div v-else v-html="column.getContent(d)" v-bind:style="column.style">
-                        </div>
                     </template>
                 </td>
             </tr>
@@ -177,7 +177,8 @@
                     <ul>
                         <li v-for="column in columns" v-if="column.hide">
                             <b v-html="column.title"></b>&nbsp;&nbsp;
-                            <span v-html="column.getValue(d)" />
+                            <span v-if="column.cell(d).type=='html'" v-html="column.getContent(d)"></span>
+                            <span v-if="column.cell(d).type=='text'" v-text="column.getContent(d)"></span>
                         </li>
                     </ul>
                 </td>
@@ -587,20 +588,9 @@
                             }
 
                             if (typeof o == "object") {
-                                if (o.type == "html") {
-                                    return o.content;
-                                } else {
-                                    var div = document.createElement('div');
-                                    var text = document.createTextNode(o.content);
-                                    div.appendChild(text);
-                                    return div.innerHTML;
-                                }
+                                return o.content;
                             }
 
-                            var div = document.createElement('div');
-                            var text = document.createTextNode(o);
-                            div.appendChild(text);
-                            return div.innerHTML;
                         },
                         getValue(d) {
                             var o = d[this.name];
@@ -838,17 +828,25 @@
                             return !c.hide
                         });
                         columns = columns.reverse();
-                        columns[0].hide = true
+                        if(columns.length>0){
+                            columns[0].hide = true; //hide last column
+                            return true;
+                        }else{
+                            return false;//nothing can hide
+                        }
                     };
 
                     var check = () => {
                         let t = total();
                         //console.log(t);
                         if (t > parentWidth) {
-                            hideLastColumn();
-                            this.$nextTick(() => {
-                                check();
-                            });
+                            var r=hideLastColumn();
+
+                            if(r){
+                                this.$nextTick(() => {
+                                    check();
+                                });
+                            }
                         }
                     }
 

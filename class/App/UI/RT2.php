@@ -66,6 +66,7 @@ class RT2 extends \P\HTMLElement
     public function addEdit()
     {
         $c = $this->response->addEdit();
+        $c->noHide();
         $this->columns[] = $c;
         return $c;
     }
@@ -73,6 +74,7 @@ class RT2 extends \P\HTMLElement
     public function addView()
     {
         $c = $this->response->addView();
+        $c->noHide();
         $this->columns[] = $c;
         return $c;
     }
@@ -80,6 +82,7 @@ class RT2 extends \P\HTMLElement
     public function addDel()
     {
         $c = $this->response->addDel();
+        $c->noHide();
         $this->columns[] = $c;
         return $c;
     }
