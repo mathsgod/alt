@@ -564,8 +564,12 @@
                                 };
                             }
 
+                            
+                            
                             if (d[this.name] == null) {
                                 return cell;
+                            }else if(typeof d[this.name]=="string"){
+                                cell.type="text";
                             } else {
                                 for (var i in d[this.name]) {
                                     cell[i] = d[this.name][i];
@@ -590,6 +594,10 @@
                             if (typeof o == "object") {
                                 return o.content;
                             }
+
+                            return o;
+
+                            
 
                         },
                         getValue(d) {
