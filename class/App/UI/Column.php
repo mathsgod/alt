@@ -36,6 +36,8 @@ class Column implements JsonSerializable
 
     public $contents = [];
 
+    public $order;
+
     public function addEdit()
     {
         $this->contents[] = function ($obj) {
@@ -135,13 +137,14 @@ class Column implements JsonSerializable
         return $this;
     }
 
-    public function sort()
+    public function sort($index)
     {
-        return $this->order();
+        return $this->order($index);
     }
 
-    public function order()
+    public function order($order)
     {
+        if ($order) $this->order = $order;
         $this->orderable = true;
         return $this;
     }

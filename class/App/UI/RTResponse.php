@@ -246,7 +246,9 @@ class RTResponse implements JsonSerializable
 
         foreach ($this->order as $o) {
             $column = $this->_columns[$o["name"]];
-            if($column->sortCallback){
+            if($column->order){
+                $source->orderBy($column->order . " " . $o["dir"]);
+            }elseif($column->sortCallback){
                 $source->orderBy(call_user_func($column->sortCallback) . " " . $o["dir"]);
             }else{
                 $source->orderBy($o["name"] . " " . $o["dir"]);
