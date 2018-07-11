@@ -159,8 +159,8 @@
                         </template>
                     </template>
                     <template v-else>
-                        <div v-if="column.cell(d).type=='html'" v-html="column.getContent(d)"></div>
-                        <div v-if="column.cell(d).type=='text'" v-text="column.getContent(d)"></div>
+                        <div v-if="column.cell(d).type=='html'" v-html="column.getContent(d)" v-bind:style="column.cell(d).divStyle"></div>
+                        <div v-if="column.cell(d).type=='text'" v-text="column.getContent(d)" v-bind:style="column.cell(d).divStyle"></div>
                         <input type="checkbox" v-if="column.type=='checkbox'" is="icheck" />
                         <input type="checkbox" v-if="column.type=='deletes'"/>
                         <button class="btn btn-xs btn-danger" v-else-if="column.cell(d).type=='delete'" v-on:click="deleteRow(d[column.data].content)"><i class="fa fa-fw fa-times"></i></button>
@@ -550,20 +550,17 @@
                             var cell = {
                                 type: "text"
                             };
+
                             if (this.cellStyle) {
                                 cell.style = { ...cell.style, ...this.cellStyle };
                             }
 
-
                             if (this.wrap) {
-                                cell.style = {
-                                    ...cell.style, ...{
-                                        "word-wrap": "break-word",
-                                        "white-space": "pre-wrap"
-                                    }
+                                cell.divStyle = {
+                                    "word-wrap": "break-word",
+                                    "white-space": "pre-wrap"
                                 };
                             }
-
                             
                             
                             if (d[this.name] == null) {
