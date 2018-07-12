@@ -1,85 +1,95 @@
 <?php
 
 namespace ALT;
+
 use \My\Func;
-class V extends Box {
+
+class V extends \App\UI\Box
+{
 	public $columns = [];
 	public $tableClass = [];
 	public $column_ratio = [2, 10];
 	public $tables = [];
 	public $row = 0;
-	
+
 	public $container;
 
-	public function __construct($object, $route) {
+	public function __construct($object, $route)
+	{
 		parent::__construct($route);
-		$this->_route=$route;
+		$this->_route = $route;
 		$this->object = $object;
 		$this->tableClass = "table-condensed";
-		$this->body()->addClass('no-padding');
+		$this->body->classList->add('no-padding');
 		$this->classList->add("no-border");
 		$this->classList->add("box-primary");
-		$this->container=$this->body();
-		
+		$this->container = $this->body();
+
 		$this->addTable();
 	}
 
-	public function setColumnRatio($ratio) {
+	public function setColumnRatio($ratio)
+	{
 		$this->column_ratio = $ratio;
 		return $this;
 	}
 
-	public function header($title = null) {
+	public function header($title = null)
+	{
 		$this->classList->remove("no-border");
 		$this->classList->add('box-primary');
 		return parent::header($title);
 	}
 
-	public function addBreak() {
+	public function addBreak()
+	{
 		$this->row++;
-		
-		$row_div=p("div")->addClass("row")->appendTo($this->body());
-		$wrap_div=p("div")->addClass("col-xs-12")->appendTo($row_div);
-		$this->container=$wrap_div;
-		
+
+		$row_div = p("div")->addClass("row")->appendTo($this->body());
+		$wrap_div = p("div")->addClass("col-xs-12")->appendTo($row_div);
+		$this->container = $wrap_div;
+
 		$this->addTable();
 		return $this;
 	}
 
-	public function addSplit() {
+	public function addSplit()
+	{
 		$tables = $this->tables[$this->row];
 		$c = count($tables);
-		if ($c == 1 && count($this->tables)==1) {
+		if ($c == 1 && count($this->tables) == 1) {
 			$div = p("div")->addClass("row")->appendTo($this->container);
 			$tables[0]->appendTo($div);
 			$wrap_div = p("div")->addClass("col-xs-12");
 			$tables[0]->wrap($wrap_div);
 		}
-		
-		$row_div=$tables[0]->parent()->parent();
 
-		$this->container= p("div")->addClass("col-xs-12")->appendTo($row_div);
+		$row_div = $tables[0]->parent()->parent();
+
+		$this->container = p("div")->addClass("col-xs-12")->appendTo($row_div);
 		$this->addTable();
 
-		$c=count($this->tables[$this->row]);
-		$col_class=floor(12/$c);
-		
-		foreach($row_div->find(">div") as $div){
+		$c = count($this->tables[$this->row]);
+		$col_class = floor(12 / $c);
+
+		foreach ($row_div->find(">div") as $div) {
 			$div->removeClass();
-			$div->addClass("col-md-".$col_class);
+			$div->addClass("col-md-" . $col_class);
 		}
 
 
 		return $this->table;
 	}
 
-	public function addNext() {
+	public function addNext()
+	{
 		$this->table = p("table")->addClass("table")->appendTo($this->container);
 		$this->table->addClass($this->tableClass);
 		$this->table->append(p("tbody"));
 	}
 
-	public function addTable() {
+	public function addTable()
+	{
 		$this->table = p("table")->addClass("table")->appendTo($this->container);
 		$this->table->addClass($this->tableClass);
 		$this->table->append(p("tbody"));
@@ -87,7 +97,8 @@ class V extends Box {
 		return $this->table;
 	}
 
-	public function addHr() {
+	public function addHr()
+	{
 
 		$tbody = $this->table->find('tbody');
 		$tr = p("tr")->appendTo($tbody);
@@ -95,7 +106,8 @@ class V extends Box {
 		return $this;
 	}
 
-	public function add($label, $getter = null) {
+	public function add($label, $getter = null)
+	{
 		$label = ($this->_route) ? $this->_route->translate($label) : $label;
 		$tbody = $this->table->find("tbody");
 

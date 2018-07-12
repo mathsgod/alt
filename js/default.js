@@ -1,3 +1,5 @@
+Vue.use(VueLocalStorage);
+
 Vue.component("roxyfileman", {
     template: "<bs-input></bs-input>",
     mounted() {

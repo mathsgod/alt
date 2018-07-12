@@ -1,7 +1,8 @@
 <template id="alt-box-header">
     <div class="box-header">
         <h3 class="box-title">
-            <i v-if="icon" :class="icon"></i> <slot></slot>
+            <i v-if="icon" :class="icon"></i>
+            <slot></slot>
         </h3>
         <div class="box-tools pull-right">
             <slot name="tools"></slot>
@@ -99,6 +100,7 @@
                 h.closeable = this.closeable;
                 h.collapsed = this.collapsed;
                 h.dataUrl = this.dataUrl;
+                h.pinable=this.pinable;
             });
 
             this.header.forEach(h => {
@@ -143,6 +145,7 @@
             collapsible: Boolean,
             collapsed: Boolean,
             closeable: Boolean,
+            pinable: Boolean,
             acl: Boolean,
             aclGroup: Array,
             dataUri: String,
@@ -189,13 +192,13 @@
     Vue.component("alt-box-header", {
         template: document.currentScript.ownerDocument.getElementById("alt-box-header"),
         props: {
-            pinable: Boolean,
             acl: Boolean,
             aclGroup: Array,
             icon: String
         },
         data() {
             return {
+                pinable: false,
                 dataUrl: "",
                 collapsible: false,
                 collapsed: false,

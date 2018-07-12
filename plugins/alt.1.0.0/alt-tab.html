@@ -1,0 +1,17 @@
+<template id="alt-tab">
+    <div>
+        <slot v-on:toggle-pin="togglePin"></slot>
+    </div>
+</template>
+<script>
+    Vue.component("alt-tab", {
+        template: document.currentScript.ownerDocument.getElementById("alt-tab"),
+        props: {
+            pinable: Boolean
+        }, methods: {
+            togglePin() {
+                console.log("toggle pin");
+            }
+        }
+    });
+</script>

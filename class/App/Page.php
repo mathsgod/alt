@@ -324,7 +324,7 @@ class Page extends \R\Page
     {
         $request = $this->request;
 
-        $f = new \ALT\Form($this);
+        $f = new UI\Form($this);
         if ($multipart) {
             $f->attributes["enctype"] = "multipart/form-data";
         }
@@ -355,15 +355,21 @@ class Page extends \R\Page
         return new UI\DataTables($this, $objects);
     }
 
-
     public function createT($objects)
     {
+//        return new \ALT\T($objects,$this);
         return new UI\T($objects, $this);
     }
 
+    public function createTab($prefix)
+    {
+        return new UI\Tab($this, $prefix);
+    }
+
+
     public function createTable($objects)
     {
-        return new UI\T($objects, $this);
+        return new UI\Table($objects, $this);
     }
 
     public function createButton()

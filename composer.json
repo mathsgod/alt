@@ -27,7 +27,7 @@
         "php": ">=5.6",
         "hostlink/r-psr7": "^2.1",
         "hostlink/r": "^2.4",
-        "hostlink/r-p": "1.*",
+        "hostlink/r-p": "^1.1.6",
         "hostlink/r-bs": "1.*",
         "hostlink/r-db": "2.*",
         "hostlink/holiday-hk": "^1.2.1",
@@ -80,5 +80,5 @@
         }
     ],
     "minimum-stability": "stable",
-    "version": "5.6.32"
+    "version": "5.6.33"
 }

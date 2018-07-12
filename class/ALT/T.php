@@ -13,7 +13,7 @@ class T extends Box
         $this->objects = $objects;
         $this->body()->addClass('no-padding table-responsive');
         $this->classList->add("box-primary");
-        $this->table = new \App\UI\T($objects, $route);
+        $this->table = new \App\UI\Table($objects, $route);
         $this->body()->append($this->table);
     }
 

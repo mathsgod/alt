@@ -1,109 +1,94 @@
 <?php
-
 namespace App\UI;
 
-class T extends \ALT\Table
+// class T extends \App\UI\T {
+class T extends Box
 {
-    protected $page;
+    public $objects;
+    public $table;
 
-    public function __construct($objects, $page)
+    public function __construct($objects, $route)
     {
-        parent::__construct($objects);
-        $this->page = $page;
-        $this->addClass("table-condensed");
+        parent::__construct($route);
+        $this->objects = $objects;
+        $this->body()->addClass('no-padding table-responsive');
+        $this->classList->add("box-primary");
+        $this->table = new \App\UI\Table($objects, $route);
+        $this->body()->append($this->table);
     }
 
-    public function addCheckBox($index)
+    public function addCheckbox($index)
     {
-        $column = $this->add(null, function ($obj) use ($index) {
-            $input = p("input");
-            $input->attr("type", "checkbox");
-            $input->addClass("iCheck");
-            if ($index) {
-                $input->attr("index", $index);
-                if (is_array($obj)) {
-                    $input->val($obj[$index]);
-                } else {
-                    $input->val($obj->$index);
-                }
-                $input->attr("name", "{$index}[]");
-            }
-            return $input;
-        }
-        )->width(20);
-        
-        
-        $column->html("<input type='checkbox' class='iCheck' onClick='
-var checked=$(this).is(\":checked\");
-var index=$(this).closest(\"th\").index();
-var td=$(this).closest(\"table\").find(\"tbody tr\").find(\"td:nth(\"+index+\")\");
-if(checked){
-	td.find(\".iCheck\").iCheck(\"check\");
-}else{
-	td.find(\".iCheck\").iCheck(\"uncheck\");
-}
-
-'/>");
-        return $column;
-    }
-
-    public function addDel()
-    {
-        $column = $this->add();
-        $column->width(20);
-        $as = $column->a()->addClass("btn btn-xs btn-danger confirm")->removeClass("btn-default")->html("<i class='fa fa-times'></i>");
-        foreach ($as as $a) {
-            if ($object = p($a)->parent()->data("object")) {
-                if ($object->canDelete()) {
-                    p($a)->attr('href', $object->uri('del'));
-                } else {
-                    p($a)->remove();
-                }
-            }
-        }
-        return $as;
-    }
-
-    public function addEdit()
-    {
-        $column = $this->add();
-        $column->width(20);
-        $as = $column->a()->addClass("btn btn-xs btn-warning")->removeClass("btn-default")->html("<i class='fa fa-pencil-alt'></i>");
-
-        foreach ($as as $a) {
-            if ($object = p($a)->parent()->data("object")) {
-                if ($object->canUpdate()) {
-                    p($a)->attr('href', $object->uri('ae'));
-                } else {
-                    p($a)->remove();
-                }
-            }
-        }
-        return $as;
+        return $this->table->addCheckbox($index);
     }
 
     public function add($label, $getter)
     {
-        $label = $this->page ? $this->page->translate($label) : $label;
-        return parent::add($label, $getter);
-    }
-    
-    public function addChildRow($label, $getter)
-    {
-        $label = $this->page ? $this->page->translate($label) : $label;
-        return parent::addChildRow($label, $getter);
+        return $this->table->add($label, $getter);
     }
 
-    public function __toString()
+    public function addChildRow($label, $getter)
     {
-        $html = parent::__toString();
-        $o = p($html);
-        $o->find("td")->each(function ($i, $o) {
-            if (p($o)->find("input,textarea,select")->count()) {
-                p($o)->wrapInner("<div class='form-group no-margin'></div>");
-            }
-        }
-        );
-        return (string )$o;
+        return $this->table->addChildRow($label, $getter);
     }
+
+    public function addView()
+    {
+        return $this->table->addView();
+    }
+
+    public function addEdit()
+    {
+        return $this->table->addEdit();
+    }
+
+    public function addDel()
+    {
+        return $this->table->addDel();
+    }
+
+    public function setCreate($uri)
+    {
+        $p = new \P\AnchorCollection();
+        $p[] = $this->header()->addButton()->icon("fa fa-plus")->addClass("btn-primary")->attr("href", $uri);
+        return $p;
+    }
+
+    public function formCreate($options, $default)
+    {
+        $this->table->attr("form-create", true);
+
+        if (is_string($options)) {
+            $opt = [
+                "name" => $options,
+                "default" => $default
+            ];
+        } else {
+            $opt = $options;
+        }
+
+        $this->table->attr("form-name", $opt["name"]);
+        $this->table->default = $opt["default"];
+
+        return $this;
+    }
+
+    public function subHTML($label, $callback, $index)
+    {
+        $url = $callback[0]->path() . "/" . $callback[1];
+        return $this->table->add($label, function ($o) use ($url, $index) {
+            if (is_object($o)) {
+                if ($index) {
+                    $url .= "?" . http_build_query([$index => $o->$index]);
+                } else {
+                    $url .= "?" . http_build_query(["id" => $o->ID()]);
+                }
+            } else {
+                $url .= "?" . http_build_query([$index => $o[$index]]);
+            }
+
+            return "<button class='btn btn-xs btn-primary table-childrow-btn table-childrow-close' data-url='$url' data-target=''><i class='fa fa-chevron-up'></i></button>";
+        });
+    }
+
 }

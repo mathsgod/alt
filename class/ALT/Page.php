@@ -42,11 +42,6 @@ class Page extends \App\Page
         return $b;
     }
 
-    public function createTab($prefix)
-    {
-        return new Tab($this, $prefix);
-    }
-
     private $_navbar;
     public function navbar()
     {
@@ -352,11 +347,6 @@ class Page extends \App\Page
             $object = $this->object();
         }
         return new \App\UI\E($object, $this);
-    }
-
-    public function createT($objects)
-    {
-        return new T($objects, $this);
     }
 
     public function createGrid($sizes)

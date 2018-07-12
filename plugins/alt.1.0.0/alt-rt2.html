@@ -435,16 +435,16 @@
                 type: Boolean,
                 default: true
             }, width: String,
-            type:String
+            type: String
         }, data() {
             return {
                 hide: false,
                 local: {
-                    orderDir: ""
+                    orderDir: this.orderDir
                 }
             };
         }, methods: {
-            checkboxChange(e){
+            checkboxChange(e) {
                 console.log(e.target.checked);
             },
             click() {
@@ -528,6 +528,12 @@
             return data;
         },
         created: function () {
+            var storage=$.localStorage.get(this.ajax.url) || {};
+            if(storage.order){
+                this.local.order=storage.order;
+            }
+            console.log(this.local.order);
+
             this.columns = this.$attrs.columns.map(o => {
                 o.hide = false;
                 o.orderDir = "";
@@ -561,12 +567,12 @@
                                     "white-space": "pre-wrap"
                                 };
                             }
-                            
-                            
+
+
                             if (d[this.name] == null) {
                                 return cell;
-                            }else if(typeof d[this.name]=="string"){
-                                cell.type="text";
+                            } else if (typeof d[this.name] == "string") {
+                                cell.type = "text";
                             } else {
                                 for (var i in d[this.name]) {
                                     cell[i] = d[this.name][i];
@@ -582,7 +588,7 @@
                         getContent(d) {
                             var o = d[this.name];
 
-                            if(o===null)return "";
+                            if (o === null) return "";
 
                             if (Array.isArray(o)) {
                                 return o.join(" ");
@@ -594,7 +600,7 @@
 
                             return o;
 
-                            
+
 
                         },
                         getValue(d) {
@@ -745,6 +751,9 @@
             }, data() {
                 return this.remoteData;
             }, order(o) {
+
+                var storage = $.localStorage.get(this.ajax.url) || {};
+
                 this.local.order = [{
                     name: o[0],
                     dir: o[1]
@@ -756,6 +765,10 @@
                         c.orderDir = o[1];
                     }
                 });
+
+                storage.order= this.local.order;
+
+                $.localStorage.set(this.ajax.url, storage);
                 return this;
             }, draw() {
                 this.$refs.box.showLoading();
@@ -833,10 +846,10 @@
                             return !c.hide
                         });
                         columns = columns.reverse();
-                        if(columns.length>0){
+                        if (columns.length > 0) {
                             columns[0].hide = true; //hide last column
                             return true;
-                        }else{
+                        } else {
                             return false;//nothing can hide
                         }
                     };
@@ -845,9 +858,9 @@
                         let t = total();
                         //console.log(t);
                         if (t > parentWidth) {
-                            var r=hideLastColumn();
+                            var r = hideLastColumn();
 
-                            if(r){
+                            if (r) {
                                 this.$nextTick(() => {
                                     check();
                                 });

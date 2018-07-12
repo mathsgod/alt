@@ -31,7 +31,7 @@ ckeditor/ckeditor:
   js: ['ckeditor.js','lang/{language}.js']
 
 vue:
-  js: ['vue.js','vue-resource.min.js']
+  js: ['vue.js','vue-resource.min.js',"vue-local-storage.min.js"]
 
 bootstrap-iconpicker:
   js: ['js/bootstrap-iconpicker-iconset-all.min.js','js/bootstrap-iconpicker.min.js']

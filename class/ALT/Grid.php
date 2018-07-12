@@ -39,9 +39,9 @@ class Grid extends \P\Query {
 	}
 
 	public function add($box, $location) {
-		if ($box instanceof Box || $box instanceof Tab) {
-			$box->pinable();
-			$box->collapsible();
+		if ($box instanceof \App\UI\Box || $box instanceof \App\UI\Tab) {
+			$box->collapsible(true);
+			$box->pinable(true);
 			$box->attributes["grid-item"]=$this->item;
 		}
 

@@ -20,6 +20,8 @@ class User_v_userlog extends App\Page
     {
         $obj = $this->object();
         $w = $jq->where();
+        //outp($jq->Order());
+        //die();
 
         return array(
             "total" => $obj->_Size(UserLog, $w),
