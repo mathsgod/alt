@@ -325,7 +325,7 @@ class Page extends \App\Page
 
     public function createBox($body)
     {
-        $box = new Box($this);
+        $box = new \App\UI\Box($this);
         $box->classList->add("box-primary");
         if($body){
             $box->body()->append($body);

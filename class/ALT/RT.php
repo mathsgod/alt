@@ -379,6 +379,12 @@ class RTRequest
 
     public function order()
     {
+        if($_GET["order"]){
+            if($_GET["order"][0]["column"]==$this->rt->_attribute["sort-field"]){
+                return $_GET["order"][0]["column"]." ".$_GET["order"][0]["dir"];
+            }
+        }
+        
 
         //prevent user direct input order
         $columns_index = array_map(function ($column) {

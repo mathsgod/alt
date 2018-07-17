@@ -21,6 +21,17 @@ class App extends \R\App
 
     public function __construct($root, $loader, $logger)
     {
+        
+        spl_autoload_register(function ($class) use ($root) {
+
+            $class_path = str_replace("\\", DIRECTORY_SEPARATOR, $class);
+            $file = realpath($root . "/pages/$class_path/$class.class.php");
+            if (is_readable($file)) {
+                require_once($file);
+            }
+        });
+
+        
         parent::__construct($root, $loader, $logger);
 
         $p = explode(DIRECTORY_SEPARATOR, __DIR__);
@@ -35,15 +46,6 @@ class App extends \R\App
 
         $this->loader->addPsr4("", $root . "/class");
         $this->loader->addPsr4("", SYSTEM . "/class");
-
-        spl_autoload_register(function ($class) use ($root) {
-
-            $class_path = str_replace("\\", DIRECTORY_SEPARATOR, $class);
-            $file = realpath($root . "/pages/$class_path/$class.class.php");
-            if (is_readable($file)) {
-                require_once($file);
-            }
-        });
 
         self::$app = $this;
 
