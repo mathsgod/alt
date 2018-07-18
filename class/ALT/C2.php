@@ -479,7 +479,7 @@ class C2 extends \P\HTMLElement
 	{
 		$p = new \BS\ButtonCollection;
 		foreach ($this->cell as $cell) {
-			$btn = new \App\UI\Button();
+			$btn = new \BS\Button();
 			$btn->classList->add("btn-xs");
 			p($cell)->append($btn);
 			if ($object = p($cell)->data("object")) {

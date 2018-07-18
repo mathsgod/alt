@@ -21,14 +21,22 @@ class SystemValue_ae extends ALT\Page
 
     public function get()
     {
-        $this->addLib("codemirror");
-
+        $this->addLib("ace");
         $obj = $this->object();
-        $mv = $this->createE();
-        $mv->add("Name")->input("name")->val($obj->name)->required();
+
+        $data = [];
+        $data["name"] = $obj->name;
+        foreach ($this->app->config["language"] as $v => $l) {
+            $data["value[$v]"] = (string)SystemValue::_($obj->name, $v);
+        }
+
+        $mv = $this->createE($data);
+        $mv->add("Name")->input("name")->required();
+
 
         foreach ($this->app->config["language"] as $v => $l) {
-            $mv->add("Value " . $l)->textarea()->text(SystemValue::_($obj->name, $v))->attr('name', "value[$v]")->addClass("code");
+            $mv->add("Value " . $l)->textarea("value[$v]")->attr("is", "ace");
+
         }
 
 
