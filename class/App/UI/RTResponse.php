@@ -144,7 +144,7 @@ class RTResponse implements JsonSerializable
             if (!$obj->canDelete()) {
                 return;
             }
-            return $obj->uri("del");
+            return $obj->uri();
         };
         $this->_columns["__del__"] = $c;
         return $c;

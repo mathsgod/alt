@@ -5,23 +5,24 @@ class Config_list extends App\Page
 {
     public function get()
     {
+
         foreach (Config::All() as $category => $config) {
             $c = [];
             foreach ($config as $k => $v) {
                 $c[] = [$k, $v];
             }
 
-            $t = new App\UI\T($c);
-         
+            $t = $this->createT($c);
+
             $t->add("Name", function ($o) {
-                    return $o[0];
+                return $o[0];
             });
 
-            if ($category=="user") {
+            if ($category == "user") {
                 $t->add("Value", function ($o) {
-                    $x=new Xeditable\Text();
-                    $x->pk=$o[0];
-                    $x->url="Config/update";
+                    $x = new Xeditable\Text();
+                    $x->pk = $o[0];
+                    $x->url = "Config/update";
                     p($x)->text($o[1]);
                     return $x;
                 });
@@ -30,13 +31,9 @@ class Config_list extends App\Page
                     return $o[1];
                 });
             }
+            $t->header($category);
+            $this->write($t);
 
-            $b = new ALT\Box($this);
-            $b->header($category);
-            $b->collapsible();
-
-            $b->body()->append($t);
-            $this->write($b);
         }
     }
 }

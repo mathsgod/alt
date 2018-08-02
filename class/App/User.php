@@ -341,4 +341,14 @@ class User extends Model
         $ul->usergroup_id = $usergroup->usergroup_id;
         $ul->save();
     }
+
+    public function __get($name)
+    {
+        if ($name == "usergroup") {
+            
+            $w[]=["usergroup_id in (select usergroup_id from UserList where user_id=?)", $this->user_id];
+            return UserGroup::Query()->where($w);
+        }
+        return parent::__get($name);
+    }
 }

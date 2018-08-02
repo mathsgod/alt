@@ -188,6 +188,12 @@ class Page extends \R\Page
         $path = substr($route->path, 1);
         $method = $route->method;
 
+        if($method=="del"){
+            if ($request->getMethod() == "del" || $request->getMethod() == "post") {
+                return parent::__invoke($request, $response);
+            }
+        }
+
         if (!ACL::Allow($path) && !ACL::Allow($path . "/" . $method)) {
             if ($request->isAccept("text/html")) {
                 \App::AccessDeny($path);
@@ -202,9 +208,7 @@ class Page extends \R\Page
             }
         }
 
-        if ($request->getMethod() == "del" || $request->getMethod() == "post") {
-            return parent::__invoke($request, $response);
-        }
+     
 
         if ($request->getQueryParams()["_rt"]) {
             $rt = new UI\RTResponse();
@@ -377,6 +381,16 @@ class Page extends \R\Page
         return new UI\Button($this);
     }
 
+    public function createBox($body)
+    {
+        $box = new UI\Box($this);
+        $box->classList->add("box-primary");
+        if($body){
+            $box->body()->append($body);
+        }
+        return $box;
+    }
+
     public function createDT($objects)
     {
         if ($objects instanceof \Iterator || $objects instanceof \IteratorAggregate) {
@@ -432,8 +446,8 @@ class Page extends \R\Page
         if ($this->request->isAccept("application/json") || $this->request->getHeader("X-Requested-With")) {
             return ["code" => 200];
         } else {
-            \App::Msg($this->module()->name . " deleted");
-            \App::Redirect();
+            $this->alert->success($this->module()->name . " deleted");
+            $this->redirect();
         }
     }
 

@@ -154,7 +154,7 @@ class ACL_ae_module extends ALT\Page
         $mv->add("Special User")->select("special_user")->ds(ACL::$_SPECIAL_USER)->attr("onChange", "onChangeSpecialUser(this.value)")->prepend("<option/>")->val($_GET["special_user"]);
 
         if (!$_GET["user_id"] && !$_GET["usergroup_id"] && !$_GET["special_user"]) {
-            $this->write(My::Box($mv));
+            $this->write($this->createBox($mv));
 
             return;
         }

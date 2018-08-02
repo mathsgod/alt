@@ -21,7 +21,7 @@ class App extends \R\App
 
     public function __construct($root, $loader, $logger)
     {
-        
+
         spl_autoload_register(function ($class) use ($root) {
 
             $class_path = str_replace("\\", DIRECTORY_SEPARATOR, $class);
@@ -31,7 +31,7 @@ class App extends \R\App
             }
         });
 
-        
+
         parent::__construct($root, $loader, $logger);
 
         $p = explode(DIRECTORY_SEPARATOR, __DIR__);
@@ -158,6 +158,16 @@ class App extends \R\App
             }
         }
 
+        if (strtolower($this->request->getMethod()) == "delete"
+            && in_array("application/json", $this->request->getHeader("accept"))) {
+
+
+            $rest=new REST();
+            $response=$rest($this->request,new Response(200));
+            file_put_contents("php://output", (string)$response->getBody());
+            return;
+        }
+
 
 //outp($this->plugins_setting);
 //die();
@@ -176,7 +186,6 @@ class App extends \R\App
             ->withAttribute("action", $route->action)
             ->withAttribute("route", $route);
 
-
         if (!$class = $route->class) {
             if ($this->user->isAdmin()) {
                 $page = new ClassNotExistPage();
@@ -185,8 +194,8 @@ class App extends \R\App
             $class = $route->class;
             $page = new $class($this);
         }
-        
-        $this->loader->addPsr4("",$pi["cms_root"]."/pages");
+
+        $this->loader->addPsr4("", $pi["cms_root"] . "/pages");
         if ($page) {
             $response = new Response(200);
             try {

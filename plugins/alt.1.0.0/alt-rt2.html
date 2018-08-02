@@ -226,7 +226,7 @@
             },
             deleteRow(uri) {
                 if (confirm("Are your sure?")) {
-                    this.$http.get(uri).then(resp => {
+                    this.$http.delete(uri).then(resp => {
                         this.$emit("data-deleted");
                     });
                 }

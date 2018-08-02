@@ -25,7 +25,7 @@ class MasterPage
         if (\App::Config("user", "development")) {
             $data["development"] = "development";
         }
-        $data["setting"] = json_decode(\App::User()->setting, true);
+        $data["setting"] = json_decode($this->app->user->setting, true);
 
         if ($data["setting"]["control-sidebar"]) {
             $data["sidebar"] = $data["setting"]["control-sidebar"];
@@ -40,9 +40,9 @@ class MasterPage
         }
 
         $data["user"] = [];
-        $data["user"] = (array)\App::User();
-        $data["user"]["name"] = (string)\App::User();
-        $data["user"]["usergroup"] = \App::User()->UserGroup()->implode(",");
+        $data["user"] = (array)$this->app->user;
+        $data["user"]["name"] = (string)$this->app->user;
+        $data["user"]["usergroup"] = $this->app->user->UserGroup()->implode(",");
 
         $data["system"] = [];
         $data["system"]["version"] = $this->app->version();

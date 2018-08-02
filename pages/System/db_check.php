@@ -56,7 +56,9 @@ class System_db_check extends ALT\Page {
 			$t[] = nl2br($s, "<br/>");
 		}
 
-		$this->write(My::Box(implode("<br/>", $t), "Following SQL should be update"));
+		$box=$this->createBox(implode("<br/>", $t));
+		$box->header->title="Following SQL should be update";
+		$this->write($box);
 
 		$this->write($this->createForm("Update?"));
 	}
