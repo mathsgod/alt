@@ -73,9 +73,9 @@ class Module extends Model
     public static function ByPath($path)
     {
         $ps = explode("/", $path);
-        $ps=array_values(array_filter($ps,"strlen"));
-        $path=implode("/",$ps);
-    
+        $ps = array_values(array_filter($ps, "strlen"));
+        $path = implode("/", $ps);
+
         $file = App::_()->loader->findFile($path);
         if ($file) {
             //find setting.ini
@@ -99,7 +99,7 @@ class Module extends Model
         }
         if (!$m) {
             $p = explode("/", $path);
-            $p=array_values(array_filter($p,"strlen"));
+            $p = array_values(array_filter($p, "strlen"));
             $m = self::_($p[0]);
         }
 
@@ -108,13 +108,16 @@ class Module extends Model
 
     public static function _($name)
     {
+        if (!$name) {
+            return null;
+        }
         // read ini first
         $m = new Module;
         $m->sequence = PHP_INT_MAX;
         $m->class = $name;
         $m->name = $name;
 
-        $app=App::_();
+        $app = App::_();
         $page = App::_()->config["system"]["page"];
         if (!$page) {
             $page = "pages";
@@ -129,9 +132,9 @@ class Module extends Model
 
         // read config
 
-        if($config=$app->config["module"][$name]){
-            foreach($config as $k=>$v){
-                $m->$k=$v;
+        if ($config = $app->config["module"][$name]) {
+            foreach ($config as $k => $v) {
+                $m->$k = $v;
             }
         }
         
@@ -174,21 +177,24 @@ class Module extends Model
 
     public function getAction()
     {
+        $app = $this->_app();
 
-        $page = \App::Config("system", "pages");
+        $page = $app->config["system"]["page"];
         if (!$page) {
             $page = "pages";
         }
 
+        $pi = $app->pathInfo();
+
         $name = $this->name;
-        if (file_exists(CMS_ROOT . "/" . SYSTEM . "/pages/" . $name)) {
-            foreach (glob(CMS_ROOT . "/" . SYSTEM . "/pages/" . $name . "/*.php") as $p) {
+        if (file_exists($file = $pi["cms_root"] . "/pages/" . $name)) {
+            foreach (glob($file . "/*.php") as $p) {
                 $pi = pathinfo($p);
                 $action[] = $pi;
             }
         }
-        if (file_exists(CMS_ROOT . "/$page/" . $name)) {
-            foreach (glob(CMS_ROOT . "/$page/" . $name . "/*.php") as $p) {
+        if (file_exists($file = $pi["system_root"] . "/pages/" . $name)) {
+            foreach (glob($file . "/*.php") as $p) {
                 $pi = pathinfo($p);
                 $action[] = $pi;
             }

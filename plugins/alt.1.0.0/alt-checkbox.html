@@ -1,7 +1,10 @@
 <script>
     Vue.component("icheck", {
-        template: `<input />`,
+        template: `<input type='checkbox' />`,
         props: {
+            value: {
+                default: 0
+            },
             checkboxClass: {
                 type: String,
                 default: 'icheckbox_square-blue'
@@ -14,9 +17,21 @@
         created() {
 
         },
+        watch: {
+            value() {
+                if (this.value == 1) {
+                    $(this.$el).iCheck("check");
+                } else {
+                    $(this.$el).iCheck("uncheck");
+                }
+            }
+        },
         mounted() {
-
             $(this.$el).iCheck(this._props);
+
+            if (this.value == 1) {
+                $(this.$el).iCheck("check");
+            }
 
             $(this.$el).on('ifClicked', (event) => {
                 $(this.$el).trigger("click");
@@ -24,8 +39,10 @@
             }).on("ifChanged", (event) => {
                 this.$emit("change", event);
             }).on("ifChecked", (event) => {
+                this.$emit("input", 1);
                 this.$emit("checked", event);
             }).on("ifUnchecked", (event) => {
+                this.$emit("input", 0);
                 this.$emit("unchecked", event);
             });
 

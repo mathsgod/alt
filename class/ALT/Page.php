@@ -36,7 +36,7 @@ class Page extends \App\Page
     public function breadcrumb()
     {
         $b = p("ol")->addClass('breadcrumb');
-        $b->append('<li><a href=""><i class="fa fa-home"></i> '.$this->translate('Home').'</a></li>');
+        $b->append('<li><a href=""><i class="fa fa-home"></i> ' . $this->translate('Home') . '</a></li>');
         $b->append("<li><a href='{$this->module()->name}'>" . $this->translate($this->module()->name) .
             "</a></li>");
         return $b;
@@ -165,10 +165,12 @@ class Page extends \App\Page
                     $header["description"] = $this->header["description"];
                     $header["breadcrumb"] = $this->breadcrumb();
 
+
                     if ($this->_navbar) {
-                        $this->_navbar->find("a")->each(function ($i, $o) {
+                        $app = $this->app;
+                        $this->_navbar->find("a")->each(function ($i, $o) use ($app) {
                             $o = p($o);
-                            if (!\App::ACL($o->attr("href"))) {
+                            if (!$app->acl($o->attr("href"))) {
                                 $o->remove();
                             }
                         });
@@ -327,7 +329,7 @@ class Page extends \App\Page
     {
         $box = new \App\UI\Box($this);
         $box->classList->add("box-primary");
-        if($body){
+        if ($body) {
             $box->body()->append($body);
         }
         return $box;
@@ -368,7 +370,7 @@ class Page extends \App\Page
             foreach (range(1, $s) as $a) {
                 $col = floor(12 / $s);
                 $section = p("section");
-                $section->attr("is","alt-grid-section");
+                $section->attr("is", "alt-grid-section");
                 $section->addClass("col-md-$col ui-sortable connectedSortable");
                 $row->append($section);
             }

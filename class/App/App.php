@@ -162,8 +162,8 @@ class App extends \R\App
             && in_array("application/json", $this->request->getHeader("accept"))) {
 
 
-            $rest=new REST();
-            $response=$rest($this->request,new Response(200));
+            $rest = new REST();
+            $response = $rest($this->request, new Response(200));
             file_put_contents("php://output", (string)$response->getBody());
             return;
         }
@@ -390,7 +390,8 @@ class App extends \R\App
         return Translate::_($str, $this->user->language);
     }
 
-    public function twig($file){
+    public function twig($file)
+    {
         $pi = pathinfo($file);
 
         $file = $pi["dirname"] . "/" . $pi["filename"];
@@ -412,6 +413,53 @@ class App extends \R\App
             $uri = substr($template_file, strlen($root) + 1);
             return $twig["environment"]->loadTemplate($uri);
         }
+    }
+
+    public function acl($path)
+    {
+        $user = $this->user;
+        $raw_path = $path;
+        $p = parse_url($path);
+        $path = $p["path"];
+
+        if ($p["scheme"]) { //external
+            return true;
+        }
+
+        if ($path[0] == "/") { //absolute path
+            $result = $user->isAdmin();
+
+            $ugs = $user->UserGroup();
+
+            $w = [];
+            $w[] = ["path=?", $path];
+
+            $u = [];
+            $u[] = "user_id=" . $user->user_id;
+
+            foreach ($ugs as $ug) {
+                $u[] = "usergroup_id=$ug->usergroup_id";
+            }
+
+            $w[] = implode(" or ", $u);
+
+            foreach (ACL::Find($w) as $acl) {
+                $v = $acl->value();
+                if ($v == "deny") {
+                    return false;
+                }
+                if ($v == "allow") {
+                    $result = true;
+                }
+            }
+
+            return $result;
+        }
+
+        return ACL::Allow($path);
+
+
+
     }
 
 
