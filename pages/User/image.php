@@ -26,6 +26,7 @@ class User_image extends R\Page
             $user = $this->app->user;
         }
 
+
         //$this->setHeader("Content-Type","application/jpeg");
         if (file_exists($f = $info["system_root"] . "/data/{$user->username}/profile.image")) {
             header("location: {$basepath}data/{$user->username}/profile.image");

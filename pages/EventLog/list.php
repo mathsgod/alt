@@ -10,32 +10,32 @@ class EventLog_list extends App\Page
     public function get()
     {
 
-        $rt = $this->createRT([$this, "ds"]);
+        $rt = $this->createRT2([$this, "ds"]);
         
         //$rt->attr("page-number",2);
 
-        $rt->attr("data-pagination", ["top", "bottom"]);
+        //$rt->attr("data-pagination", ["top", "bottom"]);
     	//$rt->attr("data-mode","virtual");
 
         $rt->order("eventlog_id", "desc");
         $rt->addView();
     	//$rt->addDel();
-        $rt->add("ID", "eventlog_id")->sort()->searchRange()->aLink("v");
+        $rt->add("ID", "eventlog_id")->ss();
         $rt->add("Class", "class")->ss();
-        $rt->add("Object ID", "id")->index("id")->ss();
+        $rt->add("Object ID", "id")->ss();
         $rt->add("Action", "action")->ss();
-        $rt->add("User", "User()")->index("user_id")->aLink("v")->searchOption(User::find());
+        $rt->add("User", "user_id")->searchOption(User::find());
         $rt->add("Created time", "created_time")->sort()->searchDate();
+     //   $rt->add("Target","target")->width("100px");
 
         $this->write($rt);
     }
 
     public function ds($rt)
     {
-        $w = $rt->where();
-        return array(
-            "total" => EventLog::Count($w),
-            "data" => EventLog::find($w, $rt->Order(), $rt->Limit())
-        );
+        $rt->source = EventLog::Query();
+        $rt->add("user_id", "User()")->alink("v");
+
+        return $rt;
     }
 }

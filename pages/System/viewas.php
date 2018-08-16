@@ -5,15 +5,15 @@ class System_viewas extends ALT\Page
     public function get($user_id, $ref)
     {
         if ($user_id) {
-            $user = App::User();
             $_SESSION["app"]["user"] = new App\User($user_id);
-            $_SESSION["app"]["org_user"] = $user;
+            $_SESSION["app"]["org_user"] = $this->app->user;
 
             if ($ref) {
-                header("Location: $ref");
+                header("location: $ref");
             } else {
-                App::Redrect("Dashboard");
+                $this->redirect("Dashboard");
             }
+            return;
         }
 
 

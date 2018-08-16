@@ -390,5 +390,29 @@ class App extends \R\App
         return Translate::_($str, $this->user->language);
     }
 
+    public function twig($file){
+        $pi = pathinfo($file);
+
+        $file = $pi["dirname"] . "/" . $pi["filename"];
+        if (is_readable($template_file = $file . ".twig")) {
+
+            if (!$config = $this->config["twig"]) {
+                $config = [];
+            }
+            $root = $this->root;
+
+            array_walk($config, function (&$o) use ($root) {
+                $o = str_replace("{root}", $root, $o);
+            });
+
+            $twig["loader"] = new \Twig_Loader_Filesystem($root);
+            $twig["environment"] = new \Twig_Environment($twig["loader"], $config);
+            $twig["environment"]->addExtension(new \Twig_Extensions_Extension_I18n());
+
+            $uri = substr($template_file, strlen($root) + 1);
+            return $twig["environment"]->loadTemplate($uri);
+        }
+    }
+
 
 }

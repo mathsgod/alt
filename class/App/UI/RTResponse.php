@@ -18,7 +18,7 @@ class Row
         return $this;
     }
 
-    public function class($callback)
+    public function addClass($callback)
     {
         $this->class = $callback;
         return $this;

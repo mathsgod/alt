@@ -3,6 +3,8 @@
 
 	var Box=function(node,options){
 
+		return;
+
 		this.options=$.extend({
 
 		},options);

@@ -23,6 +23,7 @@ class Box extends \P\HTMLDivElement
     public $collapsible = false;
     public $collapsed = false;
     public $pinable = false;
+    public $dataUrl = null;
 
     public function __construct(Page $page)
     {
@@ -35,13 +36,15 @@ class Box extends \P\HTMLDivElement
         $this->classList->add("box-primary");
     }
 
-    public function collapsible($collapsible){
-        $this->collapsible=$collapsible;
+    public function collapsible($collapsible)
+    {
+        $this->collapsible = $collapsible;
         return $this;
     }
 
-    public function pinable($pinable){
-        $this->pinable=$pinable;
+    public function pinable($pinable)
+    {
+        $this->pinable = $pinable;
         return $this;
     }
 
@@ -80,6 +83,12 @@ class Box extends \P\HTMLDivElement
 
     public function __toString()
     {
+        if ($this->dataUrl) {
+            $body = $this->body;
+            $this->attributes["data-url"] = $this->dataUrl;
+        }
+
+        
         $v = get_object_vars($this);
 
         if ($v["header"]) {
@@ -105,6 +114,7 @@ class Box extends \P\HTMLDivElement
         if ($this->pinable) {
             $this->attributes[":pinable"] = "true";
         }
+
 
         return parent::__toString();
     }

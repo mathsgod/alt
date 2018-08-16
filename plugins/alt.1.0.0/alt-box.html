@@ -70,14 +70,22 @@
                 isPinned: true
             }
         },
+        props: {
+            collapsible: Boolean,
+            collapsed: Boolean,
+            closeable: Boolean,
+            pinable: Boolean,
+            acl: Boolean,
+            aclGroup: Array,
+            dataUri: String,
+            dataAclUri: String,
+            dataUrl: String
+        },
         computed: {
             header() {
-                return this.$slots.default.filter(o => {
-                    if (o.componentOptions == undefined) return false;
-                    return o.componentOptions.tag == "alt-box-header";
-                }).map(o => {
-                    return o.componentInstance;
-                });
+                return this.$children.filter(o => {
+                    return o.$vnode.componentOptions.tag == "alt-box-header";
+                })
             }, body() {
                 return this.$slots.default.filter(o => {
                     if (o.componentOptions == undefined) return false;
@@ -100,7 +108,7 @@
                 h.closeable = this.closeable;
                 h.collapsed = this.collapsed;
                 h.dataUrl = this.dataUrl;
-                h.pinable=this.pinable;
+                h.pinable = this.pinable;
             });
 
             this.header.forEach(h => {
@@ -139,25 +147,17 @@
                     data.path = this.dataAclUri;
                     this.$http.post("ACL/box", data);
                 });
-            })
-        },
-        props: {
-            collapsible: Boolean,
-            collapsed: Boolean,
-            closeable: Boolean,
-            pinable: Boolean,
-            acl: Boolean,
-            aclGroup: Array,
-            dataUri: String,
-            dataAclUri: String,
-            dataUrl: String
+            });
+
+            if (this.dataUrl) {
+                this.reload();
+            }
         },
         methods: {
-            reload: function () {
+            reload() {
                 this.showLoading();
                 this.$http.get(this.dataUrl).then(resp => {
                     this.hideLoading();
-                    console.log(this.body[0]);
                     this.body[0].setContent(resp.body);
                 });
 

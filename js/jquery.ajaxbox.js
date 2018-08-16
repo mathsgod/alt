@@ -10,6 +10,7 @@
 
 		var obj = $(this);
 
+
 		var div=function(){
 /*__START__
 <div style='position: absolute; z-index: 999; width: 800px; display:none'>

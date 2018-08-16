@@ -1,6 +1,6 @@
 <?
 
-class cancel_viewas extends App\Page
+class _cancel_viewas extends App\Page
 {
     public function get()
     {
