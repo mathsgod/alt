@@ -1,0 +1,124 @@
+<!--
+Created by: Raymond Chong
+-->
+<template id="x-select">
+    <div>
+        <a v-if="!editMode" v-text="valueModel" @click.prevent="editMode=true; localValue=value;" :style="style" href="#"></a>
+        <div v-if="editMode">
+            <select v-model="valueModel" class="form-control" v-if="isOptGroup">
+                <optgroup :label="o" v-for="o in og">
+                    <option v-for="opt in getOption(o)" v-bind:value="opt.value" v-text="opt.text"></option>
+                </optgroup>
+            </select>
+            <select v-model="valueModel" class="form-control" v-if="!isOptGroup">
+                <option v-for="opt in options" v-bind:value="opt.value" v-text="opt.text"></option>
+            </select>
+            <div>
+                <button type="button" class="btn btn-primary btn-sm" @click="onUpdate">
+                    <i class="fa fa-fw fa-check"></i>
+                </button>
+                <button type="button" class="btn btn-default btn-sm" @click="editMode=false">
+                    <i class="fa fa-fw fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    Vue.component("x-select", {
+        template: document.currentScript.ownerDocument.getElementById("x-select"),
+        props: {
+            value: {
+                type: String,
+                default: ""
+            }, type: {
+                type: String,
+                default: "text"
+            }, option: Array,
+            optgroup: Object
+        }, computed: {
+            isOptGroup() {
+                if (this.optgroup) {
+                    return true;
+                }
+            },
+            og() {
+                let s = [];
+                for (let i in this.optgroup) {
+                    s.push(i);
+                }
+                return s;
+            },
+            options() {
+                if (this.option.length == 0) return [];
+                if (typeof this.option[0] == 'string') {
+                    return this.option.map((o) => {
+                        return {
+                            value: o,
+                            text: o
+                        };
+                    });
+                }
+                return this.option;
+            },
+            style() {
+
+                let s = {};
+                s["white-space"] = "pre-wrap";
+
+                if (!this.value) {
+                    s.color = "red";
+                    s["font-style"] = "italic";
+                }
+                return s;
+
+            },
+            valueModel: {
+                get() {
+                    if (this.editMode) {
+                        return this.localValue;
+                    }
+                    if (!this.value) {
+                        return "[empty]";
+                    }
+                    return this.value;
+                }, set(value) {
+                    this.localValue = value;
+                }
+            }
+        },
+        data() {
+            return {
+                localValue: this.value,
+                editMode: false
+            }
+        },
+        created() {
+
+        },
+        mounted() {
+
+        }, methods: {
+            getOption(optgroup) {
+                let v = this.optgroup[optgroup];
+
+                if (v.length == 0) {
+                    return [];
+                }
+                if (typeof v[0] == 'string') {
+                    return v.map((o) => {
+                        return {
+                            value: o,
+                            text: o
+                        };
+                    });
+                }
+            },
+            onUpdate() {
+                this.editMode = false;
+                this.$emit("input", this.localValue);
+            }
+        }
+    });
+</script>

@@ -10,21 +10,37 @@
         computed: {
             box() {
                 if (!this.$slots.default) return [];
-                return this.$slots.default.filter(o => {
-                    if (o.componentOptions == undefined) return false;
-                    return o.componentOptions.tag == "alt-box";
-                }).map(o => {
-                    return o.componentInstance;
+                return this.$children.filter(o => {
+                    return o.$vnode.componentOptions.tag == "alt-box";
                 });
             }
         }, data() {
             return {
-                dragdrop: false
+                isDragDrop: false
             }
         }, mounted() {
 
-            if (this.$parent.sortable) {
-
+            this.$children.forEach(c => {
+                c.$on("pinned", (v) => {
+                    this.$emit("pinned", v);
+                });
+            });
+        }, methods: {
+            getStyle() {
+                if (this.isDragDrop) {
+                    return { "min-height": "100px" };
+                } else {
+                    return { "min-height": "0px" };
+                }
+            }, isPinned() {
+                //no children
+                if (this.box.length == 0) return true;
+                return this.box.every((b) => {
+                    return b.isPinned;
+                });
+            }, startSort() {
+                this.isDragDrop=true;
+                this.box.forEach(b=>b.unpin());
                 $(this.$el).sortable({
                     placeholder: "sort-highlight",
                     connectWith: ".connectedSortable",
@@ -34,27 +50,10 @@
                 }).on("sortstop", (event, ui) => {
                     this.$emit("sortstop");
                 });
-            }
-
-
-            this.$children.forEach(c => {
-                c.$on("pinned", (v) => {
-                    this.$emit("pinned");
-                });
-            });
-        }, methods: {
-            getStyle() {
-                if (this.dragdrop) {
-                    return { "min-height": "100px" };
-                } else {
-                    return { "min-height": "0px" };
-                }
-            }, isPinned() {
-                //no children
-                if (this.$children.length == 0) return true;
-                return this.$children.every((b) => {
-                    return b.isPinned;
-                });
+            }, endSort() {
+                this.isDragDrop=false;
+                this.box.forEach(b=>b.pin());
+                $(this.$el).sortable('destroy');
             }
         }
     });
@@ -75,8 +74,13 @@
         },
         mounted() {
             this.$children.forEach(c => {
-                c.$on("pinned", () => {
-                    this.reloadDragDrop();
+                c.$on("pinned", (v) => {
+                    if(v){
+                        this.$children.forEach(c => c.endSort() );
+                    }else{
+                        this.$children.forEach(c => c.startSort() );
+                    }
+                
                 });
 
                 c.$on("sortstop", this.sortStop);
@@ -88,11 +92,7 @@
                 });
             }
         }, methods: {
-            reloadDragDrop() {
-                this.$children.forEach(c => {
-                    c.dragdrop = this.isDragDrop;
-                });
-            }, sortStop() {
+            sortStop() {
                 var grid = $(this.$el);
 
                 var data = [];

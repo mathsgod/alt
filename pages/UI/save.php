@@ -57,7 +57,7 @@ class UI_save extends App\Page
 
     public function post()
     {
-        if ($_POST["uri"] == "") die();
+        if ($_POST["uri"] == "") return ["error" => ["message" => "uri not found"]];
 
         if ($_POST["type"] == "grid") {
             $this->saveGrid();

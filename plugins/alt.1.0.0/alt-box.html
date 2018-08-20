@@ -24,15 +24,15 @@
             </div>
 
             <button v-if="pinable" type="button" class="btn btn-box-tool" @click="togglePin()">
-                <i class="fa" :class="[pinned?'fa-thumbtack':'fa-arrows-alt']"></i>
+                <i class="fa fa-fw" :class="[pinned?'fa-thumbtack':'fa-arrows-alt']"></i>
             </button>
 
             <button v-if="collapsible" type="button" class="btn btn-box-tool" @click="toggleCollapse()">
-                <i class="fa" :class="[collapsed?'fa-plus':'fa-minus']"></i>
+                <i class="fa fa-fw" :class="[collapsed?'fa-plus':'fa-minus']"></i>
             </button>
 
             <button v-if="closeable" type="button" class="btn btn-box-tool" data-widget="remove" @click="$emit('closed')">
-                <i class="fa fa-times"></i>
+                <i class="fa fa-fw fa-times"></i>
             </button>
         </div>
     </div>
@@ -85,7 +85,7 @@
             header() {
                 return this.$children.filter(o => {
                     return o.$vnode.componentOptions.tag == "alt-box-header";
-                })
+                });
             }, body() {
                 return this.$slots.default.filter(o => {
                     if (o.componentOptions == undefined) return false;
@@ -162,10 +162,14 @@
                 });
 
             },
-            showLoading: function () {
+            showLoading() {
                 this.loading = true;
-            }, hideLoading: function () {
+            }, hideLoading() {
                 this.loading = false;
+            }, pin() {
+                this.header.forEach(h => h.pin());
+            },unpin(){
+                this.header.forEach(h => h.unpin());
             }
         }
     });
@@ -222,6 +226,10 @@
             aclClicked: function (acl) {
                 acl.selected = !acl.selected;
                 this.$emit("acl", acl);
+            }, pin() {
+                this.pinned = true;
+            }, unpin() {
+                this.pinned = false;
             }
         }
     });
