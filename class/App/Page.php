@@ -188,7 +188,7 @@ class Page extends \R\Page
         $path = substr($route->path, 1);
         $method = $route->method;
 
-        if($method=="del"){
+        if ($method == "del") {
             if ($request->getMethod() == "del" || $request->getMethod() == "post") {
                 return parent::__invoke($request, $response);
             }
@@ -208,7 +208,7 @@ class Page extends \R\Page
             }
         }
 
-     
+
 
         if ($request->getQueryParams()["_rt"]) {
             $rt = new UI\RTResponse();
@@ -385,7 +385,7 @@ class Page extends \R\Page
     {
         $box = new UI\Box($this);
         $box->classList->add("box-primary");
-        if($body){
+        if ($body) {
             $box->body()->append($body);
         }
         return $box;
@@ -420,7 +420,7 @@ class Page extends \R\Page
     public function createRT2($objects, $module)
     {
         //$rt = new UI\RT($objects, $module ? $module : $this->module(), $this->request);
-        $rt = new UI\RT2(null, $this);
+        $rt = new UI\RT2(null, $this, $this->app->config);
         $rt->ajax["url"] = (string)$objects[0]->request->getURI()->getPath() . "/" . $objects[1] . "?" . $this->request->getUri()->getQuery();
         $rt->ajax["url"] = substr($rt->ajax["url"], 1);
 

@@ -18,13 +18,16 @@ class RT2 extends \P\HTMLElement
     public $exports = [];
     public $order = [];
 
-    public function __construct($objects, $page)
+    public function __construct($objects, $page, $config)
     {
         parent::__construct("div");
         $this->attributes["is"] = "alt-rt2";
         $this->response = new RTResponse();
 
         $this->_page = $page;
+
+        $this->responsive = $config["rt2-responsive"];
+
     }
 
     public function order($name, $dir)
@@ -87,9 +90,10 @@ class RT2 extends \P\HTMLElement
         return $c;
     }
 
-    public function addCheckbox($field){
+    public function addCheckbox($field)
+    {
         $c = new Column();
-        $c->type="checkbox";
+        $c->type = "checkbox";
         $this->columns[] = $c;
         return $c;
     }
