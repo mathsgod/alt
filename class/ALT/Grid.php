@@ -1,21 +1,26 @@
 <?php
 
 namespace ALT;
-class Grid extends \P\Query {
+
+class Grid extends \P\Query
+{
 	private static $NUM = 0;
 	private $item = 0;
 	public $layout;
+	public $sortable = true;
 	private $_location = [];
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct("div");
-		$this->attr("is","alt-grid");
+		$this->attr("is", "alt-grid");
 		//$this->addClass("grid");
 		$this->attr("grid-num", self::$NUM);
-        self::$NUM++;
+		self::$NUM++;
 	}
 
 	private $_row = [];
-	public function addRow() {
+	public function addRow()
+	{
 		$row = p("div");
 		$row->addClass('row');
 		$this->append($row);
@@ -23,14 +28,20 @@ class Grid extends \P\Query {
 		return $row;
 	}
 
-	public function __toString() {
-		foreach($this->_location as $row => $rows) {
+	public function __toString()
+	{
+
+		if ($this->sortable) {
+			$this->attr(":sortable", "true");
+		}
+
+		foreach ($this->_location as $row => $rows) {
 			$r = $this->_row[$row];
-			foreach($rows as $section => $sections) {
+			foreach ($rows as $section => $sections) {
 				$s = $r->find("section")[$section];
 				// sorting
 				ksort($sections);
-				foreach($sections as $item => $items) {
+				foreach ($sections as $item => $items) {
 					p($s)->append((string)$items);
 				}
 			}
@@ -38,23 +49,24 @@ class Grid extends \P\Query {
 		return parent::__toString();
 	}
 
-	public function add($box, $location) {
+	public function add($box, $location)
+	{
 		if ($box instanceof \App\UI\Box || $box instanceof \App\UI\Tab) {
 			$box->collapsible(true);
 			$box->pinable(true);
-			$box->attributes["grid-item"]=$this->item;
+			$box->attributes["grid-item"] = $this->item;
 		}
 
 
 		if ($this->layout) {
-			foreach($this->layout as $row => $sections) {
-				foreach($sections as $section => $items) {
-					foreach($items as $order => $item) {
+			foreach ($this->layout as $row => $sections) {
+				foreach ($sections as $section => $items) {
+					foreach ($items as $order => $item) {
 						if ($item == $this->item) {
 
-							if($this->_location[$row][$section][intval($order)]){
+							if ($this->_location[$row][$section][intval($order)]) {
 								$this->_location[$row][$section][] = $box;
-							}else{
+							} else {
 								$this->_location[$row][$section][intval($order)] = $box;
 							}
 							$this->item++;

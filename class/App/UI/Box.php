@@ -88,7 +88,7 @@ class Box extends \P\HTMLDivElement
             $this->attributes["data-url"] = $this->dataUrl;
         }
 
-        
+
         $v = get_object_vars($this);
 
         if ($v["header"]) {
@@ -113,6 +113,10 @@ class Box extends \P\HTMLDivElement
 
         if ($this->pinable) {
             $this->attributes[":pinable"] = "true";
+        }
+
+        if ($this->draggable) {
+            $this->attributes[":draggable"] = "true";
         }
 
 

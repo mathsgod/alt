@@ -23,16 +23,19 @@
             }
         }, mounted() {
 
+            if (this.$parent.sortable) {
 
-            $(this.$el).sortable({
-                placeholder: "sort-highlight",
-                connectWith: ".connectedSortable",
-                handle: ".box-header, .nav-tabs",
-                forcePlaceholderSize: true,
-                zIndex: 999999
-            }).on("sortstop", (event, ui) => {
-                this.$emit("sortstop");
-            });
+                $(this.$el).sortable({
+                    placeholder: "sort-highlight",
+                    connectWith: ".connectedSortable",
+                    handle: ".box-header, .nav-tabs",
+                    forcePlaceholderSize: true,
+                    zIndex: 999999
+                }).on("sortstop", (event, ui) => {
+                    this.$emit("sortstop");
+                });
+            }
+
 
             this.$children.forEach(c => {
                 c.$on("pinned", (v) => {
@@ -67,7 +70,8 @@
     Vue.component("alt-grid", {
         template: document.currentScript.ownerDocument.getElementById("alt-grid"),
         props: {
-            dataUrl: String
+            dataUrl: String,
+            sortable: Boolean
         },
         mounted() {
             this.$children.forEach(c => {
