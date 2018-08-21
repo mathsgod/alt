@@ -123,7 +123,7 @@ class Page extends \App\Page
                 $this->addLib("i18next");
                 $this->addLib("components/bootstrap-datetimepicker");
 
-                $this->addLib("components/font-awesome");
+                $this->addLib("hostlink/font-awesome");
                 $this->addLib("driftyco/ionicons");
 
                 $this->addLib("jquery-validation");

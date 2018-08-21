@@ -178,6 +178,9 @@ components/bootstrap-datetimepicker:
 components/font-awesome:
   css: ['css/fontawesome-all.min.css']
 
+hostlink/font-awesome:
+  css: ['css/all.min.css']
+
 jquery-validation:
   js: ['dist/jquery.validate.min.js','dist/additional-methods.min.js','dist/localization/messages_{language}.min.js']
 
