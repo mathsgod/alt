@@ -29,7 +29,7 @@
         "hostlink/r": "^2.4",
         "hostlink/r-p": "^1.1.6",
         "hostlink/r-bs": "1.*",
-        "hostlink/r-db": "2.*",
+        "hostlink/r-db": "^2.0.3",
         "hostlink/holiday-hk": "^1.2.1",
         "hostlink/weather": "1.*",
         "hostlink/html": "1.*",

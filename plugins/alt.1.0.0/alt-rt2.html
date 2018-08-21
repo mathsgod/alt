@@ -77,6 +77,32 @@
             }
             if (this.searchType == "date") {
                 var search = $(this.$refs.search);
+                search.keypress((e) => {
+                    if (e.which == 13) {
+                        let v = this.$refs.search.value;
+                        if (v == "") {
+                            this.search = "";
+                            this.doSearch();
+                        } else if (v.indexOf("to") >= 0) {
+                            var s={};
+                            //range
+                            let a=v.split("to");
+                            s.from=a[0].trim();
+                            s.to=a[1].trim();
+                            this.search=s;
+                            this.doSearch();
+                        } else {
+
+                            var s = {};
+                            s.from = v;
+                            s.to = v;
+                            this.search = s;
+                            this.doSearch();
+                        }
+
+                    }
+                });
+
                 search.daterangepicker({
                     //singleDatePicker: true,
                     opens: "center",
@@ -92,11 +118,15 @@
                         'Last 7 Days': [moment().subtract(6, 'days'), moment()],
                         'Last 30 Days': [moment().subtract(29, 'days'), moment()],
                         'This Month': [moment().startOf('month'), moment().endOf('month')],
-                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                        'This Year': [moment().startOf('year'), moment().endOf('year')],
+                        'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
+
                     }
                 });
 
                 search.on('apply.daterangepicker', (ev, picker) => {
+                    console.log('update');
 
                     if (picker.startDate.format("YYYY-MM-DD") == picker.endDate.format("YYYY-MM-DD")) {
                         search.val(picker.startDate.format("YYYY-MM-DD"));
@@ -528,9 +558,9 @@
             return data;
         },
         created: function () {
-            var storage=$.localStorage.get(this.ajax.url) || {};
-            if(storage.order){
-                this.local.order=storage.order;
+            var storage = $.localStorage.get(this.ajax.url) || {};
+            if (storage.order) {
+                this.local.order = storage.order;
             }
             console.log(this.local.order);
 
@@ -766,7 +796,7 @@
                     }
                 });
 
-                storage.order= this.local.order;
+                storage.order = this.local.order;
 
                 $.localStorage.set(this.ajax.url, storage);
                 return this;

@@ -246,14 +246,14 @@ class RTResponse implements JsonSerializable
 
         foreach ($this->order as $o) {
             $column = $this->_columns[$o["name"]];
-            if($column->order){
+            if ($column->order) {
                 $source->orderBy($column->order . " " . $o["dir"]);
-            }elseif($column->sortCallback){
+            } elseif ($column->sortCallback) {
                 $source->orderBy(call_user_func($column->sortCallback) . " " . $o["dir"]);
-            }else{
+            } else {
                 $source->orderBy($o["name"] . " " . $o["dir"]);
             }
-           
+
         }
 
         foreach ($this->request["columns"] as $k => $c) {
@@ -288,10 +288,18 @@ class RTResponse implements JsonSerializable
                     $w[] = [$c["name"] . " = ?", $value];
                     $source->where($w);
                 } elseif ($c["searchMethod"] == "date") {
-                    $field = $c["name"];
-                    $w = [];
-                    $w[] = ["date(`$field`) between ? and ?", [$value["from"], $value["to"]]];
-                    $source->where($w);
+
+                    if ($value["from"] == $value["to"]) {
+                        $w = [];
+                        $field = $c["name"];
+                        $w[] = ["date(`$field`) = ?", $value["from"]];
+                        $source->where($w);
+                    } else {
+                        $w = [];
+                        $field = $c["name"];
+                        $w[] = ["date(`$field`) between ? and ?", [$value["from"], $value["to"]]];
+                        $source->where($w);
+                    }
                 }
             }
         }
@@ -313,11 +321,11 @@ class RTResponse implements JsonSerializable
                 $this->add($name, $c);
             } elseif (is_array($c)) {
 
-                $col=$this->add($name,$c["content"]);
-                if($c["format"]){
-                   $col->format($c["format"]);
+                $col = $this->add($name, $c["content"]);
+                if ($c["format"]) {
+                    $col->format($c["format"]);
                 }
-                if($c["alink"]){
+                if ($c["alink"]) {
                     $col->alink($c["alink"]);
                 }
             }

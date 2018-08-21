@@ -70,6 +70,7 @@ class User_list extends ALT\Page
         //$rt->add("username", "username")->alink("v");
 
         if ($t >= 0) $w[] = ["status=?", $t];
+
         $rt->source = App\User::Query()->where($w);
 
 
