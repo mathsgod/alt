@@ -30,6 +30,7 @@
 								<th>Name</th>
 								<th>Description</th>
 								<th>Version</th>
+								<th>Update</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -38,6 +39,11 @@
 								<td v-text="p.name"></td>
 								<td v-text="p.description"></td>
 								<td v-text="p.version"></td>
+								<td>
+									<button @click="updatePackage(p.name)" class="btn btn-xs btn-primary">
+										<i class="fa fa-fw fa-cloud-download-alt"></i>
+									</button>
+								</td>
 								<td>
 									<button @click="removePackage(p.name)" class="btn btn-xs btn-danger">
 										<i class="fa fa-fw fa-times"></i>
@@ -126,8 +132,17 @@
 					this.composer_output = resp.body.output;
 					this.reloadPackages();
 				});
-			},
-			requirePackage(package) {
+			}, updatePackage(package) {
+				this.composer_output = "loading...";
+				this.$http.post("System/composer/run", {
+					cmd: "update " + package
+				}).then(resp => {
+					this.cmd = "";
+					this.composer_output = resp.body.output;
+					this.reloadPackages();
+				});
+
+			}, requirePackage(package) {
 				this.composer_output = "loading...";
 				this.$http.post("System/composer/run", {
 					cmd: "require " + package
