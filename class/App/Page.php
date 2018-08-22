@@ -118,7 +118,12 @@ class Page extends \R\Page
 
         $id = $this->id();
         if (class_exists($class, true)) {
-            $this->_object = new $class($id);
+            try {
+                $this->_object = new $class($id);
+            } catch (\Exception $e) {
+                return null;
+            }
+
         }
         return $this->_object;
     }
@@ -178,11 +183,11 @@ class Page extends \R\Page
         $this->request = $request;
         $this->request = $this->request->withAttribute("module", $this->module());
 
-        $this->_object = $this->object();
-
         if ($this->app->logined()) {
             $this->app->user->online();
         }
+
+        $this->_object = $this->object();
 
         $route = $request->getAttribute("route");
         $path = substr($route->path, 1);
@@ -208,6 +213,13 @@ class Page extends \R\Page
             }
         }
 
+        if ($request->getMethod() == "get") {
+            if (!$this->_object) {
+                $this->response = $response;
+                $this->redirect($this->module()->name);
+                return $response;
+            }
+        }
 
 
         if ($request->getQueryParams()["_rt"]) {
@@ -522,4 +534,37 @@ class Page extends \R\Page
         $fb->setPage($this);
         return $fb;
     }
+
+    public function creatorBox($object)
+    {
+        if (!$object) {
+            $object = $this->object();
+        }
+        if ($object) {
+            $v = $this->createV($object);
+            if (property_exists($object, "created_by")) {
+                $v->add("Created by", "createdBy()");
+            }
+            if (property_exists($object, "created_time")) {
+                $v->add("Created time", "created_time");
+            }
+            if (property_exists($object, "updated_by")) {
+                $v->add("Updated by", "updatedBy()");
+            }
+            if (property_exists($object, "updated_time")) {
+                $v->add("Updated time", "updated_time");
+            }
+            $v->header("Creator information");
+            return $v;
+        }
+    }
+
+    public function createV($object)
+    {
+        if (!$object) {
+            $object = $this->object();
+        }
+        return new UI\V($object, $this);
+    }
+
 }

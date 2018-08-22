@@ -1,7 +1,6 @@
 <?php
 namespace App\UI;
 
-// class T extends \App\UI\T {
 class T extends Box
 {
     public $objects;
@@ -13,7 +12,7 @@ class T extends Box
         $this->objects = $objects;
         $this->body()->addClass('no-padding table-responsive');
         $this->classList->add("box-primary");
-        $this->table = new \App\UI\Table($objects, $route);
+        $this->table = new Table($objects, $route);
         $this->body()->append($this->table);
     }
 
@@ -50,7 +49,7 @@ class T extends Box
     public function setCreate($uri)
     {
         $p = new \P\AnchorCollection();
-        $p[] = $this->header()->addButton()->icon("fa fa-plus")->addClass("btn-primary")->attr("href", $uri);
+        $p[] = $this->header->addButton()->icon("fa fa-fw fa-plus")->addClass("btn-primary")->attr("href", $uri);
         return $p;
     }
 

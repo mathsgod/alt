@@ -52,7 +52,7 @@ if(checked){
     {
         $column = $this->add();
         $column->width(20);
-        $as = $column->a()->addClass("btn btn-xs btn-danger confirm")->removeClass("btn-default")->html("<i class='fa fa-times'></i>");
+        $as = $column->a()->addClass("btn btn-xs btn-danger confirm")->removeClass("btn-default")->html("<i class='fa fa-fw fa-times'></i>");
         foreach ($as as $a) {
             if ($object = p($a)->parent()->data("object")) {
                 if ($object->canDelete()) {
@@ -69,7 +69,7 @@ if(checked){
     {
         $column = $this->add();
         $column->width(20);
-        $as = $column->a()->addClass("btn btn-xs btn-warning")->removeClass("btn-default")->html("<i class='fa fa-pencil-alt'></i>");
+        $as = $column->a()->addClass("btn btn-xs btn-warning")->removeClass("btn-default")->html("<i class='fa fa-fw fa-pencil-alt'></i>");
 
         foreach ($as as $a) {
             if ($object = p($a)->parent()->data("object")) {

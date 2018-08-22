@@ -1,9 +1,10 @@
 <?php
 // Created By: Raymond Chong
 // Last Updated:
-class UserGroup_v extends ALT\Page {
-    public function get() {
-        $this->addLib("datatables");
+class UserGroup_v extends ALT\Page
+{
+    public function get()
+    {
 
         $obj = $this->object();
         if ($obj->usergroup_id != 1) {
@@ -18,13 +19,11 @@ class UserGroup_v extends ALT\Page {
 
         $mt = $this->createT($obj->UserList());
 
-        $c=$mt->addDel();
-    	$c->label="Detach from group";
+        $c = $mt->addDel();
+        $c->label = "Detach from group";
         $mt->add("Username", "User()->username");
         $mt->add("First name", "User()->first_name");
         $mt->add("Last name", "User()->last_name");
         $this->write($mt);
     }
 }
-
-?>

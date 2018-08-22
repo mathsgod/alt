@@ -33,7 +33,6 @@ class Box extends \P\HTMLDivElement
 
         $this->attributes["is"] = "alt-box";
         $this->classList->add("box");
-        $this->classList->add("box-primary");
     }
 
     public function collapsible($collapsible)

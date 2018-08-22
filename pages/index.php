@@ -35,9 +35,10 @@ class _index extends ALT\Page\Login
                 return;
             }
         }
+        
 
         $this->addLib("twbs/bootstrap");
-        $this->addLib("components/font-awesome");
+        $this->addLib("hostlink/font-awesome");
         $this->addLib("driftyco/ionicons");
         $this->addLib("iCheck");
         $this->addLib("bootboxjs");
@@ -46,6 +47,7 @@ class _index extends ALT\Page\Login
         $data["logo"] = $config["user"]["logo"];
         $data["version"] = $this->app->version();
 
+        
         $data["r"] = $r;
         if ($config["user"]["2-step verification"] && !System::IP2StepExemptCheck($_SERVER['REMOTE_ADDR'])) {
             $data["ip2step"] = true;

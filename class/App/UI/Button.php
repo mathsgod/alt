@@ -60,4 +60,11 @@ class Button extends \BS\Button
 
         return $this;
     }
+
+    public function fancybox(){
+        $this->attr("data-type","ajax");
+        $this->attr("data-fancybox",true);
+        return $this;
+    }
+    
 }

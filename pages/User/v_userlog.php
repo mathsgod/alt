@@ -6,26 +6,22 @@ class User_v_userlog extends App\Page
 {
     public function get()
     {
-        $jq = $this->createRT([$this, "ds"], "App\UserLog");
-        $jq->order("userlog_id", "desc");
-        $jq->add("Login time", "login_dt")->searchDate()->sort();
-        $jq->add("Logout time", "logout_dt");
-        $jq->add("IP address", "ip")->search();
-        $jq->add("Result", "result")->search();
-        $jq->add("User agent", "user_agent")->search()->wrap();
-        $this->write($jq);
+        $rt = $this->createRT2([$this, "ds"]);
+        $rt->order("userlog_id", "desc");
+        $rt->add("Login time", "login_dt")->searchDate()->sort();
+        $rt->add("Logout time", "logout_dt");
+        $rt->add("IP address", "ip")->ss();
+        $rt->add("Result", "result")->ss();
+        $rt->add("User agent", "user_agent")->ss();
+        $this->write($rt);
     }
 
-    public function ds($jq)
+    public function ds($rt)
     {
-        $obj = $this->object();
-        $w = $jq->where();
-        //outp($jq->Order());
-        //die();
+        $rt->source = App\UserLog::Query([
+            "user_id" => $this->object()->user_id
+        ]);
+        return $rt;
 
-        return array(
-            "total" => $obj->_Size(UserLog, $w),
-            "data" => $obj->UserLog($w, $jq->Order(), $jq->Limit())
-        );
     }
 }

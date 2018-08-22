@@ -335,14 +335,6 @@ class Page extends \App\Page
         return $box;
     }
 
-    public function createV($object)
-    {
-        if (!$object) {
-            $object = $this->object();
-        }
-        return new V($object, $this);
-    }
-
     public function createE($object)
     {
         if (func_num_args() == 0) {
@@ -376,27 +368,5 @@ class Page extends \App\Page
             }
         }
         return $grid;
-    }
-
-    public function creatorBox($object)
-    {
-        if (!$object) {
-            $object = $this->object();
-        }
-        $v = $this->createV($object);
-        if (property_exists($object, "created_by")) {
-            $v->add("Created by", "createdBy()");
-        }
-        if (property_exists($object, "created_time")) {
-            $v->add("Created time", "created_time");
-        }
-        if (property_exists($object, "updated_by")) {
-            $v->add("Updated by", "updatedBy()");
-        }
-        if (property_exists($object, "updated_time")) {
-            $v->add("Updated time", "updated_time");
-        }
-        $v->header("Creator information");
-        return $v;
     }
 }

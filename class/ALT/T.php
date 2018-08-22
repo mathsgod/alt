@@ -50,7 +50,7 @@ class T extends Box
     public function setCreate($uri)
     {
         $p = new \P\AnchorCollection();
-        $p[] = $this->header()->addButton()->icon("fa fa-plus")->addClass("btn-primary")->attr("href", $uri);
+        $p[] = $this->header->addButton()->icon("fa fa-plus")->addClass("btn-primary")->attr("href", $uri);
         return $p;
     }
 
