@@ -500,6 +500,7 @@
                 let style = {};
                 if (this.width) {
                     style["min-width"] = this.width;
+                    style.width=this.width;
                 }
                 return style;
 
@@ -562,7 +563,6 @@
             if (storage.order) {
                 this.local.order = storage.order;
             }
-            console.log(this.local.order);
 
             this.columns = this.$attrs.columns.map(o => {
                 o.hide = false;

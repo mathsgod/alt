@@ -24,6 +24,8 @@ class Box extends \P\HTMLDivElement
     public $collapsed = false;
     public $pinable = false;
     public $dataUrl = null;
+    public $dataUri = null;
+    private static $NUM = 0;
 
     public function __construct(Page $page)
     {
@@ -33,6 +35,19 @@ class Box extends \P\HTMLDivElement
 
         $this->attributes["is"] = "alt-box";
         $this->classList->add("box");
+
+        $this->dataUri = $page->path() . "/box[" . self::$NUM . "]";
+
+        $ui = \App\UI::_($this->dataUri);
+        if ($ui->layout) {
+            $layout = json_decode($ui->layout, true);
+            if ($layout["collapsed"]) {
+                $this->collapsed=$layout["collapsed"];
+            }
+        }
+
+        self::$NUM++;
+
     }
 
     public function collapsible($collapsible)
@@ -85,6 +100,10 @@ class Box extends \P\HTMLDivElement
         if ($this->dataUrl) {
             $body = $this->body;
             $this->attributes["data-url"] = $this->dataUrl;
+        }
+
+        if($this->dataUri){
+            $this->attributes["data-uri"] = $this->dataUri;
         }
 
 

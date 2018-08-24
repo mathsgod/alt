@@ -56,6 +56,18 @@ Vue.component("ckeditor", {
 
 
 var vue_init = function () {
+    document.querySelectorAll("alt-tab").forEach(o => {
+        new Vue({
+            el: o
+        });
+    });
+
+    document.querySelectorAll("alt-tab-pane").forEach(o => {
+        new Vue({
+            el: o
+        });
+    });
+
     document.querySelectorAll("select2").forEach(o => {
         new Vue({
             el: o
@@ -109,6 +121,7 @@ var vue_init = function () {
         });
     });
     document.querySelectorAll("[is]").forEach(o => {
+        console.log("is loaded");
         new Vue({
             el: o
         });

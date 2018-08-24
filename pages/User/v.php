@@ -33,7 +33,7 @@ class User_v extends ALT\GridPage {
 
 		$tab = $this->createTab();
 		$tab->add("UserGroup", "v_usergroup");
-		if (My::User()->isAdmin()) {
+		if ($this->app->user->isAdmin()) {
 			$tab->add("UserLog", "v_userlog");
 			// $tab->add("v_module", "Module ACL");
 			// $tab->add("v_apikey", "API Key");

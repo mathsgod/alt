@@ -158,16 +158,33 @@ class App extends \R\App
             }
         }
 
-        if (strtolower($this->request->getMethod()) == "delete"
-            && in_array("application/json", $this->request->getHeader("accept"))) {
 
+        $path = $this->request->getUri()->getPath();
 
-            $rest = new REST();
-            $response = $rest($this->request, new Response(200));
-            file_put_contents("php://output", (string)$response->getBody());
-            return;
+        $p = array_values(array_filter(explode("/", $path), "strlen"));
+
+        $method = strtolower($this->request->getMethod());
+
+        if (in_array("application/json", $this->request->getHeader("accept")) && count($p) <= 2) {
+            if ((count($p) == 2 && is_numeric($p[1])) || $p[1] == null) {
+            //check permission
+                if ($method == "get") {
+                    if (!ACL::Allow($p[0], "R")) {
+                        http_response_code(403);
+                        return;
+                    }
+                }
+
+                $rest = new REST();
+                $response = $rest($this->request, new Response(200));
+                if ($code = $response->getStatusCode()) {
+                    http_response_code($code);
+                }
+                file_put_contents("php://output", (string)$response->getBody());
+                return;
+
+            }
         }
-
 
 //outp($this->plugins_setting);
 //die();

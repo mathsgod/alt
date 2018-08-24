@@ -1,7 +1,7 @@
 <?php
 namespace App;
-class UserLog extends Model{
+
+class UserLog extends Model
+{
 
 }
-
-?>

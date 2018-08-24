@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c322cf5693b7ed3b8411337705d9fea3",
+    "content-hash": "a3a0c4fda8e4d506bdbdeb779b30fce0",
     "packages": [
         {
             "name": "bassjobsen/bootstrap-3-typeahead",
@@ -762,10 +762,10 @@
         },
         {
             "name": "hostlink/r-p",
-            "version": "1.1.7",
+            "version": "1.1.8",
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/bitbucket/repo/packages/hostlink-r-p-1.1.7.zip",
+                "url": "https://raymond2.hostlink.com.hk/bitbucket/repo/packages/hostlink-r-p-1.1.8.zip",
                 "reference": null,
                 "shasum": null
             },

@@ -142,6 +142,11 @@ class Column implements JsonSerializable
         return $this->order($index);
     }
 
+    public function sortCallback($callback){
+        $this->sortCallback=$callback;
+        return $this;
+    }
+    
     public function order($order)
     {
         if ($order) $this->order = $order;

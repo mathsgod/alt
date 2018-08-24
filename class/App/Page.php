@@ -24,13 +24,11 @@ class Page extends \R\Page
 
     public function _log($message, $array)
     {
-        $log = \App::Logger();
-
-
-        if ($message) {
-            $log->info($message, $array);
+        if ($log = $this->logger) {
+            if ($message) {
+                $log->info($message, $array);
+            }
         }
-
         return $log;
     }
 
@@ -199,7 +197,7 @@ class Page extends \R\Page
             }
         }
 
-        if (!ACL::Allow($path) && !ACL::Allow($path . "/" . $method)) {
+        if (!$this->app->acl($path) && !$this->app->acl($path . "/" . $method)) {
             if ($request->isAccept("text/html")) {
                 \App::AccessDeny($path);
                 return;
@@ -214,7 +212,7 @@ class Page extends \R\Page
         }
 
         if ($request->getMethod() == "get") {
-            if (!$this->_object) {
+            if (!$this->_object && $this->id()) {
                 $this->response = $response;
                 $this->redirect($this->module()->name);
                 return $response;
@@ -373,7 +371,6 @@ class Page extends \R\Page
 
     public function createT($objects)
     {
-//        return new \ALT\T($objects,$this);
         return new UI\T($objects, $this);
     }
 
@@ -381,7 +378,6 @@ class Page extends \R\Page
     {
         return new UI\Tab($this, $prefix);
     }
-
 
     public function createTable($objects)
     {

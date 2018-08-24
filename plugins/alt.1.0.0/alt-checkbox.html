@@ -1,9 +1,9 @@
 <script>
     Vue.component("icheck", {
-        template: `<input type='checkbox' />`,
+        template: `<input type='checkbox' :value="value"/>`,
         props: {
             value: {
-                default: 0
+                default: null
             },
             checkboxClass: {
                 type: String,
@@ -12,37 +12,30 @@
             radioClass: {
                 type: String,
                 default: 'iradio_square-blue'
+            }, checked: {
+                type: Boolean
             }
         },
         created() {
 
         },
-        watch: {
-            value() {
-                if (this.value == 1) {
-                    $(this.$el).iCheck("check");
-                } else {
-                    $(this.$el).iCheck("uncheck");
-                }
-            }
-        },
         mounted() {
             $(this.$el).iCheck(this._props);
 
-            if (this.value == 1) {
-                $(this.$el).iCheck("check");
+            if(this.checked){
+                $(this.$el).iCheck('check');
             }
-
+            
             $(this.$el).on('ifClicked', (event) => {
                 $(this.$el).trigger("click");
                 this.$emit("click", event);
             }).on("ifChanged", (event) => {
                 this.$emit("change", event);
             }).on("ifChecked", (event) => {
-                this.$emit("input", 1);
+                this.$emit("input", this.$el.value);
                 this.$emit("checked", event);
             }).on("ifUnchecked", (event) => {
-                this.$emit("input", 0);
+                this.$emit("input", null);
                 this.$emit("unchecked", event);
             });
 

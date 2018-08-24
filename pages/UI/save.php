@@ -64,7 +64,7 @@ class UI_save extends App\Page
             return ["code" => 200];
         } elseif ($_POST["type"] == "box") {
             $this->saveBox();
-            return;
+            return ["code" => 200];
         } elseif ($_POST["type"] == "fav") {
             $this->saveFav();
             return;

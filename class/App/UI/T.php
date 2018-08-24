@@ -55,7 +55,7 @@ class T extends Box
 
     public function formCreate($options, $default)
     {
-        $this->table->attr("form-create", true);
+        $this->table->attributes["form-create"] = true;
 
         if (is_string($options)) {
             $opt = [
@@ -66,7 +66,7 @@ class T extends Box
             $opt = $options;
         }
 
-        $this->table->attr("form-name", $opt["name"]);
+        $this->table->attributes["form-name"] = $opt["name"];
         $this->table->default = $opt["default"];
 
         return $this;
