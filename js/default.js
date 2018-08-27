@@ -121,7 +121,6 @@ var vue_init = function () {
         });
     });
     document.querySelectorAll("[is]").forEach(o => {
-        console.log("is loaded");
         new Vue({
             el: o
         });

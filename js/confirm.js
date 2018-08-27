@@ -16,4 +16,6 @@
 		setTimeout(f,0);
 	});
 	$(f);
+
+	setInterval(f, 300);
 })(jQuery);
