@@ -131,21 +131,15 @@ class REST
 
         try {
             if ($method == "patch") {
-                $content = json_decode($request->getBody()->getContents());
-                $ret = self::Patch($uri, $content);
+                $ret = self::Post($uri, $request->getParsedBody());
             } elseif ($method == "get") {
                 $ret = self::Get($uri);
             } elseif ($method == "post") {
-                $content = $_POST;
-                if (!$content) {
-                    $content = json_decode($request->getBody()->getContents());
-                }
-                $ret = self::Post($uri, $content);
+                $ret = self::Post($uri, $request->getParsedBody());
             } else if ($method == "delete") {
                 $ret = self::Delete($uri);
             } elseif ($method == "put") {
-                $content = json_decode($request->getBody()->getContents());
-                $ret = self::Put($uri, $content);
+                $ret = self::Put($uri, $request->getParsedBody());
             }
 
             $response = $response->withBody(new JSONStream($ret));

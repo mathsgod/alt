@@ -23,7 +23,7 @@ class lockscreen extends ALT\Page\LockScreen {
             return;
         }
         $this->addLib("twbs/bootstrap");
-        $this->addLib("components/font-awesome");
+        $this->addLib("hostlink/font-awesome");
         $this->addLib("driftyco/ionicons");
         $this->addLib("iCheck");
 
