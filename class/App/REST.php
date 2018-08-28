@@ -10,6 +10,19 @@ use Exception;
 class REST
 {
 
+    public static function IsValid(RequestInterface $request)
+    {
+        if (!in_array("application/json", $request->getHeader("accept"))) {
+            return false;
+        }
+
+        if (!in_array("application/json", $request->getHeader("content-type"))) {
+            return false;
+        }
+
+        return true;
+    }
+
     //create data
     public static function Post($uri, $data)
     {
@@ -123,7 +136,10 @@ class REST
             } elseif ($method == "get") {
                 $ret = self::Get($uri);
             } elseif ($method == "post") {
-                $content = json_decode($request->getBody()->getContents());
+                $content = $_POST;
+                if (!$content) {
+                    $content = json_decode($request->getBody()->getContents());
+                }
                 $ret = self::Post($uri, $content);
             } else if ($method == "delete") {
                 $ret = self::Delete($uri);

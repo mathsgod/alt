@@ -158,14 +158,13 @@ class App extends \R\App
             }
         }
 
-
         $path = $this->request->getUri()->getPath();
 
         $p = array_values(array_filter(explode("/", $path), "strlen"));
 
         $method = strtolower($this->request->getMethod());
 
-        if (in_array("application/json", $this->request->getHeader("accept")) && count($p) <= 2) {
+        if (REST::IsValid($this->request)) {
             if ((count($p) == 2 && is_numeric($p[1])) || $p[1] == null) {
             //check permission
                 if ($method == "get") {
@@ -186,8 +185,6 @@ class App extends \R\App
             }
         }
 
-//outp($this->plugins_setting);
-//die();
         $router = new Router();
         $router->add("GET", "404_not_found", [
             "class" => "_404_not_found",
