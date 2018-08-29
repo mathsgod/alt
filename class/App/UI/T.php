@@ -10,10 +10,13 @@ class T extends Box
     {
         parent::__construct($route);
         $this->objects = $objects;
-        $this->body()->addClass('no-padding table-responsive');
+        $this->body->classList->add("no-padding");
+        $this->body->classList->add('table-responsive');
         $this->classList->add("box-primary");
         $this->table = new Table($objects, $route);
-        $this->body()->append($this->table);
+        $this->table->classList->add("table-condensed");
+        $this->table->classList->add("table-hover");
+        $this->body->append($this->table);
     }
 
     public function addCheckbox($index)

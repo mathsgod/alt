@@ -20,7 +20,6 @@ class Table extends HTMLTableElement
         $this->page = $page;
         $this->attributes["is"] = "alt-table";
         $this->classList->add("table");
-        $this->classList->add("table-condensed");
 
         $this->createTBody();
     }
@@ -48,6 +47,7 @@ class Table extends HTMLTableElement
         foreach ($this->objects as $k => $obj) {
             if ($tbody->rows->length <= $i) {
                 $row = $tbody->insertRow();
+                $row->attributes["data-index"]=$obj->id();
             } else {
                 $row = $tbody->rows[$i];
             }
