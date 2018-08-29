@@ -84,12 +84,12 @@
                             this.search = "";
                             this.doSearch();
                         } else if (v.indexOf("to") >= 0) {
-                            var s={};
+                            var s = {};
                             //range
-                            let a=v.split("to");
-                            s.from=a[0].trim();
-                            s.to=a[1].trim();
-                            this.search=s;
+                            let a = v.split("to");
+                            s.from = a[0].trim();
+                            s.to = a[1].trim();
+                            this.search = s;
                             this.doSearch();
                         } else {
 
@@ -500,7 +500,7 @@
                 let style = {};
                 if (this.width) {
                     style["min-width"] = this.width;
-                    style.width=this.width;
+                    style.width = this.width;
                 }
                 return style;
 
@@ -527,9 +527,7 @@
                 default: () => { return [] }
             }
         },
-        data: function () {
-            var storage = $.localStorage.get(this.ajax.url) || {};
-
+        data() {
             var data = {
                 hoverChild: [],
                 total: 0,
@@ -546,20 +544,19 @@
                 columns: [],
                 responsive: this.$attrs.responsive
             };
-
-            if (typeof storage.responsive !== "undefined") {
-                data.responsive = storage.responsive;
-            }
-
-            if (typeof storage.pageLength !== "undefined") {
-                data.local.pageLength = parseInt(storage.pageLength);
-            }
-
-
             return data;
         },
         created: function () {
-            var storage = $.localStorage.get(this.ajax.url) || {};
+            var storage = this.storage;
+
+            if (storage.responsive) {
+                this.responsive = storage.responsive;
+            }
+
+            if (storage.pageLength) {
+                this.local.pageLength = parseInt(storage.pageLength);
+            }
+
             if (storage.order) {
                 this.local.order = storage.order;
             }
@@ -567,6 +564,15 @@
             this.columns = this.$attrs.columns.map(o => {
                 o.hide = false;
                 o.orderDir = "";
+                o.isVisible = true;
+
+                storage.columns = Object.assign({}, storage.columns);
+                if (s = storage.columns[o.name]) {
+                    if (s.isVisible === false) {
+                        o.isVisible = false;
+                    }
+                }
+
                 this.local.order.forEach(ord => {
                     if (ord.name == o.name) {
                         o.orderDir = ord.dir;
@@ -575,12 +581,6 @@
 
                 return new Vue({
                     data: o,
-                    props: {
-                        isVisible: {
-                            type: Boolean,
-                            default: true
-                        }
-                    },
                     methods: {
                         cell(d) {
                             var cell = {
@@ -647,8 +647,20 @@
                             return o;
                         }, toggleVisible() {
                             this.isVisible = !this.isVisible;
+                            this.$emit('toggleVisible');
                         }
                     }
+                });
+            });
+
+            this.columns.forEach(column => {
+
+                column.$on("toggleVisible", () => {
+                    let storage = this.storage;
+                    storage.columns = storage.columns || {};
+                    storage.columns[column.name] = storage.columns[column.name] || {};
+                    storage.columns[column.name] = Object.assign(storage.columns[column.name], { isVisible: column.isVisible });
+                    this.storage = storage;
                 });
             });
         },
@@ -660,6 +672,16 @@
 
             window.addEventListener('resize', this.resize);
         }, computed: {
+            storage: {
+                get() {
+                    let id = this.ajax.url.split("/").filter(s => !Number(s)).join("/");
+                    return $.localStorage.get(id) || {};
+                },
+                set(data) {
+                    let id = this.ajax.url.split("/").filter(s => !Number(s)).join("/");
+                    $.localStorage.set(id, data);
+                }
+            },
             pageCount() {
                 return Math.ceil(this.total / this.local.pageLength);
             },
@@ -731,16 +753,17 @@
                 });
             },
             resetLocaStorage() {
-                $.localStorage.remove(this.ajax.url);
+                let id = this.ajax.url.split("/").filter(s => !Number(s)).join("/");
+                $.localStorage.remove(id);
                 this.draw();
             },
             toggleResponsive() {
                 this.responsive = !this.responsive;
 
                 //save 
-                var storage = $.localStorage.get(this.ajax.url) || {};
+                var storage = this.storage;
                 storage.responsive = this.responsive;
-                $.localStorage.set(this.ajax.url, storage);
+                this.storage = storage;
 
                 this.resize();
             },
@@ -757,9 +780,9 @@
             }, onChangePageLength() {
 
                 //save 
-                var storage = $.localStorage.get(this.ajax.url) || {};
+                var storage = this.storage;
                 storage.pageLength = this.local.pageLength;
-                $.localStorage.set(this.ajax.url, storage);
+                this.storage = storage;
 
                 this.page = 1;
                 this.draw();
@@ -782,7 +805,7 @@
                 return this.remoteData;
             }, order(o) {
 
-                var storage = $.localStorage.get(this.ajax.url) || {};
+                var storage = this.storage;
 
                 this.local.order = [{
                     name: o[0],
@@ -798,7 +821,8 @@
 
                 storage.order = this.local.order;
 
-                $.localStorage.set(this.ajax.url, storage);
+                this.storage = storage;
+
                 return this;
             }, draw() {
                 this.$refs.box.showLoading();

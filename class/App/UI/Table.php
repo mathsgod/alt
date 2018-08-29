@@ -47,7 +47,12 @@ class Table extends HTMLTableElement
         foreach ($this->objects as $k => $obj) {
             if ($tbody->rows->length <= $i) {
                 $row = $tbody->insertRow();
-                $row->attributes["data-index"]=$obj->id();
+                if($obj instanceof \App\Model){
+                    $row->attributes["data-index"]=$obj->id();
+                }else{
+                    $row->attributes["data-index"]=$k;
+                }
+                
             } else {
                 $row = $tbody->rows[$i];
             }

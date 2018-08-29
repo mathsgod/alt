@@ -1,6 +1,7 @@
 //created by Raymond Chong
 (function ($) {
     var f = function () {
+        return;
         $(".table-childrow-btn").off('click').on("click", function () {
             var $this = $(this);
             var tr = $(this).closest("tr");
@@ -41,8 +42,8 @@
             } else {
                 $this.removeClass("table-childrow-open").addClass("table-childrow-close");
                 $this.find("i").removeClass("fa-chevron-down").addClass("fa-chevron-up");
-                var s=$this.attr("data-id");
-                var $table=$this.closest("table")
+                let s=$this.attr("data-id");
+                var $table=$this.closest("table");
                 $table.find("tr.table-childrow[data-id='"+s+"']").remove();
 
 
