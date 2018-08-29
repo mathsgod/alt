@@ -37,8 +37,8 @@
                         } else {
                             del_input.attr('name', '_d[]');
                         }
-                        del_input.val($tr.attr("index"));
-                        if ($tr.attr("index")) {
+                        del_input.val($tr.attr("data-index"));
+                        if ($tr.attr("data-index")) {
                             $table.after(del_input);
                         }
 
