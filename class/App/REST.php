@@ -12,13 +12,15 @@ class REST
 
     public static function IsValid(RequestInterface $request)
     {
+
         if (!in_array("application/json", $request->getHeader("accept"))) {
             return false;
         }
 
-        if (!in_array("application/json", $request->getHeader("content-type"))) {
+        if(strpos("application/json",$request->getHeader("content-type")[0])==-1){
             return false;
         }
+
 
         return true;
     }
@@ -31,7 +33,7 @@ class REST
         $module = Module::_($p[0]);
 
         $class = "\\" . $module->class;
-        $obj = new $class();
+        $obj = new $class($p[1]);
         $obj->bind($data);
         $obj->save();
         return ["code" => 200, "location" => $p[0] . "/" . $obj->id()];
