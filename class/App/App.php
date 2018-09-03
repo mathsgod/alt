@@ -217,7 +217,7 @@ class App extends \R\App
             $class = $route->class;
             $page = new $class($this);
         }
-        
+
 
         $this->loader->addPsr4("", $pi["cms_root"] . "/pages");
         if ($page) {
@@ -482,8 +482,22 @@ class App extends \R\App
         }
 
         return ACL::Allow($path);
+    }
 
+    public function createMail()
+    {
+        $mail = new App\Mail(true);
+        $smtp = $this->config["user"]["smtp"];
 
+        if ($smtp && $smtp->value) {
+            $this->IsSMTP();
+            $this->Host = (string)$smtp;
+            $this->SMTPAuth = true;
+            $this->Username = $config["smtp-username"];
+            $this->Password = $config["smtp-password"];
+        }
+
+        return $mail;
 
     }
 
