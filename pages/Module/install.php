@@ -2,6 +2,22 @@
 
 class Module_install extends ALT\Page
 {
+    public function rrmdir($dir)
+    {
+        if (is_dir($dir)) {
+            $objects = scandir($dir);
+            foreach ($objects as $object) {
+                if ($object != "." && $object != "..") {
+                    if (is_dir($dir . "/" . $object))
+                        $this->rrmdir($dir . "/" . $object);
+                    else
+                        unlink($dir . "/" . $object);
+                }
+            }
+            rmdir($dir);
+        }
+    }
+
     public function rmove($src, $dest)
     {
 
@@ -47,11 +63,22 @@ class Module_install extends ALT\Page
             $tag_name = $o["tag_name"];
             $url = "https://github.com/$full_name/archive/$tag_name.tar.gz";
             $btn = html("a");
+            $btn->class("btn btn-xs btn-success");
             $btn->href("Module/install/github?url=$url&name=$full_name&tag=$tag_name");
-            $btn->text("install");
-
+            $btn->text("Install");
             return $btn;
         });
+
+        $t->add("Download", function ($o) use ($full_name) {
+            $tag_name = $o["tag_name"];
+            $url = "https://github.com/$full_name/archive/$tag_name.tar.gz";
+            $btn = html("a");
+            $btn->class("btn btn-xs btn-success")->target("_blank");
+            $btn->href($url);
+            $btn->text("Download");
+            return $btn;
+        });
+
         $this->write($t);
     }
 
@@ -67,15 +94,6 @@ class Module_install extends ALT\Page
 
         $phar = new PharData($phar_path);
         $phar->extractTo($target);
-
-        $this->rmove($target . "/$name/src", $pi["cms_root"] . "/pages");
-
-        //array_map('unlink', glob("path/to/temp/*"));
-
-
-        echo "test";
-        die();
-
     }
 
     public function github($url, $name, $tag)
@@ -85,35 +103,24 @@ class Module_install extends ALT\Page
 
         $name = basename($name);
 
-        $file = $pi["cms_root"] . "/pages/$name-$tag.tar.gz";
-        file_put_contents($file, $ret);
+        $page = $pi["cms_root"] . "/pages";
+        $tar = "$page/$name-$tag.tar.gz";
 
-        $this->unzip($file);
+        file_put_contents($tar, $ret);
+
+        $this->rrmdir($page . "/$name-$tag");
+
+        $this->unzip($tar);
+
+        $this->rmove($page . "/$name-$tag/src", $pi["cms_root"] . "/pages");
+
+        $this->rrmdir($page . "/$name-$tag");
+
+        unlink($tar);
 
 
-        echo "done";
-        return;
-
-
-
-        $file = $pi["cms_root"] . "/pages/file.zip";
-        file_put_contents($file, $ret);
-
-        $zip = new ZipArchive();
-        if ($zip->open($file) === true) {
-            $zip->extractTo($pi["cms_root"] . "/pages/rdb", ["r-db-1.0.0/src"]);
-            $zip->close();
-            echo "ok";
-        } else {
-            echo "failed";
-        }
-
-        die();
-        return;
-
-        PharData::extractTo(__DIR__ . "/test", $url);
-        echo "ok";
-
+        $this->alert->success("OK");
+        $this->redirect();
     }
 
     public function getGitHubRelease($full_name)
