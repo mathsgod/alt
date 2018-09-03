@@ -37,11 +37,15 @@ class Plugin
         $path[] = [$system_root . "/AdminLTE/plugins/{$name}", $system_base . "/AdminLTE/plugins/$name"];
 
         $yml_file = $system_root . "/plugins.yml";
+        
 
         $config = \App::_()->plugins_setting;
+
+
         if ($config[$name]) {
             $this->setting = $config[$name];
         }
+
 
         if ($setting=parse_ini_file($cms_root . "/plugins.ini", true)[$name]) {
             $this->setting = $setting;

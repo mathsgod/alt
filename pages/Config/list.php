@@ -6,7 +6,7 @@ class Config_list extends App\Page
     public function get()
     {
 
-        foreach (Config::All() as $category => $config) {
+        foreach ($this->app->config as $category => $config) {
             $c = [];
             foreach ($config as $k => $v) {
                 $c[] = [$k, $v];

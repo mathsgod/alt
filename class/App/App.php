@@ -142,6 +142,7 @@ class App extends \R\App
 
     public function run()
     {
+
         if ($this->logger) $this->logger->debug("APP::run");
 
         $this->base = $this->request->getUri()->getBasePath();
@@ -150,6 +151,14 @@ class App extends \R\App
 
         //load plugins
         $this->plugins_setting = \Symfony\Component\Yaml\Yaml::parseFile($pi["system_root"] . "/plugins.yml");
+
+        if ($this->config["user"]["development"]) {
+            $setting = \Symfony\Component\Yaml\Yaml::parseFile($pi["system_root"] . "/plugins.development.yml");
+
+            foreach ($setting as $n => $v) {
+                $this->plugins_setting[$n] = $v;
+            }
+        }
 
         foreach ($this->plugins_setting as $name => $value) {
             if ($value["locale"][$this->user->language]) {
@@ -208,6 +217,7 @@ class App extends \R\App
             $class = $route->class;
             $page = new $class($this);
         }
+        
 
         $this->loader->addPsr4("", $pi["cms_root"] . "/pages");
         if ($page) {
@@ -215,6 +225,7 @@ class App extends \R\App
             try {
                 $response = $page($request->withMethod($route->method), $response);
             } catch (\Exception $e) {
+
                 $this->alert->danger($e->getMessage());
 
                 $header = $this->request->getHeader("Referer");

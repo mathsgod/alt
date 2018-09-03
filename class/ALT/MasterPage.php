@@ -22,7 +22,7 @@ class MasterPage
      
         // get the data
         $data["lang"] = \My::Language();
-        if (\App::Config("user", "development")) {
+        if ($config["user"]["development"]) {
             $data["development"] = "development";
         }
         $data["setting"] = json_decode($this->app->user->setting, true);
@@ -142,7 +142,7 @@ class MasterPage
                             $menu["active"] = 1;
                         }
                     }
-                    if(!sizeof($menu["submenu"])){
+                    if (!sizeof($menu["submenu"])) {
                         continue;
                     }
 
@@ -192,8 +192,8 @@ class MasterPage
         $data["css"][] = "$system/plugins/RT/css/rt.css";
 
         $data["alerts"] = $this->app->flushMessage();
-       
-        
+
+
         $data["languages"] = $app->config["language"];
 
         $data["favs"] = [];

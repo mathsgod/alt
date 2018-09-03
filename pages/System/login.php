@@ -24,21 +24,26 @@ class System_login extends R\Page
 
     public function forget_password()
     {
+
         $username = $_POST["username"];
         $email = $_POST["email"];
+
         if (!$username) {
-            throw new \Exception("Username cannot be null", 400);
+            return ["error" => ["message" => "Username cannot be null"]];
         }
+
         if (!$email) {
-            throw new \Exception("Email cannot be null", 400);
+            return ["error" => ["message" => "Email cannot be null"]];
         }
 
         $w[] = ["username=?", $username];
         $w[] = ["email=?", $email];
         if ($user = \App\User::first($w)) {
-            $user->sendPassword();
+            try {
+                $user->sendPassword();
+            } catch (Exception $e) {
+                return ["error" => ["message" => $e->getMessage()]];
+            }
         }
-
-        return true;
     }
 }

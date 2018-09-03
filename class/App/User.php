@@ -291,16 +291,19 @@ class User extends Model
     {
         $password = Util::GeneratePassword();
         $e_pwd = Util::Encrypt($password);
-        $this->update(["password" => $e_pwd]);
 
-        $tpl = \App::TPL("email/forget_password.tpl");
-        $tpl->assign("username", $this->username);
-        $tpl->assign("password", $password);
+        $ret = $this->update(["password" => $e_pwd]);
+
+        $config = $this->_app()->config;
+        $content = $config["user"]["forget pwd email/content"];
+        $content = str_replace("{username}", $this->username, $content);
+        $content = str_replace("{password}", $password, $content);
+
         // Send Mail
-        $mm = new \App\Mail();
-        $mm->Subject = \App::Config("user", "domain") . " reset password";
-        $mm->msgHTML($tpl->getOutputContent());
-        $mm->setFrom("admin@" . \App::Config("user", "domain"));
+        $mm = new \App\Mail(true);
+        $mm->Subject = $config["user"]["forget pwd email/subject"];
+        $mm->msgHTML($content);
+        $mm->setFrom("admin@" . $config["user"]["domain"]);
         $mm->addAddress($this->email);
         $mm->Send();
         return $password;
@@ -345,8 +348,8 @@ class User extends Model
     public function __get($name)
     {
         if ($name == "usergroup") {
-            
-            $w[]=["usergroup_id in (select usergroup_id from UserList where user_id=?)", $this->user_id];
+
+            $w[] = ["usergroup_id in (select usergroup_id from UserList where user_id=?)", $this->user_id];
             return UserGroup::Query()->where($w);
         }
         return parent::__get($name);
