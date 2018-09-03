@@ -170,10 +170,15 @@ class Page extends \R\Page
             return;
         }
 
-        $header = $this->request->getHeader("Referer");
-        if ($h = $header[0]) {
-            $this->response = $this->response->withHeader("Location", $h);
+        if ($referer = $this->request->getHeader("Referer")[0]) {
+            if ($url = $_SESSION["app"]["referer"][$referer]) {
+                $this->response = $this->response->withHeader("Location", $url);
+                return;
+            }
+
+            $this->response = $this->response->withHeader("Location", $referer);
         }
+        
     }
 
     public function __invoke($request, $response)
@@ -347,17 +352,10 @@ class Page extends \R\Page
         $route = $request->getAttribute("route");
 
         if ($referer = $this->request->getHeader("Referer")[0]) {
-            $params = $this->request->getQueryParams();
-            $params["_referer"] = $referer;
-            $request = $this->request->withQueryParams($params);
 
-            $uri = $request->getUri();
-
-            $f->attributes["action"] = $uri->getBasePath() . $uri->getPath() . "?" . $uri->getQuery();
-        } else {
-            $f->attributes["action"] = "#";
+            $_SESSION['app']["referer"][(string)$this->request->getUri()] = $referer;
+            //$f->addHidden("_referer", $referer);
         }
-
         if ($content) {
             $f->addBody($content);
         }

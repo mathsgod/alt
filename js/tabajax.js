@@ -12,7 +12,6 @@ $(function () {
         $o.find('[data-toggle="tabajax"]').click(function (e) {
             clearTimeout(that._tab_timer);
             if (that._current_xhr) {
-                console.log('abort');
                 that._current_xhr.abort();
             }
             var $this = $(this),

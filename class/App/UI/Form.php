@@ -27,8 +27,10 @@ class Form extends \My\HTML\Form
 
         $this->submit_button = new Button($page);
         $this->submit_button->classList->add("btn-success");
-        $this->submit_button->icon("fa fa-check")->label("Submit");
         $this->submit_button->attributes["type"] = "submit";
+        $this->submit_button->attributes["icon"]="fa fa-check";
+        $this->submit_button->attributes["is"] = "alt-button";
+        $this->submit_button->label("Submit");
 
         $this->box->footer->append($this->submit_button);
 

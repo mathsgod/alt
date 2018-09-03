@@ -32,13 +32,14 @@ class User_ae extends ALT\Page
         $mv = $this->createE();
 
         $c = $mv->add("Username");
-        if (My::User()->isAdmin() || My::User()->isPowerUser() || !$obj->id()) {
+        $user = $this->app->user;
+        if ($user->isAdmin() || $user->isPowerUser() || !$obj->id()) {
             $c->input("username")->required();
         } else {
             $c->text("username");
         }
 
-        $password = $mv->add("Password")->password("password")->minlength(Config::_("password-length"));
+        $password = $mv->add("Password")->password("password")->minlength($this->app->config["user"]["password-length"]);
         if (!$obj->id()) {
             $password->required();
         }
@@ -46,8 +47,8 @@ class User_ae extends ALT\Page
         $mv->add("First name")->input("first_name")->required();
         $mv->add("Last name")->input("last_name");
 
-        $mv->Add("Phone")->input("phone");
-        $mv->Add("Email")->email("email")->required();
+        $mv->add("Phone")->input("phone");
+        $mv->add("Email")->email("email")->required();
 
         $r = $mv->add("Address");
         $r->input("addr1");
@@ -55,20 +56,20 @@ class User_ae extends ALT\Page
         $r->input("addr3");
 
         $r = $mv->add("Join date");
-        if (App::User()->isAdmin() || App::User()->IsPowerUser() || !$obj->id()) {
+        if ($user->isAdmin() || $user->isPowerUser() || !$obj->id()) {
             $r->date("join_date")->required(true);
         } else {
             $r->date("join_date");
         }
 
         if (!$obj->isAdmin()) {
-            if ((App::User()->isAdmin() || App::User()->IsPowerUser()) && App::User()->user_id != $obj->user_id) {
+            if (($user->isAdmin() || $user->isPowerUser()) && $user->user_id != $obj->user_id) {
                 $mv->add("Status")->select("status")->ds(User::$_Status);
                 $mv->add("Expiry date")->date("expiry_date");
             }
         }
 
-        if ((App::User()->isAdmin() || App::User()->is("Power Users")) && !$obj->id()) {
+        if (($user->isAdmin() || $user->isPowerUser()) && !$obj->id()) {
             $mv->addHr();
             $u = UserGroup::_("Users");
 
