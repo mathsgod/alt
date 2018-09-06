@@ -1,17 +1,28 @@
 <script>
     Vue.component("select2", {
         template: `<select class="form-control"><slot></slot></select>`,
+        props: {
+            value: {
+                type: String
+            }
+        },
         mounted() {
             $(this.$el).select2();
+            $(this.$el).val(this.value);
+            $(this.$el).trigger('change')
 
             $(this.$el).on("change", () => {
-                this.$emit('change', this);
+                var data = $(this.$el).select2('data');
+
+                let v = data.map(s => {
+                    return s.id;
+                });
+
+                this.$emit("input", v[0]);
             });
         },
         methods: {
-            value() {
-                return this.$el.value;
-            }, empty() {
+            empty() {
                 $(this.$el).empty();
             }
         }
