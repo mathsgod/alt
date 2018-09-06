@@ -34,13 +34,23 @@
             value: {
                 type: Array
             }
+        }, watch: {
+            value(newValue, oldValue) {
+
+
+                $(this.$el).val(newValue);
+                $(this.$el).trigger('change.select2')
+
+
+            }
         }, mounted() {
             $(this.$el).select2();
 
             $(this.$el).val(this.value);
-            $(this.$el).trigger('change')
+            $(this.$el).trigger('change.select2')
 
             $(this.$el).on("change", () => {
+                console.log("onchange");
                 var data = $(this.$el).select2('data');
 
                 let v = data.map(s => {
@@ -50,5 +60,6 @@
                 this.$emit("input", v);
             });
         }
+
     });
 </script>
