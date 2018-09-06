@@ -19,8 +19,25 @@
 
     Vue.component("multiselect2", {
         template: `<select class="form-control" multiple><slot></slot></select>`,
-        mounted() {
+        props: {
+            value: {
+                type: Array
+            }
+        }, mounted() {
             $(this.$el).select2();
+
+            $(this.$el).val(this.value);
+            $(this.$el).trigger('change')
+
+            $(this.$el).on("change", () => {
+                var data = $(this.$el).select2('data');
+
+                let v = data.map(s => {
+                    return s.id;
+                });
+
+                this.$emit("input", v);
+            });
         }
     });
 </script>
