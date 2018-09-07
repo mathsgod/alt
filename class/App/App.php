@@ -226,13 +226,17 @@ class App extends \R\App
                 $response = $page($request->withMethod($route->method), $response);
             } catch (\Exception $e) {
 
-                $this->alert->danger($e->getMessage());
+                if ($this->request->getHeader("accept")[0] == "application/json") {
+                    $response = new Response(200);
+                    $response = $response->withBody(new Stream($e->getMessage()));
+                } else {
+                    $this->alert->danger($e->getMessage());
 
-                $header = $this->request->getHeader("Referer");
-                if ($h = $header[0]) {
-                    $response = $response->withHeader("Location", $h);
+                    $header = $this->request->getHeader("Referer");
+                    if ($h = $header[0]) {
+                        $response = $response->withHeader("Location", $h);
+                    }
                 }
-                
                 //\App::Redirect("404_not_found?msg=" . $e->getMessage());
             }
 
