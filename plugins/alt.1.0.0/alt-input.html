@@ -1,5 +1,5 @@
 <template id="alt-input">
-    <input ref="input" class="form-control" v-bind="$props" :name="name" :type="type" :value="value" v-bind="$props"/>
+    <input ref="input" class="form-control" v-bind="$props" :name="name" :type="type" :value="value" @input="onInput" />
 </template>
 
 <script>
@@ -21,6 +21,12 @@
                     $(this.$el).addClass("form-group has-feedback");
                 }
                 //   $(this.$el).closest("form").validate()
+            }
+        }, methods: {
+            onInput(event) {
+                this.$emit("input",event.target.value);
+                
+                //this.$emit("input",);
             }
         }
     });
