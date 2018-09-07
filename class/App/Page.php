@@ -3,6 +3,8 @@
 namespace App;
 
 use R\Psr7\Stream;
+use R\Psr7\Request;
+use R\Psr7\Response;
 use R\Psr7\JSONStream;
 use R\Set;
 
@@ -178,10 +180,10 @@ class Page extends \R\Page
 
             $this->response = $this->response->withHeader("Location", $referer);
         }
-        
+
     }
 
-    public function __invoke($request, $response)
+    public function __invoke(Request $request, Response $response)
     {
         $this->request = $request;
         $this->request = $this->request->withAttribute("module", $this->module());
@@ -195,7 +197,6 @@ class Page extends \R\Page
         $route = $request->getAttribute("route");
         $path = substr($route->path, 1);
         $method = $route->method;
-
         if ($method == "del") {
             if ($request->getMethod() == "del" || $request->getMethod() == "post") {
                 return parent::__invoke($request, $response);
@@ -203,17 +204,7 @@ class Page extends \R\Page
         }
 
         if (!$this->app->acl($path) && !$this->app->acl($path . "/" . $method)) {
-            if ($request->isAccept("text/html")) {
-                \App::AccessDeny($path);
-                return;
-            } elseif ($request->isAccept("application/json")) {
-                return $response
-                    ->withHeader("Content-Type", "application/json; charset=UTF-8")
-                    ->withBody(new JSONStream(["code" => 401, "message" => "access deny"]));
-            } else {
-                \App::AccessDeny($path);
-                return;
-            }
+            return $this->app->accessDeny($request);
         }
 
         if ($request->getMethod() == "get") {

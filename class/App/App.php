@@ -2,6 +2,7 @@
 
 namespace App;
 
+use R\Psr7\Request;
 use R\Psr7\Response;
 use R\Psr7\Stream;
 
@@ -228,16 +229,17 @@ class App extends \R\App
 
                 if ($this->request->getHeader("accept")[0] == "application/json") {
                     $response = new Response(200);
+                    $response = $response->withHeader("content-type", "application/json");
                     $response = $response->withBody(new Stream($e->getMessage()));
                 } else {
                     $this->alert->danger($e->getMessage());
 
-                    $header = $this->request->getHeader("Referer");
-                    if ($h = $header[0]) {
-                        $response = $response->withHeader("Location", $h);
+                    if ($referer = $this->request->getHeader("Referer")[0]) {
+                        if ($url = $_SESSION["app"]["referer"][$referer]) {
+                            $response = $response->withHeader("Location", $url);
+                        }
                     }
                 }
-                //\App::Redirect("404_not_found?msg=" . $e->getMessage());
             }
 
             foreach ($response->getHeaders() as $name => $values) {
@@ -246,9 +248,9 @@ class App extends \R\App
 
             file_put_contents("php://output", (string)$response->getBody());
         } elseif (self::Logined()) {
-            \App::Redirect("404_not_found");
+            $this->redirect("404_not_found");
         } else {
-            \App::Redirect("");
+            //$this->redirect("/");
         }
     }
 
@@ -265,9 +267,10 @@ class App extends \R\App
             return;
         }
 
-        $header = $this->request->getHeader("Referer");
-        if ($h = $header[0]) {
-            $this->response = $this->response->withHeader("Location", $h);
+        if ($referer = $this->request->getHeader("Referer")[0]) {
+            if ($url = $_SESSION["app"]["referer"][$referer]) {
+                $response = $response->withHeader("Location", $url);
+            }
         }
     }
 
@@ -503,6 +506,39 @@ class App extends \R\App
 
         return $mail;
 
+    }
+
+    public function accessDeny(Request $request)
+    {
+        $uri = $request->getUri()->getPath();
+        $uri = substr($uri, 1);
+        if ($q = $request->getUri()->getQuery()) {
+            $uri .= "?" . $q;
+        }
+
+        $base = $request->getUri()->getBasePath();
+        if ($this->logined()) {
+
+            if ($request->getHeader("accept")[0] == "application/json") {
+                $response = new Response(200);
+                $msg = [];
+                $msg["error"]["message"] = "access deny";
+                $msg["error"]["code"] = 403;
+                $response = $response->withHeader("content-type", "application/json");
+                $response = $response->withBody(new Stream(json_encode($msg)));
+            } else {
+                $q = http_build_query(["q" => $uri]);
+                $response = new Response(403);
+                $response = $response->withHeader("location", $base . "/access_deny?" . $q);
+            }
+
+        } else {
+            $q = http_build_query(["r" => $uri]);
+            $response = new Response(403);
+            $response = $response->withHeader("location", $base . "/?" . $q);
+        }
+
+        return $response;
     }
 
 

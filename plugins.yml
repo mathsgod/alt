@@ -157,9 +157,9 @@ ckeditor:
   js: ['ckeditor.js']
   js: ['lang/{language}.js']
 
-fancyBox:
-  js: ['jquery.fancybox.min.js']
-  css: ['jquery.fancybox.min.css']
+hostlink/fancybox:
+  js: ['dist/jquery.fancybox.min.js']
+  css: ['dist/jquery.fancybox.min.css']
 
 PHPExcel:
   php: ['Classes/PHPExcel.php','Classes/PHPExcel/IOFactory.php']

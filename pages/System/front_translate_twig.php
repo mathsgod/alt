@@ -22,6 +22,7 @@ class System_front_translate_twig extends \ALT\Page
         $frontPage = new SplFileInfo($this->frontPath());
         $basePath = new SplFileInfo($frontPage->getPath());
 
+        $result = [];
         $fi = pathinfo($file);
         foreach ($this->getLang() as $lang) {
 
@@ -59,9 +60,13 @@ class System_front_translate_twig extends \ALT\Page
             // conver po to mo
             $mo = $basePath . "/locale/$lang/LC_MESSAGES/" . $fi["dirname"] . "/" . $fi["filename"] . "-" . time() . ".mo";
 
-            `msgfmt -o $mo $po_file`;
+            $compiler = new \TrekkSoft\Potomoco\Compiler();
+            $compiler->compile($po_file, $mo);
+
+
+            $result[] = ["po" => $po_file, "mo" => $mo];
         }
-        return $msg;
+        return ["code" => 200, "result" => $result];
     }
 
     public function googleTranslate()

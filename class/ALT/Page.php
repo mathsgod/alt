@@ -60,11 +60,9 @@ class Page extends \App\Page
                 $this->app->savePlace();
             } elseif ($action == "v") {
                 $obj = $this->object();
-
                 if (is_a($obj, "App\Model")) {
                     if (!$obj->canRead()) {
-                        \App::AccessDeny();
-                        return;
+                        return $this->app->accessDeny($request);
                     }
                     if ($obj->canUpdate() && $this->module()->show_update) {
                         $this->navbar()->addButton("", $obj->uri("ae"))->icon("fa fa-pencil-alt")->addClass("btn-warning");
@@ -77,13 +75,11 @@ class Page extends \App\Page
             } elseif ($action == "ae") {
                 if ($this->id()) {
                     if (!\App\ACL::Allow($this->module()->class, "U")) {
-                        \App::AccessDeny();
-                        return;
+                        return $this->app->accessDeny($request);
                     }
                 } else {
                     if (!\App\ACL::Allow($this->module()->class, "C")) {
-                        \App::AccessDeny();
-                        return;
+                        return $this->app->accessDeny($request);
                     }
                 }
             }
@@ -129,7 +125,7 @@ class Page extends \App\Page
                 $this->addLib("jquery-validation");
                 $this->addLib("purl");
 
-                $this->addLib("fancyBox");
+                $this->addLib("hostlink/fancybox");
                 $this->addLib("daterangepicker");
                 $this->addLib("pnotify");
                 $this->addLib('iCheck');
