@@ -120,16 +120,6 @@ class App
         self::_()->alert->success($message);
     }
 
-    public static function AccessDeny($uri)
-    {
-        if (self::_()->logined()) {
-            App::Redirect("access_deny");
-        } else {
-            App::Redirect("?r=$uri");
-        }
-        exit();
-    }
-
     public static function Load($name)
     {
         $p = new App\Plugin($name);
