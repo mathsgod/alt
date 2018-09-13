@@ -37,7 +37,6 @@
         "hostlink/fancybox": "3.*",
         "twig/twig": "*",
         "twig/extensions": "*",
-        "sepia/po-parser": "5.*",
         "hostlink/font-awesome": "5.*",
         "components/jquery": "2.2.4",
         "driftyco/ionicons": "2.*",

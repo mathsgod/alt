@@ -120,7 +120,11 @@ class App extends \R\App
         $composer_root = dirname(dirname($s));
 
         $server = $this->request->getServerParams();
-        $document_root = $server["DOCUMENT_ROOT"];
+
+        $cms_root = CMS_ROOT;
+        $cms = dirname($server["PHP_SELF"]);
+        $document_root = substr($cms_root, 0, -strlen($cms));
+
         if (substr($document_root, -1) == "/") {
             $document_root = substr($document_root, 0, -1);
         }

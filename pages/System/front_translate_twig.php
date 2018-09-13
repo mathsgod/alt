@@ -7,6 +7,7 @@ use My\TreeView;
 use WebClient;
 
 require_once(__dir__ . "/str_chinese.php");
+require_once(__dir__ . "/msgfmt-functions.php");
 //require_once (__dir__ . "/accesstokenauthentication.php");
 
 class System_front_translate_twig extends \ALT\Page
@@ -24,6 +25,7 @@ class System_front_translate_twig extends \ALT\Page
 
         $result = [];
         $fi = pathinfo($file);
+
         foreach ($this->getLang() as $lang) {
 
             if ($_POST["lang"]) {
@@ -34,34 +36,40 @@ class System_front_translate_twig extends \ALT\Page
 
             if (!file_exists($po_file = $basePath . "/locale/$lang/LC_MESSAGES/" . $fi["dirname"] . "/" . $fi["filename"] . ".po")) {
                 mkdir(dirname($po_file), 0777, true);
-                file_put_contents($po_file, "");
+
+            } else {
+                unlink($po_file);
+            }
+            file_put_contents($po_file, "");
+
+
+            $poParser = new \Sepia\PoParser();
+            foreach ($data as $d) {
+                $msgstr = $d["msgstr"][$lang];
+                if (!$msgstr) continue;
+                $poParser->setEntry($d["msgid"], [
+                    "msgid" => $d["msgid"],
+                    "msgstr" => $msgstr,
+                    "previous" => [$d["msgid"]]
+                ]);
             }
 
-            $poFile = new \Sepia\FileHandler($po_file);
-            $poParser = new \Sepia\PoParser($poFile);
-            /*            $poParser->setHeaders([
-			'"Project-Id-Version: \n"',
-			'"Report-Msgid-Bugs-To: \n"',
-			'"POT-Creation-Date: \n"',
-			'"PO-Revision-Date: \n"',
-			'"Last-Translator: none\n"',
-			'"Language-Team: \n"',
-			'"MIME-Version: 1.0\n"',
-			'"Content-Type: text/plain; charset=UTF-8\n"']
-			);*/
-            foreach ($data as $d) {
-                $poParser->setEntry($d["msgid"], ["msgid" => [$d["msgid"]], "msgstr" => $d["msgstr"][$lang] ? $d["msgstr"][$lang] : ""]);
-            }
             $poParser->writeFile($po_file);
+                      
             // del all mo
             foreach (glob(dirname($po_file) . "/" . $fi["filename"] . "-*.mo") as $mo_file) {
                 unlink($mo_file);
             }
-            // conver po to mo
+            // convert po to mo
             $mo = $basePath . "/locale/$lang/LC_MESSAGES/" . $fi["dirname"] . "/" . $fi["filename"] . "-" . time() . ".mo";
 
-            $compiler = new \TrekkSoft\Potomoco\Compiler();
-            $compiler->compile($po_file, $mo);
+
+            $hash = parse_po_file($po_file);
+            if ($hash === false) {
+                print "Error reading '{$po_file}', aborted.\n";
+            } else {
+                write_mo_file($hash, $mo);
+            }
 
 
             $result[] = ["po" => $po_file, "mo" => $mo];
@@ -183,6 +191,9 @@ class System_front_translate_twig extends \ALT\Page
 
         $text_domain = preg_replace('/.[^.]*$/', '', $file);
         $poParser = new \Sepia\PoParser();
+
+        $poEntries = [];
+
         foreach ($this->getLang() as $lang) {
             if (file_exists($f = $basePath . "/locale/{$lang}/LC_MESSAGES/{$text_domain}.po")) {
                 $poFile[$lang] = $poParser->parseFile($f, ["multiline-glue" => ""]);
