@@ -34,37 +34,36 @@ class Form extends \My\HTML\Form
 
         $this->box->footer->append($this->submit_button);
 
-        if (!$_SERVER["HTTP_X_FANCYBOX"]) {
-            $this->reset_button = new Button($page);
-            $this->reset_button->classList->add("btn-info");
-            $this->reset_button->icon("fa fa-rotate-left")->label("Reset");
-            $this->reset_button->attributes["type"] = "reset";
-            $this->box->footer->append($this->reset_button);
+        $this->reset_button = new Button($page);
+        $this->reset_button->classList->add("btn-info");
+        $this->reset_button->icon("fa fa-rotate-left")->label("Reset");
+        $this->reset_button->attributes["type"] = "reset";
+        $this->box->footer->append($this->reset_button);
 
-            $this->back_button = new Button($page);
-            $this->back_button->classList->add("btn-warning");
-            $this->back_button->label("Back");
-            $this->back_button->attributes["type"] = "button";
-            if ($_GET["fancybox"]) {
-                $this->back_button->attributes["data-fancybox-close"] = true;
-            } else {
-                $this->back_button->attributes["onClick"] = 'javascript:history.back(-1)';
-            }
+        $this->back_button = new Button($page);
+        $this->back_button->classList->add("btn-warning");
+        $this->back_button->label("Back");
+        $this->back_button->attributes["type"] = "button";
+        if ($_GET["fancybox"]) {
+            $this->back_button->attributes["data-fancybox-close"] = true;
+        } else {
+            $this->back_button->attributes["onClick"] = 'javascript:history.back(-1)';
+        }
 
-            $this->box->footer->append($this->back_button);
+        $this->box->footer->append($this->back_button);
+        if ($_GET["fancybox"]) {
+            $this->action($page->uri());
         }
     }
 
     public function __toString()
     {
-        if (!$_SERVER["HTTP_X_FANCYBOX"]) {
-            if (!$this->show_back) {
-                $this->back_button->classList->add("hide");
-            }
+        if (!$this->show_back) {
+            $this->back_button->classList->add("hide");
+        }
 
-            if (!$this->show_reset) {
-                $this->reset_button->classList->add("hide");
-            }
+        if (!$this->show_reset) {
+            $this->reset_button->classList->add("hide");
         }
         return parent::__toString();
     }
