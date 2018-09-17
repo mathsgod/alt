@@ -8,8 +8,10 @@
         },
         mounted() {
             $(this.$el).select2();
-            $(this.$el).val(this.value);
-            $(this.$el).trigger('change')
+            if (value) {
+                $(this.$el).val(this.value);
+                $(this.$el).trigger('change')
+            }
 
             $(this.$el).on("change", () => {
                 var data = $(this.$el).select2('data');
@@ -46,8 +48,11 @@
         }, mounted() {
             $(this.$el).select2();
 
-            $(this.$el).val(this.value);
-            $(this.$el).trigger('change.select2')
+            if (this.value) {
+                $(this.$el).val(this.value);
+                $(this.$el).trigger('change.select2')
+            }
+
 
             $(this.$el).on("change", () => {
                 console.log("onchange");

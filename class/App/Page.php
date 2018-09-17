@@ -300,6 +300,8 @@ class Page extends \R\Page
                     break;
             }
         }
+
+        return $response->withBody(new Stream($echo_content.$response->getBody()->getContents()));
     }
 
     public function module()
