@@ -88,8 +88,9 @@ class C2 extends \P\HTMLElement
 					call_user_func($this->callback, $object, $e[0]);
 				}
 			}
+			$e->appendTo($cell);
 
-			$cell->append($e);
+			
 		}
 
 

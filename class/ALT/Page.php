@@ -42,6 +42,7 @@ class Page extends \App\Page
         return $b;
     }
 
+    
     private $_navbar;
     public function navbar()
     {

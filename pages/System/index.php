@@ -48,7 +48,7 @@ class System_index extends ALT\Page
         $pg->addPanel($panel);
         $pg->addPanel($panel2);
         $this->write($pg);
+
+
     }
 }
-
-?>

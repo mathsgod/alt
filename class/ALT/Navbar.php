@@ -2,14 +2,15 @@
 
 namespace ALT;
 
-class Navbar extends \P\Query
+class Navbar extends \P\HTMLElement
 {
     protected $page;
-    public function __construct($page)
+    public function __construct(Page $page)
     {
         $this->page = $page;
         parent::__construct("nav");
-        $this->addClass("navbar navbar-default");
+        $this->classList->add("navbar");
+        $this->classList->add("navbar-default");
 
         $header = p("div")->addClass("navbar-header")->appendTo($this);
         $button = p("button")->attr("type", "button")->addClass("navbar-toggle collapsed")->appendTo($header);
@@ -42,19 +43,33 @@ class Navbar extends \P\Query
         return $btn;
     }
 
-    public function addButtonGroup($label = null, $uri = null)
+    public function addButtonGroup()
     {
         $bg = new ButtonGroup($this->page);
         $this->_content->append($bg);
         return $bg;
     }
 
+    public function addDropdown($label)
+    {
+        $dd = new \BS\Dropdown($label);
+        $this->_content->append($dd);
+        return $dd;
+    }
+
     public function addButtonDropdown($label)
     {
-        $bdd = new ButtonDropdown($this->page);
+        $bdd = new ButtonDropdown($this->page, $label);
+        $bdd->button->classList->add("navbar-btn");
+        $bdd->button->classList->add("btn-primary");
+        $bdd->button->classList->add("btn-sm");
+
+
+        $this->_content->append($bdd);
+        return $bdd;
         $bdd->addClass("navbar-btn");
         $btn = $bdd->Button();
-        $btn->addClass("btn-primary btn-sm")->text($label);
+        $btn->addClass("btn-primary btn-sm")->text($this->page->translate($label));
         $btn->append(" <span class='caret'></span>");
         $this->_content->append($bdd);
         return $bdd;
@@ -66,7 +81,7 @@ class Navbar extends \P\Query
         $this->_content->append($btn);
         p($btn)->addClass("navbar-btn btn-primary btn-sm");
         p($btn)->text("Layout reset");
-        $btn->href("UI/reset_layout?uri=".$this->page->path());
+        $btn->href("UI/reset_layout?uri=" . $this->page->path());
         $btn->icon("fa fa-fw fa-sync");
         return $btn;
     }

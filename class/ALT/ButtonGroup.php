@@ -1,19 +1,23 @@
 <?php
 
 namespace ALT;
-class ButtonGroup extends \BS\ButtonGroup {
-	private $route;
-	public function __construct($route) {
+
+class ButtonGroup extends \BS\ButtonGroup
+{
+	protected $page;
+	public function __construct(Page $page)
+	{
 		parent::__construct();
-		$this->route = $route;
+		$this->page = $page;
 	}
 
-	public function addButton($label = null, $uri = null) {
-  		$b=parent::addButton($label);
-        $b->classList[]="btn-primary";
-        if($uri){
-            $b->href($uri);
-        }
+	public function addButton($label = null, $uri = null)
+	{
+		$b = parent::addButton($this->page->translate($label));
+		$b->classList[] = "btn-primary";
+		if ($uri) {
+			$b->href($uri);
+		}
 		return $b;
 
 	}

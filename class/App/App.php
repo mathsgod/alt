@@ -497,7 +497,7 @@ class App extends \R\App
 
     public function createMail()
     {
-        $mail = new App\Mail(true);
+        $mail = new Mail(true);
         $smtp = $this->config["user"]["smtp"];
 
         if ($smtp && $smtp->value) {

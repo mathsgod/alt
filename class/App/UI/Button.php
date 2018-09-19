@@ -28,21 +28,7 @@ class Button extends \BS\Button
         return parent::__toString();
     }
 
-    public function icon($class)
-    {
-        $i = p($this)->find("i");
-        if ($i->count() > 0) {
-            $icon = $i[0];
-            p($icon)->addClass($class);
-        } else {
-            $i = p("<i></i>")->addClass($class);
-            p($this)->prepend($i);
-            $i->after(new \P\Text(" "));
-        }
-
-        return $this;
-    }
-
+   
     public function label($label)
     {
         $text_node = [];
