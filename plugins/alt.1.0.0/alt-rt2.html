@@ -356,22 +356,23 @@
                                 <i v-if="showChild" class="fa fa-fw fa-chevron-down"></i>
                             </button>
                         </td>
-                        <th v-for="(column,key) in columns" is="alt-column" v-bind="column.$data" v-if="column.isDisplay()" v-on:order="order" v-on:draw="draw"
-                            ref="column"></th>
+                        <th v-for="(column,key) in columns" is="alt-column" v-bind="column.$data" v-if="column.isDisplay()"
+                            v-on:order="order" v-on:draw="draw" v-on:search="$emit('search',$event)" ref="column"></th>
                     </tr>
                     <tr v-if="isSearchable">
                         <td v-if="hasHideColumn">
                         </td>
-                        <td v-for="(column,key) in columns" is="alt-column-search" v-bind="column.$data" v-if="column.isDisplay()" v-on:search="search"></td>
+                        <td v-for="(column,key) in columns" is="alt-column-search" v-bind="column.$data" v-if="column.isDisplay()"
+                            v-on:search="search"></td>
                     </tr>
                 </thead>
-                <tbody is="rt2-tbody" :selectable="selectable" :data="data()" :columns="columns" ref="tbody" v-on:update-data="updateData"
-                    v-on:data-deleted="draw"></tbody>
+                <tbody is="rt2-tbody" :selectable="selectable" :data="data()" :columns="columns" ref="tbody"
+                    v-on:update-data="updateData" v-on:data-deleted="draw"></tbody>
             </table>
         </div>
         <div class="box-footer">
-            <rt-pagination :page="page" :page-count="pageCount" v-on:change-page="gotoPage" v-on:first-page="firstPage" v-on:next-page="nextPage"
-                v-on:prev-page="prevPage" v-on:last-page="lastPage"></rt-pagination>
+            <rt-pagination :page="page" :page-count="pageCount" v-on:change-page="gotoPage" v-on:first-page="firstPage"
+                v-on:next-page="nextPage" v-on:prev-page="prevPage" v-on:last-page="lastPage"></rt-pagination>
 
             <div class="pull-left btn-group">
                 <button @click="draw" class="btn btn-default btn-sm" type="button" title="重新載入" data-toggle="tooltip">
@@ -405,12 +406,13 @@
 
 
             <div class="pull-left btn-group">
-                <button @click="toggleResponsive" :class="{active:responsive}" class="btn btn-default btn-sm" type="button" title="Responsive"
-                    data-toggle="tooltip">
+                <button @click="toggleResponsive" :class="{active:responsive}" class="btn btn-default btn-sm" type="button"
+                    title="Responsive" data-toggle="tooltip">
                     <i class="fa fa-tv"></i>
                 </button>
 
-                <button @click="resetLocaStorage" class="btn btn-default btn-sm" type="button" title="clear cache" data-toggle="tooltip">
+                <button @click="resetLocaStorage" class="btn btn-default btn-sm" type="button" title="clear cache"
+                    data-toggle="tooltip">
                     <i class="fa fa-times-circle"></i>
                 </button>
             </div>
@@ -431,7 +433,8 @@
             </div>
 
             <div class="pull-left btn-group">
-                <button v-for="(button,index) in buttons" @click="onClickButton(button)" class="btn btn-default btn-sm" type="button" v-text="button.text">
+                <button v-for="(button,index) in buttons" @click="onClickButton(button)" class="btn btn-default btn-sm"
+                    type="button" v-text="button.text">
                 </button>
             </div>
 
@@ -534,7 +537,7 @@
                 showChild: false,
                 showIndex: [],
                 local: {
-                    search: [],
+                    search: {},
                     draw: 1,
                     pageLength: this.pageLength,
                     order: this.$attrs.order
@@ -860,6 +863,8 @@
             }, search(name, value) {
                 this.page = 1;
                 this.local.search[name] = value;
+                this.$emit("search", this.local.search);
+
                 this.draw();
                 return this;
             }, resize() {
