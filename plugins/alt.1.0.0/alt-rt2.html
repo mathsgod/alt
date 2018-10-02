@@ -687,8 +687,8 @@
             },
             info() {
                 return {
-                    from: (this.page - 1) * this.pageLength + 1,
-                    to: Math.min(this.page * this.pageLength, this.total),
+                    from: (this.page - 1) * this.local.pageLength + 1,
+                    to: Math.min(this.page * this.local.pageLength, this.total),
                     total: this.total
                 };
             }, isSearchable() {
