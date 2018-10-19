@@ -1,5 +1,5 @@
 Vue.use(VueLocalStorage);
-
+/*
 Vue.component("roxyfileman", {
     template: "<bs-input></bs-input>",
     mounted() {
@@ -52,87 +52,28 @@ Vue.component("ckeditor", {
         }
     }
 });
+*/
+//VueRegisterElement("alt-input");
+/*VueRegisterElement("alt-tab");
+VueRegisterElement("alt-tab-pane");
+VueRegisterElement("select2");
+VueRegisterElement("alt-datatables");
+VueRegisterElement("alt-e");
+VueRegisterElement("alt-form");
+VueRegisterElement("alt-table");
+VueRegisterElement("alt-box");
+VueRegisterElement("alt-rt");
+VueRegisterElement("alt-rt2");
+VueRegisterElement("alt-timeline");
+VueRegisterElement("roxyfileman");
+VueRegisterElement("ckeditor");*/
+/*
 
-
-
-var vue_init = function () {
-    document.querySelectorAll("alt-tab").forEach(o => {
-        new Vue({
-            el: o
-        });
-    });
-
-    document.querySelectorAll("alt-tab-pane").forEach(o => {
-        new Vue({
-            el: o
-        });
-    });
-
-    document.querySelectorAll("select2").forEach(o => {
-        new Vue({
-            el: o
-        });
-    });
-    document.querySelectorAll("alt-datatables").forEach(o => {
-        new Vue({
-            el: o
-        });
-    });
-    document.querySelectorAll("alt-e").forEach(o => {
-        new Vue({
-            el: o
-        });
-    });
-
-    document.querySelectorAll("alt-form").forEach(o => {
-        new Vue({
-            el: o
-        });
-    });
-    document.querySelectorAll("alt-table").forEach(o => {
-        new Vue({
-            el: o
-        });
-    });
-    document.querySelectorAll("alt-box").forEach(o => {
-        new Vue({
-            el: o
-        });
-    });
-    document.querySelectorAll("alt-rt").forEach(o => {
-        new Vue({
-            el: o
-        });
-    });
-
-    document.querySelectorAll("alt-timeline").forEach(o => {
-        new Vue({
-            el: o
-        });
-    });
-    document.querySelectorAll("roxyfileman").forEach(o => {
-        new Vue({
-            el: o
-        });
-    });
-    document.querySelectorAll("ckeditor").forEach(o => {
-        new Vue({
-            el: o
-        });
-    });
-    document.querySelectorAll("[is]").forEach(o => {
-        new Vue({
-            el: o
-        });
-    });
-    setTimeout(vue_init, 300);
-};
-
-var vue_start=false;
+var vue_start = false;
 document.addEventListener("DOMContentLoaded", function (event) {
     console.log('domcontentloaded');
-    if(!vue_start){
-        vue_start=true;
+    if (!vue_start) {
+        vue_start = true;
         vue_init();
     }
 });
@@ -140,8 +81,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
 window.addEventListener('WebComponentsReady', function (e) {
     // imports are loaded and elements have been registered
     console.log("WebComponentsReady");
-    if(!vue_start){
-        vue_start=true;
+    if (!vue_start) {
+        vue_start = true;
         vue_init();
     }
 });
@@ -149,11 +90,11 @@ window.addEventListener('WebComponentsReady', function (e) {
 window.addEventListener('HTMLImportsLoaded', function (e) {
     // all imports loaded
     console.log("HTMLImportsLoaded");
-    if(!vue_start){
-        vue_start=true;
+    if (!vue_start) {
+        vue_start = true;
         vue_init();
     }
-});
+});*/
 
 (function ($) {
     //-- form validation --
@@ -352,37 +293,37 @@ window.addEventListener('HTMLImportsLoaded', function (e) {
 
 
         //Make the dashboard widgets sortable Using jquery UI
-/*        $(".connectedSortable").not("._connectedSortable").sortable({
-            placeholder: "sort-highlight",
-            connectWith: ".connectedSortable",
-            handle: ".box-header, .nav-tabs",
-            forcePlaceholderSize: true,
-            zIndex: 999999
-        });
-
-        $(".connectedSortable").not("._connectedSortable").on("sorttstop", function (event, ui) {
-
-            var grid = $(this).closest('.grid');
-
-            var data = [];
-            grid.children("div.row").each(function (i, row) {
-                data[i] = [];
-                $(row).children("section").each(function (j, section) {
-                    data[i][j] = [];
-
-                    $(section).children("div[grid-item]").each(function (k, item) {
-                        data[i][j].push($(item).attr("grid-item"));
+        /*        $(".connectedSortable").not("._connectedSortable").sortable({
+                    placeholder: "sort-highlight",
+                    connectWith: ".connectedSortable",
+                    handle: ".box-header, .nav-tabs",
+                    forcePlaceholderSize: true,
+                    zIndex: 999999
+                });
+        
+                $(".connectedSortable").not("._connectedSortable").on("sorttstop", function (event, ui) {
+        
+                    var grid = $(this).closest('.grid');
+        
+                    var data = [];
+                    grid.children("div.row").each(function (i, row) {
+                        data[i] = [];
+                        $(row).children("section").each(function (j, section) {
+                            data[i][j] = [];
+        
+                            $(section).children("div[grid-item]").each(function (k, item) {
+                                data[i][j].push($(item).attr("grid-item"));
+                            });
+                        });
+                    });
+        
+                    $.post("UI/save", {
+                        type: 'grid',
+                        layout: JSON.stringify(data),
+                        uri: grid.attr("data-uri")
                     });
                 });
-            });
-
-            $.post("UI/save", {
-                type: 'grid',
-                layout: JSON.stringify(data),
-                uri: grid.attr("data-uri")
-            });
-        });
-        $(".connectedSortable").not("._connectedSortable").addClass("_connectedSortable");*/
+                $(".connectedSortable").not("._connectedSortable").addClass("_connectedSortable");*/
 
 
 
@@ -407,10 +348,10 @@ window.addEventListener('HTMLImportsLoaded', function (e) {
 
 
         //Datatable
-/*        $(".DataTable").each(function (i, o) {
-            $(o).removeClass("DataTable").addClass("_DataTable");
-            $(o).DataTable();
-        });*/
+        /*        $(".DataTable").each(function (i, o) {
+                    $(o).removeClass("DataTable").addClass("_DataTable");
+                    $(o).DataTable();
+                });*/
 
         //Multiselect
         $("select.multiselect").each(function (i, o) {
@@ -597,44 +538,44 @@ function closeRoxyDialog() {
 (function ($) {
     PNotify.prototype.options.styling = "fontawesome";
 
-/*    $(".connectedSortable").css("min-height", "0px");
-
-    $("[data-widget='pin']").on("click", function (e) {
-        e.preventDefault();
-        $(this).find("i").toggleClass("fa-thumbtack").toggleClass("fa-arrows-alt");
-
-        var element = $(this).closest('.ui-sortable');
-
-        if ($(this).find("i").hasClass("fa-arrows")) {
-            element.sortable("enable");
-            element.find(".ui-sortable-handle").css("cursor", "move");
-        } else {
+    /*    $(".connectedSortable").css("min-height", "0px");
+    
+        $("[data-widget='pin']").on("click", function (e) {
+            e.preventDefault();
+            $(this).find("i").toggleClass("fa-thumbtack").toggleClass("fa-arrows-alt");
+    
+            var element = $(this).closest('.ui-sortable');
+    
+            if ($(this).find("i").hasClass("fa-arrows")) {
+                element.sortable("enable");
+                element.find(".ui-sortable-handle").css("cursor", "move");
+            } else {
+                element.sortable("disable");
+                element.find(".ui-sortable-handle").css("cursor", "");
+            }
+    
+            //check pin status
+            var move = false;
+            $("[data-widget='pin']").each(function () {
+                if ($(this).find("i").hasClass("fa-arrows-alt")) {
+                    move = true;
+                }
+            });
+    
+            if (move) {
+                $(".connectedSortable").css("min-height", "100px");
+            } else {
+                $(".connectedSortable").css("min-height", "0px");
+            }
+    
+        });
+    
+        $("[data-widget='pin']").each(function (o) {
+            var element = $(this).closest('.ui-sortable');
             element.sortable("disable");
             element.find(".ui-sortable-handle").css("cursor", "");
-        }
-
-        //check pin status
-        var move = false;
-        $("[data-widget='pin']").each(function () {
-            if ($(this).find("i").hasClass("fa-arrows-alt")) {
-                move = true;
-            }
         });
-
-        if (move) {
-            $(".connectedSortable").css("min-height", "100px");
-        } else {
-            $(".connectedSortable").css("min-height", "0px");
-        }
-
-    });
-
-    $("[data-widget='pin']").each(function (o) {
-        var element = $(this).closest('.ui-sortable');
-        element.sortable("disable");
-        element.find(".ui-sortable-handle").css("cursor", "");
-    });
-    */
+        */
 })(jQuery);
 
 function __add_favorite() {
