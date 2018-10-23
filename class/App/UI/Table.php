@@ -12,6 +12,7 @@ class Table extends HTMLTableElement
     protected $page;
     protected $objects;
     protected $columns = [];
+    public $key;
 
     public function __construct($objects, Page $page)
     {
@@ -50,7 +51,16 @@ class Table extends HTMLTableElement
                 if($obj instanceof \App\Model){
                     $row->attributes["data-index"]=$obj->id();
                 }else{
-                    $row->attributes["data-index"]=$k;
+                    if($this->key){
+                        if(is_array($obj)){
+                            $row->attributes["data-index"]=$obj[$this->key];    
+                        }else{
+                            $row->attributes["data-index"]=$obj->{$this->key};    
+                        }
+                        
+                    }else{
+                        $row->attributes["data-index"]=$k;
+                    }
                 }
                 
             } else {
