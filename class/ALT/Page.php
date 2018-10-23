@@ -130,7 +130,7 @@ class Page extends \App\Page
                 $this->addLib("daterangepicker");
                 $this->addLib("pnotify");
                 $this->addLib('iCheck');
-                // $this->addLib("polymer");
+
                 $this->addLib("bootstrap3-editable");
                 $this->addLib("timepicker");
                 $this->addLib("select2");
@@ -262,9 +262,6 @@ class Page extends \App\Page
                 outP($path_info)
                 outP($this->path());*/
 
-
-                $plugins = new \App\Plugin("angular");
-                $data["angular"] = $plugins->jss();
 
 
                 $data["content"] .= $echo_content;
