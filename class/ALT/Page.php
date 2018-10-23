@@ -143,12 +143,8 @@ class Page extends \App\Page
                 $this->addLib("robinherbots/jquery.inputmask");
                 $this->addLib("json-viewer");
 
-
                 $this->addLib("bassjobsen/bootstrap-3-typeahead");
-                $this->addLib("bootstrap-iconpicker");
                 $this->addLib("bootstrap-select/bootstrap-select");
-
-
                 $this->addLib("DataTables");
 
                 $data = [];

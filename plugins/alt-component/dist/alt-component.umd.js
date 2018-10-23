@@ -2094,12 +2094,12 @@ var es6_symbol = __webpack_require__("8a81");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom.iterable.js
 var web_dom_iterable = __webpack_require__("ac6a");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Input.vue?vue&type=template&id=69ce3492&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('input',_vm._b({ref:"input",staticClass:"form-control",attrs:{"name":_vm.name,"type":_vm.type},domProps:{"value":_vm.value},on:{"input":_vm.onInput}},'input',_vm.$props,false))}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Input.vue?vue&type=template&id=5b7fe0e7&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('input',_vm._b({staticClass:"form-control",attrs:{"name":_vm.name,"type":_vm.type},domProps:{"value":_vm.value},on:{"input":_vm.onInput}},'input',_vm.$props,false))}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/Input.vue?vue&type=template&id=69ce3492&
+// CONCATENATED MODULE: ./src/Input.vue?vue&type=template&id=5b7fe0e7&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-plugin-babel/node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Input.vue?vue&type=script&lang=js&
 //
@@ -2949,12 +2949,12 @@ var Datetime_component = normalizeComponent(
 
 Datetime_component.options.__file = "Datetime.vue"
 /* harmony default export */ var Datetime = (Datetime_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/E.vue?vue&type=template&id=6f72e94c&
-var Evue_type_template_id_6f72e94c_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.hasHeader())?_c('alt-box',[_c('alt-box-header',[_vm._v(_vm._s(_vm.header))]),_c('alt-box-body',[_c('div',{staticClass:"form-horizontal clearfix"},[_vm._t("default")],2)])],1):_c('div',{staticClass:"form-horizontal clearfix"},[_vm._t("default")],2)}
-var Evue_type_template_id_6f72e94c_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/E.vue?vue&type=template&id=2be87667&
+var Evue_type_template_id_2be87667_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.hasHeader())?_c('alt-box',[_c('alt-box-header',[_vm._v(_vm._s(_vm.header))]),_c('alt-box-body',[_c('div',{staticClass:"form-horizontal clearfix"},[_vm._t("default")],2)])],1):_c('div',{staticClass:"form-horizontal clearfix"},[_vm._t("default")],2)}
+var Evue_type_template_id_2be87667_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/E.vue?vue&type=template&id=6f72e94c&
+// CONCATENATED MODULE: ./src/E.vue?vue&type=template&id=2be87667&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-plugin-babel/node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/E.vue?vue&type=script&lang=js&
 //
@@ -2974,7 +2974,6 @@ var Evue_type_template_id_6f72e94c_staticRenderFns = []
   props: {
     header: String
   },
-  components: {},
   methods: {
     hasHeader: function hasHeader() {
       if (this.header) {
@@ -2997,8 +2996,8 @@ var Evue_type_template_id_6f72e94c_staticRenderFns = []
 
 var E_component = normalizeComponent(
   src_Evue_type_script_lang_js_,
-  Evue_type_template_id_6f72e94c_render,
-  Evue_type_template_id_6f72e94c_staticRenderFns,
+  Evue_type_template_id_2be87667_render,
+  Evue_type_template_id_2be87667_staticRenderFns,
   false,
   null,
   null,
@@ -5474,8 +5473,6 @@ new Vue({
     document.addEventListener("DOMContentLoaded", function () {
       _this.VueRegisterElement("alt-rt2");
 
-      _this.VueRegisterElement("alt-input");
-
       _this.VueRegisterElement("alt-box");
 
       _this.VueRegisterElement("alt-box-header");
@@ -5493,6 +5490,8 @@ new Vue({
       _this.VueRegisterElement("alt-datetime");
 
       _this.VueRegisterElement("alt-e");
+
+      _this.VueRegisterElement("alt-input");
 
       _this.VueRegisterElement("alt-email");
 
