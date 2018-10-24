@@ -66,8 +66,8 @@ class User_myfav extends ALT\Page
 ?>
 
 <script>
-$(function(){
-	$("#table1 table>tbody").sortable({
+document.addEventListener("DOMContentLoaded",function(){
+    $("#table1 table>tbody").sortable({
 		handle:".fa-sort",
 		axis: "y",
 		cursor: "move",
@@ -75,12 +75,5 @@ $(function(){
 			$("#form1").ajaxSubmit();
 		}
 	});
-	
-/*	$("#table1 table").tableDnD({
-		onDragStop:function(table,row){
-		
-		}
-		
-	});*/
 });
 </script>

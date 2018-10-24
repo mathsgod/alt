@@ -1,23 +1,23 @@
 <template>
 <tbody>
     <template v-for="(r,index) in data">
-        <tr v-bind:style="getStyle(r)" v-on:click="rowClicked(r)" v-bind:class="{active:r._selected}" :key="index">
+        <tr v-bind:style="getStyle(r)" v-on:click="rowClicked(r)" v-bind:class="{active:r._selected}">
             <td v-if="hasHideColumn">
                 <button class="btn btn-default btn-xs" v-on:click="toggleRowChild(index)" v-on:mouseenter="mouseEnter(index)" v-on:mouseleave="mouseLeave(index)">
                     <i v-if="!showIndex[index]" class="fa fa-fw fa-chevron-up"></i>
                     <i v-if="showIndex[index]" class="fa fa-fw fa-chevron-down"></i>
                 </button>
             </td>
-            <td v-for="(column,k) in columns" v-on:click="cellClicked(column,index,r)" v-if="column.display()"
-            v-bind:style="getCellStyle(column,index,r)" :key="k">
+            <td v-for="column in columns" v-on:click="cellClicked(column,index,r)" v-if="column.display()"
+            v-bind:style="getCellStyle(column,index,r)" >
                 <template v-if="isEditMode(column,index)" >
                     <template v-if="column.editType=='text'">
                         <input type="text" class="form-control input-sm" v-bind:value="getValue(r[column.field])" v-on:blur="updateData(index,r,column,$event.target.value)"/>
                     </template>
                     <template v-else-if="column.editType=='select'">
                         <select class="formControl" v-on:blur="updateData(index,r,column,$event.target.value)">
-                            <option v-for="(opt,i) in column.editData" v-bind:value="opt.value" v-text="opt.label"
-                            v-bind:selected="opt.value==r[column.field].value" :key="i"></option>
+                            <option v-for="opt in column.editData" v-bind:value="opt.value" v-text="opt.label"
+                            v-bind:selected="opt.value==r[column.field].value"></option>
                         </select>
                     </template>
                     <template v-else-if="column.editType=='date'">
@@ -37,16 +37,16 @@
                 </template>
             </td>
         </tr>
-        <tr class="child" v-show="showChild(index)" :key="index">
+        <tr class="child" v-show="showChild(index)">
             <td v-bind:colspan="showColumnCount">
                 <ul>
-                    <li v-for="(column,i) in columns" v-if="column.hide" :key="i">
+                    <li v-for="column in columns" v-if="column.hide">
                         <b v-html="column.title"></b>&nbsp;&nbsp;<span v-html="getValue(r[column.field])" />
                     </li>
                 </ul>
             </td>
         </tr>    
-        <tr v-if="subRow[index]" :key="index">
+        <tr v-if="subRow[index]">
             <td v-bind:colspan="showColumnCount" v-html="subRow[index]">
             </td>
         </tr>

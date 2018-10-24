@@ -32,6 +32,11 @@ import RT2Tbody from "./RT2Tbody.vue";
 import RTInfo from "./RTInfo.vue";
 import altColumn from "./Column.vue";
 import altColumnSearch from "./ColumnSearch.vue";
+import RTTable from "./RTTable.vue";
+import RTHead from "./RTHead.vue";
+import RTBody from "./RTBody.vue";
+import RTColumn from "./RTColumn.vue";
+
 
 
 Vue.component("alt-input", Input);
@@ -68,6 +73,10 @@ Vue.component("alt-column",altColumn);
 Vue.component("alt-column-search",altColumnSearch);
 Vue.component("select2",select2);
 Vue.component("multiselect2", multiselect2);
+Vue.component("rt-table",RTTable);
+Vue.component("rt-head",RTHead);
+Vue.component("rt-column",RTColumn);
+Vue.component("rt-body",RTBody);
 
 
 
@@ -75,6 +84,7 @@ new Vue({
     created() {
 
         document.addEventListener("DOMContentLoaded", () => {
+            this.VueRegisterElement("alt-rt");
             this.VueRegisterElement("alt-rt2");
             
             this.VueRegisterElement("alt-box");

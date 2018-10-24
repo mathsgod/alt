@@ -280,7 +280,6 @@ export default {
           .split("/")
           .filter(s => !Number(s))
           .join("/");
-        return {};
         return $.localStorage.get(id) || {};
       },
       set(data) {
