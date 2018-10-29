@@ -19,7 +19,6 @@
     "jquery-validation": "^1.18.0",
     "less": "^3.8.1",
     "mini-css-extract-plugin": "^0.4.4",
-    "moment": "^2.22.2",
     "select2": "^4.0.5"
   },
   "devDependencies": {
