@@ -5,6 +5,7 @@ import "bootstrap-datepicker";
 import "daterangepicker";
 import "bootstrap-select";
 
+
 import "select2";
 import select2_css from "select2/dist/css/select2.min.css";
 

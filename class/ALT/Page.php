@@ -114,7 +114,7 @@ class Page extends \App\Page
                 $this->addLib("json-viewer");
                 $this->addLib("components/moment");
                 //$this->addLib("bootboxjs");
-                //$this->addLib("jquery-ui");
+                $this->addLib("jquery-ui");
 //                $this->addLib("twbs/bootstrap");
                 //$this->addLib("components/bootstrap-datepicker");
                 //$this->addLib("bootstrap-colorpicker");

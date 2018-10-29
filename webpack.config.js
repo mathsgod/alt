@@ -37,5 +37,11 @@ module.exports = {
             from: "node_modules/bootstrap/dist",
             to: "bootstrap"
         }])*/
-    ]
+    ],
+    externals: {
+        jqueryui: true,
+        vue: true
+    }
+
+
 };
