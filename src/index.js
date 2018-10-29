@@ -1,9 +1,6 @@
 import "jquery";
 import $ from 'jquery';
 import "jquery-ui-dist/jquery-ui.min.js";
-
-
-
 window.jQuery = $;
 window.$ = $;
 
@@ -22,4 +19,4 @@ import style from "bootstrap/less/bootstrap.less";
 import daterangepicker from "daterangepicker/daterangepicker.css";
 import bootstrap_select from "bootstrap-select/dist/css/bootstrap-select.min.css";
 
-import "../plugins/x-html/dist/x-html.umd.js";
+//import "../plugins/x-html/dist/x-html.umd.js";
