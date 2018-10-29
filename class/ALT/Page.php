@@ -127,7 +127,7 @@ class Page extends \App\Page
                 $this->addLib("jquery-validation");
                 $this->addLib("purl");
 
-                $this->addLib("hostlink/fancybox");
+                //$this->addLib("hostlink/fancybox");
                 //$this->addLib("daterangepicker");
                 $this->addLib("pnotify");
                 $this->addLib('iCheck');
@@ -136,7 +136,7 @@ class Page extends \App\Page
                 $this->addLib("timepicker");
                 //$this->addLib("select2");
                 $this->addLib("bootstrap-wysihtml5");
-                $this->addLib("bootstrap-multiselect");
+                //$this->addLib("bootstrap-multiselect");
                 // $this->addLib("touchPoint");
                 $this->addLib("slimScroll");
                 $this->addLib("fastclick");

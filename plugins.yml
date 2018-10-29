@@ -53,9 +53,6 @@ robinherbots/jquery.inputmask:
 jquery:
   js: ['jquery.min.js']
 
-bootboxjs:
-  js: ['bootbox.min.js']
-
 jquery-ui:
   js: ['jquery-ui.min.js']
   css: ['jquery-ui.min.css']
@@ -73,10 +70,6 @@ fastclick:
 
 slimScroll:
   js: ['jquery.slimscroll.min.js']
-
-bootstrap-multiselect:
-  css: ['css/bootstrap-multiselect.css']
-  js: ['js/bootstrap-multiselect.js']
 
 bootstrap-wysihtml5:
   css: ['bootstrap3-wysihtml5.min.css']
