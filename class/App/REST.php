@@ -31,11 +31,9 @@ class REST
         $p = parse_url($uri);
         $p = $p["path"];
         $p = substr($p, 1);
-        $p = str_replace("/", "\\", $p);
+        $p = explode("/",$p);
 
-
-
-        $module = Module::_($p);
+        $module = Module::_($p[0]);
         $class = "\\" . $module->class;
 
         
@@ -48,10 +46,11 @@ class REST
             return ["code" => 200, "location" => $p . "/" . $o->id()];
         }
 
+
         $obj = new $class($p[1]);
         $obj->bind($data);
         $obj->save();
-        return ["code" => 200, "location" => $p . "/" . $obj->id()];
+        return ["code" => 200, "location" => $p[0] . "/" . $obj->id()];
     }
 
     //
