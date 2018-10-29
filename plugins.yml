@@ -16,7 +16,6 @@ components/moment:
   js: ['min/moment.min.js','min/locales.min.js']
 
 fullcalendar/fullcalendar:
-  require: ['components/moment']
   css: ['dist/fullcalendar.min.css']
   js: ['dist/fullcalendar.min.js','gcal.min.js']
 
@@ -92,12 +91,10 @@ select2:
   js: ['js/select2.full.min.js']
 
 components/bootstrap-datepicker:
-  require: ['twbs/bootstrap']
   js: ['js/bootstrap-datepicker.js','js/locales/bootstrap-datepicker.{language}.js']
   css: ['dist/css/bootstrap-datepicker.css']
 
 bootstrap3-editable:
-  require: ['twbs/bootstrap']
   js: ['js/bootstrap-editable.min.js']
   css: ['css/bootstrap-editable.css']
 
@@ -138,7 +135,6 @@ codemirror:
     'mode/php/php.js','addon/comment/continuecomment.js','addon/comment/comment.js']
 
 daterangepicker:
-  require: ['components/moment']
   css: ['daterangepicker.css']
   js: ['daterangepicker.js']
 
@@ -171,7 +167,6 @@ i18next:
   js: ['i18next.min.js']
 
 components/bootstrap-datetimepicker:
-  require: ['components/moment']
   css: ['build/css/bootstrap-datetimepicker.min.css']
   js: ['build/js/bootstrap-datetimepicker.min.js']
 

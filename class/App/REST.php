@@ -28,15 +28,30 @@ class REST
     //create data
     public static function Post($uri, $data)
     {
-        $p = explode("/", $uri);
-        $p = array_values(array_filter($p, "strlen"));
-        $module = Module::_($p[0]);
+        $p = parse_url($uri);
+        $p = $p["path"];
+        $p = substr($p, 1);
+        $p = str_replace("/", "\\", $p);
 
+
+
+        $module = Module::_($p);
         $class = "\\" . $module->class;
+
+        
+        if($pk=$data["_pk"]){
+
+            $o=new $class($pk);
+            $name=$data["name"];
+            $o->$name=$data["value"];
+            $o->save();
+            return ["code" => 200, "location" => $p . "/" . $o->id()];
+        }
+
         $obj = new $class($p[1]);
         $obj->bind($data);
         $obj->save();
-        return ["code" => 200, "location" => $p[0] . "/" . $obj->id()];
+        return ["code" => 200, "location" => $p . "/" . $obj->id()];
     }
 
     //

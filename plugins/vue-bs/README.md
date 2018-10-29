@@ -1,4 +1,4 @@
-# r-alt
+# vue-bs
 
 ## Project setup
 ```

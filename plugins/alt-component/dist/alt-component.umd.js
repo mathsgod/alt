@@ -6364,6 +6364,10 @@ new Vue({
     var _this = this;
 
     document.addEventListener("DOMContentLoaded", function () {
+      _this.VueRegisterElement("alt-grid");
+
+      _this.VueRegisterElement("alt-grid-section");
+
       _this.VueRegisterElement("alt-rt");
 
       _this.VueRegisterElement("alt-rt2");
@@ -6391,10 +6395,6 @@ new Vue({
       _this.VueRegisterElement("alt-email");
 
       _this.VueRegisterElement("alt-form");
-
-      _this.VueRegisterElement("alt-grid");
-
-      _this.VueRegisterElement("alt-grid-section");
 
       _this.VueRegisterElement("alt-button");
 
@@ -6429,7 +6429,7 @@ new Vue({
         subtree: true
       }; // Callback function to execute when mutations are observed
 
-      var callback = function callback(mutationsList, observer) {
+      var callback = function callback(mutationsList) {
         var _iteratorNormalCompletion = true;
         var _didIteratorError = false;
         var _iteratorError = undefined;

@@ -42,7 +42,7 @@ class Page extends \App\Page
         return $b;
     }
 
-    
+
     private $_navbar;
     public function navbar()
     {
@@ -112,11 +112,12 @@ class Page extends \App\Page
             if ($this->request->getMethod() == "get" && $this->master) {
 
                 $this->addLib("json-viewer");
-                $this->addLib("bootboxjs");
+                $this->addLib("components/moment");
+                //$this->addLib("bootboxjs");
                 //$this->addLib("jquery-ui");
-                $this->addLib("twbs/bootstrap");
-                $this->addLib("components/bootstrap-datepicker");
-                $this->addLib("bootstrap-colorpicker");
+//                $this->addLib("twbs/bootstrap");
+                //$this->addLib("components/bootstrap-datepicker");
+                //$this->addLib("bootstrap-colorpicker");
                 $this->addLib("i18next");
                 $this->addLib("components/bootstrap-datetimepicker");
 
@@ -127,13 +128,13 @@ class Page extends \App\Page
                 $this->addLib("purl");
 
                 $this->addLib("hostlink/fancybox");
-                $this->addLib("daterangepicker");
+                //$this->addLib("daterangepicker");
                 $this->addLib("pnotify");
                 $this->addLib('iCheck');
 
                 $this->addLib("bootstrap3-editable");
                 $this->addLib("timepicker");
-                $this->addLib("select2");
+                //$this->addLib("select2");
                 $this->addLib("bootstrap-wysihtml5");
                 $this->addLib("bootstrap-multiselect");
                 // $this->addLib("touchPoint");
@@ -144,7 +145,7 @@ class Page extends \App\Page
                 $this->addLib("json-viewer");
 
                 $this->addLib("bassjobsen/bootstrap-3-typeahead");
-                $this->addLib("bootstrap-select/bootstrap-select");
+                //$this->addLib("bootstrap-select/bootstrap-select");
                 $this->addLib("DataTables");
 
                 $data = [];
@@ -190,15 +191,15 @@ class Page extends \App\Page
                     }
                 }
                 // jquery
-                $plugins = new \App\Plugin("components/jquery");
-                $data["jquery"] = $plugins->jss();
+//                $plugins = new \App\Plugin("components/jquery");
+//                $data["jquery"] = $plugins->jss();
 
                 //jquery ui
-                $jqueryui = new \App\Plugin("jquery-ui");
-                $data["jquery"] = \array_merge($data["jquery"], $jqueryui->jss());
-                foreach ($jqueryui->csss() as $css) {
-                    $data["css"][] = $css;
-                }
+                //$jqueryui = new \App\Plugin("jquery-ui");
+//                $data["jquery"] = \array_merge($data["jquery"], $jqueryui->jss());
+//                foreach ($jqueryui->csss() as $css) {
+  //                  $data["css"][] = $css;
+    //            }
 
                 $plugins = new \App\Plugin("Sortable");
                 $data["jquery"] = array_merge($data["jquery"], $plugins->jss());

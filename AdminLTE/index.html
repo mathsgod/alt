@@ -8,7 +8,13 @@
     <base href="{{base}}" />
     <title>{{company}} | {{title}}</title>
     <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"> {% for c in
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <link rel="stylesheet" href="{{system_base}}/dist/css/main.css" />
+    <script src="{{system_base}}/dist/main.js"></script>
+
+
+    {% for c in
     css %}
     <link rel="stylesheet" href="{{c|raw}}"> {% endfor %}
 
@@ -21,6 +27,7 @@
 
 
     <script src="{{system_base}}/plugins/vue-bs/dist/bs.umd.min.js"></script>
+    <script src="{{system_base}}/plugins/x-html/dist/x-html.umd.min.js"></script>
     <script src="{{system_base}}/plugins/alt-component/dist/alt-component.umd.js"></script>
     <link rel="stylesheet" href="{{system_base}}/plugins/alt-component/dist/alt-component.css" />
 
