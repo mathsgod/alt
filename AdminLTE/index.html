@@ -10,12 +10,22 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-    <link rel="stylesheet" href="{{system_base}}/dist/css/main.css" />
+    <link rel="stylesheet" href="{{system_base}}/dist/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="{{system_base}}/dist/fullcalendar/fullcalendar.min.css" />
+    <link rel="stylesheet" href="{{system_base}}/dist/select2/css/select2.min.css" />
+    <link rel="stylesheet" href="{{system_base}}/dist/bootstrap-select/css/bootstrap-select.min.css" />
+    <link rel="stylesheet" href="{{system_base}}/dist/ionicons/css/ionicons.min.css" />
+    <link rel="stylesheet" href="{{system_base}}/dist/pnotify/pnotify.css" />
+    <link rel="stylesheet" href="{{system_base}}/dist/datatables/css/dataTables.bootstrap.min.css" />
+    
+
     <script src="{{system_base}}/dist/main.js"></script>
 
+    <link rel="stylesheet" href="{{system_base}}/dist/bootstrap3-editable/css/bootstrap-editable.css" />
+    <script src="{{system_base}}/dist/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 
-    {% for c in
-    css %}
+    
+    {% for c in css %}
     <link rel="stylesheet" href="{{c|raw}}"> {% endfor %}
 
     {% for js in jquery %}

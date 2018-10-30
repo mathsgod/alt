@@ -38,7 +38,6 @@
         "twig/twig": "*",
         "twig/extensions": "*",
         "hostlink/font-awesome": "5.*",
-        "driftyco/ionicons": "2.*",
         "bassjobsen/bootstrap-3-typeahead": "4.*",
         "eonasdan/bootstrap-datetimepicker": "4.*",
         "robinherbots/jquery.inputmask": "3.*",

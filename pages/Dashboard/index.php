@@ -30,8 +30,6 @@ EOT
 
     public function get() {
 
-        $this->addLib("fullcalendar/fullcalendar");
-
     	$this->write($this->getUserOnlineBox());
     }
 }

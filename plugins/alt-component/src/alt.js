@@ -101,8 +101,8 @@ new Vue({
             this.VueRegisterElement("alt-input");
             this.VueRegisterElement("alt-email");
             this.VueRegisterElement("alt-form");
-            
-            
+
+
             this.VueRegisterElement("alt-button");
             this.VueRegisterElement("ckeditor");
             this.VueRegisterElement("xeditable");
@@ -115,6 +115,8 @@ new Vue({
             this.VueRegisterElement("roxyfileman");
             this.VueRegisterElement("alt-multiselect");
             this.VueRegisterElement("alt-multiselect2");
+            this.VueRegisterElement("select2");
+
         });
 
 

@@ -214,6 +214,7 @@ class App extends \R\App
             ->withAttribute("action", $route->action)
             ->withAttribute("route", $route);
 
+
         if (!$class = $route->class) {
             if ($this->user->isAdmin()) {
                 $page = new ClassNotExistPage();
@@ -228,7 +229,8 @@ class App extends \R\App
         if ($page) {
             $response = new Response(200);
             try {
-                $response = $page($request->withMethod($route->method), $response);
+                $request = $request->withMethod($route->method);
+                $response = $page($request, $response);
             } catch (\Exception $e) {
 
                 if ($this->request->getHeader("accept")[0] == "application/json") {
@@ -249,6 +251,7 @@ class App extends \R\App
             foreach ($response->getHeaders() as $name => $values) {
                 header($name . ": " . implode(", ", $values));
             }
+
 
             file_put_contents("php://output", (string)$response->getBody());
         } elseif (self::Logined()) {

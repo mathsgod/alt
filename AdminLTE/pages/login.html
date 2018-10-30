@@ -7,9 +7,15 @@
     <meta name="robots" content="noindex, nofollow">
     <title>{{company}} | Log in</title>
     <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"> {% for c in
-    css %}
-    <link rel="stylesheet" href="{{c|raw}}"> {% endfor %}
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"> 
+
+    <link rel="stylesheet" href="{{system_base}}/dist/bootstrap/css/bootstrap.min.css" />
+
+    <script src="{{system_base}}/dist/main.js"></script>
+  
+    {% for c in css %}
+    <link rel="stylesheet" href="{{c|raw}}"> 
+    {% endfor %}
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -19,9 +25,6 @@
   <![endif]-->
 
 
-    {% for js in jquery %}
-    <script src="{{js|raw}}"></script>
-    {% endfor %}
 
     {% for js in vue.setting.js %}
     <script src="{{vue.base}}/{{js|raw}}"></script>

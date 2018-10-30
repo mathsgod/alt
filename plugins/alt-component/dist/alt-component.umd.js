@@ -6419,6 +6419,8 @@ new Vue({
       _this.VueRegisterElement("alt-multiselect");
 
       _this.VueRegisterElement("alt-multiselect2");
+
+      _this.VueRegisterElement("select2");
     });
   },
   methods: {

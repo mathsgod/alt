@@ -37,11 +37,13 @@ class _index extends ALT\Page\Login
         }
         
 
-        $this->addLib("twbs/bootstrap");
         $this->addLib("hostlink/font-awesome");
         $this->addLib("driftyco/ionicons");
         $this->addLib("iCheck");
-        $this->addLib("bootboxjs");
+
+        $pi=$this->app->pathInfo();
+        
+        $data["system_base"]=$pi["system_base"];
         $data["title"] = $config["user"]["title"];
         $data["company"] = $config["user"]["company"];
         $data["logo"] = $config["user"]["logo"];

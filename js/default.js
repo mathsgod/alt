@@ -250,14 +250,6 @@ Vue.use(VueLocalStorage);
             });
         });
 
-
-        //Datatable
-        /*        $(".DataTable").each(function (i, o) {
-                    $(o).removeClass("DataTable").addClass("_DataTable");
-                    $(o).DataTable();
-                });*/
-
-        //Multiselect
         $("select.multiselect").each(function (i, o) {
             $(o).removeClass("multiselect").addClass("_multiselect");
 
@@ -312,44 +304,6 @@ function closeRoxyDialog() {
                 $(o).jstree(options);
             });
         }
-
-        //Select2
-
-
-
-        /*        $("input[required]").not("._required").each(function (i, o) {
-                    $(o).addClass('_required');
-                    var formgroup = $(o).closest(".form-group");
-                    if (formgroup.length == 0) {
-                        formgroup = $("<div>");
-                        formgroup.addClass("no-margin form-group has-feedback");
-                        $(o).wrap(formgroup);
-                    }
-                    formgroup.addClass("has-feedback");
-        
-                    var $span = '<i class="fa fa-asterisk form-control-feedback" />';
-                    if ($(o).closest('.input-group').length == 1) {
-                        $(o).closest('.input-group').after($span);
-                    } else {
-                        $(o).after($span);
-                    }
-                });*/
-
-
-
-        /*        $("[datepicker]").not("._datepicker").each(function () {
-                    var options = {
-                        format: 'yyyy-mm-dd',
-                        todayHighlight: true,
-                        todayBtn: "linked",
-                        autoclose: true
-                    };
-                    if ($(this).attr("data-format")) options["format"] = $(this).attr("data-format");
-                    if ($(this).attr("data-inputClass")) options["inputClass"] = $(this).attr("data-inputClass");
-                    $(this).datepicker(options);
-                });
-                $("[datepicker]").addClass("_datepicker");*/
-
 
         //roxy fileman
         $(".roxy_fileman").not("._roxy_fileman").each(function () {
@@ -439,48 +393,6 @@ function closeRoxyDialog() {
     setInterval(f, 300);
 })(jQuery);
 
-(function ($) {
-    PNotify.prototype.options.styling = "fontawesome";
-
-    /*    $(".connectedSortable").css("min-height", "0px");
-    
-        $("[data-widget='pin']").on("click", function (e) {
-            e.preventDefault();
-            $(this).find("i").toggleClass("fa-thumbtack").toggleClass("fa-arrows-alt");
-    
-            var element = $(this).closest('.ui-sortable');
-    
-            if ($(this).find("i").hasClass("fa-arrows")) {
-                element.sortable("enable");
-                element.find(".ui-sortable-handle").css("cursor", "move");
-            } else {
-                element.sortable("disable");
-                element.find(".ui-sortable-handle").css("cursor", "");
-            }
-    
-            //check pin status
-            var move = false;
-            $("[data-widget='pin']").each(function () {
-                if ($(this).find("i").hasClass("fa-arrows-alt")) {
-                    move = true;
-                }
-            });
-    
-            if (move) {
-                $(".connectedSortable").css("min-height", "100px");
-            } else {
-                $(".connectedSortable").css("min-height", "0px");
-            }
-    
-        });
-    
-        $("[data-widget='pin']").each(function (o) {
-            var element = $(this).closest('.ui-sortable');
-            element.sortable("disable");
-            element.find(".ui-sortable-handle").css("cursor", "");
-        });
-        */
-})(jQuery);
 
 function __add_favorite() {
     var label = prompt("請輸入標籤", window.document.title);

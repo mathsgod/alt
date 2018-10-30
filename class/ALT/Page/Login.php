@@ -28,6 +28,7 @@ class Login extends \R\Page
 
     public function __invoke($request, $response)
     {
+
         $resp = parent::__invoke($request, $response);
 
         if ($request->getMethod() == "get") {
@@ -36,20 +37,16 @@ class Login extends \R\Page
             $this->_twig["environment"] = new \Twig_Environment($this->_twig["loader"]);
             $this->_template = $this->_twig["environment"]->loadTemplate("AdminLTE/pages/login.html");
         }
-
         $data = $resp->getBody()->getContents();
         if ($this->_template) {
             if (!$data) {
                 $data = [];
             }
 
-
             
             $p = new \App\Plugin("vue");
             $data["vue"]=$p;
 
-            $p = new \App\Plugin("components/jquery");
-            $data["jquery"] = $p->jss();
 
             foreach ($this->_lib as $name => $p) {
                 foreach ($p->setting["css"] as $css_f) {

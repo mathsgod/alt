@@ -54,6 +54,7 @@ class Page extends \App\Page
 
     public function __invoke(Request $request, Response $response)
     {
+
         $action = $request->getAttribute("action");
         $this->request = $request;
         if ($request->getMethod() == "get") {
@@ -122,17 +123,15 @@ class Page extends \App\Page
                 $this->addLib("components/bootstrap-datetimepicker");
 
                 $this->addLib("hostlink/font-awesome");
-                $this->addLib("driftyco/ionicons");
 
                 $this->addLib("jquery-validation");
                 $this->addLib("purl");
 
                 //$this->addLib("hostlink/fancybox");
                 //$this->addLib("daterangepicker");
-                $this->addLib("pnotify");
+                //$this->addLib("pnotify");
                 $this->addLib('iCheck');
 
-                $this->addLib("bootstrap3-editable");
                 $this->addLib("timepicker");
                 //$this->addLib("select2");
                 $this->addLib("bootstrap-wysihtml5");
@@ -146,7 +145,7 @@ class Page extends \App\Page
 
                 $this->addLib("bassjobsen/bootstrap-3-typeahead");
                 //$this->addLib("bootstrap-select/bootstrap-select");
-                $this->addLib("DataTables");
+                //$this->addLib("DataTables");
 
                 $data = [];
                 $data["title"] = $this->module()->name;
