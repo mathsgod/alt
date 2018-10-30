@@ -67,6 +67,10 @@ module.exports = {
                 from: "node_modules/x-editable/dist/bootstrap3-editable",
                 to: "bootstrap3-editable",
                 toType: "dir"
+            }, {
+                from: "plugins/x-html/dist",
+                to: "x-html",
+                toType: "dir"
             }
 
 
