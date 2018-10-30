@@ -71,8 +71,11 @@ module.exports = {
                 from: "plugins/x-html/dist",
                 to: "x-html",
                 toType: "dir"
+            }, {
+                from: "plugins/alt-component/dist",
+                to: "alt-component",
+                toType: "dir"
             }
-
 
         ])
     ]

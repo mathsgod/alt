@@ -11,7 +11,7 @@ export default {
   },
   mounted() {
     $(this.$el).select2();
-    if (value) {
+    if (this.value) {
       $(this.$el).val(this.value);
       $(this.$el).trigger("change");
     }
