@@ -82,7 +82,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "fae3");
+/******/ 	return __webpack_require__(__webpack_require__.s = "9a62");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -487,13 +487,6 @@ module.exports = function (bitmap, value) {
 
 /***/ }),
 
-/***/ "4af9":
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
 /***/ "4bf8":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -518,10 +511,10 @@ exports.f = {}.propertyIsEnumerable;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_index_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormGroup_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("4af9");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_index_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormGroup_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_index_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormGroup_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _AppData_Roaming_npm_node_modules_vue_cli_service_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_index_js_ref_6_oneOf_1_1_AppData_Roaming_npm_node_modules_vue_cli_service_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormGroup_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("fcb7");
+/* harmony import */ var _AppData_Roaming_npm_node_modules_vue_cli_service_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_index_js_ref_6_oneOf_1_1_AppData_Roaming_npm_node_modules_vue_cli_service_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormGroup_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_AppData_Roaming_npm_node_modules_vue_cli_service_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_index_js_ref_6_oneOf_1_1_AppData_Roaming_npm_node_modules_vue_cli_service_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormGroup_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_index_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormGroup_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+ /* unused harmony default export */ var _unused_webpack_default_export = (_AppData_Roaming_npm_node_modules_vue_cli_service_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_index_js_ref_6_oneOf_1_1_AppData_Roaming_npm_node_modules_vue_cli_service_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormGroup_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -1099,6 +1092,490 @@ exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
 
 /***/ }),
 
+/***/ "9a62":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+// CONCATENATED MODULE: C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/lib/commands/build/setPublicPath.js
+// This file is imported into lib/wc client bundles.
+
+if (typeof window !== 'undefined') {
+  var i
+  if ((i = window.document.currentScript) && (i = i.src.match(/(.+\/)[^/]+\.js$/))) {
+    __webpack_require__.p = i[1] // eslint-disable-line
+  }
+}
+
+// Indicate to webpack that this file can be concatenated
+/* harmony default export */ var setPublicPath = (null);
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es7.symbol.async-iterator.js
+var es7_symbol_async_iterator = __webpack_require__("ac4d");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.symbol.js
+var es6_symbol = __webpack_require__("8a81");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom.iterable.js
+var web_dom_iterable = __webpack_require__("ac6a");
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Input.vue?vue&type=template&id=9df38064&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('input',_vm._b({staticClass:"form-control",attrs:{"type":_vm.type}},'input',_vm.$props,false))}
+var staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/Input.vue?vue&type=template&id=9df38064&
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-plugin-babel/node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Input.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+/* harmony default export */ var Inputvue_type_script_lang_js_ = ({
+  name: "bs-input",
+  props: {
+    required: Boolean,
+    value: String,
+    type: {
+      type: String,
+      default: "text"
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/Input.vue?vue&type=script&lang=js&
+ /* harmony default export */ var src_Inputvue_type_script_lang_js_ = (Inputvue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
+
+// CONCATENATED MODULE: ./src/Input.vue
+
+
+
+
+
+/* normalize component */
+
+var component = normalizeComponent(
+  src_Inputvue_type_script_lang_js_,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+component.options.__file = "Input.vue"
+/* harmony default export */ var Input = (component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/FormGroup.vue?vue&type=template&id=733baac6&
+var FormGroupvue_type_template_id_733baac6_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"form-group"},[_vm._t("default")],2)}
+var FormGroupvue_type_template_id_733baac6_staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/FormGroup.vue?vue&type=template&id=733baac6&
+
+// EXTERNAL MODULE: ./src/FormGroup.vue?vue&type=style&index=0&lang=css&
+var FormGroupvue_type_style_index_0_lang_css_ = __webpack_require__("539f");
+
+// CONCATENATED MODULE: ./src/FormGroup.vue
+
+var script = {}
+
+
+
+/* normalize component */
+
+var FormGroup_component = normalizeComponent(
+  script,
+  FormGroupvue_type_template_id_733baac6_render,
+  FormGroupvue_type_template_id_733baac6_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+FormGroup_component.options.__file = "FormGroup.vue"
+/* harmony default export */ var FormGroup = (FormGroup_component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/InputSelect.vue?vue&type=template&id=3fc0d0b3&
+var InputSelectvue_type_template_id_3fc0d0b3_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"input-group"},[_c('div',{staticClass:"input-group-btn"},[_vm._m(0),_c('ul',{staticClass:"dropdown-menu"},_vm._l((_vm.options),function(o,index){return _c('li',{key:index},[_c('a',{attrs:{"href":"javascript:void(0)"},domProps:{"textContent":_vm._s(o)},on:{"click":function($event){$event.preventDefault();_vm.itemSelected(o)}}})])}))]),_c('input',_vm._b({staticClass:"form-control",attrs:{"type":"text","required":_vm.required},domProps:{"value":_vm.v},on:{"input":function($event){_vm.$emit('input',$event.data)}}},'input',_vm.$props,false))])}
+var InputSelectvue_type_template_id_3fc0d0b3_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('button',{staticClass:"btn btn-default dropdown-toggle",attrs:{"type":"button","data-toggle":"dropdown"}},[_c('i',{staticClass:"fa fa-caret-down"})])}]
+
+
+// CONCATENATED MODULE: ./src/InputSelect.vue?vue&type=template&id=3fc0d0b3&
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-plugin-babel/node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/InputSelect.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ var InputSelectvue_type_script_lang_js_ = ({
+  name: "bs-input-select",
+  props: {
+    required: Boolean,
+    name: String,
+    value: String,
+    options: Object
+  },
+  data: function data() {
+    return {
+      v: this.value
+    };
+  },
+  methods: {
+    itemSelected: function itemSelected(value) {
+      this.v = value;
+      this.$emit("input", value);
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/InputSelect.vue?vue&type=script&lang=js&
+ /* harmony default export */ var src_InputSelectvue_type_script_lang_js_ = (InputSelectvue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/InputSelect.vue
+
+
+
+
+
+/* normalize component */
+
+var InputSelect_component = normalizeComponent(
+  src_InputSelectvue_type_script_lang_js_,
+  InputSelectvue_type_template_id_3fc0d0b3_render,
+  InputSelectvue_type_template_id_3fc0d0b3_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+InputSelect_component.options.__file = "InputSelect.vue"
+/* harmony default export */ var InputSelect = (InputSelect_component.exports);
+// CONCATENATED MODULE: ./src/index.js
+
+
+
+
+
+
+Vue.component("bs-input", Input);
+Vue.component("bs-form-group", FormGroup);
+Vue.component("bs-input-select", InputSelect);
+new Vue({
+  created: function created() {
+    var _this = this;
+
+    document.addEventListener("DOMContentLoaded", function () {
+      _this.VueRegisterElement("bs-input");
+
+      _this.VueRegisterElement("bs-form-group");
+
+      _this.VueRegisterElement("bs-input-select");
+    });
+  },
+  methods: {
+    VueRegisterElement: function VueRegisterElement(name) {
+      var config = {
+        attributes: true,
+        childList: true,
+        subtree: true
+      }; // Callback function to execute when mutations are observed
+
+      var callback = function callback(mutationsList) {
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = mutationsList[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var mutation = _step.value;
+
+            if (mutation.type == 'childList') {
+              var _iteratorNormalCompletion2 = true;
+              var _didIteratorError2 = false;
+              var _iteratorError2 = undefined;
+
+              try {
+                for (var _iterator2 = mutation.addedNodes[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                  var n = _step2.value;
+
+                  if (n.nodeName.toLowerCase() == name) {
+                    new Vue({
+                      el: n
+                    });
+                  }
+
+                  if (n.nodeType == 1) {
+                    if (n.getAttribute("is") == name) {
+                      new Vue({
+                        el: n
+                      });
+                    }
+
+                    var _iteratorNormalCompletion3 = true;
+                    var _didIteratorError3 = false;
+                    var _iteratorError3 = undefined;
+
+                    try {
+                      for (var _iterator3 = n.querySelectorAll("[is='" + name + "']")[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                        var c = _step3.value;
+                        new Vue({
+                          el: c
+                        });
+                      }
+                    } catch (err) {
+                      _didIteratorError3 = true;
+                      _iteratorError3 = err;
+                    } finally {
+                      try {
+                        if (!_iteratorNormalCompletion3 && _iterator3.return != null) {
+                          _iterator3.return();
+                        }
+                      } finally {
+                        if (_didIteratorError3) {
+                          throw _iteratorError3;
+                        }
+                      }
+                    }
+
+                    var _iteratorNormalCompletion4 = true;
+                    var _didIteratorError4 = false;
+                    var _iteratorError4 = undefined;
+
+                    try {
+                      for (var _iterator4 = n.querySelectorAll(name)[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+                        var _c = _step4.value;
+                        new Vue({
+                          el: _c
+                        });
+                      }
+                    } catch (err) {
+                      _didIteratorError4 = true;
+                      _iteratorError4 = err;
+                    } finally {
+                      try {
+                        if (!_iteratorNormalCompletion4 && _iterator4.return != null) {
+                          _iterator4.return();
+                        }
+                      } finally {
+                        if (_didIteratorError4) {
+                          throw _iteratorError4;
+                        }
+                      }
+                    }
+                  }
+                }
+              } catch (err) {
+                _didIteratorError2 = true;
+                _iteratorError2 = err;
+              } finally {
+                try {
+                  if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
+                    _iterator2.return();
+                  }
+                } finally {
+                  if (_didIteratorError2) {
+                    throw _iteratorError2;
+                  }
+                }
+              }
+            } else if (mutation.type == 'attributes') {
+              if (mutation.attributeName == "is") {
+                if (mutation.target.getAttribute("is") == name) {
+                  new Vue({
+                    el: mutation.target
+                  });
+                }
+              }
+            }
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator.return != null) {
+              _iterator.return();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+      };
+
+      var observer = new MutationObserver(callback);
+      observer.observe(document.body, config);
+      var _iteratorNormalCompletion5 = true;
+      var _didIteratorError5 = false;
+      var _iteratorError5 = undefined;
+
+      try {
+        for (var _iterator5 = document.body.querySelectorAll(name)[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+          var c = _step5.value;
+          new Vue({
+            el: c
+          });
+        }
+      } catch (err) {
+        _didIteratorError5 = true;
+        _iteratorError5 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion5 && _iterator5.return != null) {
+            _iterator5.return();
+          }
+        } finally {
+          if (_didIteratorError5) {
+            throw _iteratorError5;
+          }
+        }
+      }
+
+      var _iteratorNormalCompletion6 = true;
+      var _didIteratorError6 = false;
+      var _iteratorError6 = undefined;
+
+      try {
+        for (var _iterator6 = document.body.querySelectorAll("[is='" + name + "']")[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+          var _c2 = _step6.value;
+          new Vue({
+            el: _c2
+          });
+        }
+      } catch (err) {
+        _didIteratorError6 = true;
+        _iteratorError6 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion6 && _iterator6.return != null) {
+            _iterator6.return();
+          }
+        } finally {
+          if (_didIteratorError6) {
+            throw _iteratorError6;
+          }
+        }
+      }
+    }
+  }
+});
+// CONCATENATED MODULE: C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/lib/commands/build/entry-lib-no-default.js
+
+
+
+
+/***/ }),
+
 /***/ "9b43":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1452,487 +1929,10 @@ module.exports = document && document.documentElement;
 
 /***/ }),
 
-/***/ "fae3":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "fcb7":
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-
-// CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/setPublicPath.js
-// This file is imported into lib/wc client bundles.
-
-if (typeof window !== 'undefined') {
-  var i
-  if ((i = window.document.currentScript) && (i = i.src.match(/(.+\/)[^/]+\.js$/))) {
-    __webpack_require__.p = i[1] // eslint-disable-line
-  }
-}
-
-// Indicate to webpack that this file can be concatenated
-/* harmony default export */ var setPublicPath = (null);
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es7.symbol.async-iterator.js
-var es7_symbol_async_iterator = __webpack_require__("ac4d");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.symbol.js
-var es6_symbol = __webpack_require__("8a81");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom.iterable.js
-var web_dom_iterable = __webpack_require__("ac6a");
-
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Input.vue?vue&type=template&id=9df38064&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('input',_vm._b({staticClass:"form-control",attrs:{"type":_vm.type}},'input',_vm.$props,false))}
-var staticRenderFns = []
-
-
-// CONCATENATED MODULE: ./src/Input.vue?vue&type=template&id=9df38064&
-
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Input.vue?vue&type=script&lang=js&
-//
-//
-//
-//
-/* harmony default export */ var Inputvue_type_script_lang_js_ = ({
-  name: "bs-input",
-  props: {
-    required: Boolean,
-    value: String,
-    type: {
-      type: String,
-      default: "text"
-    }
-  }
-});
-// CONCATENATED MODULE: ./src/Input.vue?vue&type=script&lang=js&
- /* harmony default export */ var src_Inputvue_type_script_lang_js_ = (Inputvue_type_script_lang_js_); 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-function normalizeComponent (
-  scriptExports,
-  render,
-  staticRenderFns,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier, /* server only */
-  shadowMode /* vue-cli only */
-) {
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (render) {
-    options.render = render
-    options.staticRenderFns = staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = 'data-v-' + scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = shadowMode
-      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
-      : injectStyles
-  }
-
-  if (hook) {
-    if (options.functional) {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      var originalRender = options.render
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return originalRender(h, context)
-      }
-    } else {
-      // inject component registration as beforeCreate hook
-      var existing = options.beforeCreate
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    }
-  }
-
-  return {
-    exports: scriptExports,
-    options: options
-  }
-}
-
-// CONCATENATED MODULE: ./src/Input.vue
-
-
-
-
-
-/* normalize component */
-
-var component = normalizeComponent(
-  src_Inputvue_type_script_lang_js_,
-  render,
-  staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-component.options.__file = "Input.vue"
-/* harmony default export */ var Input = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/FormGroup.vue?vue&type=template&id=733baac6&
-var FormGroupvue_type_template_id_733baac6_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"form-group"},[_vm._t("default")],2)}
-var FormGroupvue_type_template_id_733baac6_staticRenderFns = []
-
-
-// CONCATENATED MODULE: ./src/FormGroup.vue?vue&type=template&id=733baac6&
-
-// EXTERNAL MODULE: ./src/FormGroup.vue?vue&type=style&index=0&lang=css&
-var FormGroupvue_type_style_index_0_lang_css_ = __webpack_require__("539f");
-
-// CONCATENATED MODULE: ./src/FormGroup.vue
-
-var script = {}
-
-
-
-/* normalize component */
-
-var FormGroup_component = normalizeComponent(
-  script,
-  FormGroupvue_type_template_id_733baac6_render,
-  FormGroupvue_type_template_id_733baac6_staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-FormGroup_component.options.__file = "FormGroup.vue"
-/* harmony default export */ var FormGroup = (FormGroup_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/InputSelect.vue?vue&type=template&id=1cf58321&
-var InputSelectvue_type_template_id_1cf58321_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"input-group"},[_c('div',{staticClass:"input-group-btn"},[_vm._m(0),_c('ul',{staticClass:"dropdown-menu"},_vm._l((_vm.options),function(o,index){return _c('li',{key:index},[_c('a',{attrs:{"href":"javascript:void(0)"},domProps:{"textContent":_vm._s(o)},on:{"click":function($event){$event.preventDefault();_vm.itemSelected(o)}}})])}))]),_c('input',_vm._b({staticClass:"form-control",attrs:{"type":"text","required":_vm.required},domProps:{"value":_vm.v},on:{"input":function($event){_vm.$emit('input',$event.data)}}},'input',_vm.$props,false))])}
-var InputSelectvue_type_template_id_1cf58321_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('button',{staticClass:"btn btn-default dropdown-toggle",attrs:{"type":"button","data-toggle":"dropdown"}},[_c('i',{staticClass:"fa fa-caret-down"})])}]
-
-
-// CONCATENATED MODULE: ./src/InputSelect.vue?vue&type=template&id=1cf58321&
-
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/InputSelect.vue?vue&type=script&lang=js&
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ var InputSelectvue_type_script_lang_js_ = ({
-  name: "bs-input-select",
-  props: {
-    required: Boolean,
-    name: String,
-    value: String,
-    options: Array
-  },
-  data: function data() {
-    return {
-      v: this.value
-    };
-  },
-  methods: {
-    itemSelected: function itemSelected(value) {
-      this.v = value;
-      this.$emit("input", value);
-    }
-  }
-});
-// CONCATENATED MODULE: ./src/InputSelect.vue?vue&type=script&lang=js&
- /* harmony default export */ var src_InputSelectvue_type_script_lang_js_ = (InputSelectvue_type_script_lang_js_); 
-// CONCATENATED MODULE: ./src/InputSelect.vue
-
-
-
-
-
-/* normalize component */
-
-var InputSelect_component = normalizeComponent(
-  src_InputSelectvue_type_script_lang_js_,
-  InputSelectvue_type_template_id_1cf58321_render,
-  InputSelectvue_type_template_id_1cf58321_staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-InputSelect_component.options.__file = "InputSelect.vue"
-/* harmony default export */ var InputSelect = (InputSelect_component.exports);
-// CONCATENATED MODULE: ./src/index.js
-
-
-
-
-
-
-Vue.component("bs-input", Input);
-Vue.component("bs-form-group", FormGroup);
-Vue.component("bs-input-select", InputSelect);
-new Vue({
-  created: function created() {
-    var _this = this;
-
-    document.addEventListener("DOMContentLoaded", function () {
-      _this.VueRegisterElement("bs-input");
-
-      _this.VueRegisterElement("bs-form-group");
-
-      _this.VueRegisterElement("bs-input-select");
-    });
-  },
-  methods: {
-    VueRegisterElement: function VueRegisterElement(name) {
-      var config = {
-        attributes: true,
-        childList: true,
-        subtree: true
-      }; // Callback function to execute when mutations are observed
-
-      var callback = function callback(mutationsList) {
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
-
-        try {
-          for (var _iterator = mutationsList[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var mutation = _step.value;
-
-            if (mutation.type == 'childList') {
-              var _iteratorNormalCompletion2 = true;
-              var _didIteratorError2 = false;
-              var _iteratorError2 = undefined;
-
-              try {
-                for (var _iterator2 = mutation.addedNodes[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-                  var n = _step2.value;
-
-                  if (n.nodeName.toLowerCase() == name) {
-                    new Vue({
-                      el: n
-                    });
-                  }
-
-                  if (n.nodeType == 1) {
-                    if (n.getAttribute("is") == name) {
-                      new Vue({
-                        el: n
-                      });
-                    }
-
-                    var _iteratorNormalCompletion3 = true;
-                    var _didIteratorError3 = false;
-                    var _iteratorError3 = undefined;
-
-                    try {
-                      for (var _iterator3 = n.querySelectorAll("[is='" + name + "']")[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-                        var c = _step3.value;
-                        new Vue({
-                          el: c
-                        });
-                      }
-                    } catch (err) {
-                      _didIteratorError3 = true;
-                      _iteratorError3 = err;
-                    } finally {
-                      try {
-                        if (!_iteratorNormalCompletion3 && _iterator3.return != null) {
-                          _iterator3.return();
-                        }
-                      } finally {
-                        if (_didIteratorError3) {
-                          throw _iteratorError3;
-                        }
-                      }
-                    }
-
-                    var _iteratorNormalCompletion4 = true;
-                    var _didIteratorError4 = false;
-                    var _iteratorError4 = undefined;
-
-                    try {
-                      for (var _iterator4 = n.querySelectorAll(name)[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-                        var _c = _step4.value;
-                        new Vue({
-                          el: _c
-                        });
-                      }
-                    } catch (err) {
-                      _didIteratorError4 = true;
-                      _iteratorError4 = err;
-                    } finally {
-                      try {
-                        if (!_iteratorNormalCompletion4 && _iterator4.return != null) {
-                          _iterator4.return();
-                        }
-                      } finally {
-                        if (_didIteratorError4) {
-                          throw _iteratorError4;
-                        }
-                      }
-                    }
-                  }
-                }
-              } catch (err) {
-                _didIteratorError2 = true;
-                _iteratorError2 = err;
-              } finally {
-                try {
-                  if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
-                    _iterator2.return();
-                  }
-                } finally {
-                  if (_didIteratorError2) {
-                    throw _iteratorError2;
-                  }
-                }
-              }
-            } else if (mutation.type == 'attributes') {
-              if (mutation.attributeName == "is") {
-                if (mutation.target.getAttribute("is") == name) {
-                  new Vue({
-                    el: mutation.target
-                  });
-                }
-              }
-            }
-          }
-        } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator.return != null) {
-              _iterator.return();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
-          }
-        }
-      };
-
-      var observer = new MutationObserver(callback);
-      observer.observe(document.body, config);
-      var _iteratorNormalCompletion5 = true;
-      var _didIteratorError5 = false;
-      var _iteratorError5 = undefined;
-
-      try {
-        for (var _iterator5 = document.body.querySelectorAll(name)[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-          var c = _step5.value;
-          new Vue({
-            el: c
-          });
-        }
-      } catch (err) {
-        _didIteratorError5 = true;
-        _iteratorError5 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion5 && _iterator5.return != null) {
-            _iterator5.return();
-          }
-        } finally {
-          if (_didIteratorError5) {
-            throw _iteratorError5;
-          }
-        }
-      }
-
-      var _iteratorNormalCompletion6 = true;
-      var _didIteratorError6 = false;
-      var _iteratorError6 = undefined;
-
-      try {
-        for (var _iterator6 = document.body.querySelectorAll("[is='" + name + "']")[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
-          var _c2 = _step6.value;
-          new Vue({
-            el: _c2
-          });
-        }
-      } catch (err) {
-        _didIteratorError6 = true;
-        _iteratorError6 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion6 && _iterator6.return != null) {
-            _iterator6.return();
-          }
-        } finally {
-          if (_didIteratorError6) {
-            throw _iteratorError6;
-          }
-        }
-      }
-    }
-  }
-});
-// CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/entry-lib-no-default.js
-
-
-
+// extracted by mini-css-extract-plugin
 
 /***/ })
 

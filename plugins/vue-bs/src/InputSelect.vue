@@ -21,7 +21,7 @@ export default {
     required: Boolean,
     name: String,
     value: String,
-    options: Array|Object
+    options: Object
   },
   data() {
     return {
