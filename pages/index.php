@@ -38,7 +38,6 @@ class _index extends ALT\Page\Login
         
 
         $this->addLib("hostlink/font-awesome");
-        $this->addLib("driftyco/ionicons");
         $this->addLib("iCheck");
 
         $pi=$this->app->pathInfo();
