@@ -75,6 +75,10 @@ module.exports = {
                 from: "plugins/alt-component/dist",
                 to: "alt-component",
                 toType: "dir"
+            }, {
+                from: "node_modules/@fancyapps/fancybox/dist",
+                to: "fancybox",
+                toType: "dir"
             }
 
         ])
