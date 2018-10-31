@@ -79,6 +79,10 @@ module.exports = {
                 from: "node_modules/@fancyapps/fancybox/dist",
                 to: "fancybox",
                 toType: "dir"
+            }, {
+                from: "plugins/vue-bs/dist",
+                to: "vue-bs",
+                toType: "dir"
             }
 
         ])
