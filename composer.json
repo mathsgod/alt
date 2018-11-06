@@ -34,7 +34,6 @@
         "hostlink/weather": "1.*",
         "hostlink/html": "1.*",
         "mathsgod/translate": "1.*",
-        "hostlink/fancybox": "3.*",
         "twig/twig": "*",
         "twig/extensions": "*",
         "hostlink/font-awesome": "5.*",
