@@ -14,6 +14,8 @@ import "bootstrap-select";
 import "fullcalendar";
 import "datatables-all/media/js/dataTables.bootstrap.min.js";
 
+
+
 import "select2";
 
 import "@fancyapps/fancybox";

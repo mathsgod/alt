@@ -12,6 +12,7 @@
     "bootstrap": "^3.3.7",
     "bootstrap-datepicker": "^1.8.0",
     "bootstrap-datetimepicker-npm": "^4.17.37-npm",
+    "bootstrap-multiselect": "^0.9.13-1",
     "bootstrap-sass": "^3.3.7",
     "bootstrap-select": "^1.13.3",
     "datatables-all": "^1.10.13",

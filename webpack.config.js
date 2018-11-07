@@ -83,6 +83,10 @@ module.exports = {
                 from: "plugins/vue-bs/dist",
                 to: "vue-bs",
                 toType: "dir"
+            },{
+                from: "node_modules/bootstrap-multiselect/dist",
+                to: "bootstrap-multiselect",
+                toType: "dir"
             }
 
         ])
