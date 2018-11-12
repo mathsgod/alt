@@ -26,7 +26,7 @@ module.exports = {
                 use: "url-loader"
             }]
     }, plugins: [
-        //        new CleanWebpackPlugin(['dist']),
+        //new CleanWebpackPlugin(['dist']),
         new webpack.ProvidePlugin({
             $: "jquery",
             jQuery: "jquery"
