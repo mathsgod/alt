@@ -68,7 +68,7 @@ module.exports = {
                 to: "bootstrap3-editable",
                 toType: "dir"
             }, {
-                from: "../x-html/dist",
+                from: "node_modules/x-html/dist",
                 to: "x-html",
                 toType: "dir"
             }, {
@@ -80,14 +80,14 @@ module.exports = {
                 to: "fancybox",
                 toType: "dir"
             }, {
-                from: "plugins/vue-bs/dist",
+                from: "node_modules/vue-bs/dist",
                 to: "vue-bs",
                 toType: "dir"
-            },{
+            }, {
                 from: "node_modules/bootstrap-multiselect/dist",
                 to: "bootstrap-multiselect",
                 toType: "dir"
-            },{
+            }, {
                 from: "node_modules/bootstrap-datepicker/dist",
                 to: "bootstrap-datepicker",
                 toType: "dir"

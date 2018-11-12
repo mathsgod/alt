@@ -27,7 +27,9 @@
     "mini-css-extract-plugin": "^0.4.4",
     "pnotify": "^3.2.1",
     "select2": "^4.0.5",
-    "x-editable": "^1.5.1"
+    "vue-bs": "bitbucket:mathsgod/vue-bs",
+    "x-editable": "^1.5.1",
+    "x-html": "bitbucket:mathsgod/x-html"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^0.1.19",
