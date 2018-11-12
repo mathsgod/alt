@@ -68,7 +68,7 @@ module.exports = {
                 to: "bootstrap3-editable",
                 toType: "dir"
             }, {
-                from: "plugins/x-html/dist",
+                from: "../x-html/dist",
                 to: "x-html",
                 toType: "dir"
             }, {
@@ -86,6 +86,10 @@ module.exports = {
             },{
                 from: "node_modules/bootstrap-multiselect/dist",
                 to: "bootstrap-multiselect",
+                toType: "dir"
+            },{
+                from: "node_modules/bootstrap-datepicker/dist",
+                to: "bootstrap-datepicker",
                 toType: "dir"
             }
 

@@ -486,6 +486,7 @@ class C extends \P\HTMLElement {
 
 
 			$input = p("input")->appendTo($div);
+			$input->attr("autocomplete","off");
 			$input->addClass("datetimepicker form-control");
 			$input->attr("format", "YYYY-MM-DD");
 			$input->attr("name", $field);

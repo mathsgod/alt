@@ -655,6 +655,9 @@ class C2 extends \P\HTMLElement
 				$div->attr("is", "alt-date");
 				$div->attr("name", $field);
 				$div->attr("data-field", $field);
+				$div->attr("autocomplete","off");
+
+				
 				if ($object = p($cell)->data("object")) {
 					$div->data("object", $object);
 					$div->attr("value", is_object($object) ? $object->$field : $object[$field]);
