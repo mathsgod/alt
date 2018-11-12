@@ -4,14 +4,18 @@
         <span class="input-group-addon">
             <i :class="icon"></i>
         </span>
-        <input is="datepicker" ref="datepicker" class="form-control" v-bind="$props"/>
+        <input is="datepicker" ref="datepicker" class="form-control" :value="value" v-bind="$props" @input="$emit('input',$event)"/>
         <i v-if="required" class="fa fa-asterisk form-control-feedback" style="top:10px"></i>
     </div>
 </div>
 </template>
 <script>
 export default {
+  name: "alt-date",
   props: {
+    value: {
+      type: String
+    },
     icon: {
       type: String,
       default: "far fa-calendar-alt"
@@ -19,7 +23,6 @@ export default {
     name: String,
     required: Boolean,
     type: Boolean,
-    //            value: String,
     format: {
       type: String,
       default: "yyyy-mm-dd"
@@ -45,19 +48,6 @@ export default {
       if ($(this.$el).closest(".form-group").length == 0) {
         $(this.$el).css("margin-bottom", "0px");
         $(this.$el).addClass("form-group has-feedback");
-      }
-    }
-    if (this.$attrs.value) {
-      this.value = this.$attrs.value;
-    }
-  },
-  computed: {
-    value: {
-      get() {
-        return this.$refs.datepicker.value;
-      },
-      set(newValue) {
-        this.$refs.datepicker.value = newValue;
       }
     }
   }

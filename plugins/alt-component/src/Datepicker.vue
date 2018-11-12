@@ -1,9 +1,12 @@
 <template>
-    <input class="form-control"/>
+    <input class="form-control" :value="value"/>
 </template>
 <script>
 export default {
   props: {
+    value: {
+      type: String
+    },
     format: {
       type: String,
       default: "yyyy-mm-dd"
@@ -23,27 +26,14 @@ export default {
   },
   data() {
     return {
-      datepicker: null,
-      val: null
+      datepicker: null
     };
   },
   mounted() {
-    this.val = this.$el.value;
     this.datepicker = $(this.$el).datepicker(this.$props);
     this.datepicker.on("change", o => {
-      this.val = this.$el.value;
+      this.$emit("input", o.target.value);
     });
-  },
-  computed: {
-    value: {
-      get() {
-        return this.val;
-      },
-      set(newValue) {
-        this.val = newValue;
-        this.$el.value = newValue;
-      }
-    }
   }
 };
 </script>
