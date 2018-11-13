@@ -152,12 +152,12 @@ class Table extends HTMLTableElement
         return $as;
     }
 
-    public function addCheckBox($index)
+    public function addCheckBox($index, $getter)
     {
-        $column = $this->add(null, function ($obj) use ($index) {
+        $column = $this->add(null, function ($obj) use ($index, $getter) {
             $input = p("input");
             $input->attr("type", "checkbox");
-            $input->addClass("iCheck");
+            $input->attr("is", "iCheck");
             if ($index) {
                 $input->attr("index", $index);
                 if (is_array($obj)) {
@@ -166,12 +166,20 @@ class Table extends HTMLTableElement
                     $input->val($obj->$index);
                 }
                 $input->attr("name", "{$index}[]");
+
+                if($getter){
+                    if($getter($obj)){
+                        $input->attr("checked",true);
+                    }
+
+
+                }
             }
             return $input;
         })->width(20);
 
 
-        $column->html("<input type='checkbox' class='iCheck' onClick='
+        /*$column->html("<input type='checkbox' class='iCheck' onClick='
 var checked=$(this).is(\":checked\");
 var index=$(this).closest(\"th\").index();
 var td=$(this).closest(\"table\").find(\"tbody tr\").find(\"td:nth(\"+index+\")\");
@@ -181,7 +189,7 @@ if(checked){
 	td.find(\".iCheck\").iCheck(\"uncheck\");
 }
 
-'/>");
+'/>");*/
         return $column;
     }
 

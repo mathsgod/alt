@@ -346,8 +346,9 @@ class Page extends \R\Page
 
         if ($referer = $this->request->getHeader("Referer")[0]) {
 
-            $_SESSION['app']["referer"][(string)$this->request->getUri()] = $referer;
-            //$f->addHidden("_referer", $referer);
+            $uri = $this->request->getUri()->withUserInfo(null, null);
+            $_SESSION['app']["referer"][(string)$uri] = $referer;
+            
         }
         if ($content) {
             $f->addBody($content);
