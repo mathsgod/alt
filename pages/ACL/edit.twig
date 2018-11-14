@@ -46,10 +46,10 @@
                     <tr v-for="a in data.action">
                         <td v-text="a.action"></td>
                         <td>
-                            <icheck v-model="a.allow" @input="actionChecked(a)"></icheck>
+                            <icheck v-model="a.allow" @input="actionChecked(a)" value="1"></icheck>
                         </td>
                         <td>
-                            <icheck v-model="a.deny" @input="actionChecked(a)"></icheck>
+                            <icheck v-model="a.deny" @input="actionChecked(a)" value="1"></icheck>
                         </td>
                     </tr>
                 </tbody>
@@ -69,10 +69,10 @@
                     <tr v-for="a in data.path">
                         <td v-text="a.path"></td>
                         <td>
-                            <icheck v-model="a.allow" @input="actionChecked(a)"></icheck>
+                            <icheck v-model="a.allow" @input="actionChecked(a)" value="1"></icheck>
                         </td>
                         <td>
-                            <icheck v-model="a.deny" @input="actionChecked(a)"></icheck>
+                            <icheck v-model="a.deny" @input="actionChecked(a)" value="1"></icheck>
                         </td>
                     </tr>
                 </tbody>
@@ -94,10 +94,10 @@
                             <button @click.prevent="custom=null" class="btn btn-xs btn-warning"><i class="fa fa-fw fa-undo"></i></button></td>
                         <td><input type="text" class="form-control input-sm" v-model="custom.path" /></td>
                         <td>
-                            <icheck v-model="custom.allow">
+                            <icheck v-model="custom.allow" value="1">
                         </td>
                         <td>
-                            <icheck v-model="custom.deny">
+                            <icheck v-model="custom.deny" value="1">
                         </td>
 
                     </tr>
@@ -105,10 +105,10 @@
                         <td><button @click.prevent="delAction(a)" class="btn btn-xs btn-danger"><i class="fa fa-fw fa-times"></i></button></td>
                         <td v-text="a.path"></td>
                         <td>
-                            <icheck v-model="a.allow" @input="actionChecked(a)"></icheck>
+                            <icheck v-model="a.allow" @input="actionChecked(a)" value="1"></icheck>
                         </td>
                         <td>
-                            <icheck v-model="a.deny" @input="actionChecked(a)"></icheck>
+                            <icheck v-model="a.deny" @input="actionChecked(a)" value="1"></icheck>
                         </td>
                     </tr>
                 </tbody>
