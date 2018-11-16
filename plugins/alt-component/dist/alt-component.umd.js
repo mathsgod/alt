@@ -6258,7 +6258,72 @@ var RTColumn_component = normalizeComponent(
 
 RTColumn_component.options.__file = "RTColumn.vue"
 /* harmony default export */ var RTColumn = (RTColumn_component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Ace.vue?vue&type=template&id=0b51394f&
+var Acevue_type_template_id_0b51394f_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('textarea')}
+var Acevue_type_template_id_0b51394f_staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/Ace.vue?vue&type=template&id=0b51394f&
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-plugin-babel/node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Ace.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+/* harmony default export */ var Acevue_type_script_lang_js_ = ({
+  mounted: function mounted() {
+    var _this = this;
+
+    if (this.$slots.default) {
+      this.$el.value = this.$slots.default[0].text;
+    }
+
+    var $that = $(this.$el);
+    $(this.$el).addClass("hide");
+    var $div = $("<div style='height:400px'></div>");
+    $div.insertAfter(this.$el);
+    $div.html(this.$el.value);
+    this.$nextTick(function () {
+      var editor = ace.edit($div[0]);
+      var mode = $(_this.$el).attr("ace-mode");
+
+      if (mode) {
+        editor.session.setMode("ace/mode/" + mode);
+      }
+
+      editor.getSession().setValue($(_this.$el).val());
+      editor.getSession().on("change", function () {
+        //                console.log(editor.getSession().getValue());
+        $that.val(editor.getSession().getValue());
+      });
+    });
+  }
+});
+// CONCATENATED MODULE: ./src/Ace.vue?vue&type=script&lang=js&
+ /* harmony default export */ var src_Acevue_type_script_lang_js_ = (Acevue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/Ace.vue
+
+
+
+
+
+/* normalize component */
+
+var Ace_component = normalizeComponent(
+  src_Acevue_type_script_lang_js_,
+  Acevue_type_template_id_0b51394f_render,
+  Acevue_type_template_id_0b51394f_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+Ace_component.options.__file = "Ace.vue"
+/* harmony default export */ var Ace = (Ace_component.exports);
 // CONCATENATED MODULE: ./src/alt.js
+
 
 
 
@@ -6338,6 +6403,7 @@ Vue.component("rt-table", RTTable);
 Vue.component("rt-head", RTHead);
 Vue.component("rt-column", RTColumn);
 Vue.component("rt-body", RTBody);
+Vue.component("ace", Ace);
 new Vue({
   created: function created() {
     var _this = this;
@@ -6400,6 +6466,8 @@ new Vue({
       _this.VueRegisterElement("alt-multiselect2");
 
       _this.VueRegisterElement("select2");
+
+      _this.VueRegisterElement("ace");
     });
   },
   methods: {

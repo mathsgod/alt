@@ -36,7 +36,7 @@ import RTTable from "./RTTable.vue";
 import RTHead from "./RTHead.vue";
 import RTBody from "./RTBody.vue";
 import RTColumn from "./RTColumn.vue";
-
+import Ace from "./Ace.vue";
 
 
 Vue.component("alt-input", Input);
@@ -77,9 +77,7 @@ Vue.component("rt-table", RTTable);
 Vue.component("rt-head", RTHead);
 Vue.component("rt-column", RTColumn);
 Vue.component("rt-body", RTBody);
-
-
-
+Vue.component("ace", Ace);
 new Vue({
     created() {
 
@@ -116,6 +114,8 @@ new Vue({
             this.VueRegisterElement("alt-multiselect");
             this.VueRegisterElement("alt-multiselect2");
             this.VueRegisterElement("select2");
+            
+            this.VueRegisterElement("ace");
 
         });
 

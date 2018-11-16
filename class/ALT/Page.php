@@ -146,6 +146,7 @@ class Page extends \App\Page
                 $this->addLib("bassjobsen/bootstrap-3-typeahead");
                 //$this->addLib("bootstrap-select/bootstrap-select");
                 //$this->addLib("DataTables");
+                $this->addLib("ace");
 
                 $data = [];
                 $data["title"] = $this->module()->name;
