@@ -11,14 +11,15 @@
 
     <link rel="stylesheet" href="{{system_base}}/dist/bootstrap/css/bootstrap.min.css" />
 
+    {% for js in vue.setting.js %}
+    <script src="{{vue.base}}/{{js|raw}}"></script>
+    {% endfor %}
+
     <script src="{{system_base}}/dist/main.js"></script>
+    <script src="{{system_base}}/dist/login.js"></script>
 
     {% for c in css %}
     <link rel="stylesheet" href="{{c|raw}}">
-    {% endfor %}
-
-    {% for js in vue.setting.js %}
-    <script src="{{vue.base}}/{{js|raw}}"></script>
     {% endfor %}
 
     {% for src in script %}
@@ -44,7 +45,7 @@
         <!-- /.login-logo -->
         <div class="login-box-body">
 
-            <p class="login-box-msg">Sign in to start your session</p>
+            <p class="login-box-msg" v-text="message" :class="{'text-red':error}"></p>
 
             <form>
                 <div class="form-group has-feedback">
@@ -118,9 +119,11 @@
             data: {
                 username: "",
                 password: "",
-                code: ""
+                code: "",
+                message: "Sign in to start your session",
+                error: false
             },
-            created: function () {
+            created() {
                 if ('credentials' in navigator) {
                     navigator.credentials.get({
                         password: true
@@ -130,13 +133,8 @@
                             this.login(creds.id, creds.password);
                         }
                     });
-                } else {
-                    //Handle sign-in the way you did before.
-                };
-
+                }
             }, mounted() {
-
-
                 $(this.$refs.rememberMe).iCheck({
                     checkboxClass: 'icheckbox_square-blue',
                     radioClass: 'iradio_square-blue',
@@ -144,11 +142,11 @@
                 });
 
                 $(this.$refs.rememberMe).on("ifChecked", () => {
-                    this.$localStorage.set("app.remember_me", true)
+                    this.$localStorage.set("app.remember_me", true);
                 });
 
                 $(this.$refs.rememberMe).on("ifUnchecked", () => {
-                    this.$localStorage.set("app.remember_me", false)
+                    this.$localStorage.set("app.remember_me", false);
                 });
 
                 if (this.$localStorage.get("app.remember_me") == "true") {
@@ -156,11 +154,8 @@
                     $(this.$refs.rememberMe).iCheck('check');
                     $(this.$refs.rememberMe).iCheck('update');
                 }
-
-            }, methods: {
-                rememberMe() {
-                    console.log("r");
-                },
+            },
+            methods: {
                 login(username, password) {
                     this.$http.post("System/login", {
                         username: username,
@@ -181,16 +176,25 @@
                                 window.self.location.reload();
                             }
                         } else {
-                            var bb = bootbox.dialog({
-                                message: "Incorrect username or password"
-                            });
-
+                            this.message = resp.data.error.message;
+                            this.error = true;
                         }
                     });
-                }, signIn() {
+                },
+                signIn() {
+                    if (this.username == "") {
+                        this.error = true;
+                        this.message = "Please input username";
+                        return;
+                    }
+                    if (this.password == "") {
+                        this.error = true;
+                        this.message = "Please input password";
+                        return;
+                    }
                     this.login(this.username, this.password);
-
-                }, forgetPassword() {
+                },
+                forgetPassword() {
                     var bb = bootbox.dialog({
                         title: "Forget password",
                         message: $("#forget_dialog").html()
@@ -211,13 +215,10 @@
                         });
                     });
                 }
-
             }
         });
-
-
-
-    </script> {% endverbatim %}
+    </script>
+    {% endverbatim %}
 </body>
 
 </html>

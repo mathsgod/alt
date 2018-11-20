@@ -10,7 +10,7 @@ class System_login extends R\Page
         try {
             $this->app->login($username, $password, $code);
         } catch (Exception $e) {
-            return ["code" => 400, "message" => $e->getMessage()];
+            return ["code" => 400, "error" => ["message" => $e->getMessage()]];
         }
 
         return ["code" => 200];
