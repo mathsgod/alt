@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9378d98cbc4f1ff1ce3c97ec2064ef6e",
+    "content-hash": "d062a390896e973085f9238210455c20",
     "packages": [
         {
             "name": "bassjobsen/bootstrap-3-typeahead",
@@ -270,56 +270,6 @@
             "time": "2018-03-04T13:23:48+00:00"
         },
         {
-            "name": "driftyco/ionicons",
-            "version": "v2.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/driftyco/ionicons.git",
-                "reference": "ecb4b806831005c25b97ed9089fbb1d7dcc0879c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/driftyco/ionicons/zipball/ecb4b806831005c25b97ed9089fbb1d7dcc0879c",
-                "reference": "ecb4b806831005c25b97ed9089fbb1d7dcc0879c",
-                "shasum": ""
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Adam Bradley",
-                    "email": "adam@drifty.com",
-                    "homepage": "https://twitter.com/adamdbradley",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Max Lynch",
-                    "email": "max@drifty.com",
-                    "homepage": "https://twitter.com/maxlynch",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Ben Sperry",
-                    "email": "ben@drifty.com",
-                    "homepage": "https://twitter.com/benjsperry",
-                    "role": "Designer"
-                }
-            ],
-            "description": "The premium icon font for Ionic Framework.",
-            "homepage": "http://ionicons.com/",
-            "keywords": [
-                "fonts",
-                "icon font",
-                "icons",
-                "ionic",
-                "web font"
-            ],
-            "time": "2015-01-03T20:02:30+00:00"
-        },
-        {
             "name": "eonasdan/bootstrap-datetimepicker",
             "version": "4.17.47",
             "source": {
@@ -363,31 +313,18 @@
             "time": "2017-02-28T14:32:02+00:00"
         },
         {
-            "name": "hostlink/fancybox",
-            "version": "3.4.1",
-            "dist": {
-                "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/bitbucket/repo/packages/hostlink-fancybox-3.4.1.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "type": "library",
-            "authors": [
-                {
-                    "name": "Raymond Chong",
-                    "email": "raymond@hostlink.com.hk"
-                }
-            ],
-            "description": "hostlink/fancybox"
-        },
-        {
             "name": "hostlink/font-awesome",
-            "version": "5.2.0",
+            "version": "5.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://hostlink:g5DBTes9rp8B4zWNyJhJ@bitbucket.org/hostlink/font-awesome.git",
+                "reference": "e2685a860caa9765f6149c141352f8bb07ef62e8"
+            },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/bitbucket/repo/packages/hostlink-font-awesome-5.2.0.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/hostlink/font-awesome/hostlink-font-awesome-5.5.0-0be0ba.zip",
+                "reference": "e2685a860caa9765f6149c141352f8bb07ef62e8",
+                "shasum": "a47ddd7847d4979c4c57380032cec569743a2531"
             },
             "type": "library",
             "authors": [
@@ -396,16 +333,22 @@
                     "email": "raymond@hostlink.com.hk"
                 }
             ],
-            "description": "Font Awesome, the iconic SVG, font, and CSS framework."
+            "description": "Font Awesome, the iconic SVG, font, and CSS framework.",
+            "time": "2018-11-20T03:47:50+00:00"
         },
         {
             "name": "hostlink/holiday-hk",
             "version": "1.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://mathsgod:emN9LVft9qeUmQKeQsZL@bitbucket.org/hostlink/holiday-hk.git",
+                "reference": "c3a515ebbd885f8c41d1d70b03fbf2608cd9fd52"
+            },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/bitbucket/repo/packages/hostlink-holiday-hk-1.2.2.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://raymond2.hostlink.com.hk/satis/web//dist/hostlink/holiday-hk/hostlink-holiday-hk-1.2.2-31158f.zip",
+                "reference": "c3a515ebbd885f8c41d1d70b03fbf2608cd9fd52",
+                "shasum": "d6868d87b269abc3506872109e02e72f9fdf6aae"
             },
             "require-dev": {
                 "phpunit/phpunit": "*"
@@ -425,16 +368,22 @@
                     "email": "raymond@hostlink.com.hk"
                 }
             ],
-            "description": "2012 - 2019 Hong Kong holiday"
+            "description": "2012 - 2019 Hong Kong holiday",
+            "time": "2018-05-14T10:33:15+00:00"
         },
         {
             "name": "hostlink/html",
-            "version": "1.0.9",
+            "version": "1.0.10",
+            "source": {
+                "type": "git",
+                "url": "https://hostlink:g5DBTes9rp8B4zWNyJhJ@bitbucket.org/hostlink/html.git",
+                "reference": "acc624763cb07ed960cfdacc1c568cee12ec8f6a"
+            },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/bitbucket/repo/packages/hostlink-html-1.0.9.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/hostlink/html/hostlink-html-1.0.10-409e31.zip",
+                "reference": "acc624763cb07ed960cfdacc1c568cee12ec8f6a",
+                "shasum": "c652c06d9fdf2c6ee3cd48958ac3bc9f1c7d5bbb"
             },
             "type": "library",
             "autoload": {
@@ -442,7 +391,7 @@
                     "function.php"
                 ],
                 "psr-4": {
-                    "HTML\\": "class/"
+                    "HTML\\": "src/"
                 }
             },
             "license": [
@@ -455,16 +404,22 @@
                     "email": "raymond@hostlink.com.hk",
                     "homepage": "https://raymond.hostlink.com.hk"
                 }
-            ]
+            ],
+            "time": "2018-11-06T05:17:01+00:00"
         },
         {
             "name": "hostlink/r",
             "version": "2.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://hostlink:g5DBTes9rp8B4zWNyJhJ@bitbucket.org/hostlink/r.git",
+                "reference": "5b28ac27cca9049d4877972b46b5d57d82a65778"
+            },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/bitbucket/repo/packages/hostlink-r-2.4.3.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/hostlink/r/hostlink-r-2.4.3-f597e8.zip",
+                "reference": "5b28ac27cca9049d4877972b46b5d57d82a65778",
+                "shasum": "2e1c6c8af534aaae63f139fc7dae105554c6c308"
             },
             "require": {
                 "hostlink/r-psr7": "2.*",
@@ -493,16 +448,22 @@
                     "email": "raymond@hostlink.com.hk"
                 }
             ],
-            "description": "raymond core"
+            "description": "raymond core",
+            "time": "2018-06-14T10:47:14+00:00"
         },
         {
             "name": "hostlink/r-bs",
-            "version": "1.0.6",
+            "version": "1.0.7",
+            "source": {
+                "type": "git",
+                "url": "https://hostlink:g5DBTes9rp8B4zWNyJhJ@bitbucket.org/hostlink/r-bs.git",
+                "reference": "24b91e251139fdf1791e14865063645a260117c6"
+            },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/bitbucket/repo/packages/hostlink-r-bs-1.0.6.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/hostlink/r-bs/hostlink-r-bs-1.0.7-ce3f39.zip",
+                "reference": "24b91e251139fdf1791e14865063645a260117c6",
+                "shasum": "3ed5a25f695910e69feefa557b829c21f09fa1ba"
             },
             "require": {
                 "hostlink/r-p": "1.*",
@@ -522,16 +483,22 @@
                     "name": "Raymond Chong"
                 }
             ],
-            "description": "Raymond php bootstrap library"
+            "description": "Raymond php bootstrap library",
+            "time": "2018-11-06T04:45:47+00:00"
         },
         {
             "name": "hostlink/r-db",
-            "version": "2.0.5",
+            "version": "2.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://hostlink:g5DBTes9rp8B4zWNyJhJ@bitbucket.org/hostlink/r-db.git",
+                "reference": "f2cafc33f13f4601f5d6f73991e78df3a0d47583"
+            },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/bitbucket/repo/packages/hostlink-r-db-2.0.5.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/hostlink/r-db/hostlink-r-db-2.0.6-8043a4.zip",
+                "reference": "f2cafc33f13f4601f5d6f73991e78df3a0d47583",
+                "shasum": "2e1833007b4de34c1048245659761c64c6181820"
             },
             "require": {
                 "php": ">=5.4"
@@ -553,16 +520,22 @@
                     "name": "Raymond Chong"
                 }
             ],
-            "description": "raymond framework db"
+            "description": "raymond framework db",
+            "time": "2018-11-06T04:52:58+00:00"
         },
         {
             "name": "hostlink/r-p",
-            "version": "1.1.9",
+            "version": "1.1.10",
+            "source": {
+                "type": "git",
+                "url": "https://hostlink:g5DBTes9rp8B4zWNyJhJ@bitbucket.org/hostlink/r-p.git",
+                "reference": "98d7487d2ef26408582d74b5f1ee4778804c4879"
+            },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/bitbucket/repo/packages/hostlink-r-p-1.1.9.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/hostlink/r-p/hostlink-r-p-1.1.10-7b3963.zip",
+                "reference": "98d7487d2ef26408582d74b5f1ee4778804c4879",
+                "shasum": "64811928a6b5eee117747ccf87576d03b5c37789"
             },
             "require": {
                 "php": ">=5.4"
@@ -587,16 +560,22 @@
                     "name": "Raymond Chong"
                 }
             ],
-            "description": "Raymond php html library"
+            "description": "Raymond php html library",
+            "time": "2018-11-06T04:54:34+00:00"
         },
         {
             "name": "hostlink/r-psr7",
-            "version": "2.1.1",
+            "version": "2.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://hostlink:g5DBTes9rp8B4zWNyJhJ@bitbucket.org/hostlink/r-psr7.git",
+                "reference": "fc9dd7a282e682f71df296c5db67df08b19291bf"
+            },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/bitbucket/repo/packages/hostlink-r-psr7-2.1.1.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/hostlink/r-psr7/hostlink-r-psr7-2.1.2-ee3b14.zip",
+                "reference": "fc9dd7a282e682f71df296c5db67df08b19291bf",
+                "shasum": "db70cfe01628630bd3b0cdba9b1afbb215fc66f5"
             },
             "require": {
                 "psr/http-message": "1.*"
@@ -616,16 +595,22 @@
             "license": [
                 "proprietary"
             ],
-            "description": "psr7"
+            "description": "psr7",
+            "time": "2018-11-06T04:56:29+00:00"
         },
         {
             "name": "hostlink/weather",
-            "version": "1.0.15",
+            "version": "1.0.16",
+            "source": {
+                "type": "git",
+                "url": "https://hostlink:g5DBTes9rp8B4zWNyJhJ@bitbucket.org/hostlink/weather.git",
+                "reference": "06ca408b630fffabe678a0b0f17003f1a5ead235"
+            },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/bitbucket/repo/packages/hostlink-weather-1.0.15.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/hostlink/weather/hostlink-weather-1.0.16-950731.zip",
+                "reference": "06ca408b630fffabe678a0b0f17003f1a5ead235",
+                "shasum": "92925489ade66fbc3e93b25267776af6e5576f99"
             },
             "type": "library",
             "autoload": {
@@ -639,7 +624,8 @@
                     "email": "raymond@hostlink.com.hk"
                 }
             ],
-            "description": "Hong Kong weather forecast"
+            "description": "Hong Kong weather forecast",
+            "time": "2018-11-06T05:21:37+00:00"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -721,11 +707,16 @@
         {
             "name": "mathsgod/translate",
             "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://mathsgod:emN9LVft9qeUmQKeQsZL@bitbucket.org/mathsgod/translate.git",
+                "reference": "cb9a3c6b389705521c152ec8544dfe946604b47e"
+            },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/bitbucket/repo/packages/mathsgod-translate-1.0.1.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/translate/mathsgod-translate-1.0.1-eb7747.zip",
+                "reference": "cb9a3c6b389705521c152ec8544dfe946604b47e",
+                "shasum": "bb7264ca6772e5a25073d079bc93e4e655b7f3c2"
             },
             "require-dev": {
                 "phpunit/phpunit": "*"
@@ -742,7 +733,8 @@
                     "email": "mathsgod@yahoo.com"
                 }
             ],
-            "description": "Using google translate to translate word"
+            "description": "Using google translate to translate word",
+            "time": "2018-05-21T10:16:16+00:00"
         },
         {
             "name": "moment/moment",
@@ -800,16 +792,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.23.0",
+            "version": "1.24.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "fd8c787753b3a2ad11bc60c063cff1358a32a3b4"
+                "reference": "bfc9ebb28f97e7a24c45bdc3f0ff482e47bb0266"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/fd8c787753b3a2ad11bc60c063cff1358a32a3b4",
-                "reference": "fd8c787753b3a2ad11bc60c063cff1358a32a3b4",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/bfc9ebb28f97e7a24c45bdc3f0ff482e47bb0266",
+                "reference": "bfc9ebb28f97e7a24c45bdc3f0ff482e47bb0266",
                 "shasum": ""
             },
             "require": {
@@ -874,20 +866,20 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2017-06-19T01:22:40+00:00"
+            "time": "2018-11-05T09:00:11+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
-            "version": "v6.0.5",
+            "version": "v6.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "cb3ea134d4d3729e7857737d5f320cce9caf4d32"
+                "reference": "8190d73eb5def11a43cfb020b7f36db65330698c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/cb3ea134d4d3729e7857737d5f320cce9caf4d32",
-                "reference": "cb3ea134d4d3729e7857737d5f320cce9caf4d32",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/8190d73eb5def11a43cfb020b7f36db65330698c",
+                "reference": "8190d73eb5def11a43cfb020b7f36db65330698c",
                 "shasum": ""
             },
             "require": {
@@ -940,7 +932,7 @@
                 }
             ],
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
-            "time": "2018-03-27T13:49:45+00:00"
+            "time": "2018-11-16T00:41:32+00:00"
         },
         {
             "name": "psr/cache",
@@ -1219,7 +1211,7 @@
         },
         {
             "name": "symfony/polyfill-ctype",
-            "version": "v1.9.0",
+            "version": "v1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
@@ -1277,16 +1269,16 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.9.0",
+            "version": "v1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "d0cd638f4634c16d8df4508e847f14e9e43168b8"
+                "reference": "c79c051f5b3a46be09205c73b80b346e4153e494"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/d0cd638f4634c16d8df4508e847f14e9e43168b8",
-                "reference": "d0cd638f4634c16d8df4508e847f14e9e43168b8",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/c79c051f5b3a46be09205c73b80b346e4153e494",
+                "reference": "c79c051f5b3a46be09205c73b80b346e4153e494",
                 "shasum": ""
             },
             "require": {
@@ -1332,20 +1324,20 @@
                 "portable",
                 "shim"
             ],
-            "time": "2018-08-06T14:22:27+00:00"
+            "time": "2018-09-21T13:07:52+00:00"
         },
         {
             "name": "symfony/process",
-            "version": "v3.4.17",
+            "version": "v3.4.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "1dc2977afa7d70f90f3fefbcd84152813558910e"
+                "reference": "35c2914a9f50519bd207164c353ae4d59182c2cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/1dc2977afa7d70f90f3fefbcd84152813558910e",
-                "reference": "1dc2977afa7d70f90f3fefbcd84152813558910e",
+                "url": "https://api.github.com/repos/symfony/process/zipball/35c2914a9f50519bd207164c353ae4d59182c2cb",
+                "reference": "35c2914a9f50519bd207164c353ae4d59182c2cb",
                 "shasum": ""
             },
             "require": {
@@ -1381,11 +1373,11 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2018-10-02T12:28:39+00:00"
+            "time": "2018-10-14T17:33:21+00:00"
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.4.17",
+            "version": "v3.4.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
@@ -1444,16 +1436,16 @@
         },
         {
             "name": "twig/extensions",
-            "version": "v1.5.2",
+            "version": "v1.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig-extensions.git",
-                "reference": "2c1a86526d0044065220d1b51ac08348bea5ca82"
+                "reference": "e187386bea539a2cc2726689d6b4d468672a8ab4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/2c1a86526d0044065220d1b51ac08348bea5ca82",
-                "reference": "2c1a86526d0044065220d1b51ac08348bea5ca82",
+                "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/e187386bea539a2cc2726689d6b4d468672a8ab4",
+                "reference": "e187386bea539a2cc2726689d6b4d468672a8ab4",
                 "shasum": ""
             },
             "require": {
@@ -1495,7 +1487,7 @@
                 "i18n",
                 "text"
             ],
-            "time": "2018-05-22T13:26:07+00:00"
+            "time": "2018-11-16T03:34:09+00:00"
         },
         {
             "name": "twig/twig",

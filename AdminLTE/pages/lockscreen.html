@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <base href="{{base}}" />
   <title>{{company}} | Lockscreen</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -10,10 +12,10 @@
   <link rel="stylesheet" href="{{system_base}}/dist/bootstrap/css/bootstrap.min.css" />
 
   <script src="{{system_base}}/dist/main.js"></script>
-  
-{% for c in css %}
-	<link rel="stylesheet" href="{{c|raw}}">
-{% endfor %}
+
+  {% for c in css %}
+  <link rel="stylesheet" href="{{c|raw}}">
+  {% endfor %}
 
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -25,90 +27,92 @@
 
 
 </head>
+
 <body class="hold-transition lockscreen">
-<!-- Automatic element centering -->
-<div class="lockscreen-wrapper">
-  <div class="lockscreen-logo">
-    <a href="//{{domain}}"><b>{{company}}</b></a>
-  </div>
-  <!-- User name -->
-  <div class="lockscreen-name">{{name}}</div>
-
-  <!-- START LOCK SCREEN ITEM -->
-  <div class="lockscreen-item">
-    <!-- lockscreen image -->
-    <div class="lockscreen-image">
-      <img src="User/{{user.user_id}}/image" alt="User Image">
+  <!-- Automatic element centering -->
+  <div class="lockscreen-wrapper">
+    <div class="lockscreen-logo">
+      <a href="//{{domain}}"><b>{{company}}</b></a>
     </div>
-    <!-- /.lockscreen-image -->
+    <!-- User name -->
+    <div class="lockscreen-name">{{name}}</div>
 
-    <!-- lockscreen credentials (contains the form) -->
-    <form class="lockscreen-credentials" >
-      <div class="input-group">
-        <input type="password" class="form-control" placeholder="password">
-
-        <div class="input-group-btn">
-          <button type="submit" class="btn"><i class="fa fa-arrow-right text-muted"></i></button>
-        </div>
+    <!-- START LOCK SCREEN ITEM -->
+    <div class="lockscreen-item">
+      <!-- lockscreen image -->
+      <div class="lockscreen-image">
+        <img src="User/{{user.user_id}}/image" alt="User Image">
       </div>
-    </form>
-    <!-- /.lockscreen credentials -->
+      <!-- /.lockscreen-image -->
 
+      <!-- lockscreen credentials (contains the form) -->
+      <form class="lockscreen-credentials">
+        <div class="input-group">
+          <input type="password" class="form-control" placeholder="password">
+
+          <div class="input-group-btn">
+            <button type="submit" class="btn"><i class="fa fa-arrow-right text-muted"></i></button>
+          </div>
+        </div>
+      </form>
+      <!-- /.lockscreen credentials -->
+
+    </div>
+    <!-- /.lockscreen-item -->
+    <div class="help-block text-center">
+      Enter your password to retrieve your session
+    </div>
+    <div class="text-center">
+      <a href="lockscreen?login=1">Or sign in as a different user</a>
+    </div>
+    <div class="lockscreen-footer text-center">
+      Copyright &copy; {{copyright.year}} <b><a href="{{copyright.url}}" class="text-black">{{company}}</a></b><br>
+      All rights reserved
+    </div>
   </div>
-  <!-- /.lockscreen-item -->
-  <div class="help-block text-center">
-    Enter your password to retrieve your session
-  </div>
-  <div class="text-center">
-    <a href="lockscreen?login=1">Or sign in as a different user</a>
-  </div>
-  <div class="lockscreen-footer text-center">
-    Copyright &copy; {{copyright.year}} <b><a href="{{copyright.url}}" class="text-black">{{company}}</a></b><br>
-    All rights reserved
-  </div>
-</div>
-<!-- /.center -->
-{% for src in script %}
-<script src="{{src|raw}}"></script>
-{% endfor %}
+  <!-- /.center -->
+  {% for src in script %}
+  <script src="{{src|raw}}"></script>
+  {% endfor %}
 
 
-<input type="hidden" value="{{user.username}}" id="username" />
+  <input type="hidden" value="{{user.username}}" id="username" />
 
-{% verbatim %}
-<script>
-$(function(){
-	var login_func=function(username,password,code){
-		$.post("System/login",{
-			username:username,
-			password:password,
-			code:code
-		},function(data){
-			//success login
-			if(data.code==200){
-				window.self.location="";
-			}else{
-				if(data.message=="2-step verification"){
-					var code=prompt("2-step verification code:");
-					if(code!=null){
-						login_func(username,password,code);
-					}
-				}else{
-					$(".help-block").text(data.message).addClass("text-red");
-				}
-			}
+  {% verbatim %}
+  <script>
+    $(function () {
+      var login_func = function (username, password, code) {
+        $.post("System/login", {
+          username: username,
+          password: password,
+          code: code
+        }, function (data) {
+          //success login
+          if (data.code == 200) {
+            window.self.location = "";
+          } else {
+            if (data.message == "2-step verification") {
+              var code = prompt("2-step verification code:");
+              if (code != null) {
+                login_func(username, password, code);
+              }
+            } else {
+              $(".help-block").text(data.message).addClass("text-red");
+            }
+          }
 
-		},'json');
-	};
+        }, 'json');
+      };
 
-	$("form.lockscreen-credentials").on("submit",function(){
-		var password=$(this).find("input").val();
-		login_func($("#username").val(),password,null);
-		return false;
-	});
-});
-</script>
-{% endverbatim %}
+      $("form.lockscreen-credentials").on("submit", function () {
+        var password = $(this).find("input").val();
+        login_func($("#username").val(), password, null);
+        return false;
+      });
+    });
+  </script>
+  {% endverbatim %}
 
 </body>
+
 </html>

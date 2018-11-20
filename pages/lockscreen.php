@@ -2,11 +2,14 @@
 use App\Config;
 use App\System;
 use App\User;
-class lockscreen extends ALT\Page\LockScreen {
-    public function get($username) {
-        $app=$this->app;
+
+class lockscreen extends ALT\Page\LockScreen
+{
+    public function get($username)
+    {
+        $app = $this->app;
         if ($app->logined()) {
-        	header("location: index");
+            header("location: index");
             return;
         }
 
@@ -16,16 +19,23 @@ class lockscreen extends ALT\Page\LockScreen {
             return;
         }
 
-        $user = User::first([['username=?',$username]]);
+        $user = User::first([['username=?', $username]]);
         if (!$user) {
             setcookie("app.username", "", time() - 3600);
             header("location: index");
             return;
         }
-        $this->addLib("twbs/bootstrap");
+
+
+        //$this->addLib("twbs/bootstrap");
         $this->addLib("hostlink/font-awesome");
-        $this->addLib("driftyco/ionicons");
+        //$this->addLib("driftyco/ionicons");
         $this->addLib("iCheck");
+
+
+        $pi = $this->app->pathInfo();
+        $data["base"] = $this->app->basePath() . "/";
+        $data["system_base"] = $pi["system_base"];
 
         $data["user"] = $user;
         $data["company"] = $app->config["user"]["company"];
@@ -37,7 +47,8 @@ class lockscreen extends ALT\Page\LockScreen {
         return $data;
     }
 
-    public function login() {
+    public function login()
+    {
         setcookie("app.username", "", time() - 3600);
         header("location: index");
     }
