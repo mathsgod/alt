@@ -24,6 +24,7 @@ export default {
       });
 
       this.$emit("input", v[0]);
+      this.$emit("change", v[0]);
     });
   },
   methods: {

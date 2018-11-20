@@ -3402,12 +3402,12 @@ var Multiselect_component = normalizeComponent(
 
 Multiselect_component.options.__file = "Multiselect.vue"
 /* harmony default export */ var Multiselect = (Multiselect_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Select2.vue?vue&type=template&id=04d52600&
-var Select2vue_type_template_id_04d52600_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('select',{staticClass:"form-control"},[_vm._t("default")],2)}
-var Select2vue_type_template_id_04d52600_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Select2.vue?vue&type=template&id=05f15486&
+var Select2vue_type_template_id_05f15486_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('select',{staticClass:"form-control"},[_vm._t("default")],2)}
+var Select2vue_type_template_id_05f15486_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/Select2.vue?vue&type=template&id=04d52600&
+// CONCATENATED MODULE: ./src/Select2.vue?vue&type=template&id=05f15486&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-plugin-babel/node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Select2.vue?vue&type=script&lang=js&
 //
@@ -3437,6 +3437,8 @@ var Select2vue_type_template_id_04d52600_staticRenderFns = []
       });
 
       _this.$emit("input", v[0]);
+
+      _this.$emit("change", v[0]);
     });
   },
   methods: {
@@ -3457,8 +3459,8 @@ var Select2vue_type_template_id_04d52600_staticRenderFns = []
 
 var Select2_component = normalizeComponent(
   src_Select2vue_type_script_lang_js_,
-  Select2vue_type_template_id_04d52600_render,
-  Select2vue_type_template_id_04d52600_staticRenderFns,
+  Select2vue_type_template_id_05f15486_render,
+  Select2vue_type_template_id_05f15486_staticRenderFns,
   false,
   null,
   null,
