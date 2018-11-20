@@ -48,7 +48,7 @@ json-viewer:
   css: ['query.json-viewer.css']
 
 robinherbots/jquery.inputmask:
-  js: ['dist/min/jquery.inputmask.bundle.min.js','extra/bindings/inputmask.binding.js']
+  js: ['dist/min/jquery.inputmask.bundle.min.js','dist/inputmask/bindings/inputmask.binding.js']
 
 jquery:
   js: ['jquery.min.js']

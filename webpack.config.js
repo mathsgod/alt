@@ -106,7 +106,6 @@ module.exports = {
                 to: "bootstrap-datepicker",
                 toType: "dir"
             }
-
         ])
     ]
 

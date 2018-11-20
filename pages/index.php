@@ -7,7 +7,7 @@ class _index extends ALT\Page\Login
 {
     public function get($r)
     {
- 
+
         $config = $this->app->config;
         if ($this->app->logined()) {
             $user = $this->app->user;
@@ -22,33 +22,22 @@ class _index extends ALT\Page\Login
             } else {
                 $this->response = $this->response->withHeader("Location", "Dashboard");
             }
-            
+
             return;
         }
-
-        if ($_COOKIE["app_username"]) {
-            $w = [];
-            $w[] = ["username=?", $_COOKIE["app_username"]];
-
-            if ($user = User::first($w)) {
-                $this->response = $this->response->withHeader("Location", "lockscreen?username=" . $_COOKIE["app_username"]);
-                return;
-            }
-        }
-        
 
         $this->addLib("hostlink/font-awesome");
         $this->addLib("iCheck");
 
-        $pi=$this->app->pathInfo();
-        
-        $data["system_base"]=$pi["system_base"];
+        $pi = $this->app->pathInfo();
+
+        $data["system_base"] = $pi["system_base"];
         $data["title"] = $config["user"]["title"];
         $data["company"] = $config["user"]["company"];
         $data["logo"] = $config["user"]["logo"];
         $data["version"] = $this->app->version();
 
-        
+
         $data["r"] = $r;
         if ($config["user"]["2-step verification"] && !System::IP2StepExemptCheck($_SERVER['REMOTE_ADDR'])) {
             $data["ip2step"] = true;
