@@ -1,5 +1,5 @@
 //Confirm
-(function($){
+document.addEventListener("DOMContentLoaded",function(){
 	var f=function(){
 		$(".confirm").each(function(){
 			var msg=$(this).attr("confirm-msg");
@@ -18,4 +18,4 @@
 	$(f);
 
 	setInterval(f, 300);
-})(jQuery);
+});

@@ -1,4 +1,3 @@
-console.log("login.js");
 var Vue = window.Vue;
 Vue.use(VueLocalStorage);
 var $=window.$;
