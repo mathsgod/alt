@@ -10,6 +10,11 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
+    <script type="text/javascript">
+        if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent))
+            document.write('<script src="https:\/\/cdn.polyfill.io\/v2\/polyfill.min.js"><\/script>');
+    </script>
+  
     <link rel="stylesheet" href="{{system_base}}/dist/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="{{system_base}}/dist/fullcalendar/fullcalendar.min.css" />
     <link rel="stylesheet" href="{{system_base}}/dist/select2/css/select2.min.css" />
@@ -21,7 +26,9 @@
     <link rel="stylesheet" href="{{system_base}}/dist/bootstrap-multiselect/css/bootstrap-multiselect.css" />
     <link rel="stylesheet" href="{{system_base}}/dist/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" />
 
+    <script src="{{system_base}}/dist/jquery/jquery.min.js"></script>
     <script src="{{system_base}}/dist/main.js"></script>
+    <script src="{{system_base}}/dist/layout.js" defer></script>
 
     <script src="{{system_base}}/dist/bootstrap-multiselect/js/bootstrap-multiselect.js"></script>
 

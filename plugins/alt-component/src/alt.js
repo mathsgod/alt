@@ -38,6 +38,7 @@ import RTBody from "./RTBody.vue";
 import RTColumn from "./RTColumn.vue";
 import Ace from "./Ace.vue";
 
+Vue=window.Vue;
 
 Vue.component("alt-input", Input);
 Vue.component("alt-box", Box);
@@ -91,11 +92,13 @@ new Vue({
             this.VueRegisterElement("alt-box-header");
             this.VueRegisterElement("alt-box-body");
             this.VueRegisterElement("alt-box-footer");
+            this.VueRegisterElement("alt-e");
+
             this.VueRegisterElement("icheck");
             this.VueRegisterElement("datepicker");
             this.VueRegisterElement("alt-date");
             this.VueRegisterElement("alt-datetime");
-            this.VueRegisterElement("alt-e");
+
             this.VueRegisterElement("alt-input");
             this.VueRegisterElement("alt-email");
             this.VueRegisterElement("alt-form");

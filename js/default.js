@@ -38,30 +38,6 @@ Vue.use(VueLocalStorage);
 
     var f = function () {
 
-        $("textarea[ace]").each(function () {
-            var $that = $(this);
-            this.removeAttribute("ace");
-
-            $(this).addClass("hide");
-            var $div = $("<div style='height:400px'></div>");
-            $div.insertAfter(this);
-
-            var editor = ace.edit($div[0]);
-            var mode = $(this).attr("ace-mode");
-            if (mode) {
-                editor.session.setMode("ace/mode/" + mode);
-            }
-
-            editor.getSession().setValue($(this).val());
-
-            editor.getSession().on('change', function () {
-                console.log(editor.getSession().getValue());
-                $that.val(editor.getSession().getValue());
-            });
-
-
-        });
-
         $('[data-toggle="popover"]').popover();
 
         $("[data-format='json']").each(function () {
@@ -143,37 +119,6 @@ Vue.use(VueLocalStorage);
             $(this).slimScroll(options);
         });
 
-        if (typeof CodeMirror != "undefined") {
-            $(".code").not("._code").each(function (i, o) {
-                $(o).addClass("_code");
-                var editor = CodeMirror.fromTextArea(this, {
-                    lineNumbers: true,
-                    matchBrackets: true,
-                    mode: "application/x-httpd-php",
-                    indentUnit: 8,
-                    indentWithTabs: true,
-                    enterMode: "keep",
-                    tabMode: "shift"
-                });
-            });
-        }
-
-        $("textarea.wysihtml5").not("._wysihtml5").each(function () {
-            $(this).addClass("_wysihtml5").wysihtml5();
-        });
-
-        //markdown
-        $(".markdown").not("._markdown").each(function () {
-            $(this).addClass("_markdown");
-            $(this).html(marked($(this).html()));
-        });
-
-        //colorpicker
-        $(".cp").not("._colorpicker").each(function (i, o) {
-            $(o).addClass("_colorpicker");
-            $(o).colorpicker();
-        });
-
         $(".box").box();
 
         //box collapse
@@ -193,74 +138,6 @@ Vue.use(VueLocalStorage);
 
             });
 
-        });
-
-
-        //Make the dashboard widgets sortable Using jquery UI
-        /*        $(".connectedSortable").not("._connectedSortable").sortable({
-                    placeholder: "sort-highlight",
-                    connectWith: ".connectedSortable",
-                    handle: ".box-header, .nav-tabs",
-                    forcePlaceholderSize: true,
-                    zIndex: 999999
-                });
-        
-                $(".connectedSortable").not("._connectedSortable").on("sorttstop", function (event, ui) {
-        
-                    var grid = $(this).closest('.grid');
-        
-                    var data = [];
-                    grid.children("div.row").each(function (i, row) {
-                        data[i] = [];
-                        $(row).children("section").each(function (j, section) {
-                            data[i][j] = [];
-        
-                            $(section).children("div[grid-item]").each(function (k, item) {
-                                data[i][j].push($(item).attr("grid-item"));
-                            });
-                        });
-                    });
-        
-                    $.post("UI/save", {
-                        type: 'grid',
-                        layout: JSON.stringify(data),
-                        uri: grid.attr("data-uri")
-                    });
-                });
-                $(".connectedSortable").not("._connectedSortable").addClass("_connectedSortable");*/
-
-
-
-
-        //fancybox
-        if ($.fancybox) {
-            $(".fancybox").each(function () {
-                if ($(this).hasClass("_fancybox")) return;
-
-                var o;
-                $(this).fancybox();
-            });
-        }
-
-        //Timepicker
-        $(".timepicker").each(function (i, o) {
-            $(this).datetimepicker({
-                sideBySide: true,
-                format: "HH:mm"
-            });
-        });
-
-        $("select.multiselect").each(function (i, o) {
-            $(o).removeClass("multiselect").addClass("_multiselect");
-
-            var options = {
-                includeSelectAllOption: true,
-                enableFiltering: true
-            };
-
-            if ($(o).attr("buttonWidth")) options["buttonWidth"] = $(o).attr("buttonWidth");
-            if ($(o).attr("numberDisplayed")) options["numberDisplayed"] = $(o).attr("numberDisplayed");
-            $(o).multiselect(options);
         });
 
 
@@ -292,6 +169,9 @@ Vue.use(VueLocalStorage);
 function closeRoxyDialog() {
     $.fancybox.close();
 }
+
+
+
 (function ($) {
     var f = function () {
         if ($.jstree != undefined) {
@@ -304,35 +184,6 @@ function closeRoxyDialog() {
                 $(o).jstree(options);
             });
         }
-
-        //roxy fileman
-        $(".roxy_fileman").not("._roxy_fileman").each(function () {
-            $(this).on("click", function () {
-                var d = new Date().getTime();
-                d = "roxy_" + d;
-
-                $(this).attr("data-roxy-id", d);
-
-                var resize_width = $(this).attr('roxy-resize-width');
-                var type = ($(this).attr('roxy-type') == undefined) ? "image" : $(this).attr('roxy-type');
-
-                var session = "";
-                if ($(this).attr("roxy-session")) {
-                    session = $(this).attr("roxy-session");
-                }
-
-                var path = "plugins/RoxyFileman.1.4.5/fileman/index.html?type=" + type + "&integration=custom&txtFieldId=" + d + "&session=" + session;
-
-                if (resize_width != undefined) {
-                    path += "&resize_width=" + resize_width;
-                }
-                $.fancybox.open({
-                    src: path,
-                    type: "iframe"
-                });
-            });
-        });
-        $(".roxy_fileman").addClass("_roxy_fileman");
 
         //dialog
         $("a.dialog").not("._dialog").each(function (i, o) {
@@ -354,19 +205,6 @@ function closeRoxyDialog() {
 
         });
 
-        //iCheck
-        $('input.iCheck').not("._iCheck").each(function (i, o) {
-            $(o).iCheck({
-                checkboxClass: 'icheckbox_square-blue',
-                radioClass: 'iradio_square-blue'
-            });
-            $(o).addClass("_iCheck");
-
-            $(o).on('ifClicked', function () {
-                $(this).trigger("click");
-            });
-
-        });
 
         //t2s
         if ($.t2s) {

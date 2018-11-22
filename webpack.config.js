@@ -7,7 +7,8 @@ module.exports = {
     mode: "production",
     entry: {
         main: "./src/main.js",
-        login: "./src/login.js"
+        login: "./src/login.js",
+        layout: "./src/layout.js"
     },
     module: {
         rules: [
@@ -104,6 +105,10 @@ module.exports = {
             }, {
                 from: "node_modules/bootstrap-datepicker/dist",
                 to: "bootstrap-datepicker",
+                toType: "dir"
+            }, {
+                from: "node_modules/jquery/dist",
+                to: "jquery",
                 toType: "dir"
             }
         ])

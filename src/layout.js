@@ -1,4 +1,6 @@
-var ALT = new Vue({
+var Vue=window.Vue;
+var $=window.$;
+window.ALT = new Vue({
 	el: "#alt-navbar",
 	data: {
 		messages: [],
@@ -236,5 +238,3 @@ $(function () {
 		$("[data-layout='sidebar-mini']").prop('checked', true);
 	}
 });
-
-

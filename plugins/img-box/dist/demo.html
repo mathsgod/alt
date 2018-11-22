@@ -1,0 +1,17 @@
+<meta charset="utf-8">
+<title>ImgBox demo</title>
+<script src="https://unpkg.com/vue"></script>
+<script src="./ImgBox.umd.js"></script>
+<link rel="stylesheet" href="./ImgBox.css">
+
+<div id="app">
+  <demo></demo>
+</div>
+
+<script>
+new Vue({
+  components: {
+    demo: ImgBox
+  }
+}).$mount('#app')
+</script>

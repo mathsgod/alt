@@ -235,10 +235,10 @@ class Page extends \App\Page
                 $data["script"][] = "$system/js/jquery.box.js";
 
 
-                $data["script"][] = "$system/js/vue.img-box.js";
+                //$data["script"][] = "$system/js/vue.img-box.js";
 
 
-                $data["script"][] = "$system/js/layout.js";
+                //$data["script"][] = "$system/js/layout.js";
                 $data["script"][] = "$system/js/default.js";
 
 
