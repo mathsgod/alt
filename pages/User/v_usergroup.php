@@ -16,9 +16,9 @@ class User_v_usergroup extends App\Page
 
     public function ds($rt)
     {
-        $q = App\UserGroup::Query()->leftJoin('userlist', 'userlist.usergroup_id=usergroup.usergroup_id');
-        $q->where("userlist.user_id=" . $this->object()->user_id);
-        $rt->source = $q;
+        $q = App\UserGroup::Query()->leftJoin('UserList', 'UserList.usergroup_id=UserGroup.usergroup_id');
+        $q->where("UserList.user_id=" . $this->object()->user_id);
+        $rt->source = $q; 
         $rt->add("usergroup", "__toString()");
         return $rt;
     }

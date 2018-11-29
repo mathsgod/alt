@@ -19,11 +19,11 @@ class T extends Box
         $this->body->append($this->table);
     }
 
-    public function addCheckbox($index)
+    public function addCheckbox($index,$callback)
     {
-        return $this->table->addCheckbox($index);
+        return $this->table->addCheckbox($index,$callback);
     }
-
+    
     public function add($label, $getter)
     {
         return $this->table->add($label, $getter);
