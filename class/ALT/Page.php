@@ -190,21 +190,10 @@ class Page extends \App\Page
                         $data["css"][] = $f;
                     }
                 }
-                // jquery
-//                $plugins = new \App\Plugin("components/jquery");
-//                $data["jquery"] = $plugins->jss();
-
-                //jquery ui
-                //$jqueryui = new \App\Plugin("jquery-ui");
-//                $data["jquery"] = \array_merge($data["jquery"], $jqueryui->jss());
-//                foreach ($jqueryui->csss() as $css) {
-  //                  $data["css"][] = $css;
-    //            }
 
                 $plugins = new \App\Plugin("Sortable");
-                $data["jquery"] = array_merge($data["jquery"], $plugins->jss());
 
-
+                $data["jquery"]=$plugins->jss();
 
                 extract(\App::_()->pathInfo());
                 $system = $system_base;
