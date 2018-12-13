@@ -1,7 +1,9 @@
 <?php
 
-class User_v extends ALT\GridPage {
-	public function get() {
+class User_v extends ALT\GridPage
+{
+	public function get()
+	{
 		$obj = $this->object();
 
 		$this->navbar()->addButton("Reset password", $obj->uri("reset_password"));
@@ -11,15 +13,15 @@ class User_v extends ALT\GridPage {
 		$this->navbar()->addLayoutReset();
 
 		$mv = $this->createV();
-		$mv->header->title="Information";
+		$mv->header->title = "Information";
 		$mv->add("Username", "username");
-		$mv->add("First name")->xeditable("first_name");
+		$mv->add("First name", "first_name");
 		$mv->add("Last name", "last_name");
 		$mv->add("Phone", "phone");
 		$mv->add("Email", "email");
 		$mv->add("Address", function ($o) {
-			return $o->addr1 . "<br/>" . $o->addr2 . "<br/>" . $o->addr3; }
-		);
+			return $o->addr1 . "<br/>" . $o->addr2 . "<br/>" . $o->addr3;
+		});
 		$mv->add("Join date", "join_date");
 		$mv->add("Expiry date", "expiry_date");
 		$mv->add("Default page", "default_page");
