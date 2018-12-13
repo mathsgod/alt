@@ -13,7 +13,7 @@ class User_v extends ALT\GridPage {
 		$mv = $this->createV();
 		$mv->header->title="Information";
 		$mv->add("Username", "username");
-		$mv->add("First name", "first_name");
+		$mv->add("First name")->xeditable("first_name");
 		$mv->add("Last name", "last_name");
 		$mv->add("Phone", "phone");
 		$mv->add("Email", "email");

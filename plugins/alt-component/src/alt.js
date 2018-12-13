@@ -60,7 +60,7 @@ Vue.component("alt-table", altTable);
 Vue.component("alt-table-body", altTableBody);
 Vue.component("alt-tab-pane", altTabPane);
 Vue.component("alt-timeline", altTimeline);
-Vue.component("xeditable", xeditable);
+Vue.component("x-editable", xeditable);
 Vue.component("ckeditor", ckeditor);
 Vue.component("roxyfileman", roxyfileman);
 Vue.component("alt-button", altButton);
@@ -106,7 +106,7 @@ new Vue({
 
             this.VueRegisterElement("alt-button");
             this.VueRegisterElement("ckeditor");
-            this.VueRegisterElement("xeditable");
+            this.VueRegisterElement("x-editable");
             this.VueRegisterElement("alt-timeline");
             this.VueRegisterElement("alt-tab");
             this.VueRegisterElement("alt-tab-pane");
