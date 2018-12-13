@@ -6367,6 +6367,7 @@ Ace_component.options.__file = "Ace.vue"
 
 
 
+Vue = window.Vue;
 Vue.component("alt-input", Input);
 Vue.component("alt-box", Box);
 Vue.component("alt-box-header", BoxHeader);
@@ -6387,7 +6388,7 @@ Vue.component("alt-table", Table);
 Vue.component("alt-table-body", TableBody);
 Vue.component("alt-tab-pane", TabPane);
 Vue.component("alt-timeline", Timeline);
-Vue.component("xeditable", xeditable);
+Vue.component("x-editable", xeditable);
 Vue.component("ckeditor", ckeditor);
 Vue.component("roxyfileman", roxyfileman);
 Vue.component("alt-button", Button);
@@ -6427,6 +6428,8 @@ new Vue({
 
       _this.VueRegisterElement("alt-box-footer");
 
+      _this.VueRegisterElement("alt-e");
+
       _this.VueRegisterElement("icheck");
 
       _this.VueRegisterElement("datepicker");
@@ -6434,8 +6437,6 @@ new Vue({
       _this.VueRegisterElement("alt-date");
 
       _this.VueRegisterElement("alt-datetime");
-
-      _this.VueRegisterElement("alt-e");
 
       _this.VueRegisterElement("alt-input");
 
@@ -6447,7 +6448,7 @@ new Vue({
 
       _this.VueRegisterElement("ckeditor");
 
-      _this.VueRegisterElement("xeditable");
+      _this.VueRegisterElement("x-editable");
 
       _this.VueRegisterElement("alt-timeline");
 
