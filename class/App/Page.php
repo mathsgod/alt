@@ -277,10 +277,9 @@ class Page extends \R\Page
                         } else {
                             $content = $ret;
                         }
-                        $data["object"]=$this->object();
+                        $data["_object"]=$this->object();
 
-                        $data["app"]=$this->app;
-
+                        $data["_app"]=$this->app;
 
                         $content .= $echo_content;
                         $content .= $this->_template->render($data);

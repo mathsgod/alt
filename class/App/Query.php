@@ -19,7 +19,14 @@ class Query extends \R\DB\Query
 
         $iterator = parent::getIterator();
 
-        return  new RSList($iterator, $this->class);
-        return $this->_list;
+        return new RSList($iterator, $this->class);
+    }
+
+    public function first()
+    {  
+        $this->limit(1);
+        $l=$this->getIterator();
+        return $l->first();
+        
     }
 }

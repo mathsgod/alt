@@ -22,7 +22,6 @@ class App extends \R\App
 
     public function __construct($root, $loader, $logger)
     {
-
         spl_autoload_register(function ($class) use ($root) {
 
             $class_path = str_replace("\\", DIRECTORY_SEPARATOR, $class);
@@ -31,9 +30,9 @@ class App extends \R\App
                 require_once($file);
             }
         });
-
-
         parent::__construct($root, $loader, $logger);
+
+        $this->entity = new Entity($this);
 
         $p = explode(DIRECTORY_SEPARATOR, __DIR__);
         array_pop($p);
