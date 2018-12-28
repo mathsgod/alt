@@ -3,6 +3,16 @@ namespace App;
 
 class Entity extends \R\Entity
 {
+    public function __get($name)
+    {
+        if ($name == "User") {
+            return $this->User();
+        } elseif ($name == "UserGroup") {
+            return $this->UserGroup();
+        }
+
+        return parent::__get($name);
+    }
 
     public function User($user_id)
     {
