@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1e368404ed335da2f2e5bfc7e97bbb27",
+    "content-hash": "ac195c2b88a35448665c33be82ce2ea2",
     "packages": [
         {
             "name": "bassjobsen/bootstrap-3-typeahead",
@@ -409,20 +409,21 @@
         },
         {
             "name": "hostlink/r",
-            "version": "2.4.4",
+            "version": "2.4.5",
             "source": {
                 "type": "git",
                 "url": "https://hostlink:g5DBTes9rp8B4zWNyJhJ@bitbucket.org/hostlink/r.git",
-                "reference": "684ae1cabca9c15ea515d1b402b694bb64f6bbf3"
+                "reference": "dfcdd2d1b3bdcb7ffdd0c651994901c9bd448add"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/hostlink/r/hostlink-r-2.4.4-2ce268.zip",
-                "reference": "684ae1cabca9c15ea515d1b402b694bb64f6bbf3",
-                "shasum": "3d5732ed54a950e04e768788cd7bc4b6777ac2e6"
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/hostlink/r/hostlink-r-2.4.5-95bb6c.zip",
+                "reference": "dfcdd2d1b3bdcb7ffdd0c651994901c9bd448add",
+                "shasum": "1cb274a4bf2c671ba988560909cb3ea83bfd00a7"
             },
             "require": {
                 "hostlink/r-psr7": "2.*",
+                "mathsgod/data-structure": "^1.0",
                 "php": ">=5.4",
                 "psr/log": "*"
             },
@@ -449,7 +450,7 @@
                 }
             ],
             "description": "raymond core",
-            "time": "2018-12-27T09:13:20+00:00"
+            "time": "2018-12-28T03:33:13+00:00"
         },
         {
             "name": "hostlink/r-bs",
