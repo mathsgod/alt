@@ -364,14 +364,9 @@ class App extends \R\App
         if ($_SESSION["app"]["version"])
             return $_SESSION["app"]["version"];
         $composer = new Composer();
-        $ret = $composer->lockConfig();
-        foreach ($ret["packages"] as $package) {
-            if ($package["name"] == "hostlink/r-alt") {
-                $_SESSION["app"]["version"] = $package["version"];
-                return $package["version"];
-            }
-        }
-        return;
+        $package = $composer->package("hostlink/r-alt");
+        $_SESSION["app"]["version"]=$package->version;
+        return $_SESSION["app"]["version"];
     }
 
     public function savePlace()
