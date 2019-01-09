@@ -117,7 +117,7 @@ class Table extends HTMLTableElement
     {
         $column = $this->add();
         $column->width(20);
-        $as = $column->a()->addClass("btn btn-xs btn-info confirm")->removeClass("btn-default")->html("<i class='fa fa-fw fa-search'></i>");
+        $as = $column->a()->addClass("btn btn-xs btn-info")->removeClass("btn-default")->html("<i class='fa fa-fw fa-search'></i>");
         foreach ($as as $a) {
             if ($object = p($a)->parent()->data("object")) {
                 p($a)->attr('href', $object->uri('v'));

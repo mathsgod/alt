@@ -425,15 +425,23 @@ class App extends \R\App
 
     public function twig($file)
     {
-        $pi = pathinfo($file);
 
-        $file = $pi["dirname"] . "/" . $pi["filename"];
-        if (is_readable($template_file = $file . ".twig")) {
+        if ($file[0] == "/") {
+            $pi = pathinfo($file);
+            $root = $pi["dirname"];
+            $template_file = $pi["basename"];
+        } else {
+            $pi = pathinfo($file);
+            $file = $pi["dirname"] . "/" . $pi["filename"];
+            $template_file = $file . ".twig";
+            $root = $this->root;
+        }
+        
+        if (is_readable($root . "/" . $template_file)) {
 
             if (!$config = $this->config["twig"]) {
                 $config = [];
             }
-            $root = $this->root;
 
             array_walk($config, function (&$o) use ($root) {
                 $o = str_replace("{root}", $root, $o);
@@ -442,9 +450,7 @@ class App extends \R\App
             $twig["loader"] = new \Twig_Loader_Filesystem($root);
             $twig["environment"] = new \Twig_Environment($twig["loader"], $config);
             $twig["environment"]->addExtension(new \Twig_Extensions_Extension_I18n());
-
-            $uri = substr($template_file, strlen($root) + 1);
-            return $twig["environment"]->loadTemplate($uri);
+            return $twig["environment"]->loadTemplate($template_file);
         }
     }
 
