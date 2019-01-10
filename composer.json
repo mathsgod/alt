@@ -1,5 +1,5 @@
 {
-    "name": "hostlink/r-alt",
+    "name": "mathsgod/alt",
     "description": "Raymond ALT framework",
     "autoload": {
         "psr-4": {
@@ -25,14 +25,14 @@
     ],
     "require": {
         "php": ">=5.6",
-        "hostlink/r-psr7": "^2.1.1",
-        "hostlink/r": "^2.4",
-        "hostlink/r-p": "^1.1.6",
-        "hostlink/r-bs": "1.*",
-        "hostlink/r-db": "^2.0.3",
-        "hostlink/holiday-hk": "^1.2.1",
-        "hostlink/weather": "1.*",
-        "hostlink/html": "1.*",
+        "mathsgod/r-psr7": "^2.1.1",
+        "mathsgod/r": "^2.4",
+        "mathsgod/p-query": "^1.1.6",
+        "mathsgod/bs": "1.*",
+        "mathsgod/r-db": "^2.0.3",
+        "mathsgod/holiday-hk": "^1.2.1",
+        "mathsgod/weather": "1.*",
+        "mathsgod/html": "1.*",
         "mathsgod/translate": "1.*",
         "twig/twig": "*",
         "twig/extensions": "*",
