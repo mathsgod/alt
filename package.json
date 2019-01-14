@@ -1,5 +1,5 @@
 {
-  "name": "r-alt",
+  "name": "alt",
   "version": "1.0.1",
   "description": "Raymond framework",
   "main": "index.js",
@@ -19,7 +19,7 @@
     "datatables.net": "^1.10.19",
     "daterangepicker": "^3.0.3",
     "detect-browser": "^3.0.1",
-    "fullcalendar": "^3.9.0",
+    "fullcalendar": "^3.10.0",
     "ionicons": "^4.4.6",
     "jquery": "^2.2.4",
     "jquery-ui-dist": "^1.12.1",
@@ -28,9 +28,9 @@
     "mini-css-extract-plugin": "^0.4.4",
     "pnotify": "^3.2.1",
     "select2": "^4.0.5",
-    "vue-bs": "bitbucket:mathsgod/vue-bs",
+    "vue-bs": "git+https://github.com/mathsgod/vue-bs.git",
     "x-editable": "^1.5.1",
-    "x-html": "bitbucket:mathsgod/x-html"
+    "x-html": "git+https://github.com/mathsgod/x-html.git"
   },
   "devDependencies": {
     "@babel/core": "^7.1.6",
@@ -58,9 +58,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://mathsgod@bitbucket.org/hostlink/r-alt.git"
+    "url": "git+https://www.github.com/mathsgod/alt.git"
   },
   "author": "Raymond Chong",
   "license": "UNLICENSED",
-  "homepage": "https://bitbucket.org/hostlink/r-alt#readme"
+  "homepage": "https://www.github.com/mathsgod/alt#readme"
 }
