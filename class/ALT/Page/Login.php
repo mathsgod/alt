@@ -64,8 +64,6 @@ class Login extends \R\Page
 
             $data["css"][] = $p["system_base"] . "/AdminLTE/dist/css/AdminLTE.min.css";
 
-
-            $data["script"][] = $p["system_base"] . "/js/cookie.js";
             $data["script"][] = $p["system_base"] . "/js/jquery.form.min.js";
 
             $resp = $resp

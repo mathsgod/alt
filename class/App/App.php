@@ -361,11 +361,12 @@ class App extends \R\App
 
     public function version()
     {
+        $composer = new Composer();
+        $package = $composer->package("mathsgod/alt");
         if ($_SESSION["app"]["version"])
             return $_SESSION["app"]["version"];
         $composer = new Composer();
-        $package = $composer->package("hostlink/r-alt");
-        $_SESSION["app"]["version"]=$package->version;
+        $_SESSION["app"]["version"] = $package->version;
         return $_SESSION["app"]["version"];
     }
 

@@ -8,14 +8,23 @@ class Composer
     {
     }
 
-    public function auth(){
-        return json_decode(file_get_contents($this->path()."/auth.json"),true);
+    public function auth()
+    {
+        return json_decode(file_get_contents($this->path() . "/auth.json"), true);
     }
 
     public function installed()
     {
         $ret = self::exec("show -f json");
-        return json_decode($ret, true)["installed"];
+        $ret = json_decode($ret, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            //self update
+            self::exec("self-update");
+            $ret = self::exec("show -f json");
+            $ret = json_decode($ret, true);
+        }
+        return $ret["installed"];
     }
 
     public function show()
@@ -25,13 +34,14 @@ class Composer
 
     public function package($name)
     {
+        $path = $this->path();
         foreach ($this->installed() as $p) {
             if ($p["name"] == $name) {
                 $package = new Package();
                 $package->name = $p["name"];
                 $package->version = $p["version"];
                 $package->description = $p["description"];
-                $package->path = getcwd() . "/composer/vender/" . $name;
+                $package->path = $path . "/vender/" . $name;
 
                 return $package;
             }
