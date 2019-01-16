@@ -12,7 +12,7 @@ class System_composer extends ALT\Page
     public function addRaymondRepo()
     {
         $composer = new App\Composer();
-        $composer->exec("config repositories.hostlink-raymond composer https://raymond2.hostlink.com.hk/bitbucket/repo");
+        $composer->exec("config repositories.hostlink-raymond composer https://raymond2.hostlink.com.hk/satis/web");
         return [true];
     }
 

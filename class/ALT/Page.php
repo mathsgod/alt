@@ -122,8 +122,6 @@ class Page extends \App\Page
                 $this->addLib("i18next");
                 $this->addLib("components/bootstrap-datetimepicker");
 
-                $this->addLib("hostlink/font-awesome");
-
                 $this->addLib("jquery-validation");
                 $this->addLib("purl");
 

@@ -110,6 +110,10 @@ module.exports = {
                 from: "node_modules/moment/min",
                 to: "moment",
                 toType: "dir"
+            },{
+                from: "node_modules/@fortawesome/fontawesome-free",
+                to: "font-awesome",
+                toType: "dir"
             }
         ])
     ]

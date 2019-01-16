@@ -4,13 +4,13 @@
 	<alt-box class="box-primary">
 		<alt-box-header>
 			Composer
-			<button class="btn btn-xs btn-primary" @click="run('update hostlink/r-alt')">update hostlink/r-alt</button>
+			<button class="btn btn-xs btn-primary" @click="run('update mathsgod/alt')">update mathsgod/alt</button>
 			<button class="btn btn-xs btn-primary" @click="changeOwner">Change owner</button>
 			<button class="btn btn-xs btn-primary" @click="addRaymondRepo">Add Raymond repo</button>
 			<button class="btn btn-xs btn-primary" @click="updateComposer">Update composer</button>
 		</alt-box-header>
 		<alt-box-body>
-			<input type="text" v-model="cmd" placeholder="update hostlink/r-alt" @keyup.enter="runComposer" class="form-control">
+			<input type="text" v-model="cmd" placeholder="update mathsgod/alt" @keyup.enter="runComposer" class="form-control">
 			<div v-html="composer_output" style="white-space:pre;overflow:auto">
 
 			</div>
