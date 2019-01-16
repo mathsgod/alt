@@ -213,7 +213,7 @@ class Page extends \App\Page
 
                 $data["jss"][]="$system/dist/moment/moment-with-locales.min.js";
                 $data["jss"][]="$system/dist/fullcalendar/fullcalendar.min.js";
-                $data["jss"][]="$system/dist/fullcalendar/locale/zh-tw.js";
+                $data["jss"][]="$system/dist/fullcalendar/locale/".$this->app->locale.".js";
 
 
                 $data["script"][] = "$system/AdminLTE/dist/js/app.js";
