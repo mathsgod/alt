@@ -1,7 +1,7 @@
 <template>
     <tbody>
-        <template v-for="(d,index) in data">
-            <tr v-on:click="onClickRow(d)" v-bind:class="getRowClass(d)">
+        <template v-for="(d,index) in data" >
+            <tr v-on:click="onClickRow(d)" v-bind:class="getRowClass(d)" :style="getStyle(d)" :key="index">
                 <td v-if="hasHideColumn">
                     <button class="btn btn-default btn-xs" 
                         v-on:click="toggleRowChild(index)" 
@@ -86,6 +86,12 @@ export default {
     }
   },
   methods: {
+    getStyle(d){
+      
+      if(d.__row__.style){
+        return d.__row__.style;  
+      }
+    },
     getRowClass(d) {
       var c = [];
       if (this.isSelected(d)) {

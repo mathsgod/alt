@@ -113,7 +113,7 @@ class Page extends \App\Page
             if ($this->request->getMethod() == "get" && $this->master) {
 
                 $this->addLib("json-viewer");
-                $this->addLib("components/moment");
+                //$this->addLib("components/moment");
                 //$this->addLib("bootboxjs");
                 //$this->addLib("jquery-ui");
 //                $this->addLib("twbs/bootstrap");
@@ -207,7 +207,13 @@ class Page extends \App\Page
                 /*$data["vue"][]= "$system/js/vue.sortable.js";
                 $data["vue"][] = "$system/js/vue.draggable.js";*/
 
+                
+                //$data["jss"][]="$system/dist/fullcalendar/locale/".$this->app->locale.".js";
+                //$data["jss"][]="$system/dist/fullcalendar/locale/zh-tw.js";
 
+                $data["jss"][]="$system/dist/moment/moment-with-locales.min.js";
+                $data["jss"][]="$system/dist/fullcalendar/fullcalendar.min.js";
+                $data["jss"][]="$system/dist/fullcalendar/locale/zh-tw.js";
 
 
                 $data["script"][] = "$system/AdminLTE/dist/js/app.js";
@@ -257,6 +263,7 @@ class Page extends \App\Page
                 $data["content"] .= $echo_content;
                 $data["content"] .= (string)$response;
 
+                
                 $data["css"][] = "$system/AdminLTE/dist/css/AdminLTE.css";
                 $data["css"][] = "$system/AdminLTE/dist/css/skins/_all-skins.min.css";
 

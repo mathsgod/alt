@@ -172,6 +172,7 @@ class RTResponse implements JsonSerializable
         if ($this->page) {
             $source->limit([$this->page, $this->length]);
         }
+
         $data = [];
         foreach ($source as $obj) {
             $d = [];
@@ -255,6 +256,7 @@ class RTResponse implements JsonSerializable
             }
 
         }
+
 
         foreach ($this->request["columns"] as $k => $c) {
             $column = $this->_columns[$c["name"]];

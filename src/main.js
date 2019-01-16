@@ -11,10 +11,7 @@ import "bootstrap";
 import "bootstrap-datepicker";
 import "daterangepicker";
 import "bootstrap-select";
-import "fullcalendar";
 import "datatables-all/media/js/dataTables.bootstrap.min.js";
-
-
 
 import "select2";
 

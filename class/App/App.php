@@ -14,6 +14,7 @@ class App extends \R\App
     private static $app;
     public $user;
     public $user_id;
+    public $locale = "zh-hk";
 
     public static function _()
     {
@@ -95,6 +96,9 @@ class App extends \R\App
         }
         $this->user = $_SESSION["app"]["user"];
         $this->user_id = $this->user->user_id;
+        if ($this->user->language) {
+            $this->locale = $this->user->language;
+        }
 
     }
 
