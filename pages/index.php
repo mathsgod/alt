@@ -26,7 +26,6 @@ class _index extends ALT\Page\Login
             return;
         }
 
-        $this->addLib("hostlink/font-awesome");
         $this->addLib("iCheck");
 
         $pi = $this->app->pathInfo();
