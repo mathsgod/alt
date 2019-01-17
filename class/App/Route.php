@@ -103,31 +103,21 @@ class Route extends \R\Route
                 return;
             }
 
+            if (file_exists($file = SYSTEM . DIRECTORY_SEPARATOR . "pages" . $path . DIRECTORY_SEPARATOR . "index.php")) {
+
+                $this->file = $file;
+                $this->path = implode("/", $qs) . "/index";
+                $this->class = implode("_", $qs) . "_index";
+                $this->action = "index";
+                $this->method = $method;
+                return;
+            }
 
             if (file_exists($file = $root . $base . $page . $path . ".php")) {
                 $this->file = $file;
                 $this->path = $path;
                 $this->class = implode("_", $qs);
                 $this->action = array_pop($qs);
-                $this->method = $method;
-                return;
-            }
-            $method = array_pop($qs);
-        }
-
-
-        $qs = explode("/", $this->path);
-        $method = strtolower($request->getMethod());
-        $root = $request->getServerParams()["DOCUMENT_ROOT"];
-        $base = $request->getURI()->getBasePath();
-        while (count($qs)) {
-            $path = implode(DIRECTORY_SEPARATOR, $qs);
-
-            if (file_exists($file = SYSTEM . DIRECTORY_SEPARATOR . "pages" . $path . DIRECTORY_SEPARATOR . "index.php")) {
-                $this->file = $file;
-                $this->path = implode("/", $qs) . "/index";
-                $this->class = implode("_", $qs) . "_index";
-                $this->action = "index";
                 $this->method = $method;
                 return;
             }
@@ -140,6 +130,7 @@ class Route extends \R\Route
                 $this->method = $method;
                 return;
             }
+
             $method = array_pop($qs);
         }
     }

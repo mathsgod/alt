@@ -313,81 +313,6 @@
             "time": "2017-02-28T14:32:02+00:00"
         },
         {
-            "name": "hostlink/r-p",
-            "version": "1.1.10",
-            "source": {
-                "type": "git",
-                "url": "https://hostlink:g5DBTes9rp8B4zWNyJhJ@bitbucket.org/hostlink/r-p.git",
-                "reference": "98d7487d2ef26408582d74b5f1ee4778804c4879"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/hostlink/r-p/hostlink-r-p-1.1.10-7b3963.zip",
-                "reference": "98d7487d2ef26408582d74b5f1ee4778804c4879",
-                "shasum": "64811928a6b5eee117747ccf87576d03b5c37789"
-            },
-            "require": {
-                "php": ">=5.4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "P\\": "src/"
-                },
-                "files": [
-                    "function/function.php"
-                ]
-            },
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Raymond Chong"
-                }
-            ],
-            "description": "Raymond php html library",
-            "time": "2018-11-06T04:54:34+00:00"
-        },
-        {
-            "name": "hostlink/r-psr7",
-            "version": "2.1.2",
-            "source": {
-                "type": "git",
-                "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/r-psr7.git",
-                "reference": "fc9dd7a282e682f71df296c5db67df08b19291bf"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/hostlink/r-psr7/hostlink-r-psr7-2.1.2-ee3b14.zip",
-                "reference": "fc9dd7a282e682f71df296c5db67df08b19291bf",
-                "shasum": "db70cfe01628630bd3b0cdba9b1afbb215fc66f5"
-            },
-            "require": {
-                "psr/http-message": "1.*"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "R\\Psr7\\": "src/"
-                },
-                "files": [
-                    "function/function.php"
-                ]
-            },
-            "license": [
-                "proprietary"
-            ],
-            "description": "psr7",
-            "time": "2018-11-06T04:56:29+00:00"
-        },
-        {
             "name": "kriswallsmith/assetic",
             "version": "v1.4.0",
             "source": {
@@ -466,20 +391,20 @@
         },
         {
             "name": "mathsgod/bs",
-            "version": "1.0.7",
+            "version": "1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/bs.git",
-                "reference": "24b91e251139fdf1791e14865063645a260117c6"
+                "reference": "1b9b81e0af10369bf19784fe87de7665b8234fad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/bs/mathsgod-bs-1.0.7-ce3f39.zip",
-                "reference": "24b91e251139fdf1791e14865063645a260117c6",
-                "shasum": "7806969a40c499c4fd1e26c42092989132c8533c"
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/bs/mathsgod-bs-1.0.8-23dbce.zip",
+                "reference": "1b9b81e0af10369bf19784fe87de7665b8234fad",
+                "shasum": "3e5232d26c0e282ccbf642ae6c7d210621c97c7a"
             },
             "require": {
-                "hostlink/r-p": "1.*",
+                "mathsgod/p-query": "1.*",
                 "php": ">=5.4"
             },
             "type": "library",
@@ -497,14 +422,14 @@
                 }
             ],
             "description": "Raymond php bootstrap library",
-            "time": "2018-11-06T04:45:47+00:00"
+            "time": "2019-01-10T03:11:25+00:00"
         },
         {
             "name": "mathsgod/data-structure",
             "version": "1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://mathsgod:emN9LVft9qeUmQKeQsZL@bitbucket.org/mathsgod/data-structure.git",
+                "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/data-structure.git",
                 "reference": "a0c1ad17124317567ac5974ccb3670353769c6f2"
             },
             "dist": {
@@ -670,30 +595,29 @@
         },
         {
             "name": "mathsgod/r",
-            "version": "2.4.5",
+            "version": "2.4.7",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/r.git",
-                "reference": "dfcdd2d1b3bdcb7ffdd0c651994901c9bd448add"
+                "reference": "bd199973246e3c55db1ddf9034fd3bb7ceb40071"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/r/mathsgod-r-2.4.5-95bb6c.zip",
-                "reference": "dfcdd2d1b3bdcb7ffdd0c651994901c9bd448add",
-                "shasum": "94abb6e8ab8f8088d1021de8e2ac12149f749273"
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/r/mathsgod-r-2.4.7-5daa5f.zip",
+                "reference": "bd199973246e3c55db1ddf9034fd3bb7ceb40071",
+                "shasum": "06c9322287557f94da8983e9e4632e590d093172"
             },
             "require": {
-                "hostlink/r-psr7": "2.*",
-                "mathsgod/data-structure": "^1.0",
+                "mathsgod/r-psr7": "2.*",
                 "php": ">=5.4",
                 "psr/log": "*"
             },
             "require-dev": {
-                "hostlink/r-db": "2.*",
+                "mathsgod/r-db": "2.*",
                 "phpunit/phpunit": "*"
             },
             "suggest": {
-                "hostlink/r-db": "2.*"
+                "mathsgod/r-db": "2.*"
             },
             "type": "library",
             "autoload": {
@@ -711,7 +635,7 @@
                 }
             ],
             "description": "raymond core",
-            "time": "2018-12-28T03:33:13+00:00"
+            "time": "2019-01-16T09:34:20+00:00"
         },
         {
             "name": "mathsgod/r-db",
@@ -820,16 +744,16 @@
         },
         {
             "name": "moment/moment",
-            "version": "2.22.2",
+            "version": "2.23.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moment/moment.git",
-                "reference": "2e2a5b35439665d4b0200143d808a7c26d6cd30f"
+                "reference": "b8f4fe2bf5bb9022655505d59b62aef12bc540d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/moment/moment/zipball/2e2a5b35439665d4b0200143d808a7c26d6cd30f",
-                "reference": "2e2a5b35439665d4b0200143d808a7c26d6cd30f",
+                "url": "https://api.github.com/repos/moment/moment/zipball/b8f4fe2bf5bb9022655505d59b62aef12bc540d6",
+                "reference": "b8f4fe2bf5bb9022655505d59b62aef12bc540d6",
                 "shasum": ""
             },
             "require": {
@@ -870,7 +794,7 @@
                 "time",
                 "validate"
             ],
-            "time": "2018-06-01T06:45:43+00:00"
+            "time": "2018-12-13T06:39:15+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -1410,16 +1334,16 @@
         },
         {
             "name": "symfony/process",
-            "version": "v3.4.20",
+            "version": "v3.4.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "abb46b909dd6ba0b50e10d4c10ffe6ee96dd70f2"
+                "reference": "0d41dd7d95ed179aed6a13393b0f4f97bfa2d25c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/abb46b909dd6ba0b50e10d4c10ffe6ee96dd70f2",
-                "reference": "abb46b909dd6ba0b50e10d4c10ffe6ee96dd70f2",
+                "url": "https://api.github.com/repos/symfony/process/zipball/0d41dd7d95ed179aed6a13393b0f4f97bfa2d25c",
+                "reference": "0d41dd7d95ed179aed6a13393b0f4f97bfa2d25c",
                 "shasum": ""
             },
             "require": {
@@ -1455,20 +1379,20 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2018-11-20T16:10:26+00:00"
+            "time": "2019-01-02T21:24:08+00:00"
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.4.20",
+            "version": "v3.4.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "291e13d808bec481eab83f301f7bff3e699ef603"
+                "reference": "554a59a1ccbaac238a89b19c8e551a556fd0e2ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/291e13d808bec481eab83f301f7bff3e699ef603",
-                "reference": "291e13d808bec481eab83f301f7bff3e699ef603",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/554a59a1ccbaac238a89b19c8e551a556fd0e2ea",
+                "reference": "554a59a1ccbaac238a89b19c8e551a556fd0e2ea",
                 "shasum": ""
             },
             "require": {
@@ -1514,7 +1438,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2018-11-11T19:48:54+00:00"
+            "time": "2019-01-01T13:45:19+00:00"
         },
         {
             "name": "twig/extensions",
@@ -1573,16 +1497,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v2.6.0",
+            "version": "v2.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "a11dd39f5b6589e14f0ff3b36675d06047c589b1"
+                "reference": "7d7342c8a4059fefb9b8d07db0cc14007021f9b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/a11dd39f5b6589e14f0ff3b36675d06047c589b1",
-                "reference": "a11dd39f5b6589e14f0ff3b36675d06047c589b1",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/7d7342c8a4059fefb9b8d07db0cc14007021f9b7",
+                "reference": "7d7342c8a4059fefb9b8d07db0cc14007021f9b7",
                 "shasum": ""
             },
             "require": {
@@ -1636,7 +1560,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2018-12-16T10:36:48+00:00"
+            "time": "2019-01-14T15:00:48+00:00"
         }
     ],
     "packages-dev": [
@@ -1693,256 +1617,6 @@
                 "instantiate"
             ],
             "time": "2015-06-14T21:17:01+00:00"
-        },
-        {
-            "name": "hostlink/holiday-hk",
-            "version": "1.2.2",
-            "source": {
-                "type": "git",
-                "url": "https://mathsgod:emN9LVft9qeUmQKeQsZL@bitbucket.org/hostlink/holiday-hk.git",
-                "reference": "c3a515ebbd885f8c41d1d70b03fbf2608cd9fd52"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web//dist/hostlink/holiday-hk/hostlink-holiday-hk-1.2.2-31158f.zip",
-                "reference": "c3a515ebbd885f8c41d1d70b03fbf2608cd9fd52",
-                "shasum": "d6868d87b269abc3506872109e02e72f9fdf6aae"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "": "src/"
-                },
-                "classmap": [
-                    "src/ICal.php"
-                ]
-            },
-            "authors": [
-                {
-                    "name": "Raymond Chong",
-                    "email": "raymond@hostlink.com.hk"
-                }
-            ],
-            "description": "2012 - 2019 Hong Kong holiday",
-            "time": "2018-05-14T10:33:15+00:00"
-        },
-        {
-            "name": "hostlink/html",
-            "version": "1.0.10",
-            "source": {
-                "type": "git",
-                "url": "https://hostlink:g5DBTes9rp8B4zWNyJhJ@bitbucket.org/hostlink/html.git",
-                "reference": "acc624763cb07ed960cfdacc1c568cee12ec8f6a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/hostlink/html/hostlink-html-1.0.10-409e31.zip",
-                "reference": "acc624763cb07ed960cfdacc1c568cee12ec8f6a",
-                "shasum": "c652c06d9fdf2c6ee3cd48958ac3bc9f1c7d5bbb"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "function.php"
-                ],
-                "psr-4": {
-                    "HTML\\": "src/"
-                }
-            },
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Raymond Chong",
-                    "role": "Analyst programmer",
-                    "email": "raymond@hostlink.com.hk",
-                    "homepage": "https://raymond.hostlink.com.hk"
-                }
-            ],
-            "time": "2018-11-06T05:17:01+00:00"
-        },
-        {
-            "name": "hostlink/r",
-            "version": "2.4.5",
-            "source": {
-                "type": "git",
-                "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/r.git",
-                "reference": "dfcdd2d1b3bdcb7ffdd0c651994901c9bd448add"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/hostlink/r/hostlink-r-2.4.5-95bb6c.zip",
-                "reference": "dfcdd2d1b3bdcb7ffdd0c651994901c9bd448add",
-                "shasum": "1cb274a4bf2c671ba988560909cb3ea83bfd00a7"
-            },
-            "require": {
-                "hostlink/r-psr7": "2.*",
-                "mathsgod/data-structure": "^1.0",
-                "php": ">=5.4",
-                "psr/log": "*"
-            },
-            "require-dev": {
-                "hostlink/r-db": "2.*",
-                "phpunit/phpunit": "*"
-            },
-            "suggest": {
-                "hostlink/r-db": "2.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "R\\": "class"
-                }
-            },
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Raymond Chong",
-                    "email": "raymond@hostlink.com.hk"
-                }
-            ],
-            "description": "raymond core",
-            "time": "2018-12-28T03:33:13+00:00"
-        },
-        {
-            "name": "hostlink/r-bs",
-            "version": "1.0.7",
-            "source": {
-                "type": "git",
-                "url": "https://hostlink:g5DBTes9rp8B4zWNyJhJ@bitbucket.org/hostlink/r-bs.git",
-                "reference": "24b91e251139fdf1791e14865063645a260117c6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/hostlink/r-bs/hostlink-r-bs-1.0.7-ce3f39.zip",
-                "reference": "24b91e251139fdf1791e14865063645a260117c6",
-                "shasum": "3ed5a25f695910e69feefa557b829c21f09fa1ba"
-            },
-            "require": {
-                "hostlink/r-p": "1.*",
-                "php": ">=5.4"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "BS\\": "src/"
-                }
-            },
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Raymond Chong"
-                }
-            ],
-            "description": "Raymond php bootstrap library",
-            "time": "2018-11-06T04:45:47+00:00"
-        },
-        {
-            "name": "hostlink/r-db",
-            "version": "2.0.8",
-            "source": {
-                "type": "git",
-                "url": "https://hostlink:g5DBTes9rp8B4zWNyJhJ@bitbucket.org/hostlink/r-db.git",
-                "reference": "08ef6cd1c78f3a041fbb6bbba91313d9f861379e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/hostlink/r-db/hostlink-r-db-2.0.8-2bc579.zip",
-                "reference": "08ef6cd1c78f3a041fbb6bbba91313d9f861379e",
-                "shasum": "b7fac52375a839327ef7867d9a3be647abb4e91a"
-            },
-            "require": {
-                "mathsgod/data-structure": "^1.0",
-                "php": ">=5.4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "R\\": "src"
-                }
-            },
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Raymond Chong"
-                }
-            ],
-            "description": "raymond framework db",
-            "time": "2018-12-28T03:08:38+00:00"
-        },
-        {
-            "name": "hostlink/weather",
-            "version": "1.0.16",
-            "source": {
-                "type": "git",
-                "url": "https://hostlink:g5DBTes9rp8B4zWNyJhJ@bitbucket.org/hostlink/weather.git",
-                "reference": "06ca408b630fffabe678a0b0f17003f1a5ead235"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/hostlink/weather/hostlink-weather-1.0.16-950731.zip",
-                "reference": "06ca408b630fffabe678a0b0f17003f1a5ead235",
-                "shasum": "92925489ade66fbc3e93b25267776af6e5576f99"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "HL\\": "/"
-                }
-            },
-            "authors": [
-                {
-                    "name": "Raymond Chong",
-                    "email": "raymond@hostlink.com.hk"
-                }
-            ],
-            "description": "Hong Kong weather forecast",
-            "time": "2018-11-06T05:21:37+00:00"
-        },
-        {
-            "name": "mathsgod/translate",
-            "version": "1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://mathsgod:emN9LVft9qeUmQKeQsZL@bitbucket.org/mathsgod/translate.git",
-                "reference": "cb9a3c6b389705521c152ec8544dfe946604b47e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/translate/mathsgod-translate-1.0.1-eb7747.zip",
-                "reference": "cb9a3c6b389705521c152ec8544dfe946604b47e",
-                "shasum": "bb7264ca6772e5a25073d079bc93e4e655b7f3c2"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "R\\": "src"
-                }
-            },
-            "authors": [
-                {
-                    "name": "Raymond Chong",
-                    "email": "mathsgod@yahoo.com"
-                }
-            ],
-            "description": "Using google translate to translate word",
-            "time": "2018-05-21T10:16:16+00:00"
         },
         {
             "name": "myclabs/deep-copy",

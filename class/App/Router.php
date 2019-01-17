@@ -14,6 +14,7 @@ class Router extends \R\Router
         });
         $path = implode("/", $path);
 
+
         $method = $request->getMethod();
         foreach ($this->route as $route) {
             if ($method == $route["method"] && $path == $route["path"]) {
