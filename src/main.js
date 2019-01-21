@@ -26,6 +26,8 @@ PNotify.prototype.options.styling = "fontawesome";
 
 import daterangepicker from "daterangepicker/daterangepicker.css";
 
+//import WebAuthn from "WebAuthn.js";
+//window.WebAuthn = WebAuthn;
 //
 //window.PNotify = PNotify;
 //PNotify.defaults.styling = 'bootstrap3';

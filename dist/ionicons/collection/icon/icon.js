@@ -1,4 +1,4 @@
-import { getName, getSrc, isValid } from './utils';
+import { getIconMap, getName, getSrc, isValid } from './utils';
 export class Icon {
     constructor() {
         this.isVisible = false;
@@ -38,6 +38,9 @@ export class Icon {
                 getSvgContent(this.doc, url, 's-ion-icon')
                     .then(svgContent => this.svgContent = svgContent);
             }
+            else {
+                console.error('icon was not resolved');
+            }
         }
         if (!this.ariaLabel) {
             const name = getName(this.name, this.mode, this.ios, this.md);
@@ -69,6 +72,10 @@ export class Icon {
         return null;
     }
     getNamedUrl(name) {
+        const url = getIconMap().get(name);
+        if (url) {
+            return url;
+        }
         return `${this.resourcesUrl}svg/${name}.svg`;
     }
     hostData() {
@@ -160,7 +167,7 @@ function getSvgContent(doc, url, scopedId) {
     let req = requests.get(url);
     if (!req) {
         req = fetch(url, { cache: 'force-cache' }).then(rsp => {
-            if (rsp.ok) {
+            if (isStatusValid(rsp.status)) {
                 return rsp.text();
             }
             return Promise.resolve(null);
@@ -168,6 +175,9 @@ function getSvgContent(doc, url, scopedId) {
         requests.set(url, req);
     }
     return req;
+}
+function isStatusValid(status) {
+    return status <= 299;
 }
 function validateContent(document, svgContent, scopeId) {
     if (svgContent) {

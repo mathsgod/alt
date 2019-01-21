@@ -1,6 +1,6 @@
 var Vue = window.Vue;
 Vue.use(VueLocalStorage);
-var $=window.$;
+var $ = window.$;
 var vm = new Vue({
     el: "#app",
     data: {
@@ -12,14 +12,37 @@ var vm = new Vue({
     },
     created() {
         if ('credentials' in navigator) {
-            navigator.credentials.get({
-                password: true
-            }).then(creds => {
-                if (creds) {
-                    //Do something with the credentials.
-                    this.login(creds.id, creds.password);
-                }
-            });
+            if (localStorage.getItem("app.fido2")) {
+                var username = localStorage.getItem("app.fido2");
+                this.$http.get("index/getChallenge", {
+                    params: {
+                        username: username
+                    }
+                }).then(resp => {
+                    var a = new WebAuthn();
+                    a.authenticate(resp.data.challenge).then(info => {
+                        this.$http.post("index/fido2", {
+                            username: username,
+                            data: info
+                        }).then(resp => {
+                            window.self.location.reload();
+                        });
+                    }).catch(resp => {
+                        console.log(resp);
+                    });
+                });
+            } else {
+                navigator.credentials.get({
+                    password: true
+                }).then(creds => {
+                    if (creds) {
+                        //Do something with the credentials.
+                        this.login(creds.id, creds.password);
+                    }
+                });
+            }
+
+
         }
     }, mounted() {
         $(this.$refs.rememberMe).iCheck({

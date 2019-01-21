@@ -1,5 +1,21 @@
+let CACHED_MAP;
+export function getIconMap() {
+    if (!CACHED_MAP) {
+        const win = window;
+        win.Ionicons = win.Ionicons || {};
+        CACHED_MAP = win.Ionicons.map = win.Ionicons.map || new Map();
+    }
+    return CACHED_MAP;
+}
+export function addIcons(icons) {
+    const map = getIconMap();
+    Object.keys(icons).forEach(name => {
+        map.set(name, icons[name]);
+    });
+}
 export function getName(name, mode, ios, md) {
     mode = (mode || 'md').toLowerCase();
+    mode = mode === 'ios' ? 'ios' : 'md';
     if (ios && mode === 'ios') {
         name = ios.toLowerCase();
     }

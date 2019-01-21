@@ -5,6 +5,28 @@ use App\User;
 
 class _index extends ALT\Page\Login
 {
+    public function fido2()
+    {
+        $user = User::_($_POST["username"]);
+        $weba = new WebAuthn($_SERVER["HTTP_HOST"]);
+        if ($weba->authenticate($_POST['data'], $user->credential)) {
+            return ["code" => 200];
+        }
+        return ["error" => ["message" => "login error"]];
+
+    }
+
+    public function getChallenge($username)
+    {
+        $user = App\User::_($username);
+
+        $credential = $user->credential;
+        $weba = new WebAuthn($_SERVER["HTTP_HOST"]);
+
+        return ["challenge" => $weba->prepare_for_login($credential)];
+
+    }
+    
     public function get($r)
     {
 
