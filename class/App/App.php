@@ -292,12 +292,12 @@ class App extends \R\App
 
     public function loginFido2($username, $data)
     {
-        $user = User::_($user);
+        $user = User::_($username);
         if ($user->status) {
             throw new Error("error");
         }
 
-        $weba = new WebAuthn($_SERVER["HTTP_HOST"]);
+        $weba = new \R\WebAuthn($_SERVER["HTTP_HOST"]);
         if (!$weba->authenticate($data, $user->credential)) {
             throw new Error("error");
         }
