@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-3" id="div1">
 
         <!-- Profile Image -->
         <div class="box box-primary">
@@ -19,6 +19,7 @@
                 <a class="btn btn-primary btn-xs" href="User/{{user_id}}/reset_password" data-i18n="app.Reset password">Reset passsword</a>
                 <a class="btn btn-primary btn-xs" href="User/{{user_id}}/2step">2 step verfication</a>
                 <a class="btn btn-primary btn-xs" href="User/{{user_id}}/2step_whitelist">2 step verfication ip white list</a>
+                <button class="btn btn-primary btn-xs" @click="createWebAuthn">Web Authentication</button>
             </div>
         </div>
         <!-- /.box -->
@@ -36,3 +37,27 @@
 <form id="form1" action="" method="post" enctype="multipart/form-data">
     <input type='file' name='file' id='profile_image' onchange="$('#form1').submit()" class="hide">
 </form>
+
+<script>
+    var vm = new Vue({
+        el: "#div1",
+        methods: {
+            createWebAuthn() {
+                this.$http.get("User/profile/getCredential").then(resp => {
+                    var webn = new WebAuthn();
+                    webn.register(resp.data.data).then(resp => {
+                        this.webAuthnRegister(resp);
+                    }).catch(resp => {
+                        alert(resp.message);
+                    });
+                });
+            }, webAuthnRegister(info) {
+                this.$http.post("User/profile/postFido2", info).then(resp => {
+                    localStorage.setItem("app.fido2", resp.data.username);
+                    alert("Register completed");
+                });
+            }
+        }
+    });
+
+</script>
