@@ -785,17 +785,17 @@
         },
         {
             "name": "mathsgod/r-webauthn",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/r-webauthn.git",
-                "reference": "64bdf0b6686f62f88f56c899790da9deab4ec6c2"
+                "reference": "c0d8f855c829f87496c6f1dc954abab76b9318ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/r-webauthn/mathsgod-r-webauthn-1.0.1-21a036.zip",
-                "reference": "64bdf0b6686f62f88f56c899790da9deab4ec6c2",
-                "shasum": "83400e2d1770120c8bba9e36d560cba11093931b"
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/r-webauthn/mathsgod-r-webauthn-1.0.2-3aced0.zip",
+                "reference": "c0d8f855c829f87496c6f1dc954abab76b9318ac",
+                "shasum": "dbdb28ea6b3112a064da2175d638b2310fe988fa"
             },
             "require": {
                 "2tvenom/cborencode": "^1.0",
@@ -815,7 +815,7 @@
                 }
             ],
             "description": "Web authentication for php",
-            "time": "2019-01-22T08:45:47+00:00"
+            "time": "2019-01-22T09:23:53+00:00"
         },
         {
             "name": "moment/moment",
