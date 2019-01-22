@@ -114,6 +114,10 @@ module.exports = {
                 from: "node_modules/@fortawesome/fontawesome-free",
                 to: "font-awesome",
                 toType: "dir"
+            },{
+                from: "vendor/mathsgod/r-webauthn/dist",
+                to: "r-webauthn",
+                toType: "dir"
             }
         ])
     ]
