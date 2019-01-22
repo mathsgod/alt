@@ -213,7 +213,7 @@ class App extends \R\App
         $request = $this->request->withAttribute("included_content", ob_get_contents());
         ob_end_clean();
 
-        
+
         $request = $request
             ->withAttribute("action", $route->action)
             ->withAttribute("route", $route);
@@ -290,6 +290,27 @@ class App extends \R\App
         return (boolean)$_SESSION["app"]["login"];
     }
 
+    public function loginFido2($username, $data)
+    {
+        $user = User::_($user);
+        if ($user->status) {
+            throw new Error("error");
+        }
+
+        $weba = new WebAuthn($_SERVER["HTTP_HOST"]);
+        if (!$weba->authenticate($data, $user->credential)) {
+            throw new Error("error");
+        }
+
+        $_SESSION["app"]["user_id"] = $user->user_id;
+        $_SESSION["app"]["user"] = $user;
+        $_SESSION["app"]["login"] = true;
+        $user->createUserLog("SUCCESS");
+        $user->online();
+        $this->user = $user;
+
+        return true;
+    }
 
     public function login($username, $password, $code)
     {
@@ -452,7 +473,7 @@ class App extends \R\App
             $twig["loader"] = new \Twig_Loader_Filesystem($root);
             $twig["environment"] = new \Twig_Environment($twig["loader"], $config);
             $twig["environment"]->addExtension(new \Twig_Extensions_Extension_I18n());
-            
+
             return $twig["environment"]->loadTemplate($template_file);
         }
     }

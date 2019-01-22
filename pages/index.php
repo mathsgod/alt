@@ -7,13 +7,13 @@ class _index extends ALT\Page\Login
 {
     public function fido2()
     {
-        $user = User::_($_POST["username"]);
-        $weba = new WebAuthn($_SERVER["HTTP_HOST"]);
-        if ($weba->authenticate($_POST['data'], $user->credential)) {
+        try {
+            $this->app->loginFido2($_POST["username"], $_POST["data"]);
             return ["code" => 200];
+        } catch (Exception $e) {
+
         }
         return ["error" => ["message" => "login error"]];
-
     }
 
     public function getChallenge($username)
@@ -26,7 +26,7 @@ class _index extends ALT\Page\Login
         return ["challenge" => $weba->prepare_for_login($credential)];
 
     }
-    
+
     public function get($r)
     {
 
