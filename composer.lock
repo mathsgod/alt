@@ -819,16 +819,16 @@
         },
         {
             "name": "moment/moment",
-            "version": "2.23.0",
+            "version": "2.24.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moment/moment.git",
-                "reference": "b8f4fe2bf5bb9022655505d59b62aef12bc540d6"
+                "reference": "96d0d6791ab495859d09a868803d31a55c917de1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/moment/moment/zipball/b8f4fe2bf5bb9022655505d59b62aef12bc540d6",
-                "reference": "b8f4fe2bf5bb9022655505d59b62aef12bc540d6",
+                "url": "https://api.github.com/repos/moment/moment/zipball/96d0d6791ab495859d09a868803d31a55c917de1",
+                "reference": "96d0d6791ab495859d09a868803d31a55c917de1",
                 "shasum": ""
             },
             "require": {
@@ -869,7 +869,7 @@
                 "time",
                 "validate"
             ],
-            "time": "2018-12-13T06:39:15+00:00"
+            "time": "2019-01-21T20:59:53+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -1253,16 +1253,16 @@
         },
         {
             "name": "robinherbots/jquery.inputmask",
-            "version": "4.0.4",
+            "version": "4.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RobinHerbots/Inputmask.git",
-                "reference": "47bc03af5e6b1f92278db6d5200af6994741c965"
+                "reference": "57433426d81d2ee951e0d8e27cd0a233461f9562"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RobinHerbots/Inputmask/zipball/47bc03af5e6b1f92278db6d5200af6994741c965",
-                "reference": "47bc03af5e6b1f92278db6d5200af6994741c965",
+                "url": "https://api.github.com/repos/RobinHerbots/Inputmask/zipball/57433426d81d2ee951e0d8e27cd0a233461f9562",
+                "reference": "57433426d81d2ee951e0d8e27cd0a233461f9562",
                 "shasum": ""
             },
             "type": "library",
@@ -1285,7 +1285,7 @@
                 "mask",
                 "plugins"
             ],
-            "time": "2018-12-03T12:47:17+00:00"
+            "time": "2019-01-09T13:28:49+00:00"
         },
         {
             "name": "robloach/component-installer",
