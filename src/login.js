@@ -27,7 +27,7 @@ var vm = new Vue({
                             loginWebAuthn: {
                                 __args: {
                                     username: username,
-                                    assertion: info
+                                    assertion: JSON.stringify(info)
                                 }
                             }
                         }).then(resp => {

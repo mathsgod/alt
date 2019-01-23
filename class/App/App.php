@@ -181,7 +181,7 @@ class App extends \R\App
 
         $method = strtolower($this->request->getMethod());
 
-        if (REST::IsValid($this->request) && $this->request->getUri()->getPath()!="/api") {
+        if (REST::IsValid($this->request) && $this->request->getUri()->getPath() != "/api") {
             if ((count($p) == 2 && is_numeric($p[1])) || $p[1] == null) {
             //check permission
                 if ($method == "get") {
@@ -290,15 +290,16 @@ class App extends \R\App
         return (boolean)$_SESSION["app"]["login"];
     }
 
-    public function loginFido2($username, $data)
+    public function loginFido2($username, $assertion)
     {
         $user = User::_($username);
         if ($user->status) {
             throw new Error("error");
         }
 
+        $assertion = json_decode($assertion);
         $weba = new \R\WebAuthn($_SERVER["HTTP_HOST"]);
-        if (!$weba->authenticate($data, $user->credential)) {
+        if (!$weba->authenticate($assertion, $user->credential)) {
             throw new Error("error");
         }
 
