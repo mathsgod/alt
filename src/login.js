@@ -14,18 +14,28 @@ var vm = new Vue({
         if ('credentials' in navigator) {
             if (localStorage.getItem("app.fido2")) {
                 var username = localStorage.getItem("app.fido2");
-                this.$http.get("index/getChallenge", {
-                    params: {
-                        username: username
+                this.$gql.query("api", {
+                    credentialRequestOptions: {
+                        __args: {
+                            username
+                        }
                     }
                 }).then(resp => {
                     var a = new WebAuthn();
-                    a.authenticate(resp.data.challenge).then(info => {
-                        this.$http.post("index/fido2", {
-                            username: username,
-                            data: info
+                    a.authenticate(resp.data.credentialRequestOptions).then(info => {
+                        this.$gql.query("api", {
+                            loginWebAuthn: {
+                                __args: {
+                                    username: username,
+                                    assertion: info
+                                }
+                            }
                         }).then(resp => {
-                            window.self.location.reload();
+                            if (resp.data.loginWebAuthn) {
+                                window.self.location.reload();
+                            } else {
+                                bootbox.alert("login error");
+                            }
                         });
                     }).catch(resp => {
                         bootbox.alert(resp.message);
@@ -76,8 +86,8 @@ var vm = new Vue({
                     }
                 }
             }).then(resp => {
-                var data = resp.data;
-                if (data.login) {
+                var r = resp.data;
+                if (r.data.login) {
                     if (this.$localStorage.get("app.remember_me") == "true") {
                         this.$localStorage.set("app.username", username);
                     }
@@ -89,7 +99,7 @@ var vm = new Vue({
                         window.self.location.reload();
                     }
                 } else {
-                    if (data.error.message == "2-step verification") {
+                    if (r.error.message == "2-step verification") {
                         bootbox.prompt("Please input 2-step verification code", result => {
                             this.login(username, password, result);
                         });

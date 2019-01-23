@@ -27,6 +27,7 @@ class Query
     {
         $w[] = ["username=?", $args["username"]];
         $w[] = ["email=?", $args["email"]];
+        $w[] = "status=0";
         if ($user = \App\User::first($w)) {
             try {
                 $user->sendPassword();
@@ -35,5 +36,28 @@ class Query
             }
         }
         return true;
+    }
+
+    public function credentialRequestOptions($root, $args, $context)
+    {
+        if (!$user = \App\User::_($args["username"])) {
+            throw new Error("user not found");
+        }
+
+        $credential = $user->credential;
+        $weba = new \R\WebAuthn($_SERVER["HTTP_HOST"]);
+
+        return $weba->prepare_for_login($credential);
+    }
+
+    public function loginWebAuthn($root, $args, $context)
+    {
+        try {
+            $this->app->loginFido2($args["username"], $args["assertion"]);
+            return true;
+        } catch (Exception $e) {
+            throw new Error($e->getMessage());
+        }
+        return false;
     }
 }

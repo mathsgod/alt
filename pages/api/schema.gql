@@ -5,7 +5,8 @@ schema {
 type Query{
     me:Me
     login(username:String!,password:String!,code:String):Boolean
-    forgotPassword(username:String!,email:String!):Boolean
+    credentialRequestOptions(username:String!):String
+    loginWebAuthn(username:String!,assertion:String!):Boolean
 }
 
 type Me{
