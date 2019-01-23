@@ -49,7 +49,7 @@
                     }
                 }).then(resp => {
                     var webn = new WebAuthn();
-                    webn.register(resp.data.data.credentialCreationOptions).then(resp => {
+                    webn.register(resp.data.data.me.credentialCreationOptions).then(resp => {
                         this.webAuthnRegister(resp);
                     }).catch(resp => {
                         alert(resp.message);
