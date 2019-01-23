@@ -53,7 +53,7 @@ class Query
     public function loginWebAuthn($root, $args, $context)
     {
         try {
-            $this->app->loginFido2($args["username"], $args["assertion"]);
+            $context->loginFido2($args["username"], $args["assertion"]);
             return true;
         } catch (Exception $e) {
             throw new Error($e->getMessage());
