@@ -2,67 +2,61 @@
 // Created By: Raymond Chong
 // Created Date: 2013-04-10
 // Last Updated:
-class User_2step extends ALT\Page {
-
-
-    public function barcode($data) {
-        $this->write(file_get_contents("https://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=".$data));
-
-        return;
-
-        // include 2D barcode class (search for installation path)
-        $p = App\Plugin::load("tcpdf");
-        require_once($p->path . "/tcpdf_barcodes_2d.php");
-        // set the barcode content and type
-        $barcodeobj = new TCPDF2DBarcode($data, 'QRCODE,H');
-        // output the barcode as PNG image
-        $barcodeobj->getBarcodePNG(6, 6, array(0, 0, 0));
-
-
+class User_2step extends ALT\Page
+{
+    public function barcode($data)
+    {
+        $this->write(file_get_contents("https://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=" . $data));
     }
 
-    public function post($cmd) {
+    public function post($cmd)
+    {
         switch ($cmd) {
             case "remove":
-                $u = App::User();
+                $u = $this->app->user;
                 $u->secret = "";
                 $u->save();
-                App::Msg("2-step verification removed");
-                App::redirect();
+                $this->alert->info("2-step verification removed");
+                $this->redirect();
                 break;
             default:
-                App::redirect("User/2step?auto_create=1");
+                $this->redirect("User/2step?auto_create=1");
         }
     }
 
-    private function create_code() {
+    private function create_code()
+    {
         require_once(SYSTEM . "/plugins/GoogleAuthenticator/GoogleAuthenticator.php");
         $g = new GoogleAuthenticator();
         $secret = $g->generateSecret();
-        $u = App::User();
+        $u = $this->app->user;
         $u->secret = $secret;
         $u->save();
 
         $b = $this->createBox();
-        $b->header("2-step secret key");
-        $b->body()->append("Your secret key are created: <b>$secret</b>");
+        $b->header->title = "2-step secret key";
 
-        $user = App::User()->username;
-        $hostname = App::Config("user", "domain");
-        $data = urlencode(sprintf("otpauth://totp/%s@%s?secret=%s", $user, $hostname, $secret));
-        $b->body()->append("<div align='center'><img src='User/2step/barcode?data={$data}' /></div>");
+        $username = $this->app->user->username;
+        $hostname = $_SERVER["HTTP_HOST"];
+
+        $b->body->innerHTML .= "Your secret key are created: <b>$secret</b><br/>";
+        $b->body->innerHTML .= "Host: $hostname <br/>";
+
+        $data = urlencode(sprintf("otpauth://totp/%s@%s?secret=%s", $username, $hostname, $secret));
+        $b->body->innerHTML .= "<div align='center'><img src='User/2step/barcode?data={$data}' /></div>";
 
         $this->write($b);
     }
 
-    public function get($auto_create) {
+    public function get($auto_create)
+    {
         // $this->header()->setTitle("2-step verfication");
         if ($auto_create) {
             $this->create_code();
-            return ;
+            return;
         }
 
-        if (App::User()->secret) {
+        if ($this->app->secret) {
             $f = $this->createForm("2-step verification already set, remove it?");
             $f->action("User/2step?cmd=remove");
             $this->write($f);
@@ -73,5 +67,3 @@ class User_2step extends ALT\Page {
         }
     }
 }
-
-?>

@@ -28,7 +28,7 @@ var vm = new Vue({
                             window.self.location.reload();
                         });
                     }).catch(resp => {
-                        console.log(resp);
+                        bootbox.alert(resp.message);
                     });
                 });
             } else {
@@ -66,11 +66,11 @@ var vm = new Vue({
         }
     },
     methods: {
-        login(username, password) {
+        login(username, password, code) {
             this.$http.post("System/login", {
                 username: username,
                 password: password,
-                code: this.code
+                code: code
             }).then(resp => {
                 if (resp.data.code == 200) {
 
@@ -86,8 +86,15 @@ var vm = new Vue({
                         window.self.location.reload();
                     }
                 } else {
-                    this.message = resp.data.error.message;
-                    this.error = true;
+                    if (resp.data.error.message == "2-step verification") {
+                        bootbox.prompt("Please input 2-step verification code", result => {
+                            this.login(username, password, result);
+                        });
+
+                    } else {
+                        this.message = resp.data.error.message;
+                        this.error = true;
+                    }
                 }
             });
         },

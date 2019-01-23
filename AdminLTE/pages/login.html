@@ -18,7 +18,8 @@
     {% endfor %}
 
     <script src="{{system_base}}/dist/main.js"></script>
-    <script src="{{system_base}}/dist/login.js" defer></script>
+    <!-- script src="{{system_base}}/dist/login.js" defer></script-->
+    <script src="{{system_base}}/src/login.js" defer></script>
     <script src="{{system_base}}/dist/r-webauthn/main.js" defer></script>
 
 
@@ -53,22 +54,13 @@
 
             <form>
                 <div class="form-group has-feedback">
-                    <input type="username" class="form-control" placeholder="Username" name="username" v-model="username"
-                        required>
+                    <input type="username" class="form-control" placeholder="Username" name="username" v-model="username" required>
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
-                    <input type="password" class="form-control" placeholder="Password" name="password" v-model="password"
-                        required>
+                    <input type="password" class="form-control" placeholder="Password" name="password" v-model="password" required>
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
-
-                {% if ip2step %}
-                <div class="form-group has-feedback">
-                    <input type="text" class="form-control" placeholder="2-step verification" name="code" v-model="code" />
-                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                </div>
-                {% endif %}
 
                 <div class="row">
                     <div class="col-xs-8">

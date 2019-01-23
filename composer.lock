@@ -596,17 +596,17 @@
         },
         {
             "name": "mathsgod/p-query",
-            "version": "1.1.11",
+            "version": "1.1.13",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/p-query.git",
-                "reference": "ab2acdcd58424b327647ba3fe7bcc8e8a884c2e8"
+                "reference": "e0bcbe87d3f10d71ea150a3a950a23934a8218ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/p-query/mathsgod-p-query-1.1.11-e536c3.zip",
-                "reference": "ab2acdcd58424b327647ba3fe7bcc8e8a884c2e8",
-                "shasum": "ff2653e77f44261e1600e177d12d9eeabcca6daa"
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/p-query/mathsgod-p-query-1.1.13-c13de7.zip",
+                "reference": "e0bcbe87d3f10d71ea150a3a950a23934a8218ab",
+                "shasum": "97001a38fd4e317e0e6d3da4972a83499c10778a"
             },
             "require": {
                 "php": ">=5.4"
@@ -632,7 +632,7 @@
                 }
             ],
             "description": "Raymond php html library",
-            "time": "2019-01-09T08:50:19+00:00"
+            "time": "2019-01-23T03:02:26+00:00"
         },
         {
             "name": "mathsgod/r",
