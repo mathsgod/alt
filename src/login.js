@@ -22,7 +22,7 @@ var vm = new Vue({
                     }
                 }).then(resp => {
                     var a = new WebAuthn();
-                    a.authenticate(resp.data.credentialRequestOptions).then(info => {
+                    a.authenticate(resp.data.data.credentialRequestOptions).then(info => {
                         this.$gql.query("api", {
                             loginWebAuthn: {
                                 __args: {
@@ -31,7 +31,7 @@ var vm = new Vue({
                                 }
                             }
                         }).then(resp => {
-                            if (resp.data.loginWebAuthn) {
+                            if (resp.data.data.loginWebAuthn) {
                                 window.self.location.reload();
                             } else {
                                 bootbox.alert("login error");
