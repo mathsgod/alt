@@ -60,4 +60,5 @@ class Query
         }
         return false;
     }
+ 
 }

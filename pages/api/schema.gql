@@ -1,6 +1,11 @@
 schema {
     query:Query
+    mutation:Mutation
 }   
+
+type Mutation{
+    me:Me
+}
 
 type Query{
     me:Me
@@ -15,6 +20,8 @@ type Me{
     first_name:String
     last_name:String
     group:[UserGroup]
+    credentialCreationOptions:String
+    registrationWebAuthn(attestion:String!):Boolean
 }
 
 type UserGroup{

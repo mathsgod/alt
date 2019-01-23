@@ -43,18 +43,36 @@
         el: "#div1",
         methods: {
             createWebAuthn() {
-                this.$http.get("User/profile/getCredential").then(resp => {
+                this.$gql.query("api", {
+                    me: {
+                        credentialCreationOptions
+                    }
+                }).then(resp => {
                     var webn = new WebAuthn();
-                    webn.register(resp.data.data).then(resp => {
+                    webn.register(resp.data.data.credentialCreationOptions).then(resp => {
                         this.webAuthnRegister(resp);
                     }).catch(resp => {
                         alert(resp.message);
                     });
                 });
             }, webAuthnRegister(info) {
-                this.$http.post("User/profile/postFido2", info).then(resp => {
-                    localStorage.setItem("app.fido2", resp.data.username);
-                    alert("Register completed");
+                this.$gql.mutation("api", {
+                    me: {
+                        registrationWebAuthn: {
+                            __args: {
+                                attestion: info
+                            }
+                        }
+                    }
+                }).then(resp => {
+                    this.$gql.query("api", {
+                        me: {
+                            username: true
+                        }
+                    }).then(resp => {
+                        localStorage.setItem("app.fido2", resp.data.data.username);
+                        alert("Register completed");
+                    });
                 });
             }
         }
