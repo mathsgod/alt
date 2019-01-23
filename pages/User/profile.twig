@@ -45,7 +45,7 @@
             createWebAuthn() {
                 this.$gql.query("api", {
                     me: {
-                        credentialCreationOptions
+                        credentialCreationOptions: true
                     }
                 }).then(resp => {
                     var webn = new WebAuthn();
