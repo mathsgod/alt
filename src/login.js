@@ -67,17 +67,20 @@ var vm = new Vue({
     },
     methods: {
         login(username, password, code) {
-            this.$http.post("System/login", {
-                username: username,
-                password: password,
-                code: code
+            this.$gql.query("api", {
+                login: {
+                    __args: {
+                        username: username,
+                        password: password,
+                        code: code ? code : ""
+                    }
+                }
             }).then(resp => {
-                if (resp.data.code == 200) {
-
+                var data = resp.data;
+                if (data.login) {
                     if (this.$localStorage.get("app.remember_me") == "true") {
                         this.$localStorage.set("app.username", username);
                     }
-
                     var redirect = this.$refs.redirect.value;
 
                     if (redirect != "") {
@@ -86,19 +89,18 @@ var vm = new Vue({
                         window.self.location.reload();
                     }
                 } else {
-                    if (resp.data.error.message == "2-step verification") {
+                    if (data.error.message == "2-step verification") {
                         bootbox.prompt("Please input 2-step verification code", result => {
                             this.login(username, password, result);
                         });
 
                     } else {
-                        this.message = resp.data.error.message;
+                        this.message = data.error.message;
                         this.error = true;
                     }
                 }
             });
-        },
-        signIn() {
+        }, signIn() {
             if (this.username == "") {
                 this.error = true;
                 this.message = "Please input username";
@@ -110,23 +112,26 @@ var vm = new Vue({
                 return;
             }
             this.login(this.username, this.password);
-        },
-        forgetPassword() {
+        }, forgetPassword() {
+            var self = this;
             var bb = bootbox.dialog({
                 title: "Forget password",
                 message: $("#forget_dialog").html()
-
             }).on('shown.bs.modal', function () {
                 $(this).find("form").on("submit", function () {
-                    $(this).ajaxSubmit(function (data) {
+                    var data = $(this).getFormData();
+                    self.$gql.query("api", {
+                        forgotPassword: {
+                            __args: data
+                        }
+                    }).then(resp => {
+                        var data = resp.data;
                         bb.modal('hide');
                         if (data.error) {
                             bootbox.alert(data.error.message);
                         } else {
                             bootbox.alert("Password sent to your email if information correct");
                         }
-
-
                     });
                     return false;
                 });

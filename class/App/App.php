@@ -181,7 +181,7 @@ class App extends \R\App
 
         $method = strtolower($this->request->getMethod());
 
-        if (REST::IsValid($this->request)) {
+        if (REST::IsValid($this->request) && $this->request->getUri()->getPath()!="/api") {
             if ((count($p) == 2 && is_numeric($p[1])) || $p[1] == null) {
             //check permission
                 if ($method == "get") {

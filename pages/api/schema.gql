@@ -1,0 +1,22 @@
+schema {
+    query:Query
+}   
+
+type Query{
+    me:Me
+    login(username:String!,password:String!,code:String):Boolean
+    forgotPassword(username:String!,email:String!):Boolean
+}
+
+type Me{
+    user_id:Int
+    username:String
+    first_name:String
+    last_name:String
+    group:[UserGroup]
+}
+
+type UserGroup{
+    name:String
+}
+
