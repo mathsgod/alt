@@ -1,5 +1,5 @@
 <?php
-use Type;
+namespace Type;
 
 class Mutation
 {
