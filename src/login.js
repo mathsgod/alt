@@ -38,18 +38,11 @@ var vm = new Vue({
                             }
                         });
                     }).catch(resp => {
-                        bootbox.alert(resp.message);
+                        this.passwordLogin();
                     });
                 });
             } else {
-                navigator.credentials.get({
-                    password: true
-                }).then(creds => {
-                    if (creds) {
-                        //Do something with the credentials.
-                        this.login(creds.id, creds.password);
-                    }
-                });
+                this.passwordLogin();
             }
 
 
@@ -76,7 +69,16 @@ var vm = new Vue({
         }
     },
     methods: {
-        login(username, password, code) {
+        passwordLogin() {
+            navigator.credentials.get({
+                password: true
+            }).then(creds => {
+                if (creds) {
+                    //Do something with the credentials.
+                    this.login(creds.id, creds.password);
+                }
+            });
+        }, login(username, password, code) {
             this.$gql.query("api", {
                 login: {
                     __args: {
@@ -105,7 +107,7 @@ var vm = new Vue({
                         });
 
                     } else {
-                        this.message = data.error.message;
+                        this.message = r.error.message;
                         this.error = true;
                     }
                 }
