@@ -70,7 +70,7 @@
                             username: true
                         }
                     }).then(resp => {
-                        localStorage.setItem("app.fido2", resp.data.data.username);
+                        localStorage.setItem("app.fido2", resp.data.data.me.username);
                         alert("Register completed");
                     });
                 });
