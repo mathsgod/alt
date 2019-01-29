@@ -1,3 +1,4 @@
+import VueRegisterElement from "vue-register-element/src/index.js";
 import Input from './Input.vue';
 import Box from './Box.vue';
 import BoxHeader from './BoxHeader.vue';
@@ -38,147 +39,42 @@ import RTBody from "./RTBody.vue";
 import RTColumn from "./RTColumn.vue";
 import Ace from "./Ace.vue";
 
-Vue=window.Vue;
-
-Vue.component("alt-input", Input);
-Vue.component("alt-box", Box);
-Vue.component("alt-box-header", BoxHeader);
-Vue.component("alt-box-body", BoxBody);
-Vue.component("alt-box-footer", BoxFooter);
-Vue.component("icheck", icheck);
-Vue.component("datepicker", datepicker);
-Vue.component("alt-date", altDate);
-Vue.component("alt-datetime", altDatetime);
-Vue.component("alt-e", altE);
-Vue.component("alt-email", altEmail);
-Vue.component("alt-form", altForm);
-Vue.component("alt-grid", altGrid);
-Vue.component("alt-grid-section", altGridSection);
-Vue.component("alt-multiselect", multiselect);
-Vue.component("alt-tab", altTab);
-Vue.component("alt-table", altTable);
-Vue.component("alt-table-body", altTableBody);
-Vue.component("alt-tab-pane", altTabPane);
-Vue.component("alt-timeline", altTimeline);
-Vue.component("x-editable", xeditable);
-Vue.component("ckeditor", ckeditor);
-Vue.component("roxyfileman", roxyfileman);
-Vue.component("alt-button", altButton);
-Vue.component("alt-cell", altCell);
-Vue.component("alt-rt", altRT);
-Vue.component("alt-rt2", altRT2);
-Vue.component("rt-pagination", RTPagination);
-Vue.component("rt2-tbody", RT2Tbody);
-Vue.component("rt-info", RTInfo);
-Vue.component("alt-column", altColumn);
-Vue.component("alt-column-search", altColumnSearch);
-Vue.component("select2", select2);
-Vue.component("multiselect2", multiselect2);
-Vue.component("rt-table", RTTable);
-Vue.component("rt-head", RTHead);
-Vue.component("rt-column", RTColumn);
-Vue.component("rt-body", RTBody);
-Vue.component("ace", Ace);
-new Vue({
-    created() {
-
-        document.addEventListener("DOMContentLoaded", () => {
-            this.VueRegisterElement("alt-grid");
-            this.VueRegisterElement("alt-grid-section");
-            this.VueRegisterElement("alt-rt");
-            this.VueRegisterElement("alt-rt2");
-
-            this.VueRegisterElement("alt-box");
-            this.VueRegisterElement("alt-box-header");
-            this.VueRegisterElement("alt-box-body");
-            this.VueRegisterElement("alt-box-footer");
-            this.VueRegisterElement("alt-e");
-
-            this.VueRegisterElement("icheck");
-            this.VueRegisterElement("datepicker");
-            this.VueRegisterElement("alt-date");
-            this.VueRegisterElement("alt-datetime");
-
-            this.VueRegisterElement("alt-input");
-            this.VueRegisterElement("alt-email");
-            this.VueRegisterElement("alt-form");
-
-
-            this.VueRegisterElement("alt-button");
-            this.VueRegisterElement("ckeditor");
-            this.VueRegisterElement("x-editable");
-            this.VueRegisterElement("alt-timeline");
-            this.VueRegisterElement("alt-tab");
-            this.VueRegisterElement("alt-tab-pane");
-            this.VueRegisterElement("alt-table");
-            this.VueRegisterElement("alt-table-body");
-            this.VueRegisterElement("alt-table-button");
-            this.VueRegisterElement("roxyfileman");
-            this.VueRegisterElement("alt-multiselect");
-            this.VueRegisterElement("alt-multiselect2");
-            this.VueRegisterElement("select2");
-            
-            this.VueRegisterElement("ace");
-
-        });
-
-
-
-
-
-    }, methods: {
-        VueRegisterElement(name) {
-
-
-            var config = { attributes: true, childList: true, subtree: true };
-
-            // Callback function to execute when mutations are observed
-            var callback = function (mutationsList) {
-                for (var mutation of mutationsList) {
-                    if (mutation.type == 'childList') {
-                        for (var n of mutation.addedNodes) {
-                            if (n.nodeName.toLowerCase() == name) {
-                                new Vue({ el: n });
-                            }
-                            if (n.nodeType == 1) {
-                                if (n.getAttribute("is") == name) {
-                                    new Vue({ el: n });
-                                }
-
-                                for (let c of n.querySelectorAll("[is='" + name + "']")) {
-                                    new Vue({ el: c });
-                                }
-
-
-                                for (let c of n.querySelectorAll(name)) {
-                                    new Vue({ el: c });
-                                }
-                            }
-                        }
-                    }
-                    else if (mutation.type == 'attributes') {
-                        if (mutation.attributeName == "is") {
-                            if (mutation.target.getAttribute("is") == name) {
-                                new Vue({ el: mutation.target });
-                            }
-                        }
-                    }
-                }
-            };
-
-
-            var observer = new MutationObserver(callback);
-
-            observer.observe(document.body, config);
-
-
-            for (let c of document.body.querySelectorAll(name)) {
-                new Vue({ el: c });
-            }
-
-            for (let c of document.body.querySelectorAll("[is='" + name + "']")) {
-                new Vue({ el: c });
-            }
-        }
-    }
-});
+VueRegisterElement("alt-input", Input);
+VueRegisterElement("alt-box", Box);
+VueRegisterElement("alt-box-header", BoxHeader);
+VueRegisterElement("alt-box-body", BoxBody);
+VueRegisterElement("alt-box-footer", BoxFooter);
+VueRegisterElement("icheck", icheck);
+VueRegisterElement("datepicker", datepicker);
+VueRegisterElement("alt-date", altDate);
+VueRegisterElement("alt-datetime", altDatetime);
+VueRegisterElement("alt-e", altE);
+VueRegisterElement("alt-email", altEmail);
+VueRegisterElement("alt-form", altForm);
+VueRegisterElement("alt-grid", altGrid);
+VueRegisterElement("alt-grid-section", altGridSection);
+VueRegisterElement("alt-multiselect", multiselect);
+VueRegisterElement("alt-tab", altTab);
+VueRegisterElement("alt-table", altTable);
+VueRegisterElement("alt-table-body", altTableBody);
+VueRegisterElement("alt-tab-pane", altTabPane);
+VueRegisterElement("alt-timeline", altTimeline);
+VueRegisterElement("x-editable", xeditable);
+VueRegisterElement("ckeditor", ckeditor);
+VueRegisterElement("roxyfileman", roxyfileman);
+VueRegisterElement("alt-button", altButton);
+VueRegisterElement("alt-cell", altCell);
+VueRegisterElement("alt-rt", altRT);
+VueRegisterElement("alt-rt2", altRT2);
+VueRegisterElement("rt-pagination", RTPagination);
+VueRegisterElement("rt2-tbody", RT2Tbody);
+VueRegisterElement("rt-info", RTInfo);
+VueRegisterElement("alt-column", altColumn);
+VueRegisterElement("alt-column-search", altColumnSearch);
+VueRegisterElement("select2", select2);
+VueRegisterElement("multiselect2", multiselect2);
+VueRegisterElement("rt-table", RTTable);
+VueRegisterElement("rt-head", RTHead);
+VueRegisterElement("rt-column", RTColumn);
+VueRegisterElement("rt-body", RTBody);
+VueRegisterElement("ace", Ace);

@@ -10,6 +10,7 @@
   "dependencies": {
     "vue": "^2.5.17",
     "vue-localstorage": "^0.6.2",
+    "vue-register-element": "git+https://github.com/mathsgod/VueRegisterElement.git",
     "vue-resource": "^1.5.1"
   },
   "devDependencies": {

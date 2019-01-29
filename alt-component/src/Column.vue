@@ -1,13 +1,17 @@
 <template>
-    <th v-on:click="click" class="unselectable" v-bind:style="getStyle()"
+  <th
+    v-on:click="click"
+    class="unselectable"
+    v-bind:style="getStyle()"
     v-bind:class="{
         sortable:orderable,
         sorting_desc:(orderDir=='desc'),
         sorting_asc:(orderDir=='asc')
-    }">
-        <input v-if="type=='checkbox'" type="checkbox" is="icheck" v-on:change="checkboxChange"/>
-        <div v-else v-text="title"></div>
-    </th>
+    }"
+  >
+    <input v-if="type=='checkbox'" type="checkbox" is="icheck" v-on:change="checkboxChange">
+    <div v-else v-text="title"></div>
+  </th>
 </template>
 <script>
 export default {
@@ -23,6 +27,9 @@ export default {
       default: true
     },
     width: String,
+    minWidth: String,
+    maxWidth: String,
+    overflow: String,
     type: String
   },
   data() {
@@ -63,9 +70,21 @@ export default {
     getStyle() {
       let style = {};
       if (this.width) {
-        style["min-width"] = this.width;
         style.width = this.width;
       }
+
+      if (this.minWidth) {
+        style["min-width"] = this.minWidth;
+      }
+
+      if (this.maxWidth) {
+        style["max-width"] = this.maxWidth;
+      }
+
+      if (this.overflow) {
+        style["overflow"] = this.overflow;
+      }
+
       return style;
     }
   }

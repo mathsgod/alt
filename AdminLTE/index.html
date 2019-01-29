@@ -55,13 +55,13 @@
     {% endfor %}
     
     <script src="{{system_base}}/dist/x-html/x-html.umd.min.js"></script>
-    <script src="{{system_base}}/plugins/alt-component/dist/alt-component.umd.js"></script>
+    <script src="{{system_base}}/alt-component/dist/alt-component.umd.js"></script>
     {% for js in jss %}
     <script src="{{js|raw}}"></script>
     {% endfor %}
 
     <script src="{{system_base}}/dist/vue-bs/bs.umd.min.js"></script>
-    <link rel="stylesheet" href="{{system_base}}/dist/alt-component/alt-component.css" />
+    <link rel="stylesheet" href="{{system_base}}/alt-component/dist/alt-component.css" />
 
     <script src="{{system_base}}/js/vue-gql.js"></script>
     <script src="{{system_base}}/js/jquery.form-data.js"></script>

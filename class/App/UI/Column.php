@@ -17,6 +17,10 @@ class Column implements JsonSerializable
     public $alink = null;
     public $descriptor = [];
     public $width = null;
+    public $minWidth = null;
+    public $maxWidth = null;
+    public $overflow = null;
+
     public $className = [];
 
     public $format = null;
@@ -37,6 +41,7 @@ class Column implements JsonSerializable
     public $contents = [];
 
     public $order;
+
 
     public function addEdit()
     {
@@ -79,6 +84,9 @@ class Column implements JsonSerializable
     public function width($width)
     {
         $this->width = $width;
+        $this->minWidth = $width;
+        $this->maxWidth = $width;
+        $this->overflow = "hidden";
         return $this;
     }
 
@@ -142,11 +150,12 @@ class Column implements JsonSerializable
         return $this->order($index);
     }
 
-    public function sortCallback($callback){
-        $this->sortCallback=$callback;
+    public function sortCallback($callback)
+    {
+        $this->sortCallback = $callback;
         return $this;
     }
-    
+
     public function order($order)
     {
         if ($order) $this->order = $order;
@@ -311,10 +320,14 @@ class Column implements JsonSerializable
             $data["cellStyle"]["text-align"] = $this->align;
         }
         if ($this->width) $data["width"] = $this->width;
+        if ($this->minWidth) $data["minWidth"] = $this->minWidth;
+        if ($this->maxWidth) $data["maxWidth"] = $this->maxWidth;
+        if ($this->overflow) $data["overflow"] = $this->overflow;
         if ($this->className) $data["className"] = implode(" ", $this->className);
         return $data;
     }
 
 
 }
+
 
