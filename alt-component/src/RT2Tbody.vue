@@ -1,58 +1,106 @@
 <template>
-    <tbody>
-        <template v-for="(d,index) in data" >
-            <tr v-on:click="onClickRow(d)" v-bind:class="getRowClass(d)" :style="getStyle(d)" :key="index">
-                <td v-if="hasHideColumn">
-                    <button class="btn btn-default btn-xs" 
-                        v-on:click="toggleRowChild(index)" 
-                        v-on:mouseenter="mouseEnterRow(index)" 
-                        v-on:mouseleave="mouseLeaveRow(index)">
-                        <i v-if="!showIndex[index]" class="fa fa-fw fa-chevron-up"></i>
-                        <i v-if="showIndex[index]" class="fa fa-fw fa-chevron-down"></i>
-                    </button>
-                </td>
-                <td v-for="column in columns" v-if="column.isDisplay()" v-on:click="onClickCell(column,index)" v-bind:style="column.cell(d).style">
-                   <template v-if="isEditMode(column,index)" >
-                        <template v-if="column.editType=='text'">
-                            <input type="text" class="form-control input-sm" v-bind:value="column.getValue(d)" v-on:blur="updateData(index,d,column,$event.target.value)"/>
-                        </template>
-                        <template v-else-if="column.editType=='select'">
-                            <select class="formControl" v-on:blur="updateData(index,d,column,$event.target.value)">
-                                <option v-for="opt in column.editData" v-bind:value="opt.value" v-text="opt.label"
-                                v-bind:selected="opt.value==column.getValue(d).value"></option>
-                            </select>
-                        </template>
-                        <template v-else-if="column.editType=='date'">
-                            <input type="text" class="form-control input-sm" v-bind:value="column.getValue(d)" v-on:blur="updateData(index,d,column,$event.target.value)"/>
-                        </template>
-                    </template>
-                    <template v-else>
-                        <div v-if="column.cell(d).type=='html'" v-html="column.getContent(d)" v-bind:style="column.cell(d).divStyle"></div>
-                        <div v-if="column.cell(d).type=='text'" v-text="column.getContent(d)" v-bind:style="column.cell(d).divStyle"></div>
-                        <input type="checkbox" v-if="column.type=='checkbox'" is="icheck" />
-                        <input type="checkbox" v-if="column.type=='deletes'"/>
-                        <button class="btn btn-xs btn-danger" v-else-if="column.cell(d).type=='delete'" v-on:click="deleteRow(d[column.data].content)"><i class="fa fa-fw fa-times"></i></button>
-                        <button class="btn btn-xs btn-default" v-else-if="column.type=='sub-row'" v-on:click="toggleSubRow(index,r)">
-                            <i v-if="subRow[index]" class="fa fa-fw fa-minus"></i>
-                            <i v-if="!subRow[index]" class="fa fa-fw fa-plus"></i>
-                        </button>
-                        <a v-else-if="column.type=='link'" v-bind:href="column.href" v-html="column.content"></a>
-                    </template>
-                </td>
-            </tr>
-            <tr class="child" v-show="showChild(index)">
-                <td v-bind:colspan="showColumnCount">
-                    <ul>
-                        <li v-for="column in columns" v-if="column.hide">
-                            <b v-html="column.title"></b>&nbsp;&nbsp;
-                            <span v-if="column.cell(d).type=='html'" v-html="column.getContent(d)"></span>
-                            <span v-if="column.cell(d).type=='text'" v-text="column.getContent(d)"></span>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        </template>
-    </tbody>
+  <tbody>
+    <template v-for="(d,index) in data">
+      <tr
+        v-on:click="onClickRow(d)"
+        v-bind:class="getRowClass(d)"
+        :style="getStyle(d)"
+        :key="index"
+      >
+        <td v-if="hasHideColumn">
+          <button
+            class="btn btn-default btn-xs"
+            v-on:click="toggleRowChild(index)"
+            v-on:mouseenter="mouseEnterRow(index)"
+            v-on:mouseleave="mouseLeaveRow(index)"
+          >
+            <i v-if="!showIndex[index]" class="fa fa-fw fa-chevron-up"></i>
+            <i v-if="showIndex[index]" class="fa fa-fw fa-chevron-down"></i>
+          </button>
+        </td>
+        <td
+          v-for="(column,key) in visibleColumns"
+          :key="key"
+          v-on:click="onClickCell(column,index)"
+          v-bind:style="column.cell(d).style"
+        >
+          <template v-if="isEditMode(column,index)">
+            <template v-if="column.editType=='text'">
+              <input
+                type="text"
+                class="form-control input-sm"
+                v-bind:value="column.getValue(d)"
+                v-on:blur="updateData(index,d,column,$event.target.value)"
+              >
+            </template>
+            <template v-else-if="column.editType=='select'">
+              <select
+                class="formControl"
+                v-on:blur="updateData(index,d,column,$event.target.value)"
+              >
+                <option
+                  v-for="(opt,opt_key) in column.editData"
+                  :key="opt_key"
+                  v-bind:value="opt.value"
+                  v-text="opt.label"
+                  v-bind:selected="opt.value==column.getValue(d).value"
+                ></option>
+              </select>
+            </template>
+            <template v-else-if="column.editType=='date'">
+              <input
+                type="text"
+                class="form-control input-sm"
+                v-bind:value="column.getValue(d)"
+                v-on:blur="updateData(index,d,column,$event.target.value)"
+              >
+            </template>
+          </template>
+          <template v-else>
+            <div
+              v-if="column.cell(d).type=='html'"
+              v-html="column.getContent(d)"
+              v-bind:style="column.cell(d).divStyle"
+            ></div>
+            <div
+              v-if="column.cell(d).type=='text'"
+              v-text="column.getContent(d)"
+              v-bind:style="column.cell(d).divStyle"
+            ></div>
+            <input type="checkbox" v-if="column.type=='checkbox'" is="icheck">
+            <input type="checkbox" v-if="column.type=='deletes'">
+            <button
+              class="btn btn-xs btn-danger"
+              v-else-if="column.cell(d).type=='delete'"
+              v-on:click="deleteRow(d[column.data].content)"
+            >
+              <i class="fa fa-fw fa-times"></i>
+            </button>
+            <button
+              class="btn btn-xs btn-default"
+              v-else-if="column.type=='sub-row'"
+              v-on:click="toggleSubRow(index,r)"
+            >
+              <i v-if="subRow[index]" class="fa fa-fw fa-minus"></i>
+              <i v-if="!subRow[index]" class="fa fa-fw fa-plus"></i>
+            </button>
+            <a v-else-if="column.type=='link'" v-bind:href="column.href" v-html="column.content"></a>
+          </template>
+        </td>
+      </tr>
+      <tr class="child" v-show="showChild(index)" :key="index">
+        <td v-bind:colspan="showColumnCount">
+          <ul>
+            <li v-for="(column,key) in hideColumns" :key="key">
+              <b v-html="column.title"></b>&nbsp;&nbsp;
+              <span v-if="column.cell(d).type=='html'" v-html="column.getContent(d)"></span>
+              <span v-if="column.cell(d).type=='text'" v-text="column.getContent(d)"></span>
+            </li>
+          </ul>
+        </td>
+      </tr>
+    </template>
+  </tbody>
 </template>
 
 <script>
@@ -74,6 +122,16 @@ export default {
     };
   },
   computed: {
+    hideColumns() {
+      return this.columns.filter(column => {
+        return column.hide;
+      });
+    },
+    visibleColumns() {
+      return this.columns.filter(column => {
+        return column.isDisplay();
+      });
+    },
     hasHideColumn() {
       return this.columns.some(o => o.hide);
     },
@@ -86,10 +144,9 @@ export default {
     }
   },
   methods: {
-    getStyle(d){
-      
-      if(d.__row__.style){
-        return d.__row__.style;  
+    getStyle(d) {
+      if (d.__row__.style) {
+        return d.__row__.style;
       }
     },
     getRowClass(d) {

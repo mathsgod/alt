@@ -6,102 +6,159 @@ table.rt > thead button.multiselect {
 }
 </style>
 <template>
-    <div class="box no-border" is="alt-box" ref="box">
-        <div class="box-body no-padding" is="alt-box-body" :class="{'table-responsive':!responsive}">
-            <table class="table table-hover table-condensed table-bordered rt" ref="table">
-                <thead>
-                    <tr>
-                        <td v-if="hasHideColumn">
-                            <button class="btn btn-default btn-xs" v-on:click="toggleChild">
-                                <i v-if="!showChild" class="fa fa-fw fa-chevron-up"></i>
-                                <i v-if="showChild" class="fa fa-fw fa-chevron-down"></i>
-                            </button>
-                        </td>
-                        <th v-for="(column,key) in columns" :key="key" is="alt-column" v-bind="column.$data" v-if="column.isDisplay()"
-                            v-on:order="order" v-on:draw="draw" v-on:search="$emit('search',$event)" ref="column"></th>
-                    </tr>
-                    <tr v-if="isSearchable">
-                        <td v-if="hasHideColumn">
-                        </td>
-                        <td v-for="(column,key) in columns" :key="key" is="alt-column-search" v-bind="column.$data" v-if="column.isDisplay()"
-                            v-on:search="search"></td>
-                    </tr>
-                </thead>
-                <tbody is="rt2-tbody" :selectable="selectable" :data="data()" :columns="columns" ref="tbody"
-                    v-on:update-data="updateData" v-on:data-deleted="draw"></tbody>
-            </table>
-        </div>
-        <div class="box-footer">
-            <rt-pagination :page="page" :page-count="pageCount" v-on:change-page="gotoPage" v-on:first-page="firstPage"
-                v-on:next-page="nextPage" v-on:prev-page="prevPage" v-on:last-page="lastPage"></rt-pagination>
-
-            <div class="pull-left btn-group">
-                <button @click="draw" class="btn btn-default btn-sm" type="button" title="重新載入" data-toggle="tooltip">
-                    <i class="fa fa-sync-alt"></i>
-                </button>
-            </div>
-
-            <div class="pull-left">
-                <select class="form-control input-sm" @change="onChangePageLength" v-model="local.pageLength">
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                    <option value="500">500</option>
-                </select>
-            </div>
-
-
-            <div class="pull-left dropup">
-                <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-                    <span class="icon glyphicon glyphicon-th-list"></span>
-                </button>
-                <ul class="dropdown-menu" ref="column_menu">
-                    <li v-for="(column,key) in columns" v-if="column.title" :key="key">
-                        <a href="#" class="small" data-value="option1" tabIndex="-1" @click.prevent="column.toggleVisible()">
-                            <input type="checkbox" v-model="column.isVisible" />&nbsp;{{column.title}}
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-
-            <div class="pull-left btn-group">
-                <button @click="toggleResponsive" :class="{active:responsive}" class="btn btn-default btn-sm" type="button"
-                    title="Responsive" data-toggle="tooltip">
-                    <i class="fa fa-tv"></i>
-                </button>
-
-                <button @click="resetLocaStorage" class="btn btn-default btn-sm" type="button" title="clear cache"
-                    data-toggle="tooltip">
-                    <i class="fa fa-times-circle"></i>
-                </button>
-            </div>
-
-            <div class="pull-left dropdown" v-if="hasExport()">
-                <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
-                    Export
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li v-if="exports.indexOf('xlsx')>=0">
-                        <a href="#" @click.prevent="exportFile('xlsx')">XLSX</a>
-                    </li>
-                    <li v-if="exports.indexOf('csv')>=0">
-                        <a href="#" @click.prevent="exportFile('csv')">CSV</a>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="pull-left btn-group">
-                <button v-for="(button,index) in buttons" :key="index" @click="onClickButton(button)" class="btn btn-default btn-sm"
-                    type="button" v-text="button.text">
-                </button>
-            </div>
-
-            <rt-info class="pull-right" v-bind="info"></rt-info>
-        </div>
+  <div class="box no-border" is="alt-box" ref="box">
+    <div class="box-body no-padding" is="alt-box-body" :class="{'table-responsive':!responsive}">
+      <table class="table table-hover table-condensed table-bordered rt" ref="table">
+        <thead>
+          <tr>
+            <td v-if="hasHideColumn">
+              <button class="btn btn-default btn-xs" v-on:click="toggleChild">
+                <i v-if="!showChild" class="fa fa-fw fa-chevron-up"></i>
+                <i v-if="showChild" class="fa fa-fw fa-chevron-down"></i>
+              </button>
+            </td>
+            <th
+              v-for="(column,key) in visibleColumns"
+              :key="key"
+              is="alt-column"
+              v-bind="column.$data"
+              v-on:order="order"
+              v-on:draw="draw"
+              v-on:search="$emit('search',$event)"
+              ref="column"
+            ></th>
+          </tr>
+          <tr v-if="isSearchable">
+            <td v-if="hasHideColumn"></td>
+            <td
+              v-for="(column,key) in visibleColumns"
+              :key="key"
+              is="alt-column-search"
+              v-bind="column.$data"
+              v-on:search="search"
+            ></td>
+          </tr>
+        </thead>
+        <tbody
+          is="rt2-tbody"
+          :selectable="selectable"
+          :data="data()"
+          :columns="columns"
+          ref="tbody"
+          v-on:update-data="updateData"
+          v-on:data-deleted="draw"
+        ></tbody>
+      </table>
     </div>
+    <div class="box-footer">
+      <rt-pagination
+        :page="page"
+        :page-count="pageCount"
+        v-on:change-page="gotoPage"
+        v-on:first-page="firstPage"
+        v-on:next-page="nextPage"
+        v-on:prev-page="prevPage"
+        v-on:last-page="lastPage"
+      ></rt-pagination>
+
+      <div class="pull-left btn-group">
+        <button
+          @click="draw"
+          class="btn btn-default btn-sm"
+          type="button"
+          title="重新載入"
+          data-toggle="tooltip"
+        >
+          <i class="fa fa-sync-alt"></i>
+        </button>
+      </div>
+
+      <div class="pull-left">
+        <select
+          class="form-control input-sm"
+          @change="onChangePageLength"
+          v-model="local.pageLength"
+        >
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+          <option value="500">500</option>
+        </select>
+      </div>
+
+      <div class="pull-left dropup">
+        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+          <span class="icon glyphicon glyphicon-th-list"></span>
+        </button>
+        <ul class="dropdown-menu" ref="column_menu">
+          <li v-for="(column,key) in columnsHasTitle" :key="key">
+            <a
+              href="#"
+              class="small"
+              data-value="option1"
+              tabindex="-1"
+              @click.prevent="column.toggleVisible()"
+            >
+              <input type="checkbox" v-model="column.isVisible">
+              &nbsp;{{column.title}}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="pull-left btn-group">
+        <button
+          @click="toggleResponsive"
+          :class="{active:responsive}"
+          class="btn btn-default btn-sm"
+          type="button"
+          title="Responsive"
+          data-toggle="tooltip"
+        >
+          <i class="fa fa-tv"></i>
+        </button>
+        
+        <button
+          @click="resetLocaStorage"
+          class="btn btn-default btn-sm"
+          type="button"
+          title="clear cache"
+          data-toggle="tooltip"
+        >
+          <i class="fa fa-times-circle"></i>
+        </button>
+      </div>
+
+      <div class="pull-left dropdown" v-if="hasExport()">
+        <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+          Export
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+          <li v-if="exports.indexOf('xlsx')>=0">
+            <a href="#" @click.prevent="exportFile('xlsx')">XLSX</a>
+          </li>
+          <li v-if="exports.indexOf('csv')>=0">
+            <a href="#" @click.prevent="exportFile('csv')">CSV</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="pull-left btn-group">
+        <button
+          v-for="(button,index) in buttons"
+          :key="index"
+          @click="onClickButton(button)"
+          class="btn btn-default btn-sm"
+          type="button"
+          v-text="button.text"
+        ></button>
+      </div>
+
+      <rt-info class="pull-right" v-bind="info"></rt-info>
+    </div>
+  </div>
 </template>
 <script>
 export default {
@@ -274,6 +331,16 @@ export default {
     window.addEventListener("resize", this.resize);
   },
   computed: {
+    visibleColumns() {
+      return this.columns.filter(column => {
+        return column.isDisplay();
+      });
+    },
+    columnsHasTitle() {
+      return this.columns.filter(column => {
+        return column.title;
+      });
+    },
     storage: {
       get() {
         let id = this.ajax.url
