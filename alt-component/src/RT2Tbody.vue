@@ -162,7 +162,7 @@ export default {
     },
     deleteRow(uri) {
       if (confirm("Are your sure?")) {
-        this.$http.delete(uri).then(resp => {
+        this.$http.delete(uri).then(() => {
           this.$emit("data-deleted");
         });
       }
@@ -186,7 +186,7 @@ export default {
       }
       return false;
     },
-    onClickCell: function(column, index, r) {
+    onClickCell: function(column, index) {
       if (!column.editable) return false;
       this.editMode = true;
       this.editColumn = column;
