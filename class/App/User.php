@@ -13,7 +13,7 @@ class User extends Model
         }
     }
 
-    public static function Login($username, $password, $code)
+    public static function Login($username, $password, $code = null)
     {
         $sth = self::__db()->prepare("select user_id,password from User where username=:username and status=0");
         $sth->execute([":username" => $username]);

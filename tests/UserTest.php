@@ -7,8 +7,9 @@ final class UserTest extends TestCase
 {
     public function testLogin()
     {
-        $app = new App\App(__DIR__);
-        $this->assertTrue((boolean)App\User::Login("raymond", "111111"));
+        $loader = new Composer\Autoload\ClassLoader();
+        $app = new App\App(__DIR__, $loader);
+        $this->assertTrue((boolean)App\App::Login("raymond", "111111"));
         $this->assertFalse(App\User::Login("raymond", "222222"));
     }
 }

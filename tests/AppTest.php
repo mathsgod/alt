@@ -8,7 +8,8 @@ final class AppTest extends TestCase
 
     public function testApp()
     {
-        $app = new App\App(__DIR__);
+        $loader = new Composer\Autoload\ClassLoader();
+        $app = new App\App(__DIR__, $loader);
 
         $this->assertEquals($app, App::_());
 

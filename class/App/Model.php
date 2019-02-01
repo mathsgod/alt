@@ -3,7 +3,9 @@ namespace App;
 
 abstract class Model extends \R\ORM\Model
 {
-    public function __construct($id)
+    public static $_db;
+    public static $_app;
+    public function __construct($id = null)
     {
         parent::__construct($id);
         $c = new \ReflectionClass(get_class($this));
@@ -16,9 +18,14 @@ abstract class Model extends \R\ORM\Model
         }
     }
 
+    public static function __db()
+    {
+        return self::$_db;
+    }
+
     public function _db()
     {
-        return parent::__db();
+        return $this->db;
     }
 
     public function _app()

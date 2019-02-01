@@ -21,7 +21,7 @@ class App extends \R\App
         return self::$app;
     }
 
-    public function __construct($root, $loader, $logger)
+    public function __construct($root, $loader, $logger = null)
     {
         spl_autoload_register(function ($class) use ($root) {
 
@@ -33,7 +33,10 @@ class App extends \R\App
         });
         parent::__construct($root, $loader, $logger);
 
-        $this->entity = new Entity($this);
+//        $this->entity = new Entity($this);
+
+        Model::$_db = $this->db;
+        Model::$_app = $this;
 
         $p = explode(DIRECTORY_SEPARATOR, __DIR__);
         array_pop($p);
@@ -69,13 +72,13 @@ class App extends \R\App
 
         //db config
         $host = $_SERVER["HTTP_HOST"];
-        if(function_exists("apcu_fetch")){
+        if (function_exists("apcu_fetch")) {
             $pool = new ApcuCachePool();
             if ($pool->hasItem('config')) {
                 $config = $pool->getItem($host . "_config")->get();
             } else {
                 $item = $pool->getItem($host . "_config");
-    
+
                 $config = [];
                 foreach (Config::Find() as $c) {
                     $config[$c->name] = $c->value;
@@ -84,7 +87,7 @@ class App extends \R\App
                 $item->expiresAfter(60);
                 $pool->save($item);
             }
-        }else{
+        } else {
             $config = [];
             foreach (Config::Find() as $c) {
                 $config[$c->name] = $c->value;
@@ -320,7 +323,7 @@ class App extends \R\App
         return true;
     }
 
-    public function login($username, $password, $code)
+    public function login($username, $password, $code = null)
     {
         if ($username == "") {
             throw new \Exception("Username cannot be empty", 400);
@@ -421,7 +424,7 @@ class App extends \R\App
     }
 
 
-    public function sv($name, $lang)
+    public function sv($name, $lang = null)
     {
         if (!$lang) $lang = $this->user->language;
 
