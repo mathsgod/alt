@@ -3,7 +3,7 @@ namespace App;
 
 use R\RSList;
 
-class Query extends \R\DB\Query
+class Query extends \R\ORM\Query
 {
 
     public $class;

@@ -1,7 +1,7 @@
 <?php
 namespace App;
 
-abstract class Model extends \R\Model
+abstract class Model extends \R\ORM\Model
 {
     public function __construct($id)
     {

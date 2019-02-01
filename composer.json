@@ -26,10 +26,8 @@
     "require": {
         "php": ">=5.6",
         "mathsgod/r-psr7": "^2.1.1",
-        "mathsgod/r": "^2.4",
         "mathsgod/p-query": "^1.1.6",
         "mathsgod/bs": "1.*",
-        "mathsgod/r-db": "^2.0.3",
         "mathsgod/hl-holiday": "^1.2.1",
         "mathsgod/hl-weather": "1.*",
         "mathsgod/html": "1.*",
@@ -47,7 +45,9 @@
         "mathsgod/r-graphql": "^1.2"
     },
     "require-dev": {
-        "phpunit/phpunit": "*"
+        "phpunit/phpunit": "*",
+        "mathsgod/r": "^2.5",
+        "mathsgod/r-db": "^3.0"
     },
     "suggest": {
         "ckeditor/ckeditor": "JavaScript WYSIWYG web text editor.",

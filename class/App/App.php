@@ -69,19 +69,26 @@ class App extends \R\App
 
         //db config
         $host = $_SERVER["HTTP_HOST"];
-        $pool = new ApcuCachePool();
-        if ($pool->hasItem('config')) {
-            $config = $pool->getItem($host . "_config")->get();
-        } else {
-            $item = $pool->getItem($host . "_config");
-
+        if(function_exists("apcu_fetch")){
+            $pool = new ApcuCachePool();
+            if ($pool->hasItem('config')) {
+                $config = $pool->getItem($host . "_config")->get();
+            } else {
+                $item = $pool->getItem($host . "_config");
+    
+                $config = [];
+                foreach (Config::Find() as $c) {
+                    $config[$c->name] = $c->value;
+                }
+                $item->set($config);
+                $item->expiresAfter(60);
+                $pool->save($item);
+            }
+        }else{
             $config = [];
             foreach (Config::Find() as $c) {
                 $config[$c->name] = $c->value;
             }
-            $item->set($config);
-            $item->expiresAfter(60);
-            $pool->save($item);
         }
 
         foreach ($config as $name => $value) {
