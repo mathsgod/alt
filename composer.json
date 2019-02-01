@@ -42,12 +42,12 @@
         "symfony/yaml": "3.*",
         "monolog/monolog": "1.*",
         "mathsgod/r-webauthn": "^1.0",
-        "mathsgod/r-graphql": "^1.2"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "*",
+        "mathsgod/r-graphql": "^1.2",
         "mathsgod/r": "^2.5",
         "mathsgod/r-db": "^3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
     },
     "suggest": {
         "ckeditor/ckeditor": "JavaScript WYSIWYG web text editor.",
