@@ -550,7 +550,7 @@ class Page extends \R\Page
         }
     }
 
-    public function createV($object)
+    public function createV($object = null)
     {
         if (!$object) {
             $object = $this->object();
