@@ -277,9 +277,9 @@ class Page extends \R\Page
                         } else {
                             $content = $ret;
                         }
-                        $data["_object"]=$this->object();
+                        $data["_object"] = $this->object();
 
-                        $data["_app"]=$this->app;
+                        $data["_app"] = $this->app;
 
                         $content .= $echo_content;
                         $content .= $this->_template->render($data);
@@ -304,7 +304,7 @@ class Page extends \R\Page
             }
         }
 
-        return $response->withBody(new Stream($echo_content.$response->getBody()->getContents()));
+        return $response->withBody(new Stream($echo_content . $response->getBody()->getContents()));
     }
 
     public function module()
@@ -351,7 +351,7 @@ class Page extends \R\Page
 
             $uri = $this->request->getUri()->withUserInfo(null, null);
             $_SESSION['app']["referer"][(string)$uri] = $referer;
-            
+
         }
         if ($content) {
             $f->addBody($content);
@@ -369,7 +369,7 @@ class Page extends \R\Page
         return new UI\T($objects, $this);
     }
 
-    public function createTab($prefix)
+    public function createTab($prefix = null)
     {
         return new UI\Tab($this, $prefix);
     }
@@ -420,7 +420,7 @@ class Page extends \R\Page
         return $rt;
     }
 
-    public function createRT2($objects, $module)
+    public function createRT2($objects, $module = null)
     {
         //$rt = new UI\RT($objects, $module ? $module : $this->module(), $this->request);
         $rt = new UI\RT2(null, $this, $this->app->config);

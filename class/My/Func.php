@@ -1,40 +1,46 @@
 <?php
 namespace My;
+
 use Exception;
-class Func {
+
+class Func
+{
     private $function;
     private $parameter;
     public $id;
 
-    public function name() {
+    public function name()
+    {
         return $this->function;
     }
 
-    public static function _($function, $parameters) {
+    public static function _($function, $parameters = null)
+    {
         return new Func($function, $parameters);
     }
 
-    public function __construct($function, $parameters) {
+    public function __construct($function, $parameters = null)
+    {
         $this->parameter = $parameters;
         $this->function = $function;
     }
 
-    public function call($obj, $n) {
-        if (is_null($this->function))return $obj;
-        if ($this->function == "")return "";
+    public function call($obj, $n = null)
+    {
+        if (is_null($this->function)) return $obj;
+        if ($this->function == "") return "";
         $func = $this->function;
 
         if ($func instanceof \Closure || is_array($func)) {
             $parameter = array();
             $parameter[] = $obj;
             $parameter[] = $n;
-            foreach($this->parameter as $p) {
+            foreach ($this->parameter as $p) {
                 $parameter[] = $p;
             }
             try {
                 return call_user_func_array($func, $parameter);
-            }
-            catch(Exception $e) {
+            } catch (Exception $e) {
                 return $e->getMessage();
             }
         }
@@ -47,9 +53,8 @@ class Func {
             } else {
                 try {
                     eval('$v=$obj->' . $func . ";");
-                }
-                catch(Exception $e) {
-                     $v = $e->getMessage();
+                } catch (Exception $e) {
+                    $v = $e->getMessage();
                 }
             }
         } else {
@@ -62,7 +67,7 @@ class Func {
             } else {
                 $v = $func;
             }
-        } ;
+        };
 
         return $v;
     }

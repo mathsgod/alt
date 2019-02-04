@@ -160,7 +160,6 @@ class App extends \R\App
 
     public function run()
     {
-
         if ($this->logger) $this->logger->debug("APP::run");
 
         $this->base = $this->request->getUri()->getBasePath();
@@ -387,6 +386,8 @@ class App extends \R\App
         AuthLock::Clear();
 
         $this->user = $user;
+        
+        return true;
     }
 
     public function flushMessage()
@@ -495,12 +496,13 @@ class App extends \R\App
         $raw_path = $path;
         $p = parse_url($path);
         $path = $p["path"];
-
+        
         if ($p["scheme"]) { //external
             return true;
         }
 
         if ($path[0] == "/") { //absolute path
+            
             $result = $user->isAdmin();
 
             $ugs = $user->UserGroup();
@@ -516,7 +518,6 @@ class App extends \R\App
             }
 
             $w[] = implode(" or ", $u);
-
             foreach (ACL::Find($w) as $acl) {
                 $v = $acl->value();
                 if ($v == "deny") {

@@ -87,8 +87,8 @@ class ACL extends Model
             $user = new User($user);
         }
 
-
         $result = $user->isAdmin();
+
         if(!$result){
             if($user->isUser()){
                 $result=App::_()->config["system"]["user_default_acl"];
@@ -102,7 +102,7 @@ class ACL extends Model
         }
 
         $ugs = $user->UserGroup();
-
+       
         if (!$result) {
             if ($module = Module::ByPath($path)) {
                 if ($acl = $module->acl) {
@@ -125,6 +125,7 @@ class ACL extends Model
                 }
             }
         }
+             
 
         $ini = ACL::INI();
         if (!$result) {
@@ -143,8 +144,6 @@ class ACL extends Model
                 }
             }
         }
-
-
 
         $module = array_shift($ps);
 

@@ -90,7 +90,7 @@ class Column implements JsonSerializable
         return $this;
     }
 
-    public function editable($type = "text", $data)
+    public function editable($type = "text", $data = null)
     {
         $this->editable = true;
         $this->editType = $type;
@@ -145,7 +145,7 @@ class Column implements JsonSerializable
         return $this;
     }
 
-    public function sort($index)
+    public function sort($index = null)
     {
         return $this->order($index);
     }
@@ -170,7 +170,7 @@ class Column implements JsonSerializable
         return $this;
     }
 
-    public function searchSelect2($objects, $display_member, $value_member)
+    public function searchSelect2($objects, $display_member = null, $value_member = null)
     {
         $this->searchable = true;
         $this->searchOptions = array($objects, $display_member, $value_member);
@@ -195,7 +195,7 @@ class Column implements JsonSerializable
         return $this;
     }
 
-    public function searchSingle($objects, $display_member, $value_member)
+    public function searchSingle($objects, $display_member = null, $value_member = null)
     {
         $this->searchable = true;
         $this->searchOptions = array($objects, $display_member, $value_member);
@@ -204,7 +204,7 @@ class Column implements JsonSerializable
         return $this;
     }
 
-    public function searchMultiple($objects, $display_member, $value_member)
+    public function searchMultiple($objects, $display_member = null, $value_member = null)
     {
         $this->searchable = true;
         $this->searchOptions = array($objects, $display_member, $value_member);
@@ -214,7 +214,7 @@ class Column implements JsonSerializable
         return $this;
     }
 
-    public function searchOption($objects, $display_member, $value_member)
+    public function searchOption($objects, $display_member = null, $value_member = null)
     {
         $this->searchable = true;
         $this->searchOptions = array($objects, $display_member, $value_member);

@@ -78,6 +78,7 @@ class User extends Model
 
     public function online()
     {
+
         if (\PHP\APCu::Exists()) {
             $o = new \PHP\APCu();
         } elseif (\PHP\SHM::Exists()) {
@@ -217,16 +218,15 @@ class User extends Model
     {
         if (is_object($name)) {
             $group = $name;
-            self::$_is[$this->user_id][$group->name] = $this->_Size(UserList, "usergroup_id={$group->usergroup_id}");
+            self::$_is[$this->user_id][$group->name] = $this->_Size("UserList", "usergroup_id={$group->usergroup_id}");
             return self::$_is[$this->user_id][$group->name];
         }
 
         if (!is_null(self::$_is[$this->user_id][$name])) {
             return self::$_is[$this->user_id][$name];
         }
-
         if ($group = UserGroup::_($name)) { // usergroup exitst
-            self::$_is[$this->user_id][$name] = $this->_Size(UserList, "usergroup_id={$group->usergroup_id}");
+            self::$_is[$this->user_id][$name] = $this->UserList->where(["usergroup_id" => $group->usergroup_id])->count();
         } else {
             self::$_is[$this->user_id][$name] = 0;
         }

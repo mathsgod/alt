@@ -39,7 +39,7 @@ class Plugin
         $path[] = [$system_root . "/AdminLTE/plugins/{$name}", $system_base . "/AdminLTE/plugins/$name"];
 
         $yml_file = $system_root . "/plugins.yml";
-        
+
 
         $config = \App::_()->plugins_setting;
 
@@ -49,7 +49,7 @@ class Plugin
         }
 
 
-        if ($setting=parse_ini_file($cms_root . "/plugins.ini", true)[$name]) {
+        if ($setting = parse_ini_file($cms_root . "/plugins.ini", true)[$name]) {
             $this->setting = $setting;
         }
 
@@ -90,7 +90,7 @@ class Plugin
         return $csss;
     }
 
-    public function jss($language)
+    public function jss($language = null)
     {
         $jss = [];
         foreach ($this->setting["js"] as $js) {

@@ -1,6 +1,8 @@
 <?php
 namespace App;
 
+use \R\ORM\Query;
+
 abstract class Model extends \R\ORM\Model
 {
     public static $_db;
@@ -218,7 +220,7 @@ abstract class Model extends \R\ORM\Model
         return parent::__call($function, $args);
     }
 
-    public static function Query($query)
+    public static function Query($query = null)
     {
         $q = new Query(get_called_class());
         $q->select();
@@ -238,6 +240,7 @@ abstract class Model extends \R\ORM\Model
     {
         return self::_app()->sv($name);
     }
+
 
 
 }
