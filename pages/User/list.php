@@ -6,6 +6,7 @@ class User_list extends ALT\Page
     public function get()
     {
         // outp(App\User::find());
+        
 
         $rt = $this->createRT2([$this, "ds"]);
 
@@ -47,7 +48,6 @@ class User_list extends ALT\Page
 
     public function ds($rt, $t)
     {
-
         $rt->columns = [
             "status" => "Status()",
             "isonline" => [

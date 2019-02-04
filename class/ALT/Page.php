@@ -54,7 +54,6 @@ class Page extends \App\Page
 
     public function __invoke(Request $request, Response $response)
     {
-
         $action = $request->getAttribute("action");
         $this->request = $request;
         if ($request->getMethod() == "get") {

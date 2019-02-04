@@ -20,6 +20,12 @@ abstract class Model extends \R\ORM\Model
         }
     }
 
+    public function id()
+    {
+        $key = $this->_key();
+        return $this->$key;
+    }
+
     public static function __db()
     {
         return self::$_db;
@@ -223,16 +229,8 @@ abstract class Model extends \R\ORM\Model
     public static function Query($query = null)
     {
         $q = new Query(get_called_class());
+        $q->where($query);
         $q->select();
-        $q->from(self::_table()->name);
-
-
-        if (is_array($query)) {
-            foreach ($query as $name => $v) {
-                $q->where("$name=?", $v);
-            }
-        }
-
         return $q;
     }
 

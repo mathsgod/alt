@@ -5,7 +5,7 @@ class User extends Model
 {
     public static $_Status = ["Active", "Inactive"];
 
-    public function __construct($id)
+    public function __construct($id = null)
     {
         parent::__construct($id);
         if (!$id) {
@@ -124,7 +124,7 @@ class User extends Model
 
     public function canUpdate()
     {
-        $user = \App::User();
+        $user = self::$_app->user;
         if ($this->isGuest()) {
             return false;
         }

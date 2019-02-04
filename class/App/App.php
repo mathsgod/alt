@@ -162,6 +162,7 @@ class App extends \R\App
     {
         if ($this->logger) $this->logger->debug("APP::run");
 
+
         $this->base = $this->request->getUri()->getBasePath();
 
         $pi = $this->pathInfo();
@@ -386,7 +387,7 @@ class App extends \R\App
         AuthLock::Clear();
 
         $this->user = $user;
-        
+
         return true;
     }
 
@@ -496,13 +497,13 @@ class App extends \R\App
         $raw_path = $path;
         $p = parse_url($path);
         $path = $p["path"];
-        
+
         if ($p["scheme"]) { //external
             return true;
         }
 
         if ($path[0] == "/") { //absolute path
-            
+
             $result = $user->isAdmin();
 
             $ugs = $user->UserGroup();
