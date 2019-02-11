@@ -53,7 +53,7 @@ class Config extends Model
         return $config;
     }
 
-    public function save($acl)
+    public function save($acl = true)
     {
         $host = $_SERVER["HTTP_HOST"];
         $pool = new ApcuCachePool();
@@ -62,7 +62,7 @@ class Config extends Model
         return parent::save($acl);
     }
 
-    public function delete($acl)
+    public function delete($acl = true)
     {
         $host = $_SERVER["HTTP_HOST"];
 

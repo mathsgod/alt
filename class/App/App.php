@@ -8,6 +8,7 @@ use R\Psr7\Stream;
 
 use Cache\Adapter\Apcu\ApcuCachePool;
 use Psr\Log\LoggerInterface;
+use Exception;
 
 class App extends \R\App
 {
@@ -31,6 +32,15 @@ class App extends \R\App
                 require_once($file);
             }
         });
+
+        //check config file
+        if (!file_exists($root . "/config.ini")) {
+            throw new Exception("config.ini not found");
+        }
+        //
+
+
+
         parent::__construct($root, $loader, $logger);
 
 //        $this->entity = new Entity($this);

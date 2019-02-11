@@ -236,7 +236,7 @@ abstract class Model extends \R\ORM\Model
 
     public static function _sv($name)
     {
-        return self::_app()->sv($name);
+        return self::$_app->sv($name);
     }
 
 
