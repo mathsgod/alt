@@ -2576,12 +2576,12 @@ var Datepicker_component = normalizeComponent(
 
 Datepicker_component.options.__file = "Datepicker.vue"
 /* harmony default export */ var Datepicker = (Datepicker_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Date.vue?vue&type=template&id=666c1f72&
-var Datevue_type_template_id_666c1f72_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"input-group"},[_c('span',{staticClass:"input-group-addon"},[_c('i',{class:_vm.icon})]),_c("datepicker",_vm._b({ref:"datepicker",tag:"input",staticClass:"form-control",attrs:{"value":_vm.value},on:{"input":function($event){_vm.$emit('input',$event)}}},'input',_vm.$props,false)),(_vm.required)?_c('i',{staticClass:"fa fa-asterisk form-control-feedback",staticStyle:{"top":"10px"}}):_vm._e()])])}
-var Datevue_type_template_id_666c1f72_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Date.vue?vue&type=template&id=76029190&
+var Datevue_type_template_id_76029190_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"input-group"},[_c('span',{staticClass:"input-group-addon"},[_c('i',{class:_vm.icon})]),_c("datepicker",_vm._b({ref:"datepicker",tag:"input",attrs:{"value":_vm.value},on:{"input":function($event){_vm.$emit('input',$event)}}},'input',_vm.$props,false)),(_vm.required)?_c('i',{staticClass:"fa fa-asterisk form-control-feedback",staticStyle:{"top":"10px"}}):_vm._e()])])}
+var Datevue_type_template_id_76029190_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/Date.vue?vue&type=template&id=666c1f72&
+// CONCATENATED MODULE: ./src/Date.vue?vue&type=template&id=76029190&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-plugin-babel/node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Date.vue?vue&type=script&lang=js&
 //
@@ -2648,8 +2648,8 @@ var Datevue_type_template_id_666c1f72_staticRenderFns = []
 
 var Date_component = normalizeComponent(
   src_Datevue_type_script_lang_js_,
-  Datevue_type_template_id_666c1f72_render,
-  Datevue_type_template_id_666c1f72_staticRenderFns,
+  Datevue_type_template_id_76029190_render,
+  Datevue_type_template_id_76029190_staticRenderFns,
   false,
   null,
   null,
@@ -6193,25 +6193,24 @@ Ace_component.options.__file = "Ace.vue"
 
 
 
-src("alt-input", Input);
+src("alt-tab", Tab);
+src("alt-tab-pane", TabPane);
 src("alt-box", Box);
 src("alt-box-header", BoxHeader);
 src("alt-box-body", BoxBody);
 src("alt-box-footer", BoxFooter);
+src("alt-e", E);
 src("icheck", icheck);
 src("datepicker", Datepicker);
 src("alt-date", src_Date);
 src("alt-datetime", Datetime);
-src("alt-e", E);
 src("alt-email", Email);
 src("alt-form", Form);
 src("alt-grid", Grid);
 src("alt-grid-section", GridSection);
 src("alt-multiselect", Multiselect);
-src("alt-tab", Tab);
 src("alt-table", Table);
 src("alt-table-body", TableBody);
-src("alt-tab-pane", TabPane);
 src("alt-timeline", Timeline);
 src("x-editable", xeditable);
 src("ckeditor", ckeditor);
@@ -6232,6 +6231,7 @@ src("rt-head", RTHead);
 src("rt-column", RTColumn);
 src("rt-body", RTBody);
 src("ace", Ace);
+src("alt-input", Input);
 // CONCATENATED MODULE: C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/lib/commands/build/entry-lib-no-default.js
 
 
