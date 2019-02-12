@@ -154,12 +154,12 @@ class Page extends \R\Page
         }
     }
 
-    public function redirect($uri)
+    public function redirect($uri = null)
     {
         return $this->_redirect($uri);
     }
 
-    public function _redirect($uri)
+    public function _redirect($uri = null)
     {
         if ($uri) {
             $location = $this->request->getUri()->getBasePath() . "/" . $uri;
@@ -414,7 +414,7 @@ class Page extends \R\Page
     }
 
 
-    public function createRT($objects, $module)
+    public function createRT($objects, $module = null)
     {
         $rt = new UI\RT($objects, $module ? $module : $this->module(), $this->request);
         return $rt;

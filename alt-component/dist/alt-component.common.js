@@ -360,6 +360,108 @@ exports.f = Object.getOwnPropertySymbols;
 
 /***/ }),
 
+/***/ "2877":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return normalizeComponent; });
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+
 /***/ "28a5":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -725,6 +827,23 @@ var defined = __webpack_require__("be13");
 module.exports = function (it) {
   return Object(defined(it));
 };
+
+
+/***/ }),
+
+/***/ "5033":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/icheck.vue?vue&type=template&id=1605e116&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('input',{attrs:{"type":"checkbox"}})}
+var staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/icheck.vue?vue&type=template&id=1605e116&
+/* concated harmony reexport render */__webpack_require__.d(__webpack_exports__, "a", function() { return render; });
+/* concated harmony reexport staticRenderFns */__webpack_require__.d(__webpack_exports__, "b", function() { return staticRenderFns; });
 
 
 /***/ }),
@@ -1938,100 +2057,8 @@ var staticRenderFns = []
 });
 // CONCATENATED MODULE: ./src/Input.vue?vue&type=script&lang=js&
  /* harmony default export */ var src_Inputvue_type_script_lang_js_ = (Inputvue_type_script_lang_js_); 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-function normalizeComponent (
-  scriptExports,
-  render,
-  staticRenderFns,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier, /* server only */
-  shadowMode /* vue-cli only */
-) {
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (render) {
-    options.render = render
-    options.staticRenderFns = staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = 'data-v-' + scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = shadowMode
-      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
-      : injectStyles
-  }
-
-  if (hook) {
-    if (options.functional) {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      var originalRender = options.render
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return originalRender(h, context)
-      }
-    } else {
-      // inject component registration as beforeCreate hook
-      var existing = options.beforeCreate
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    }
-  }
-
-  return {
-    exports: scriptExports,
-    options: options
-  }
-}
+// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
+var componentNormalizer = __webpack_require__("2877");
 
 // CONCATENATED MODULE: ./src/Input.vue
 
@@ -2041,7 +2068,7 @@ function normalizeComponent (
 
 /* normalize component */
 
-var component = normalizeComponent(
+var component = Object(componentNormalizer["a" /* default */])(
   src_Inputvue_type_script_lang_js_,
   render,
   staticRenderFns,
@@ -2216,7 +2243,7 @@ var defineProperty = __webpack_require__("a322");
 
 /* normalize component */
 
-var Box_component = normalizeComponent(
+var Box_component = Object(componentNormalizer["a" /* default */])(
   src_Boxvue_type_script_lang_js_,
   Boxvue_type_template_id_0c080f06_render,
   Boxvue_type_template_id_0c080f06_staticRenderFns,
@@ -2327,7 +2354,7 @@ var BoxHeadervue_type_template_id_253aa0de_staticRenderFns = [function () {var _
 
 /* normalize component */
 
-var BoxHeader_component = normalizeComponent(
+var BoxHeader_component = Object(componentNormalizer["a" /* default */])(
   src_BoxHeadervue_type_script_lang_js_,
   BoxHeadervue_type_template_id_253aa0de_render,
   BoxHeadervue_type_template_id_253aa0de_staticRenderFns,
@@ -2376,7 +2403,7 @@ var BoxBodyvue_type_template_id_ddd1ac16_staticRenderFns = []
 
 /* normalize component */
 
-var BoxBody_component = normalizeComponent(
+var BoxBody_component = Object(componentNormalizer["a" /* default */])(
   src_BoxBodyvue_type_script_lang_js_,
   BoxBodyvue_type_template_id_ddd1ac16_render,
   BoxBodyvue_type_template_id_ddd1ac16_staticRenderFns,
@@ -2415,7 +2442,7 @@ var BoxFootervue_type_template_id_273da12f_staticRenderFns = []
 
 /* normalize component */
 
-var BoxFooter_component = normalizeComponent(
+var BoxFooter_component = Object(componentNormalizer["a" /* default */])(
   src_BoxFootervue_type_script_lang_js_,
   BoxFootervue_type_template_id_273da12f_render,
   BoxFootervue_type_template_id_273da12f_staticRenderFns,
@@ -2428,84 +2455,9 @@ var BoxFooter_component = normalizeComponent(
 
 BoxFooter_component.options.__file = "BoxFooter.vue"
 /* harmony default export */ var BoxFooter = (BoxFooter_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/icheck.vue?vue&type=template&id=e4d662a4&
-var icheckvue_type_template_id_e4d662a4_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('input',{attrs:{"type":"checkbox"},domProps:{"value":_vm.value}})}
-var icheckvue_type_template_id_e4d662a4_staticRenderFns = []
+// EXTERNAL MODULE: ./src/icheck.vue
+var icheck = __webpack_require__("ec06");
 
-
-// CONCATENATED MODULE: ./src/icheck.vue?vue&type=template&id=e4d662a4&
-
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-plugin-babel/node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/icheck.vue?vue&type=script&lang=js&
-//
-//
-//
-/* harmony default export */ var icheckvue_type_script_lang_js_ = ({
-  props: {
-    value: {
-      default: null
-    },
-    checkboxClass: {
-      type: String,
-      default: "icheckbox_square-blue"
-    },
-    radioClass: {
-      type: String,
-      default: "iradio_square-blue"
-    },
-    checked: {
-      type: Boolean
-    }
-  },
-  created: function created() {},
-  mounted: function mounted() {
-    var _this = this;
-
-    $(this.$el).iCheck(this._props);
-
-    if (this.checked) {
-      $(this.$el).iCheck("check");
-    }
-
-    $(this.$el).on("ifClicked", function (event) {
-      $(_this.$el).trigger("click");
-
-      _this.$emit("click", event);
-    }).on("ifChanged", function (event) {
-      _this.$emit("change", event);
-    }).on("ifChecked", function (event) {
-      _this.$emit("input", _this.$el.value);
-
-      _this.$emit("checked", event);
-    }).on("ifUnchecked", function (event) {
-      _this.$emit("input", null);
-
-      _this.$emit("unchecked", event);
-    });
-  }
-});
-// CONCATENATED MODULE: ./src/icheck.vue?vue&type=script&lang=js&
- /* harmony default export */ var src_icheckvue_type_script_lang_js_ = (icheckvue_type_script_lang_js_); 
-// CONCATENATED MODULE: ./src/icheck.vue
-
-
-
-
-
-/* normalize component */
-
-var icheck_component = normalizeComponent(
-  src_icheckvue_type_script_lang_js_,
-  icheckvue_type_template_id_e4d662a4_render,
-  icheckvue_type_template_id_e4d662a4_staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-icheck_component.options.__file = "icheck.vue"
-/* harmony default export */ var icheck = (icheck_component.exports);
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Datepicker.vue?vue&type=template&id=07aeb6e1&
 var Datepickervue_type_template_id_07aeb6e1_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('input',{staticClass:"form-control",domProps:{"value":_vm.value}})}
 var Datepickervue_type_template_id_07aeb6e1_staticRenderFns = []
@@ -2563,7 +2515,7 @@ var Datepickervue_type_template_id_07aeb6e1_staticRenderFns = []
 
 /* normalize component */
 
-var Datepicker_component = normalizeComponent(
+var Datepicker_component = Object(componentNormalizer["a" /* default */])(
   src_Datepickervue_type_script_lang_js_,
   Datepickervue_type_template_id_07aeb6e1_render,
   Datepickervue_type_template_id_07aeb6e1_staticRenderFns,
@@ -2646,7 +2598,7 @@ var Datevue_type_template_id_76029190_staticRenderFns = []
 
 /* normalize component */
 
-var Date_component = normalizeComponent(
+var Date_component = Object(componentNormalizer["a" /* default */])(
   src_Datevue_type_script_lang_js_,
   Datevue_type_template_id_76029190_render,
   Datevue_type_template_id_76029190_staticRenderFns,
@@ -2723,7 +2675,7 @@ var Datetimevue_type_template_id_f8847de4_staticRenderFns = []
 
 /* normalize component */
 
-var Datetime_component = normalizeComponent(
+var Datetime_component = Object(componentNormalizer["a" /* default */])(
   src_Datetimevue_type_script_lang_js_,
   Datetimevue_type_template_id_f8847de4_render,
   Datetimevue_type_template_id_f8847de4_staticRenderFns,
@@ -2781,7 +2733,7 @@ var Evue_type_template_id_2be87667_staticRenderFns = []
 
 /* normalize component */
 
-var E_component = normalizeComponent(
+var E_component = Object(componentNormalizer["a" /* default */])(
   src_Evue_type_script_lang_js_,
   Evue_type_template_id_2be87667_render,
   Evue_type_template_id_2be87667_staticRenderFns,
@@ -2839,7 +2791,7 @@ var Emailvue_type_template_id_121fe762_staticRenderFns = [function () {var _vm=t
 
 /* normalize component */
 
-var Email_component = normalizeComponent(
+var Email_component = Object(componentNormalizer["a" /* default */])(
   src_Emailvue_type_script_lang_js_,
   Emailvue_type_template_id_121fe762_render,
   Emailvue_type_template_id_121fe762_staticRenderFns,
@@ -2891,7 +2843,7 @@ var Formvue_type_template_id_6657ac63_staticRenderFns = []
 
 /* normalize component */
 
-var Form_component = normalizeComponent(
+var Form_component = Object(componentNormalizer["a" /* default */])(
   src_Formvue_type_script_lang_js_,
   Formvue_type_template_id_6657ac63_render,
   Formvue_type_template_id_6657ac63_staticRenderFns,
@@ -2979,7 +2931,7 @@ var Gridvue_type_template_id_598f4c43_staticRenderFns = []
 
 /* normalize component */
 
-var Grid_component = normalizeComponent(
+var Grid_component = Object(componentNormalizer["a" /* default */])(
   src_Gridvue_type_script_lang_js_,
   Gridvue_type_template_id_598f4c43_render,
   Gridvue_type_template_id_598f4c43_staticRenderFns,
@@ -3084,7 +3036,7 @@ var GridSectionvue_type_template_id_1e38a5b7_staticRenderFns = []
 
 /* normalize component */
 
-var GridSection_component = normalizeComponent(
+var GridSection_component = Object(componentNormalizer["a" /* default */])(
   src_GridSectionvue_type_script_lang_js_,
   GridSectionvue_type_template_id_1e38a5b7_render,
   GridSectionvue_type_template_id_1e38a5b7_staticRenderFns,
@@ -3136,7 +3088,7 @@ var Multiselectvue_type_template_id_23681a7c_staticRenderFns = []
 
 /* normalize component */
 
-var Multiselect_component = normalizeComponent(
+var Multiselect_component = Object(componentNormalizer["a" /* default */])(
   src_Multiselectvue_type_script_lang_js_,
   Multiselectvue_type_template_id_23681a7c_render,
   Multiselectvue_type_template_id_23681a7c_staticRenderFns,
@@ -3204,7 +3156,7 @@ var Select2vue_type_template_id_05f15486_staticRenderFns = []
 
 /* normalize component */
 
-var Select2_component = normalizeComponent(
+var Select2_component = Object(componentNormalizer["a" /* default */])(
   src_Select2vue_type_script_lang_js_,
   Select2vue_type_template_id_05f15486_render,
   Select2vue_type_template_id_05f15486_staticRenderFns,
@@ -3272,7 +3224,7 @@ var Multiselect2vue_type_template_id_90091bf0_staticRenderFns = []
 
 /* normalize component */
 
-var Multiselect2_component = normalizeComponent(
+var Multiselect2_component = Object(componentNormalizer["a" /* default */])(
   src_Multiselect2vue_type_script_lang_js_,
   Multiselect2vue_type_template_id_90091bf0_render,
   Multiselect2vue_type_template_id_90091bf0_staticRenderFns,
@@ -3381,7 +3333,7 @@ var es6_function_name = __webpack_require__("7f7f");
 
 /* normalize component */
 
-var Tab_component = normalizeComponent(
+var Tab_component = Object(componentNormalizer["a" /* default */])(
   src_Tabvue_type_script_lang_js_,
   Tabvue_type_template_id_0b70b104_render,
   Tabvue_type_template_id_0b70b104_staticRenderFns,
@@ -3568,7 +3520,7 @@ var Tablevue_type_template_id_326512dc_staticRenderFns = []
 
 /* normalize component */
 
-var Table_component = normalizeComponent(
+var Table_component = Object(componentNormalizer["a" /* default */])(
   src_Tablevue_type_script_lang_js_,
   Tablevue_type_template_id_326512dc_render,
   Tablevue_type_template_id_326512dc_staticRenderFns,
@@ -3611,7 +3563,7 @@ var TableBodyvue_type_template_id_22f2ea94_staticRenderFns = []
 
 /* normalize component */
 
-var TableBody_component = normalizeComponent(
+var TableBody_component = Object(componentNormalizer["a" /* default */])(
   src_TableBodyvue_type_script_lang_js_,
   TableBodyvue_type_template_id_22f2ea94_render,
   TableBodyvue_type_template_id_22f2ea94_staticRenderFns,
@@ -3686,7 +3638,7 @@ var TabPanevue_type_template_id_1f07f77e_staticRenderFns = []
 
 /* normalize component */
 
-var TabPane_component = normalizeComponent(
+var TabPane_component = Object(componentNormalizer["a" /* default */])(
   src_TabPanevue_type_script_lang_js_,
   TabPanevue_type_template_id_1f07f77e_render,
   TabPanevue_type_template_id_1f07f77e_staticRenderFns,
@@ -3755,7 +3707,7 @@ var Timelinevue_type_template_id_643d7533_staticRenderFns = []
 
 /* normalize component */
 
-var Timeline_component = normalizeComponent(
+var Timeline_component = Object(componentNormalizer["a" /* default */])(
   src_Timelinevue_type_script_lang_js_,
   Timelinevue_type_template_id_643d7533_render,
   Timelinevue_type_template_id_643d7533_staticRenderFns,
@@ -3817,7 +3769,7 @@ var xeditablevue_type_template_id_e593a8fc_staticRenderFns = []
 
 /* normalize component */
 
-var xeditable_component = normalizeComponent(
+var xeditable_component = Object(componentNormalizer["a" /* default */])(
   src_xeditablevue_type_script_lang_js_,
   xeditablevue_type_template_id_e593a8fc_render,
   xeditablevue_type_template_id_e593a8fc_staticRenderFns,
@@ -3874,7 +3826,7 @@ var es6_regexp_replace = __webpack_require__("a481");
 
 /* normalize component */
 
-var ckeditor_component = normalizeComponent(
+var ckeditor_component = Object(componentNormalizer["a" /* default */])(
   src_ckeditorvue_type_script_lang_js_,
   ckeditorvue_type_template_id_ceb4cc20_render,
   ckeditorvue_type_template_id_ceb4cc20_staticRenderFns,
@@ -3936,7 +3888,7 @@ var roxyfilemanvue_type_template_id_3eb3f4d6_staticRenderFns = []
 
 /* normalize component */
 
-var roxyfileman_component = normalizeComponent(
+var roxyfileman_component = Object(componentNormalizer["a" /* default */])(
   src_roxyfilemanvue_type_script_lang_js_,
   roxyfilemanvue_type_template_id_3eb3f4d6_render,
   roxyfilemanvue_type_template_id_3eb3f4d6_staticRenderFns,
@@ -4005,7 +3957,7 @@ var Buttonvue_type_template_id_7bb7e900_staticRenderFns = []
 
 /* normalize component */
 
-var Button_component = normalizeComponent(
+var Button_component = Object(componentNormalizer["a" /* default */])(
   src_Buttonvue_type_script_lang_js_,
   Buttonvue_type_template_id_7bb7e900_render,
   Buttonvue_type_template_id_7bb7e900_staticRenderFns,
@@ -4043,7 +3995,7 @@ var Cellvue_type_template_id_134770a3_staticRenderFns = []
 
 /* normalize component */
 
-var Cell_component = normalizeComponent(
+var Cell_component = Object(componentNormalizer["a" /* default */])(
   src_Cellvue_type_script_lang_js_,
   Cellvue_type_template_id_134770a3_render,
   Cellvue_type_template_id_134770a3_staticRenderFns,
@@ -4467,7 +4419,7 @@ var RTvue_type_style_index_0_lang_css_ = __webpack_require__("42d3");
 
 /* normalize component */
 
-var RT_component = normalizeComponent(
+var RT_component = Object(componentNormalizer["a" /* default */])(
   src_RTvue_type_script_lang_js_,
   RTvue_type_template_id_6db09736_render,
   RTvue_type_template_id_6db09736_staticRenderFns,
@@ -4504,7 +4456,7 @@ var RT2vue_type_style_index_0_lang_css_ = __webpack_require__("18c1");
 
 /* normalize component */
 
-var RT2_component = normalizeComponent(
+var RT2_component = Object(componentNormalizer["a" /* default */])(
   src_RT2vue_type_script_lang_js_,
   RT2vue_type_template_id_76dfd31c_render,
   RT2vue_type_template_id_76dfd31c_staticRenderFns,
@@ -4603,7 +4555,7 @@ var RTPaginationvue_type_template_id_5d309ce9_staticRenderFns = []
 
 /* normalize component */
 
-var RTPagination_component = normalizeComponent(
+var RTPagination_component = Object(componentNormalizer["a" /* default */])(
   src_RTPaginationvue_type_script_lang_js_,
   RTPaginationvue_type_template_id_5d309ce9_render,
   RTPaginationvue_type_template_id_5d309ce9_staticRenderFns,
@@ -4897,7 +4849,7 @@ var RT2Tbodyvue_type_template_id_1fbb9142_staticRenderFns = []
 
 /* normalize component */
 
-var RT2Tbody_component = normalizeComponent(
+var RT2Tbody_component = Object(componentNormalizer["a" /* default */])(
   src_RT2Tbodyvue_type_script_lang_js_,
   RT2Tbodyvue_type_template_id_1fbb9142_render,
   RT2Tbodyvue_type_template_id_1fbb9142_staticRenderFns,
@@ -4936,7 +4888,7 @@ var RTInfovue_type_template_id_6166295c_staticRenderFns = []
 
 /* normalize component */
 
-var RTInfo_component = normalizeComponent(
+var RTInfo_component = Object(componentNormalizer["a" /* default */])(
   src_RTInfovue_type_script_lang_js_,
   RTInfovue_type_template_id_6166295c_render,
   RTInfovue_type_template_id_6166295c_staticRenderFns,
@@ -5065,7 +5017,7 @@ var Columnvue_type_template_id_78c821ac_staticRenderFns = []
 
 /* normalize component */
 
-var Column_component = normalizeComponent(
+var Column_component = Object(componentNormalizer["a" /* default */])(
   src_Columnvue_type_script_lang_js_,
   Columnvue_type_template_id_78c821ac_render,
   Columnvue_type_template_id_78c821ac_staticRenderFns,
@@ -5251,7 +5203,7 @@ var es6_regexp_search = __webpack_require__("386d");
 
 /* normalize component */
 
-var ColumnSearch_component = normalizeComponent(
+var ColumnSearch_component = Object(componentNormalizer["a" /* default */])(
   src_ColumnSearchvue_type_script_lang_js_,
   ColumnSearchvue_type_template_id_67261cc6_render,
   ColumnSearchvue_type_template_id_67261cc6_staticRenderFns,
@@ -5614,7 +5566,7 @@ var es6_array_sort = __webpack_require__("55dd");
 
 /* normalize component */
 
-var RTTable_component = normalizeComponent(
+var RTTable_component = Object(componentNormalizer["a" /* default */])(
   src_RTTablevue_type_script_lang_js_,
   RTTablevue_type_template_id_590e476d_render,
   RTTablevue_type_template_id_590e476d_staticRenderFns,
@@ -5860,7 +5812,7 @@ var RTHeadvue_type_template_id_0f36ae61_staticRenderFns = []
 
 /* normalize component */
 
-var RTHead_component = normalizeComponent(
+var RTHead_component = Object(componentNormalizer["a" /* default */])(
   src_RTHeadvue_type_script_lang_js_,
   RTHeadvue_type_template_id_0f36ae61_render,
   RTHeadvue_type_template_id_0f36ae61_staticRenderFns,
@@ -5893,7 +5845,7 @@ var RTBodyvue_type_script_lang_js_ = __webpack_require__("cdca");
 
 /* normalize component */
 
-var RTBody_component = normalizeComponent(
+var RTBody_component = Object(componentNormalizer["a" /* default */])(
   src_RTBodyvue_type_script_lang_js_,
   RTBodyvue_type_template_id_a5ac1c64_render,
   RTBodyvue_type_template_id_a5ac1c64_staticRenderFns,
@@ -6075,7 +6027,7 @@ var RTColumnvue_type_template_id_68d76bd6_staticRenderFns = []
 
 /* normalize component */
 
-var RTColumn_component = normalizeComponent(
+var RTColumn_component = Object(componentNormalizer["a" /* default */])(
   src_RTColumnvue_type_script_lang_js_,
   RTColumnvue_type_template_id_68d76bd6_render,
   RTColumnvue_type_template_id_68d76bd6_staticRenderFns,
@@ -6139,7 +6091,7 @@ var Acevue_type_template_id_0b51394f_staticRenderFns = []
 
 /* normalize component */
 
-var Ace_component = normalizeComponent(
+var Ace_component = Object(componentNormalizer["a" /* default */])(
   src_Acevue_type_script_lang_js_,
   Acevue_type_template_id_0b51394f_render,
   Acevue_type_template_id_0b51394f_staticRenderFns,
@@ -6200,7 +6152,7 @@ src("alt-box-header", BoxHeader);
 src("alt-box-body", BoxBody);
 src("alt-box-footer", BoxFooter);
 src("alt-e", E);
-src("icheck", icheck);
+src("icheck", icheck["default"]);
 src("datepicker", Datepicker);
 src("alt-date", src_Date);
 src("alt-datetime", Datetime);
@@ -6473,6 +6425,16 @@ for (var collections = getKeys(DOMIterables), i = 0; i < collections.length; i++
   }
 }
 
+
+/***/ }),
+
+/***/ "b391":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_cache_loader_dist_cjs_js_ref_12_0_node_modules_thread_loader_dist_cjs_js_AppData_Roaming_npm_node_modules_vue_cli_plugin_babel_node_modules_babel_loader_lib_index_js_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_icheck_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("d8cf");
+/* harmony import */ var _node_modules_cache_loader_dist_cjs_js_ref_12_0_node_modules_thread_loader_dist_cjs_js_AppData_Roaming_npm_node_modules_vue_cli_plugin_babel_node_modules_babel_loader_lib_index_js_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_icheck_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_cache_loader_dist_cjs_js_ref_12_0_node_modules_thread_loader_dist_cjs_js_AppData_Roaming_npm_node_modules_vue_cli_plugin_babel_node_modules_babel_loader_lib_index_js_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_icheck_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__);
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_cache_loader_dist_cjs_js_ref_12_0_node_modules_thread_loader_dist_cjs_js_AppData_Roaming_npm_node_modules_vue_cli_plugin_babel_node_modules_babel_loader_lib_index_js_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_icheck_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -7007,6 +6969,73 @@ module.exports = function (done, value) {
 
 /***/ }),
 
+/***/ "d8cf":
+/***/ (function(module, exports) {
+
+//
+//
+//
+module.exports = {
+  props: {
+    value: {
+      default: null
+    },
+    checkboxClass: {
+      type: String,
+      default: "icheckbox_square-blue"
+    },
+    radioClass: {
+      type: String,
+      default: "iradio_square-blue"
+    },
+    checked: {
+      type: Boolean
+    },
+    trueValue: {
+      default: 1
+    },
+    falseValue: {
+      default: null
+    }
+  },
+  created: function created() {},
+  mounted: function mounted() {
+    var _this = this;
+
+    $(this.$el).iCheck(this._props);
+
+    if (this.checked) {
+      $(this.$el).iCheck("check");
+    }
+
+    if (this.value == this.trueValue) {
+      $(this.$el).iCheck("check");
+    }
+
+    $(this.$el).on("ifClicked", function (event) {
+      $(_this.$el).trigger("click");
+
+      _this.$emit("click", event);
+    }).on("ifChanged", function (event) {
+      _this.$emit("change", event);
+    }).on("ifChecked", function (event) {
+      $(_this.$el).val(_this.value);
+
+      _this.$emit("input", _this.trueValue);
+
+      _this.$emit("checked", event);
+    }).on("ifUnchecked", function (event) {
+      $(_this.$el).val(null);
+
+      _this.$emit("input", _this.falseValue);
+
+      _this.$emit("unchecked", event);
+    });
+  }
+};
+
+/***/ }),
+
 /***/ "d8e8":
 /***/ (function(module, exports) {
 
@@ -7049,6 +7078,36 @@ module.exports = function (original) {
   } return C === undefined ? Array : C;
 };
 
+
+/***/ }),
+
+/***/ "ec06":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _icheck_vue_vue_type_template_id_1605e116___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("5033");
+/* harmony import */ var _icheck_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("b391");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("2877");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"])(
+  _icheck_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _icheck_vue_vue_type_template_id_1605e116___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
+  _icheck_vue_vue_type_template_id_1605e116___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+component.options.__file = "icheck.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 

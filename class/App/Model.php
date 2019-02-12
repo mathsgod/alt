@@ -110,30 +110,13 @@ abstract class Model extends \R\ORM\Model
 
     public function delete($acl = true)
     {
-        if ($acl) {
-            if (!$this->canDelete()) {
-                throw new \Exception("Cannot delete [" . get_class($this) . "]");
-            }
-        }
-
         EventLog::LogDelete($this);
         return parent::Delete();
     }
 
-    public function save($acl = true)
+    public function save()
     {
         $new_record = !$this->id();
-
-        if ($acl) {
-            if (!ACL::Allow(get_class($this), $new_record ? "C" : "U")) {
-                if ($new_record == "C") {
-                    throw new \Exception("Access deny [Create " . get_called_class() . "]");
-                } else {
-                    throw new \Exception("Access deny [Update " . get_called_class() . "]");
-                }
-            }
-        }
-
         if ($new_record) { // Insert
             $action = "C";
 
@@ -224,14 +207,6 @@ abstract class Model extends \R\ORM\Model
             return $s[$this->{strtolower($function)}];
         }
         return parent::__call($function, $args);
-    }
-
-    public static function Query($query = null)
-    {
-        $q = new Query(get_called_class());
-        $q->where($query);
-        $q->select();
-        return $q;
     }
 
     public static function _sv($name)

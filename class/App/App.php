@@ -37,13 +37,8 @@ class App extends \R\App
         if (!file_exists($root . "/config.ini")) {
             throw new Exception("config.ini not found");
         }
-        //
-
-
 
         parent::__construct($root, $loader, $logger);
-
-//        $this->entity = new Entity($this);
 
         Model::$_db = $this->db;
         Model::$_app = $this;
@@ -119,7 +114,6 @@ class App extends \R\App
         if ($this->user->language) {
             $this->locale = $this->user->language;
         }
-
     }
 
     public function getFile($file)

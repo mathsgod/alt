@@ -1,8 +1,8 @@
 <template>
-    <input type='checkbox' :value="value"/>
+  <input type="checkbox">
 </template>
 <script>
-export default {
+module.exports = {
   props: {
     value: {
       default: null
@@ -17,6 +17,12 @@ export default {
     },
     checked: {
       type: Boolean
+    },
+    trueValue: {
+      default: 1
+    },
+    falseValue: {
+      default: null
     }
   },
   created() {},
@@ -24,6 +30,10 @@ export default {
     $(this.$el).iCheck(this._props);
 
     if (this.checked) {
+      $(this.$el).iCheck("check");
+    }
+
+    if (this.value == this.trueValue) {
       $(this.$el).iCheck("check");
     }
 
@@ -36,11 +46,13 @@ export default {
         this.$emit("change", event);
       })
       .on("ifChecked", event => {
-        this.$emit("input", this.$el.value);
+        $(this.$el).val(this.value);
+        this.$emit("input", this.trueValue);
         this.$emit("checked", event);
       })
       .on("ifUnchecked", event => {
-        this.$emit("input", null);
+        $(this.$el).val(null);
+        this.$emit("input", this.falseValue);
         this.$emit("unchecked", event);
       });
   }

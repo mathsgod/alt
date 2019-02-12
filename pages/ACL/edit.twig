@@ -46,10 +46,10 @@
                     <tr v-for="a in data.action">
                         <td v-text="a.action"></td>
                         <td>
-                            <icheck v-model="a.allow" @input="actionChecked(a)" value="1"></icheck>
+                            <icheck v-model="a.allow" @input="actionChecked(a)"></icheck>
                         </td>
                         <td>
-                            <icheck v-model="a.deny" @input="actionChecked(a)" value="1"></icheck>
+                            <icheck v-model="a.deny" @input="actionChecked(a)"></icheck>
                         </td>
                     </tr>
                 </tbody>
@@ -69,10 +69,10 @@
                     <tr v-for="a in data.path">
                         <td v-text="a.path"></td>
                         <td>
-                            <icheck v-model="a.allow" @input="actionChecked(a)" value="1"></icheck>
+                            <icheck v-model="a.allow" @input="actionChecked(a)"></icheck>
                         </td>
                         <td>
-                            <icheck v-model="a.deny" @input="actionChecked(a)" value="1"></icheck>
+                            <icheck v-model="a.deny" @input="actionChecked(a)"></icheck>
                         </td>
                     </tr>
                 </tbody>

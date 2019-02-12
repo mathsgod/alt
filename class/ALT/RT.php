@@ -75,7 +75,7 @@ class RTColumn
         $this->editable = true;
         $this->edit_type = $type;
         $this->edit_data = $data;
-        
+
         return $this;
     }
 
@@ -100,7 +100,7 @@ class RTColumn
         return $this;
     }
 
-    public function search($callback)
+    public function search($callback = null)
     {
         $this->searchable = true;
         $this->search_type = 'text';
@@ -122,7 +122,7 @@ class RTColumn
         return $this;
     }
 
-    public function sort($index)
+    public function sort($index = null)
     {
         $this->sortable = true;
         if ($index instanceof \Closure) {
@@ -300,7 +300,7 @@ class RTColumn
             //$search_remember = $d["search_remember"];
         }
 
-        if ($this->search_type == "date" || $this->search_type=="range") {
+        if ($this->search_type == "date" || $this->search_type == "range") {
             $data = [];
             if (isset($_GET["search"][$this->index]["from"])) {
                 $data["from"] = $_GET["search"][$this->index]["from"];
@@ -379,9 +379,9 @@ class RTRequest
 
     public function order()
     {
-        if($_GET["order"]){
-            if($_GET["order"][0]["column"]==$this->rt->_attribute["sort-field"]){
-                return $_GET["order"][0]["column"]." ".$_GET["order"][0]["dir"];
+        if ($_GET["order"]) {
+            if ($_GET["order"][0]["column"] == $this->rt->_attribute["sort-field"]) {
+                return $_GET["order"][0]["column"] . " " . $_GET["order"][0]["dir"];
             }
         }
         
@@ -405,7 +405,7 @@ class RTRequest
                     $order["(" . call_user_func($col->sort_callback) . ")"] = $dir;
                 } else {
                     if (in_array($column["column"], $columns_index)) {
-                        $order[$column["column"]] =  $dir;
+                        $order[$column["column"]] = $dir;
                     }
                 }
             }
@@ -455,7 +455,7 @@ class RTRequest
                 if ($value["to"] != "") {
                     $where[] = ["$name <= ?", $value["to"]];
                 }
-                
+
             } elseif ($column->search_type == 'select') {
                 if ($value != "") {
                     $where[] = ["$name = ?", $value];
@@ -569,7 +569,7 @@ class RT implements \JsonSerializable
 
     public function addDel($redirect = "")
     {
-        $c = new RTColumn();
+        $c = new RTColumn($this);
         $c->resizable = false;
         $c->align("center");
         $c->index("[del]");
@@ -581,7 +581,7 @@ class RT implements \JsonSerializable
 
     public function addDels()
     {
-        $c = new RTColumn();
+        $c = new RTColumn($this);
         $c->align("center");
         $c->index("[dels]");
         $c->width(28);
@@ -856,8 +856,8 @@ class RT implements \JsonSerializable
             $rt->_child[] = "\n";
         }
 
-        $ui = \App\UI::_($this->_attribute["source"] );
-        $layout=$ui->layout()["RT2"];
+        $ui = \App\UI::_($this->_attribute["source"]);
+        $layout = $ui->layout()["RT2"];
 
         foreach ($this->columns as $col) {
             $rc = new \HTML\Node("rt-column");
@@ -872,8 +872,8 @@ class RT implements \JsonSerializable
                 "fixed" => $col->fixed
             ];
 
-            if($layout["visible"][$col->index]===false){
-                $attr["hidden"]=true;
+            if ($layout["visible"][$col->index] === false) {
+                $attr["hidden"] = true;
             }
 
             if ($col->align) {
@@ -889,8 +889,8 @@ class RT implements \JsonSerializable
             }
 
 
-            if($col->wrap){
-                $attr["wrap"]=true;
+            if ($col->wrap) {
+                $attr["wrap"] = true;
             }
 
 
@@ -946,14 +946,14 @@ class RT implements \JsonSerializable
         }
 
 
-        if($this->buttons){
-            $div=html("div");
+        if ($this->buttons) {
+            $div = html("div");
             $div->slot("buttons");
-            foreach($this->buttons as $btn){
-                $div->_child[]=$btn;
+            foreach ($this->buttons as $btn) {
+                $div->_child[] = $btn;
             }
-            $rt->_child[]=$div;
-    
+            $rt->_child[] = $div;
+
         }
 
 

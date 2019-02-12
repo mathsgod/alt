@@ -38,12 +38,12 @@ class User extends Model
 
     public static function _($username)
     {
-        return self::first([["username=?", $username]]);
+        return self::Query(["username" => $username])->first();
     }
 
     public function skin()
     {
-        $skin = $this->skin ? $this->skin : (string)Config::_("default-skin");
+        $skin = $this->skin ? $this->skin : self::$_app->config["user"]["default-skin"];
 
         if (file_exists("themes/$skin")) {
             return new \ALT\Skin("themes/$skin");
@@ -54,7 +54,8 @@ class User extends Model
 
     public function canRead()
     {
-        if (\App::User()->is("Users") && $this->user_id == \App::UserID()) {
+        $user = self::$_app->user;
+        if ($user->is("Users") && $this->user_id == $user->user_id) {
             return true;
         }
         return parent::canRead();
@@ -62,49 +63,16 @@ class User extends Model
 
     public function onlineTime()
     {
-
-        if (\PHP\APCu::Exists()) {
-            $o = new \PHP\APCu();
-        } else {
-            $o = new \PHP\SHM();
-        }
-
-        if (!$r = $o->read()) {
-            $r = [];
-        }
-
-        return date("Y-m-d H:i:s", $r["online"][$this->user_id]);
+        return $this->last_online;
     }
 
     public function online()
     {
-
-        if (\PHP\APCu::Exists()) {
-            $o = new \PHP\APCu();
-        } elseif (\PHP\SHM::Exists()) {
-            $o = new \PHP\SHM();
-        } else {
-            return;
-        }
-        if (!is_array($r)) {
-            $r = [];
-        }
-        $r["online"][$this->user_id] = time();
-        $o->write($r);
+        $this->update(["last_online" => date("Y-m-d H:i:s")]);
     }
 
     public function offline()
     {
-        if (\PHP\APCu::Exists()) {
-            $o = new \PHP\APCu();
-        } elseif (\PHP\SHM::Exists()) {
-            $o = new \PHP\SHM();
-        } else {
-            return;
-        }
-        unset($r["online"][$this->user_id]);
-
-        $o->write($r);
     }
 
     public function setting()
@@ -113,7 +81,6 @@ class User extends Model
             return json_decode($setting, true);
         }
         return [];
-
     }
 
     public function UserGroup()
@@ -144,7 +111,7 @@ class User extends Model
 
     public function canDelete()
     {
-        $user = \App::User();
+        $user = self::$_app->user;
         if ($this->isGuest()) {
             return false;
         }
@@ -190,27 +157,12 @@ class User extends Model
 
     public function isOnline()
     {
-        if (\PHP\APCu::Exists()) {
-            $o = new \PHP\APCu();
-        } elseif (\PHP\SHM::Exists()) {
-            $o = new \PHP\SHM();
-        } else {
+        $time = strtotime($this->last_online);
+
+        if (time() - $time > 300) {
             return false;
         }
-
-
-        if ($data = $o->read()) {
-            $time = $data["online"][$this->user_id];
-            if (!$time) {
-                return false;
-            }
-            if (time() - $time > 300) {
-                return false;
-            }
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     private static $_is = [];
@@ -218,7 +170,7 @@ class User extends Model
     {
         if (is_object($name)) {
             $group = $name;
-            self::$_is[$this->user_id][$group->name] = $this->_Size("UserList", "usergroup_id={$group->usergroup_id}");
+            self::$_is[$this->user_id][$group->name] = $this->UserList->where(["usergroup_id" => $group->usergroup_id])->count() > 0;
             return self::$_is[$this->user_id][$group->name];
         }
 
@@ -226,9 +178,9 @@ class User extends Model
             return self::$_is[$this->user_id][$name];
         }
         if ($group = UserGroup::_($name)) { // usergroup exitst
-            self::$_is[$this->user_id][$name] = $this->UserList->where(["usergroup_id" => $group->usergroup_id])->count();
+            self::$_is[$this->user_id][$name] = $this->UserList->where(["usergroup_id" => $group->usergroup_id])->count() > 0;
         } else {
-            self::$_is[$this->user_id][$name] = 0;
+            self::$_is[$this->user_id][$name] = false;
         }
         return self::$_is[$this->user_id][$name];
     }
@@ -243,9 +195,7 @@ class User extends Model
             }
         } else {
             if ($g = UserGroup::_($group)) {
-                if ($this->_size(UserList, "usergroup_id=$g->usergroup_id")) {
-                    return true;
-                }
+                return $this->UserList->where(["usergroup_id" > $g->usergroup_id])->count() > 0;
             }
         }
 
@@ -264,7 +214,7 @@ class User extends Model
                 $this->password = Util::Encrypt($this->password);
             }
         }
-        parent::save();
+        return parent::save();
     }
 
     public function createUserLog($result = null)
@@ -285,6 +235,12 @@ class User extends Model
             $userlog_id = $o->userlog_id;
             self::__db()->exec("Update UserLog set logout_dt='$dt' where userlog_id=$userlog_id");
         }
+    }
+
+    public function changePassword($password)
+    {
+        $this->update(["password" => Util::Encrypt($password)]);
+        return true;
     }
 
     public function sendPassword()
@@ -316,20 +272,18 @@ class User extends Model
         return $g->checkCode($this->secret, $code);
     }
 
-    public function removeFrom($usergroup)
+    public function removeFrom(UserGroup $usergroup)
     {
         if (!$usergroup->usergroup_id) {
             return;
         }
-
-        $w[] = "user_id='$this->user_id'";
-        $w[] = "usergroup_id='$usergroup->usergroup_id'";
-        foreach (UserList::find($w) as $ul) {
-            $ul->delete();
-        }
+        $this->UserList->where([
+            "user_id" => $this->user_id,
+            "usergroup_id" => $usergroup->usergroup_id
+        ])->delete();
     }
 
-    public function addTo($usergroup)
+    public function addTo(UserGroup $usergroup)
     {
         if (!$usergroup->usergroup_id) {
             throw new Exception("Usergroup not found");

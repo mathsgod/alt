@@ -127,7 +127,7 @@ class Page extends \App\Page
                 //$this->addLib("hostlink/fancybox");
                 //$this->addLib("daterangepicker");
                 //$this->addLib("pnotify");
-                $this->addLib('iCheck');
+                //$this->addLib('iCheck');
 
                 $this->addLib("timepicker");
                 //$this->addLib("select2");

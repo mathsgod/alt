@@ -10,13 +10,16 @@ class AuthLock extends Model
             $w[] = ["ip=?", $ip];
         }
         $w[] = "value>=3";
-        $w[] = "date_add(time,Interval 180 second) > now()";
-        return self::First($w);
+        $w[] = "date_add(`time`,Interval 180 second) > now()";
+        return self::Count($w);
     }
 
     public static function Add()
     {
         $ip = $_SERVER["REMOTE_ADDR"];
+        if (!$ip) {
+            return;
+        }
         $w[] = ["ip=?", $ip];
         if ($a = AuthLock::First($w)) {
             $a->value++;
@@ -29,16 +32,17 @@ class AuthLock extends Model
         }
 
         //no checking
-        $a->save(false);
+        $a->save();
     }
 
     public static function Clear()
     {
         $ip = $_SERVER["REMOTE_ADDR"];
-        $w[] = ["ip=?", $ip];
-
+        if (!$ip) {
+            return;
+        }
         if ($a = AuthLock::First($w)) {
-            $a->delete(false);
+            $a->delete();
         }
     }
 }
