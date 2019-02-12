@@ -76,32 +76,16 @@ class App extends \R\App
         }
 
         //db config
-        $host = $_SERVER["HTTP_HOST"];
-        if (function_exists("apcu_fetch")) {
-            $pool = new ApcuCachePool();
-            if ($pool->hasItem('config')) {
-                $config = $pool->getItem($host . "_config")->get();
-            } else {
-                $item = $pool->getItem($host . "_config");
 
-                $config = [];
-                foreach (Config::Find() as $c) {
-                    $config[$c->name] = $c->value;
-                }
-                $item->set($config);
-                $item->expiresAfter(60);
-                $pool->save($item);
-            }
-        } else {
-            $config = [];
-            foreach (Config::Find() as $c) {
-                $config[$c->name] = $c->value;
-            }
+        $config = [];
+        foreach (Config::Find() as $c) {
+            $config[$c->name] = $c->value;
         }
 
         foreach ($config as $name => $value) {
             $this->config["user"][$name] = $value;
         }
+
 
         $this->alert = new Alert();
 
@@ -244,13 +228,13 @@ class App extends \R\App
 
 
         $this->loader->addPsr4("", $pi["cms_root"] . "/pages");
+
         if ($page) {
             $response = new Response(200);
             try {
                 $request = $request->withMethod($route->method);
                 $response = $page($request, $response);
             } catch (\Exception $e) {
-
                 if ($this->request->getHeader("accept")[0] == "application/json") {
                     $response = new Response(200);
                     $response = $response->withHeader("content-type", "application/json");
@@ -266,6 +250,7 @@ class App extends \R\App
                 }
             }
 
+
             foreach ($response->getHeaders() as $name => $values) {
                 header($name . ": " . implode(", ", $values));
             }
@@ -277,6 +262,7 @@ class App extends \R\App
         } else {
             //$this->redirect("/");
         }
+
     }
 
     public function redirect($url)

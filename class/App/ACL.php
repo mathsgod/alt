@@ -70,6 +70,7 @@ class ACL extends Model
 
     public static function Allow($path, $action = null, $user = null, $debug = false)
     {
+
         $raw_path = $path;
         $p = parse_url($path);
         $path = $p["path"];
@@ -89,20 +90,21 @@ class ACL extends Model
 
         $result = $user->isAdmin();
 
-        if(!$result){
-            if($user->isUser()){
-                $result=App::_()->config["system"]["user_default_acl"];
+        if (!$result) {
+            if ($user->isUser()) {
+                $result = App::_()->config["system"]["user_default_acl"];
 
                 //if module is system, set false
                 $module = Module::ByPath($path);
-                if(startsWith($module->class,"App")){
-                    $result=false;
+                if (startsWith($module->class, "App")) {
+                    $result = false;
                 }
             }
         }
 
         $ugs = $user->UserGroup();
-       
+
+        /*
         if (!$result) {
             if ($module = Module::ByPath($path)) {
                 if ($acl = $module->acl) {
@@ -116,7 +118,6 @@ class ACL extends Model
                         return $ug->name;
                     });
 
-
                     $inters = Set::Create($usergroups)->intersection($ugs);
 
                     if ($inters->count()) {
@@ -124,8 +125,7 @@ class ACL extends Model
                     }
                 }
             }
-        }
-             
+        }*/
 
         $ini = ACL::INI();
         if (!$result) {
@@ -350,12 +350,13 @@ class ACL extends Model
         }
         // API::output($this);
         $func = "_ACL_func_" . $this->acl_id;
-        eval(<<<EOT
-		function {$func}(){
-			?>{$this->code}<?
-		}
-EOT
-);
+        $eval = <<<EOT
+function {$func}(){
+    ?>{$this->code}<?
+}
+EOT;
+        eval($eval);
+
         if ($func()) {
             return $this->value;
         }

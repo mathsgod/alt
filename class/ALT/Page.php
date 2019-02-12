@@ -26,7 +26,7 @@ class Page extends \App\Page
         }
     }
 
-    public function header($name, $description = null, $icon)
+    public function header($name, $description = null, $icon = null)
     {
         $this->header["name"] = $name;
         $this->header["description"] = $description;
