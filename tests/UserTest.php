@@ -41,23 +41,4 @@ final class UserTest extends TestCase
 
     }
 
-    public function testUserGroup()
-    {
-        $raymond = App\User::_("raymond");
-        $ug = App\UserGroup::_("Administrators");
-
-        if ($raymond->is("Administrators")) {
-            $raymond->removeFrom($ug);
-        }
-        $this->assertFalse($raymond->is("Administrators"));
-
-        $this->assertInstanceOf(App\UserGroup::class, $ug);
-
-        $raymond->addTo($ug);
-        $this->assertTrue($raymond->is("Administrators"));
-
-        $raymond->removeFrom($ug);
-        $this->assertFalse($raymond->is("Administrators"));
-
-    }
 }

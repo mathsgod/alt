@@ -274,22 +274,16 @@ class User extends Model
 
     public function removeFrom(UserGroup $usergroup)
     {
-        if (!$usergroup->usergroup_id) {
-            return;
-        }
+
         $this->UserList->where([
-            "user_id" => $this->user_id,
             "usergroup_id" => $usergroup->usergroup_id
         ])->delete();
     }
 
     public function addTo(UserGroup $usergroup)
     {
-        if (!$usergroup->usergroup_id) {
-            throw new Exception("Usergroup not found");
-        }
-        $w[] = "user_id='$this->user_id'";
-        $w[] = "usergroup_id='$usergroup->usergroup_id'";
+        $w[] = ["user_id=?", [$this->user_id]];
+        $w[] = ["usergroup_id=?", [$usergroup->usergroup_id]];
         if (UserList::count($w)) {
             throw new Exception("User already existed in group");
         }
