@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c76b76d73136e8985ffed4981c99d0c6",
+    "content-hash": "2f0d0e04c3d2f15fcfefccce5aa2857f",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -764,17 +764,17 @@
         },
         {
             "name": "mathsgod/r-db",
-            "version": "3.0.6",
+            "version": "3.0.7",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/r-db.git",
-                "reference": "49285132df0fada72949379301db4093450d7315"
+                "reference": "b36b456e4a170b20ad038d20a1df2a94dbc8b1b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/r-db/mathsgod-r-db-3.0.6-79a400.zip",
-                "reference": "49285132df0fada72949379301db4093450d7315",
-                "shasum": "cb946f17221970a0f2aa3b38fe895acaaee35388"
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/r-db/mathsgod-r-db-3.0.7-193973.zip",
+                "reference": "b36b456e4a170b20ad038d20a1df2a94dbc8b1b3",
+                "shasum": "a7b4b958dadc60063a54d3937c44347eeecb1bd9"
             },
             "require": {
                 "mathsgod/data-structure": "^1.0",
@@ -798,7 +798,7 @@
                 }
             ],
             "description": "raymond framework db",
-            "time": "2019-02-14T07:55:45+00:00"
+            "time": "2019-02-14T09:03:13+00:00"
         },
         {
             "name": "mathsgod/r-graphql",

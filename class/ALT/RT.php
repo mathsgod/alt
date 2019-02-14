@@ -532,7 +532,7 @@ class RT implements \JsonSerializable
 
     public function addEdit()
     {
-        $column = new RTColumn();
+        $column = new RTColumn($this);
         $column->resizable = false;
         $column->descriptor[] = function ($obj) {
             $uri = $obj->uri('ae');
@@ -551,7 +551,7 @@ class RT implements \JsonSerializable
 
     public function addView()
     {
-        $column = new RTColumn();
+        $column = new RTColumn($this);
         $column->resizable = false;
         $column->descriptor[] = function ($obj) {
             $uri = $obj->uri('v');

@@ -41,8 +41,7 @@ class Module extends Model
             return self::$_modules;
         }
 
-
-        $page = \App::Config("system", "pages");
+        $page = self::$_app->config["system"]["pages"];
         if (!$page) {
             $page = "pages";
         }
@@ -76,7 +75,7 @@ class Module extends Model
         $ps = array_values(array_filter($ps, "strlen"));
         $path = implode("/", $ps);
 
-        $file = App::_()->loader->findFile($path);
+        $file = self::$_app->loader->findFile($path);
         if ($file) {
             //find setting.ini
             $p = explode("/", dirname($file));
@@ -117,8 +116,7 @@ class Module extends Model
         $m->class = $name;
         $m->name = $name;
 
-        $app = App::_();
-        $page = App::_()->config["system"]["page"];
+        $page = self::$_app->config["system"]["page"];
         if (!$page) {
             $page = "pages";
         }
@@ -158,7 +156,7 @@ class Module extends Model
                 $m->$k = $v;
             }
         }
-
+/*
         // load from db
         if ($module = Module::first([["name=?", [$m->class]]])) {
             foreach ($module as $k => $v) {
@@ -170,14 +168,14 @@ class Module extends Model
                     $m->$k = $v;
                 }
             }
-        }
+        }*/
 
         return $m;
     }
 
     public function getAction()
     {
-        $app = $this->_app();
+        $app = self::$_app;
 
         $page = $app->config["system"]["page"];
         if (!$page) {

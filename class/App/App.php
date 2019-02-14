@@ -25,6 +25,7 @@ class App extends \R\App
 
     public function __construct($root, $loader, $logger = null)
     {
+        if ($logger) $logger->debug("App::__construct");
         spl_autoload_register(function ($class) use ($root) {
 
             $class_path = str_replace("\\", DIRECTORY_SEPARATOR, $class);
@@ -92,6 +93,10 @@ class App extends \R\App
         }
 
         $this->entity = new Entity();
+
+        foreach (SystemValue::Query() as $sv) {
+            $this->system_value[$sv->language][$sv->name] = $sv;
+        }
     }
 
     public function getFile($file)
@@ -142,7 +147,10 @@ class App extends \R\App
 
     public function run()
     {
-        if ($this->logger) $this->logger->debug("APP::run");
+        if ($this->logger) {
+            $this->logger->debug("App::run");
+            $this->logger->debug("App request uri:" . $this->request->getUri());
+        }
 
 
         $this->base = $this->request->getUri()->getBasePath();
@@ -170,6 +178,7 @@ class App extends \R\App
         $path = $this->request->getUri()->getPath();
 
         $p = array_values(array_filter(explode("/", $path), "strlen"));
+
 
         $method = strtolower($this->request->getMethod());
 
@@ -200,11 +209,11 @@ class App extends \R\App
             "file" => $pi["system_root"] . "/pages/404_not_found.php"
         ]);
 
+
         ob_start();
         $route = $router->getRoute($this->request, $this->loader);
         $request = $this->request->withAttribute("included_content", ob_get_contents());
         ob_end_clean();
-
 
         $request = $request
             ->withAttribute("action", $route->action)
@@ -227,6 +236,7 @@ class App extends \R\App
             $response = new Response(200);
             try {
                 $request = $request->withMethod($route->method);
+                if ($this->logger) $this->logger->debug("invoke page");
                 $response = $page($request, $response);
             } catch (\Exception $e) {
                 if ($this->request->getHeader("accept")[0] == "application/json") {
@@ -408,18 +418,13 @@ class App extends \R\App
     }
 
 
-    public function sv($name, $lang = null)
+    public function sv($name, $locale = null)
     {
-        if (!$lang) $lang = $this->user->language;
+        if (!$locale) $locale = $this->locale;
 
-        if ($this->_sv[$name][$lang]) return $this->_sv[$name][$lang];
-
-        if ($sv = SystemValue::_($name, $lang)) {
-            $this->_sv[$name][$lang] = $sv->values();
-            return $this->_sv[$name][$lang];
+        if ($this->_sv[$locale][$name]) {
+            return $this->_sv[$locale][$name]->values();
         }
-
-        return [];
     }
 
     public function user()
@@ -429,6 +434,7 @@ class App extends \R\App
 
     public function getModule()
     {
+        if ($this->logger) $this->logger->debug("app getModule");
         $modules = Module::All();
         usort($modules, function ($a, $b) {
             if ($a->sequence == $b->sequence) {

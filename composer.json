@@ -40,7 +40,7 @@
         "cache/apcu-adapter": "1.*",
         "phpmailer/phpmailer": "6.*",
         "symfony/yaml": "3.*",
-        "monolog/monolog": "1.*",
+        "monolog/monolog": "^1.24",
         "mathsgod/r-webauthn": "^1.0",
         "mathsgod/r-graphql": "^1.2",
         "mathsgod/r": "^2.5",

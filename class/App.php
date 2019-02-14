@@ -32,11 +32,11 @@ class App
     public static function Config($category = null, $name = null)
     {
         if (func_num_args() == 0) {
-            return App\Config::All();
+            return App\System::$app->config;
         } elseif (func_num_args() == 1) {
-            return App\Config::All()[$category];
+            return App\System::$app->config[$category];
         }
-        return App\Config::All()[$category][$name];
+        return App\System::$app->config[$category][$name];
     }
 
     public static function T($str = "")

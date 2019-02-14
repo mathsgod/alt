@@ -12,8 +12,8 @@ class E extends \P\HTMLDivElement
     public function __construct($object)
     {
         parent::__construct();
-        $this->attributes["is"]="alt-e";
-        $this->classList[]="form-horizontal";
+        $this->attributes["is"] = "alt-e";
+        $this->classList[] = "form-horizontal";
         $this->object = $object;
         $this->content = p("div")->addClass("col-md-12")->appendTo($this);
         $this->contents[] = $this->content;
@@ -73,11 +73,11 @@ class E extends \P\HTMLDivElement
     }
 
 
-    public function add($label, $getter)
+    public function add($label, $getter = null)
     {
-        $form_group=new \App\UI\FormGroup();
+        $form_group = new \App\UI\FormGroup();
         p($form_group)->append("<label class='col-sm-2 control-label'>$label</label>");
-        
+
         $c2 = new C2("div");
         //$form_group->setAttribute("is","bs-form-group");
         $c2->classList->add('col-sm-10');
@@ -94,6 +94,8 @@ class E extends \P\HTMLDivElement
             $static->addClass("form-control-static");
             if ($getter instanceof \Closure) {
                 $static->html($getter($this->object));
+
+                     
             } else {
                 $result = \My\Func::_($getter)->call($this->object);
 
@@ -112,12 +114,12 @@ class E extends \P\HTMLDivElement
             }
         };
 
-        $form_group->childNodes[]=$c2;
+        $form_group->childNodes[] = $c2;
 
         $this->content->append($form_group);
         $this->content->append("\n");
 
-        
+
 
         return $c2;
     }

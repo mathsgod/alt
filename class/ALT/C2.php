@@ -90,7 +90,7 @@ class C2 extends \P\HTMLElement
 			}
 			$e->appendTo($cell);
 
-			
+
 		}
 
 
@@ -415,7 +415,7 @@ class C2 extends \P\HTMLElement
 		return $this;
 	}
 
-	public function a($field)
+	public function a($field = null)
 	{
 		$p = new \P\AnchorCollection;
 		foreach ($this->cell as $cell) {
@@ -655,9 +655,9 @@ class C2 extends \P\HTMLElement
 				$div->attr("is", "alt-date");
 				$div->attr("name", $field);
 				$div->attr("data-field", $field);
-				$div->attr("autocomplete","off");
+				$div->attr("autocomplete", "off");
 
-				
+
 				if ($object = p($cell)->data("object")) {
 					$div->data("object", $object);
 					$div->attr("value", is_object($object) ? $object->$field : $object[$field]);

@@ -25,7 +25,7 @@ class Table extends HTMLTableElement
         $this->createTBody();
     }
 
-    public function add($label, $getter)
+    public function add($label = null, $getter = null)
     {
         $column = new C2("th");
         $column->default = $this->default;
@@ -48,21 +48,21 @@ class Table extends HTMLTableElement
         foreach ($this->objects as $k => $obj) {
             if ($tbody->rows->length <= $i) {
                 $row = $tbody->insertRow();
-                if($obj instanceof \App\Model){
-                    $row->attributes["data-index"]=$obj->id();
-                }else{
-                    if($this->key){
-                        if(is_array($obj)){
-                            $row->attributes["data-index"]=$obj[$this->key];    
-                        }else{
-                            $row->attributes["data-index"]=$obj->{$this->key};    
+                if ($obj instanceof \App\Model) {
+                    $row->attributes["data-index"] = $obj->id();
+                } else {
+                    if ($this->key) {
+                        if (is_array($obj)) {
+                            $row->attributes["data-index"] = $obj[$this->key];
+                        } else {
+                            $row->attributes["data-index"] = $obj->{$this->key};
                         }
-                        
-                    }else{
-                        $row->attributes["data-index"]=$k;
+
+                    } else {
+                        $row->attributes["data-index"] = $k;
                     }
                 }
-                
+
             } else {
                 $row = $tbody->rows[$i];
             }
@@ -167,9 +167,9 @@ class Table extends HTMLTableElement
                 }
                 $input->attr("name", "{$index}[]");
 
-                if($getter){
-                    if($getter($obj)){
-                        $input->attr("checked",true);
+                if ($getter) {
+                    if ($getter($obj)) {
+                        $input->attr("checked", true);
                     }
 
 
@@ -203,11 +203,11 @@ if(checked){
     public function __toString()
     {
         foreach ($this->columns as $column) {
-			if ($column->c_tpl->count()) {
-				$column->attributes["c-tpl"] = (string )$column->c_tpl;
-			}
+            if ($column->c_tpl->count()) {
+                $column->attributes["c-tpl"] = (string )$column->c_tpl;
+            }
         }
-        
+
         $html = parent::__toString();
         $o = p($html);
         $o->find("td")->each(function ($i, $o) {
