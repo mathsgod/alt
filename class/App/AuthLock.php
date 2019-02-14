@@ -41,7 +41,7 @@ class AuthLock extends Model
         if (!$ip) {
             return;
         }
-        if ($a = AuthLock::First($w)) {
+        if ($a = self::First(["ip" => $ip])) {
             $a->delete();
         }
     }

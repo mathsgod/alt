@@ -3,14 +3,18 @@
 // Created Date: 19/3/2010
 // Last Updated:
 namespace App;
-class EventLog extends Model {
-    public function different() {
+
+class EventLog extends Model
+{
+    public function different()
+    {
         $source = json_decode($this->source, true);
         $target = json_decode($this->target, true);
         return array_diff_assoc($source, $target);
     }
 
-    public static function LogDelete($object) {
+    public static function LogDelete($object)
+    {
         $class = get_class($object);
         if ($class == "App\EventLog") return;
 
@@ -20,16 +24,17 @@ class EventLog extends Model {
         $r["action"] = "Delete";
         $r["target"] = json_encode($object);
         $remark = array();
-        foreach(get_object_vars($object) as $k => $v) {
-            if ($k[0] == "_")continue;
+        foreach (get_object_vars($object) as $k => $v) {
+            if ($k[0] == "_") continue;
             $remark[] = $k . " => " . $v;
         }
         $r["remark"] = implode(chr(10), $remark);
         $r["created_time"] = date("Y-m-d H:i:s");
-        self::__db()->insert("EventLog", $r);
+        self::_table()->insert($r);
     }
 
-    public static function Log($object, $action) {
+    public static function Log($object, $action)
+    {
         $class = get_class($object);
         if ($class == "App\EventLog") return;
         // check the module
@@ -37,7 +42,7 @@ class EventLog extends Model {
         $short_name = $rc->getShortName();
         $m = Module::All()[$short_name];
 
-        if (!$m->log)return;
+        if (!$m->log) return;
 
         $r["user_id"] = \App::User()->user_id;
         $r["class"] = $class;
@@ -54,6 +59,6 @@ class EventLog extends Model {
             $r["target"] = json_encode($object);
         }
         $r["created_time"] = date("Y-m-d H:i:s");
-        self::__db()->insert("EventLog", $r);
+        self::_table()->insert($r);
     }
 }

@@ -16,6 +16,7 @@ class App extends \R\App
     public $user;
     public $user_id;
     public $locale = "zh-hk";
+    public $entity;
 
     public static function _()
     {
@@ -63,8 +64,6 @@ class App extends \R\App
         $file = $pi["system_root"] . "/config.ini";
         if (file_exists($file)) {
             $c = parse_ini_file($file, true);
-
-
             foreach ($c as $n => $v) {
                 foreach ($v as $a => $b) {
                     if (!isset($this->config[$n][$a])) {
@@ -76,16 +75,9 @@ class App extends \R\App
         }
 
         //db config
-
-        $config = [];
-        foreach (Config::Find() as $c) {
-            $config[$c->name] = $c->value;
+        foreach (Config::Query() as $c) {
+            $this->config["user"][$c->name] = $c->value;
         }
-
-        foreach ($config as $name => $value) {
-            $this->config["user"][$name] = $value;
-        }
-
 
         $this->alert = new Alert();
 
@@ -98,6 +90,8 @@ class App extends \R\App
         if ($this->user->language) {
             $this->locale = $this->user->language;
         }
+
+        $this->entity = new Entity();
     }
 
     public function getFile($file)
@@ -343,7 +337,6 @@ class App extends \R\App
             throw new \Exception("Login error", 403);
         }
         $user = new User($user_id);
-
         if ($this->config["user"]["2-step verification"]) {
             $need_check = true;
             if ($setting = $user->setting()) {
@@ -390,11 +383,10 @@ class App extends \R\App
 
     public function version()
     {
-        $composer = new Composer();
-        $package = $composer->package("mathsgod/alt");
         if ($_SESSION["app"]["version"])
             return $_SESSION["app"]["version"];
         $composer = new Composer();
+        $package = $composer->package("mathsgod/alt");
         $_SESSION["app"]["version"] = $package->version;
         return $_SESSION["app"]["version"];
     }

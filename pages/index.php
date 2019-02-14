@@ -58,7 +58,6 @@ class _index extends ALT\Page\Login
         $data["logo"] = $config["user"]["logo"];
         $data["version"] = $this->app->version();
 
-
         $data["r"] = $r;
         if ($config["user"]["2-step verification"] && !System::IP2StepExemptCheck($_SERVER['REMOTE_ADDR'])) {
             $data["ip2step"] = true;

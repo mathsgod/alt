@@ -1,7 +1,7 @@
 <?php
 namespace App;
 
-class Entity extends \R\Entity
+class Entity
 {
     public function __get($name)
     {
@@ -14,35 +14,25 @@ class Entity extends \R\Entity
         return parent::__get($name);
     }
 
-    public function User($user_id)
+    public function User($user_id = null)
     {
         if ($user_id) {
             return new User($user_id);
         }
-        $q = new Query("App\User");
-        $q->select();
-        $q->from("User");
-
-        return $q;
+        return User::Query();
     }
 
-    public function UserGroup($usergroup_id)
+    public function UserGroup($usergroup_id = null)
     {
         if ($usergroup_id) {
             return new UserGroup($usergroup_id);
         }
-        $q = new Query("App\UserGroup");
-        $q->select();
-        $q->from("UserGroup");
-        return $q;
+        return UserGroup::Query();
     }
 
     public function Config()
     {
-        $q = new Query("App\Config");
-        $q->select();
-        $q->from("Config");
-        return $q;
+        return Config::Query();
     }
 
 }

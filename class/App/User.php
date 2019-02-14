@@ -195,7 +195,7 @@ class User extends Model
             }
         } else {
             if ($g = UserGroup::_($group)) {
-                return $this->UserList->where(["usergroup_id" > $g->usergroup_id])->count() > 0;
+                return $this->UserList->where(["usergroup_id" => $g->usergroup_id])->count() > 0;
             }
         }
 
@@ -224,16 +224,15 @@ class User extends Model
         $r["ip"] = $_SERVER['REMOTE_ADDR'];
         $r["result"] = $result;
         $r["user_agent"] = $_SERVER['HTTP_USER_AGENT'];
-        self::__db()->insert('UserLog', $r);
+        UserLog::_table()->insert($r);
     }
 
     public function Logout()
     {
-        $o = UserLog::first("user_id=$this->user_id", ["userlog_id", "desc"]);
+        $o = UserLog::first("user_id=$this->user_id", "userlog_id desc");
         if ($o) {
-            $dt = date("Y-m-d H:i:s");
-            $userlog_id = $o->userlog_id;
-            self::__db()->exec("Update UserLog set logout_dt='$dt' where userlog_id=$userlog_id");
+            $o->logout_dt = date("Y-m-d H:i:s");
+            $o->save();
         }
     }
 

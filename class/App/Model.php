@@ -108,10 +108,10 @@ abstract class Model extends \R\ORM\Model
         return true;
     }
 
-    public function delete($acl = true)
+    public function delete()
     {
         EventLog::LogDelete($this);
-        return parent::Delete();
+        return parent::delete();
     }
 
     public function save()
