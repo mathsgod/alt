@@ -75,7 +75,7 @@ class App extends \R\App
             }
         }
 
-        //db config
+
         foreach (Config::Query() as $c) {
             $this->config["user"][$c->name] = $c->value;
         }
