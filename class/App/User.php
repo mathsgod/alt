@@ -83,10 +83,13 @@ class User extends Model
         return [];
     }
 
+    private static $_CACHE_USERGROUP = [];
     public function UserGroup()
     {
+        if (self::$_CACHE_USERGROUP[$this->user_id]) return self::$_CACHE_USERGROUP[$this->user_id];
         $w[] = ["usergroup_id in (select usergroup_id from UserList where user_id=?)", $this->user_id];
-        return UserGroup::Find($w);
+        self::$_CACHE_USERGROUP[$this->user_id] = UserGroup::Find($w);
+        return self::$_CACHE_USERGROUP[$this->user_id];
     }
 
     public function canUpdate()
@@ -168,21 +171,26 @@ class User extends Model
     private static $_is = [];
     public function is($name)
     {
-        if (is_object($name)) {
-            $group = $name;
-            self::$_is[$this->user_id][$group->name] = $this->UserList->where(["usergroup_id" => $group->usergroup_id])->count() > 0;
-            return self::$_is[$this->user_id][$group->name];
+
+
+        if ($name instanceof UserGroup) {
+            $group = $group;
+        } else {
+            $group = UserGroup::_($name);
         }
 
-        if (!is_null(self::$_is[$this->user_id][$name])) {
-            return self::$_is[$this->user_id][$name];
+        if (isset(self::$_is[$this->user_id])) {
+            return in_array($group->usergroup_id, self::$_is[$this->user_id]);
         }
-        if ($group = UserGroup::_($name)) { // usergroup exitst
-            self::$_is[$this->user_id][$name] = $this->UserList->where(["usergroup_id" => $group->usergroup_id])->count() > 0;
-        } else {
-            self::$_is[$this->user_id][$name] = false;
+
+        self::$_is[$this->user_id] = [];
+        //get all about user group 
+        //self::$_app->log("User::is db", ["name" => $name, "user_id" => $this->user_id]);
+        foreach ($this->UserList as $ul) {
+            self::$_is[$this->user_id][] = $ul->usergroup_id;
         }
-        return self::$_is[$this->user_id][$name];
+        //self::$_app->log("is data", self::$_is);
+        return in_array($group->usergroup_id, self::$_is[$this->user_id]);
     }
 
     public function isOneOf($group)

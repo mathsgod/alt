@@ -1,7 +1,9 @@
 <?php
 
-class System_db_check extends ALT\Page {
-	public function post() {
+class System_db_check extends ALT\Page
+{
+	public function post()
+	{
 		$db = $this->app->db;
 		foreach ($this->findSQL() as $sql) {
 			$db->exec($sql);
@@ -10,8 +12,9 @@ class System_db_check extends ALT\Page {
 		App::Redirect();
 	}
 
-	public function findSQL() {
-		$db_scheme = json_decode(file_get_contents(App::Config("system", "update_source") . "db_scheme.php"), true);
+	public function findSQL()
+	{
+		$db_scheme = json_decode(file_get_contents($this->app->config["system"]["update_source"] . "db_scheme.php"), true);
 
 
 		$db = $this->app->db;
@@ -38,12 +41,14 @@ class System_db_check extends ALT\Page {
 		return $sql;
 	}
 
-	public function needUpdate() {
+	public function needUpdate()
+	{
 		$sql = $this->findSQL();
 		return sizeof($sql);
 	}
 
-	public function get() {
+	public function get()
+	{
 		$t = [];
 		$sql = $this->findSQL();
 
@@ -56,14 +61,15 @@ class System_db_check extends ALT\Page {
 			$t[] = nl2br($s, "<br/>");
 		}
 
-		$box=$this->createBox(implode("<br/>", $t));
-		$box->header->title="Following SQL should be update";
+		$box = $this->createBox(implode("<br/>", $t));
+		$box->header->title = "Following SQL should be update";
 		$this->write($box);
 
 		$this->write($this->createForm("Update?"));
 	}
 
-	private function findColumn($columns, $name) {
+	private function findColumn($columns, $name)
+	{
 		foreach ($columns as $i) {
 			if ($i->Field == $name) {
 				return $i;
@@ -71,7 +77,8 @@ class System_db_check extends ALT\Page {
 		}
 	}
 
-	private function hasDifferent($source_col, $target_col) {
+	private function hasDifferent($source_col, $target_col)
+	{
 		foreach ($source_col as $k => $v) {
 
 			if ($k == "Key")
@@ -83,7 +90,8 @@ class System_db_check extends ALT\Page {
 		return false;
 	}
 
-	private function checkDifferent($source, $target) {
+	private function checkDifferent($source, $target)
+	{
 		$diff = [];
 		foreach ($target as $column) {
 			$col = $this->findColumn($source, $column["Field"]);
@@ -98,7 +106,8 @@ class System_db_check extends ALT\Page {
 		return $diff;
 	}
 
-	private function updateTable($table, $changes) {
+	private function updateTable($table, $changes)
+	{
 		// fetch target table
 		$sql = "ALTER TABLE `$table`\n";
 		$diff = [];
@@ -112,7 +121,8 @@ class System_db_check extends ALT\Page {
 		return "";
 	}
 
-	public function createTable($table, $changes) {
+	public function createTable($table, $changes)
+	{
 		// check target exist
 		$sql = "CREATE TABLE `$table` (\n";
 		foreach ($changes as $col) {
@@ -129,7 +139,8 @@ class System_db_check extends ALT\Page {
 		return $sql;
 	}
 
-	private function columnQuery($col) {
+	private function columnQuery($col)
+	{
 		$q = "`$col[Field]` {$col[Type]}";
 		if ($col["Null"] == "NO") {
 			$q .= " NOT NULL";

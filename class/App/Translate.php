@@ -4,8 +4,10 @@ namespace App;
 class Translate extends Model
 {
 	private static $_CACHE = [];
+	private static $_CACHE_DB = null;
 	public static function ByModule($module, $language)
 	{
+		//self::$_app->log("Translate::ByModule");
 		if (self::$_CACHE[$module][$language]) return self::$_CACHE[$module][$language];
 		$data = [];
 
@@ -30,6 +32,30 @@ class Translate extends Model
 		}
 
 
+		if (!isset(self::$_CACHE_DB)) {
+			self::$_CACHE_DB = [];
+			foreach (self::Query() as $t) {
+				if (!$t->module) {
+					self::$_CACHE_DB["-"][$t->language][$t->name] = $t->value;
+				} else {
+					self::$_CACHE_DB[$t->module][$t->language][$t->name] = $t->value;
+				}
+			}
+		}
+		if (self::$_CACHE_DB["-"][$language]) {
+			foreach (self::$_CACHE_DB["-"][$language] as $k => $v) {
+				$data[$k] = $v;
+			}
+		}
+
+		if (self::$_CACHE_DB[$module][$language]) {
+			foreach (self::$_CACHE_DB[$module][$language] as $k => $v) {
+				$data[$k] = $v;
+			}
+		}
+
+		/*
+
 		$w = [];
 		$w[] = "module is null";
 		$w[] = "language=" . self::__db()->quote($language);
@@ -44,7 +70,7 @@ class Translate extends Model
 
 		foreach (Translate::Find($w) as $translate) {
 			$data[$translate->name] = $translate->value;
-		}
+		}*/
 
 		self::$_CACHE[$module][$language] = $data;
 		return $data;
@@ -52,6 +78,7 @@ class Translate extends Model
 
 	public static function _($name, $language)
 	{
+		self::$_app->log("Translate::_", [$name, $language]);
 		$w[] = "name=" . self::__db()->quote($name);
 		$w[] = "language=" . self::__db()->quote($language);
 
@@ -112,5 +139,3 @@ class Translate extends Model
 		return Translate::first($w);
 	}
 }
-
-?>

@@ -67,7 +67,7 @@ class ACL extends Model
         return null;
     }
 
-
+    private static $_CACHE = [];
     public static function Allow($path, $action = null, $user = null, $debug = false)
     {
 
@@ -83,7 +83,7 @@ class ACL extends Model
         $ps = explode("/", $path);
 
         if (is_null($user)) {
-            $user = App::_()->user;
+            $user = self::$_app->user;
         } elseif (!($user instanceof User)) {
             $user = new User($user);
         }
@@ -92,7 +92,7 @@ class ACL extends Model
 
         if (!$result) {
             if ($user->isUser()) {
-                $result = App::_()->config["system"]["user_default_acl"];
+                $result = self::$_app->config["system"]["user_default_acl"];
 
                 //if module is system, set false
                 $module = Module::ByPath($path);
@@ -155,6 +155,62 @@ class ACL extends Model
                 }
             }
         }
+
+        //load all acl
+        $w = [];
+        $u[] = "user_id=" . $user->user_id;
+        foreach ($ugs as $ug) {
+            $u[] = "usergroup_id=$ug->usergroup_id";
+        }
+        if (!$user->isGuest()) {
+            $u[] = "special_user=3";
+        }
+        $w[] = implode(" or ", $u);
+
+        if (!isset(self::$_CACHE[$user->user_id])) {
+            self::$_CACHE[$user->user_id] = (array)self::Find($w);
+        }
+
+
+        foreach (self::$_CACHE[$user->user_id] as $acl) {
+            if ($acl->module == $module) {
+                if ($acl->path == $path) {
+                    $v = $acl->value();
+                    if ($v == "deny") {
+                        return false;
+                    }
+                    if ($v == "allow") {
+                        $result = true;
+                    }
+                }
+
+                if ($acl->action == "FC") {
+                    $v = $acl->value();
+                    if ($v == "deny") {
+                        return false;
+                    }
+                    if ($v == "allow") {
+                        $result = true;
+                    }
+                }
+
+                if ($acl->action == $action) {
+                    $v = $acl->value();
+                    if ($v == "deny") {
+                        return false;
+                    }
+                    if ($v == "allow") {
+                        $result = true;
+                    }
+                }
+            }
+        }
+
+        return $result;
+
+
+
+
 
         $path = implode("/", $ps);
         // ---------------------------------------------------------------------

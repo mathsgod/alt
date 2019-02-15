@@ -1,43 +1,54 @@
 <?php
 namespace App;
-class UserGroup extends Model {
-    public function User() {
-        return $this->UserList()->map(function($o) {
-                return $o->User();
-            }
-            );
+
+class UserGroup extends Model
+{
+    public function User()
+    {
+        return $this->UserList()->map(function ($o) {
+            return $o->User();
+        });
     }
 
-    public static function _($name) {
-        if ($g = UserGroup::first("name='$name'")) {
-            return $g;
-        }
-        if ($g = UserGroup::first("code='$name'")) {
-            return $g;
+    private static $_CACHE;
+    public static function _($name)
+    {
+        if (isset(self::$_CACHE[$name])) {
+            return self::$_CACHE[$name];
         }
 
-        return null;
+        if ($g = UserGroup::first("name='$name' or code='$name'")) {
+            self::$_CACHE[$name] = $g;
+        } else {
+            self::$_CACHE[$name] = null;
+
+        }
+        return self::$_CACHE[$name];
     }
 
-    public function hasUser($user) {
-        foreach($user->UserList() as $ul) {
-            if ($ul->usergroup_id == $this->usergroup_id)return true;
+    public function hasUser($user)
+    {
+        foreach ($user->UserList() as $ul) {
+            if ($ul->usergroup_id == $this->usergroup_id) return true;
         }
         return false;
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->name;
     }
 
-	public function canUpdate(){
-		if ($this->usergroup_id <= 4)return false;
-		return parent::canUpdate();
-	}
+    public function canUpdate()
+    {
+        if ($this->usergroup_id <= 4) return false;
+        return parent::canUpdate();
+    }
 
-    public function canDelete() {
-        if ($this->_Size("UserList"))return false;
-        if ($this->usergroup_id <= 4)return false;
+    public function canDelete()
+    {
+        if ($this->_Size("UserList")) return false;
+        if ($this->usergroup_id <= 4) return false;
         return parent::canDelete();
     }
 }

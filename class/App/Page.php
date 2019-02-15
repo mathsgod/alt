@@ -51,7 +51,7 @@ class Page extends \R\Page
 
         $this->_lib[$name] = $p;
         if ($name == "ckeditor") {
-            $path = \App::Config("user", "roxy_fileman_path");
+            $path = $this->app->config["user"]["roxy_fileman_path"];
             $path = str_replace("{username}", $this->app->user->username, $path);
             $_SESSION["roxy_fileman_path"] = $path;
             mkdir(System::$root . "$path");

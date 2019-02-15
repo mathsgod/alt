@@ -289,6 +289,13 @@ class App extends \R\App
         }
     }
 
+    public function log($message, $data = [])
+    {
+        if ($this->logger) {
+            $this->logger->debug($message, $data);
+        }
+    }
+
     public function logined()
     {
         return (boolean)$_SESSION["app"]["login"];
