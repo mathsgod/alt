@@ -40,11 +40,14 @@ export function getName(name, mode, ios, md) {
 export function getSrc(src) {
     if (typeof src === 'string') {
         src = src.trim();
-        if (src.length > 0 && /(\/|\.)/.test(src)) {
+        if (isSrc(src)) {
             return src;
         }
     }
     return null;
+}
+export function isSrc(str) {
+    return str.length > 0 && /(\/|\.)/.test(str);
 }
 export function isValid(elm) {
     if (elm.nodeType === 1) {

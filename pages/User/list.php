@@ -6,7 +6,7 @@ class User_list extends ALT\Page
     public function get()
     {
         // outp(App\User::find());
-        
+
 
         $rt = $this->createRT2([$this, "ds"]);
 
@@ -15,7 +15,7 @@ class User_list extends ALT\Page
         $rt->addEdit();
         $rt->addDel();
 
-        $rt->add("Username", "username")->ss()->width("30px");
+        $rt->add("Username", "username")->ss();
         $rt->add("User group", "usergroup_id")->searchOption(App\UserGroup::find());      
         /*function ($obj) {
             return $obj->UserGroup()->implode(",");

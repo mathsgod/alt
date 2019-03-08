@@ -38,7 +38,7 @@ class File {
         readfile($this->name);
     }
 
-    public function permission($file) {
+    public function permission() {
         return substr(sprintf('%o', fileperms($this->name)), - 4);
     }
 }

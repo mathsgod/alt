@@ -118,6 +118,14 @@ module.exports = {
                 from: "vendor/mathsgod/r-webauthn/dist",
                 to: "r-webauthn",
                 toType: "dir"
+            },{
+                from: "node_modules/tippy.js/umd/index.all.min.js",
+                to: "tippy.js",
+                toType: "dir"
+            },{
+                from: "node_modules/popper.js/dist/umd/popper.min.js",
+                to: "popper.js",
+                toType: "dir"
             }
         ])
     ]

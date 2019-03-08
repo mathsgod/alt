@@ -8,8 +8,8 @@ class System_db_check extends ALT\Page
 		foreach ($this->findSQL() as $sql) {
 			$db->exec($sql);
 		}
-		App::Msg("SQL executed");
-		App::Redirect();
+		$this->alert->info("SQL executed");
+		$this->redirect();
 	}
 
 	public function findSQL()
@@ -19,11 +19,11 @@ class System_db_check extends ALT\Page
 
 		$db = $this->app->db;
 
-		$schema = $db->Schema();
+		$schema = $db;
 
 		$tables = [];
 
-		foreach ($schema->tables() as $name => $table) {
+		foreach ($schema->tables as $name => $table) {
 			$tables[$table->name] = $table;
 		}
 
@@ -153,3 +153,4 @@ class System_db_check extends ALT\Page
 		return $q;
 	}
 }
+

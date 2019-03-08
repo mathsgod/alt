@@ -30,6 +30,10 @@ export declare class Icon {
      */
     md?: string;
     /**
+     * Specifies whether the icon should horizontally flip when `dir` is `"rtl"`.
+     */
+    flipRtl?: boolean;
+    /**
      * Specifies which icon to use from the built-in set of icons.
      */
     name?: string;
@@ -57,11 +61,18 @@ export declare class Icon {
     componentDidUnload(): void;
     private waitUntilVisible;
     loadIcon(): void;
+    getName(): string | undefined;
     getUrl(): string | null;
     private getNamedUrl;
     hostData(): {
         'role': string;
-        class: {};
+        class: {
+            'flip-rtl': boolean | "" | undefined;
+        } | {
+            [x: string]: boolean | "" | undefined;
+            'flip-rtl': boolean | "" | undefined;
+            'ion-color': boolean;
+        };
     };
     render(): JSX.Element;
 }

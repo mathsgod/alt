@@ -1,4 +1,4 @@
-import { getIconMap, getName, getSrc, isValid } from './utils';
+import { getIconMap, getName, getSrc, isSrc, isValid } from './utils';
 export class Icon {
     constructor() {
         this.isVisible = false;
@@ -43,7 +43,7 @@ export class Icon {
             }
         }
         if (!this.ariaLabel) {
-            const name = getName(this.name, this.mode, this.ios, this.md);
+            const name = getName(this.getName(), this.mode, this.ios, this.md);
             if (name) {
                 this.ariaLabel = name
                     .replace('ios-', '')
@@ -52,22 +52,27 @@ export class Icon {
             }
         }
     }
+    getName() {
+        if (this.name !== undefined) {
+            return this.name;
+        }
+        if (this.icon && !isSrc(this.icon)) {
+            return this.icon;
+        }
+        return undefined;
+    }
     getUrl() {
         let url = getSrc(this.src);
         if (url) {
             return url;
         }
-        url = getName(this.name, this.mode, this.ios, this.md);
+        url = getName(this.getName(), this.mode, this.ios, this.md);
         if (url) {
             return this.getNamedUrl(url);
         }
         url = getSrc(this.icon);
         if (url) {
             return url;
-        }
-        url = getName(this.icon, this.mode, this.ios, this.md);
-        if (url) {
-            return this.getNamedUrl(url);
         }
         return null;
     }
@@ -79,9 +84,10 @@ export class Icon {
         return `${this.resourcesUrl}svg/${name}.svg`;
     }
     hostData() {
+        const flipRtl = this.flipRtl || (this.ariaLabel && this.ariaLabel.indexOf('arrow') > -1 && this.flipRtl !== false);
         return {
             'role': 'img',
-            class: Object.assign({}, createColorClasses(this.color), { [`icon-${this.size}`]: !!this.size })
+            class: Object.assign({}, createColorClasses(this.color), { [`icon-${this.size}`]: !!this.size, 'flip-rtl': flipRtl && this.doc.dir === 'rtl' })
         };
     }
     render() {
@@ -108,6 +114,10 @@ export class Icon {
         },
         "el": {
             "elementRef": true
+        },
+        "flipRtl": {
+            "type": Boolean,
+            "attr": "flip-rtl"
         },
         "icon": {
             "type": String,

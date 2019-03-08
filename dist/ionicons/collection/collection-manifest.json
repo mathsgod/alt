@@ -29,6 +29,11 @@
           "attr": "color"
         },
         {
+          "name": "flipRtl",
+          "type": "Boolean",
+          "attr": "flip-rtl"
+        },
+        {
           "name": "icon",
           "type": "String",
           "attr": "icon",
@@ -113,8 +118,8 @@
   "collections": [],
   "compiler": {
     "name": "@stencil/core",
-    "version": "0.16.1",
-    "typescriptVersion": "3.1.6"
+    "version": "0.17.0",
+    "typescriptVersion": "3.2.2"
   },
   "bundles": []
 }

@@ -17,7 +17,7 @@ class REST
             return false;
         }
 
-        if(strpos("application/json",$request->getHeader("content-type")[0])==-1){
+        if (strpos("application/json", $request->getHeader("content-type")[0]) == -1) {
             return false;
         }
 
@@ -31,24 +31,31 @@ class REST
         $p = parse_url($uri);
         $p = $p["path"];
         $p = substr($p, 1);
-        $p = explode("/",$p);
+        $p = explode("/", $p);
 
         $module = Module::_($p[0]);
         $class = "\\" . $module->class;
 
-        
-        if($pk=$data["_pk"]){
 
-            $o=new $class($pk);
-            $name=$data["name"];
-            $o->$name=$data["value"];
+        if ($pk = $data["_pk"]) {
+
+            $o = new $class($pk);
+            $name = $data["name"];
+            $o->$name = $data["value"];
+            if (!$o->canUpdate()) {
+                return ["code" => 401, "error" => ["message" => "access deny"]];
+            }
             $o->save();
+
             return ["code" => 200, "location" => $p . "/" . $o->id()];
         }
 
 
         $obj = new $class($p[1]);
         $obj->bind($data);
+        if (!$obj->canUpdate()) {
+            return ["code" => 401, "error" => ["message" => "access deny"]];
+        }
         $obj->save();
         return ["code" => 200, "location" => $p[0] . "/" . $obj->id()];
     }
@@ -88,6 +95,9 @@ class REST
         } elseif (count($p) == 2) {
             try {
                 $value = new $class($p[1]);
+                if (!$value->canRead()) {
+                    return ["error" => ["message" => "access deny"]];
+                }
                 return $value;
             } catch (Exception $e) {
                 return ["error" => ["code" => $e->getCode(), "message" => $e->getMessage()]];
@@ -105,6 +115,9 @@ class REST
         $class = "\\" . $module->class;
         $obj = new $class($p[1]);
         $obj->bind($data);
+        if (!$obj->canUpdate()) {
+            return ["error" => ["message" => "access deny"]];
+        }
         $obj->save();
         return ["code" => 200];
     }
@@ -119,6 +132,9 @@ class REST
         $class = "\\" . $module->class;
         $obj = new $class($p[1]);
         $obj->bind($data);
+        if (!$obj->canUpdate()) {
+            return ["error" => ["message" => "access deny"]];
+        }
         $obj->save();
         return ["code" => 200];
     }
@@ -132,8 +148,11 @@ class REST
 
         $class = "\\" . $module->class;
         $obj = new $class($p[1]);
-        $obj->delete();
+        if (!$obj->canDelete()) {
+            return ["error" => ["message" => "access deny"]];
+        }
 
+        $obj->delete();
         return ["code" => 200];
     }
 
@@ -159,7 +178,6 @@ class REST
             }
 
             $response = $response->withBody(new JSONStream($ret));
-
         } catch (Exception $e) {
             $response = $response->withBody(new JSONStream([
                 "code" => 200,
@@ -169,5 +187,4 @@ class REST
 
         return $response;
     }
-
 }

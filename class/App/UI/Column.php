@@ -81,6 +81,12 @@ class Column implements JsonSerializable
         return $this;
     }
 
+    public function minWidth($width)
+    {
+        $this->minWidth = $width;
+        return;
+    }
+
     public function width($width)
     {
         $this->width = $width;

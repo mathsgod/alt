@@ -15,6 +15,11 @@
           "required": false
         },
         {
+          "label": "flip-rtl",
+          "description": "Specifies whether the icon should horizontally flip when `dir` is `\"rtl\"`.",
+          "required": false
+        },
+        {
           "label": "icon",
           "description": "A combination of both `name` and `src`. If a `src` url is detected\nit will set the `src` property. Otherwise it assumes it's a built-in named\nSVG and set the `name` property.",
           "required": false

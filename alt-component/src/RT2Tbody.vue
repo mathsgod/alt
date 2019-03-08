@@ -5,7 +5,7 @@
         v-on:click="onClickRow(d)"
         v-bind:class="getRowClass(d)"
         :style="getStyle(d)"
-        :key="index"
+        :key="'row'+index"
       >
         <td v-if="hasHideColumn">
           <button
@@ -20,7 +20,7 @@
         </td>
         <td
           v-for="(column,key) in visibleColumns"
-          :key="key"
+          :key="'col'+key"
           v-on:click="onClickCell(column,index)"
           v-bind:style="column.cell(d).style"
         >
@@ -40,7 +40,7 @@
               >
                 <option
                   v-for="(opt,opt_key) in column.editData"
-                  :key="opt_key"
+                  :key="'option'+opt_key"
                   v-bind:value="opt.value"
                   v-text="opt.label"
                   v-bind:selected="opt.value==column.getValue(d).value"
@@ -88,10 +88,10 @@
           </template>
         </td>
       </tr>
-      <tr class="child" v-show="showChild(index)" :key="index">
+      <tr class="child" v-show="showChild(index)" :key="'child'+index">
         <td v-bind:colspan="showColumnCount">
           <ul>
-            <li v-for="(column,key) in hideColumns" :key="key">
+            <li v-for="(column,key) in hideColumns" :key="'hide_col'+key">
               <b v-html="column.title"></b>&nbsp;&nbsp;
               <span v-if="column.cell(d).type=='html'" v-html="column.getContent(d)"></span>
               <span v-if="column.cell(d).type=='text'" v-text="column.getContent(d)"></span>
