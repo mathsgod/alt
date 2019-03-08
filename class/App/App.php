@@ -71,7 +71,6 @@ class App extends \R\App
                         $this->config[$n][$a] = $b;
                     }
                 }
-
             }
         }
 
@@ -82,7 +81,7 @@ class App extends \R\App
 
         $this->alert = new Alert();
 
-       //user
+        //user
         if (!$_SESSION["app"]["user"]) {
             $_SESSION["app"]["user"] = new User(2);
         }
@@ -110,7 +109,6 @@ class App extends \R\App
         if (is_readable($f = $system_root . "/" . $file)) {
             return $f;
         }
-
     }
 
     public function pathInfo()
@@ -184,7 +182,7 @@ class App extends \R\App
 
         if (REST::IsValid($this->request) && $this->request->getUri()->getPath() != "/api") {
             if ((count($p) == 2 && is_numeric($p[1])) || $p[1] == null) {
-            //check permission
+                //check permission
                 if ($method == "get") {
                     if (!ACL::Allow($p[0], "R")) {
                         http_response_code(403);
@@ -199,7 +197,6 @@ class App extends \R\App
                 }
                 file_put_contents("php://output", (string)$response->getBody());
                 return;
-
             }
         }
 
@@ -222,7 +219,7 @@ class App extends \R\App
 
         if (!$class = $route->class) {
             if ($this->user->isAdmin()) {
-                $page = new ClassNotExistPage();
+                $page = new ClassNotExistPage($this);
             }
         } else {
             $class = $route->class;
@@ -266,13 +263,12 @@ class App extends \R\App
         } else {
             //$this->redirect("/");
         }
-
     }
 
     public function redirect($url)
     {
-        if ($uri) {
-            $location = $this->request->getUri()->getBasePath() . "/" . $uri;
+        if ($url) {
+            $location = $this->request->getUri()->getBasePath() . "/" . $url;
             $this->response = $this->response->withHeader("Location", $location);
             return;
         }
@@ -539,12 +535,11 @@ class App extends \R\App
             $this->IsSMTP();
             $this->Host = (string)$smtp;
             $this->SMTPAuth = true;
-            $this->Username = $config["smtp-username"];
-            $this->Password = $config["smtp-password"];
+            $this->Username = $this->config["user"]["smtp-username"];
+            $this->Password = $this->config["user"]["smtp-password"];
         }
 
         return $mail;
-
     }
 
     public function accessDeny(Request $request)
@@ -570,7 +565,6 @@ class App extends \R\App
                 $response = new Response(403);
                 $response = $response->withHeader("location", $base . "/access_deny?" . $q);
             }
-
         } else {
             $q = http_build_query(["r" => $uri]);
             $response = new Response(403);
@@ -579,6 +573,5 @@ class App extends \R\App
 
         return $response;
     }
-
-
 }
+
