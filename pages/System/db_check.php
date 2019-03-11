@@ -16,7 +16,6 @@ class System_db_check extends ALT\Page
 	{
 		$db_scheme = json_decode(file_get_contents($this->app->config["system"]["update_source"] . "db_scheme.php"), true);
 
-
 		$db = $this->app->db;
 
 		$schema = $db;
@@ -53,7 +52,7 @@ class System_db_check extends ALT\Page
 		$sql = $this->findSQL();
 
 		if (sizeof($sql) == 0) {
-			$this->callout("Information", "Your database is lastest version!");
+			$this->callout->info("Information", "Your database is lastest version!");
 			return;
 		}
 
@@ -153,4 +152,3 @@ class System_db_check extends ALT\Page
 		return $q;
 	}
 }
-

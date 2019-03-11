@@ -425,8 +425,8 @@ class App extends \R\App
     {
         if (!$locale) $locale = $this->locale;
 
-        if ($this->_sv[$locale][$name]) {
-            return $this->_sv[$locale][$name]->values();
+        if ($this->system_value[$locale][$name]) {
+            return $this->system_value[$locale][$name]->values();
         }
     }
 

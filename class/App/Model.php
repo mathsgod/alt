@@ -1,8 +1,6 @@
 <?php
 namespace App;
 
-use \R\ORM\Query;
-
 abstract class Model extends \R\ORM\Model
 {
     public static $_db;
@@ -203,7 +201,7 @@ abstract class Model extends \R\ORM\Model
         $f = "_" . $function;
 
         if (property_exists($class, $f)) {
-            eval("\$s = $class::\$$f;");
+            $s = $this->$f;
             return $s[$this->{strtolower($function)}];
         }
         return parent::__call($function, $args);
@@ -214,13 +212,22 @@ abstract class Model extends \R\ORM\Model
         return self::$_app->sv($name);
     }
 
-    public function _size($class)
+    public function _size($class, $where = [])
     {
         $key = $this->_key();
         $w = [];
         $w[] = ["$key=?", $this->id()];
-        return forward_static_call([$class,"Count"],$w);
+        foreach ($where as $w1) {
+            $w[] = $w1;
+        }
+        return forward_static_call([$class, "Count"], $w);
     }
 
-
+    public function _scalar($class, $query)
+    {
+        $key = $this->_key();
+        $w = [];
+        $w[] = ["$key=?", $this->id()];
+        return forward_static_call([$class, "Scalar"], $query, $w);
+    }
 }

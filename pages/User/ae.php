@@ -1,5 +1,5 @@
 <?php
-// Created By: Raymond Chong
+ // Created By: Raymond Chong
 // Last Updated:
 use App\Config;
 use App\User;
@@ -8,8 +8,6 @@ use App\UserList;
 
 class User_ae extends ALT\Page
 {
-    public static $_Status = [0 => "Active", 1 => "Inactive"];
-
     public function post()
     {
         parent::post();
@@ -23,7 +21,6 @@ class User_ae extends ALT\Page
                 $o->save();
             }
         }
-        //$this->_redirect($obj->uri("v"));
     }
 
     public function get()
@@ -64,7 +61,7 @@ class User_ae extends ALT\Page
 
         if (!$obj->isAdmin()) {
             if (($user->isAdmin() || $user->isPowerUser()) && $user->user_id != $obj->user_id) {
-                $mv->add("Status")->select("status")->ds(User::$_Status);
+                $mv->add("Status")->select("status")->ds(User::STATUS);
                 $mv->add("Expiry date")->date("expiry_date");
             }
         }
@@ -73,11 +70,8 @@ class User_ae extends ALT\Page
             $mv->addHr();
             $u = UserGroup::_("Users");
 
-            $ugs = UserGroup::find()->filter(function ($o) use ($obj, &$selected) {
+            $ugs = UserGroup::find()->filter(function ($o) {
                 if ($o->name == "Administrators" && !App::User()->isAdmin()) return false;
-                if ($o->hasUser($obj)) {
-                    $selected[] = $o->usergroup_id;
-                }
                 return true;
             });
 

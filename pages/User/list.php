@@ -26,7 +26,7 @@ class User_list extends ALT\Page
         $rt->add("Last name", "last_name")->ss();
         $rt->add("Phone", "phone")->ss()->editable();
         $rt->add("Email", "email")->ss();//->overflow("hidden");
-        $rt->add("Status", "status")->sort()->searchOption(User::$_Status);
+        $rt->add("Status", "status")->sort()->searchOption(User::STATUS);
 //        $rt->add("Status", "Status()")->index("status")->sort()->searchOption(User::$_Status);
         // $rt->add("Expiry date", "expiry_date")->sort()->searchDateRange();
         $rt->add("Expiry date", "expiry_date")->sort()->searchDate();

@@ -3,7 +3,8 @@ namespace App;
 
 class User extends Model
 {
-    public static $_Status = ["Active", "Inactive"];
+
+    public const STATUS = ["Active", "Inactive"];
 
     public function __construct($id = null)
     {
@@ -72,8 +73,7 @@ class User extends Model
     }
 
     public function offline()
-    {
-    }
+    { }
 
     public function setting()
     {
