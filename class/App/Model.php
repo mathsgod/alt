@@ -214,6 +214,13 @@ abstract class Model extends \R\ORM\Model
         return self::$_app->sv($name);
     }
 
+    public function _size($class)
+    {
+        $key = $this->_key();
+        $w = [];
+        $w[] = ["$key=?", $this->id()];
+        return forward_static_call([$class,"Count"],$w);
+    }
 
 
 }
