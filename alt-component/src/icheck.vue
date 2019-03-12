@@ -5,7 +5,7 @@
 module.exports = {
   props: {
     value: {
-      default: null
+      default: "on"
     },
     checkboxClass: {
       type: String,
@@ -16,10 +16,11 @@ module.exports = {
       default: "iradio_square-blue"
     },
     checked: {
-      type: Boolean
+      type: Boolean,
+      default: false
     },
     trueValue: {
-      default: 1
+      default: null
     },
     falseValue: {
       default: null
@@ -32,6 +33,10 @@ module.exports = {
     if (this.checked) {
       $(this.$el).iCheck("check");
     }
+
+    this.$el.value = this.value;
+
+    $(this.$el).val(this.value);
 
     if (this.value == this.trueValue) {
       $(this.$el).iCheck("check");
@@ -46,12 +51,10 @@ module.exports = {
         this.$emit("change", event);
       })
       .on("ifChecked", event => {
-        $(this.$el).val(this.value);
         this.$emit("input", this.trueValue);
         this.$emit("checked", event);
       })
       .on("ifUnchecked", event => {
-        $(this.$el).val(null);
         this.$emit("input", this.falseValue);
         this.$emit("unchecked", event);
       });

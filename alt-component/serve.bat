@@ -1,0 +1,1 @@
+vue-cli-service serve --target lib src/alt.js

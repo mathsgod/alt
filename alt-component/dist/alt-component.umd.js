@@ -1718,23 +1718,6 @@ module.exports = function (it) {
 
 /***/ }),
 
-/***/ "5033":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/icheck.vue?vue&type=template&id=1605e116&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('input',{attrs:{"type":"checkbox"}})}
-var staticRenderFns = []
-
-
-// CONCATENATED MODULE: ./src/icheck.vue?vue&type=template&id=1605e116&
-/* concated harmony reexport render */__webpack_require__.d(__webpack_exports__, "a", function() { return render; });
-/* concated harmony reexport staticRenderFns */__webpack_require__.d(__webpack_exports__, "b", function() { return staticRenderFns; });
-
-
-/***/ }),
-
 /***/ "50ed":
 /***/ (function(module, exports) {
 
@@ -8924,7 +8907,7 @@ module.exports = function (fn, that, length) {
 module.exports = {
   props: {
     value: {
-      default: null
+      default: "on"
     },
     checkboxClass: {
       type: String,
@@ -8935,10 +8918,11 @@ module.exports = {
       default: "iradio_square-blue"
     },
     checked: {
-      type: Boolean
+      type: Boolean,
+      default: false
     },
     trueValue: {
-      default: 1
+      default: null
     },
     falseValue: {
       default: null
@@ -8954,6 +8938,9 @@ module.exports = {
       $(this.$el).iCheck("check");
     }
 
+    this.$el.value = this.value;
+    $(this.$el).val(this.value);
+
     if (this.value == this.trueValue) {
       $(this.$el).iCheck("check");
     }
@@ -8965,14 +8952,10 @@ module.exports = {
     }).on("ifChanged", function (event) {
       _this.$emit("change", event);
     }).on("ifChecked", function (event) {
-      $(_this.$el).val(_this.value);
-
       _this.$emit("input", _this.trueValue);
 
       _this.$emit("checked", event);
     }).on("ifUnchecked", function (event) {
-      $(_this.$el).val(null);
-
       _this.$emit("input", _this.falseValue);
 
       _this.$emit("unchecked", event);
@@ -9231,7 +9214,7 @@ var meta = module.exports = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _icheck_vue_vue_type_template_id_1605e116___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("5033");
+/* harmony import */ var _icheck_vue_vue_type_template_id_c12be582___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("facd");
 /* harmony import */ var _icheck_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("b391");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("2877");
 
@@ -9243,8 +9226,8 @@ var meta = module.exports = {
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"])(
   _icheck_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _icheck_vue_vue_type_template_id_1605e116___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
-  _icheck_vue_vue_type_template_id_1605e116___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
+  _icheck_vue_vue_type_template_id_c12be582___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
+  _icheck_vue_vue_type_template_id_c12be582___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
   false,
   null,
   null,
@@ -9316,6 +9299,23 @@ module.exports = __webpack_require__("5537")('native-function-to-string', Functi
 
 var document = __webpack_require__("7726").document;
 module.exports = document && document.documentElement;
+
+
+/***/ }),
+
+/***/ "facd":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/icheck.vue?vue&type=template&id=c12be582&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('input',{attrs:{"type":"checkbox"}})}
+var staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/icheck.vue?vue&type=template&id=c12be582&
+/* concated harmony reexport render */__webpack_require__.d(__webpack_exports__, "a", function() { return render; });
+/* concated harmony reexport staticRenderFns */__webpack_require__.d(__webpack_exports__, "b", function() { return staticRenderFns; });
 
 
 /***/ }),
