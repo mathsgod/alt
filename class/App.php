@@ -1,17 +1,10 @@
 <?php
 use R\Psr7\ServerRequest;
-use App\Composer;
 
 class App
 {
     public static $app;
-
-
     public static $system_mode = false;
-
-    private static $_sv = [];
-    private static $composer;
-    private static $log;
 
     public static function Loader()
     {
@@ -20,7 +13,7 @@ class App
 
     public static function Log()
     {
-        $app = App\System::$app;
+        $app = self::_();
         return call_user_func_array([$app, "log"], func_get_args());
     }
 
@@ -32,11 +25,11 @@ class App
     public static function Config($category = null, $name = null)
     {
         if (func_num_args() == 0) {
-            return App\System::$app->config;
+            return self::_()->config;
         } elseif (func_num_args() == 1) {
-            return App\System::$app->config[$category];
+            return self::_()->config[$category];
         }
-        return App\System::$app->config[$category][$name];
+        return self::_()->config[$category][$name];
     }
 
     public static function T($str = "")
@@ -69,9 +62,6 @@ class App
 
     public static function Request($uri)
     {
-        $system_root = realpath(__DIR__ . "/../pages");
-        $user_root = realpath(__DIR__ . "/../../../pages");
-
         $request = ServerRequest::FromEnv();
         $uri = $request->getURI()->withPath($uri);
         $request = $request->withUri($uri);
@@ -100,7 +90,7 @@ class App
                 $_url = $base . "/" . $uri;
                 header("location: $_url");
             } else {
-                header("location: $url");
+                header("location: $uri");
             }
         }
     }
@@ -115,7 +105,7 @@ class App
         return App\ACL::Allow($uri);
     }
 
-    public static function Msg($message, $type = "success")
+    public static function Msg($message)
     {
         self::_()->alert->success($message);
     }
