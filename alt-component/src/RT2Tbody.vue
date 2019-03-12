@@ -79,10 +79,10 @@
             <button
               class="btn btn-xs btn-default"
               v-else-if="column.type=='sub-row'"
-              v-on:click="toggleSubRow(index,r)"
+              v-on:click="toggleSubRow(index,column.cell(d))"
             >
-              <i v-if="subRow[index]" class="fa fa-fw fa-minus"></i>
-              <i v-if="!subRow[index]" class="fa fa-fw fa-plus"></i>
+              <i v-show="subRow[index]" class="fa fa-fw fa-minus"></i>
+              <i v-show="!subRow[index]" class="fa fa-fw fa-plus"></i>
             </button>
             <a v-else-if="column.type=='link'" v-bind:href="column.href" v-html="column.content"></a>
           </template>
@@ -99,6 +99,10 @@
           </ul>
         </td>
       </tr>
+
+      <tr v-show="subRow[index]" :key="'subrow'+index">
+        <td v-html="subRowContent[index]" :colspan="visibleColumns.length"></td>
+      </tr>
     </template>
   </tbody>
 </template>
@@ -113,6 +117,9 @@ export default {
   },
   data() {
     return {
+      subRow: [],
+      subRowContent: [],
+      subRowColumn: null,
       hoverChild: [],
       showIndex: [],
       editMode: false,
@@ -144,6 +151,22 @@ export default {
     }
   },
   methods: {
+    toggleSubRow(index, cell) {
+      if (this.subRow[index]) {
+        this.subRow[index] = false;
+      } else {
+        this.subRow[index] = true;
+        Vue.http
+          .get(cell.url, {
+            params: cell.params
+          })
+          .then(resp => {
+            this.subRowContent[index] = resp.body;
+            this.$forceUpdate();
+          });
+      }
+      this.$forceUpdate();
+    },
     getStyle(d) {
       if (d.__row__.style) {
         return d.__row__.style;

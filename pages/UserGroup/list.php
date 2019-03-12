@@ -5,31 +5,34 @@ class UserGroup_list extends App\Page
 {
     public function get()
     {
-        $rt = $this->createRT([$this, "ds"]);
+        $rt = $this->createRT2([$this, "ds"]);
         $rt->addView();
         $rt->addEdit();
         $rt->addDel();
-        $rt->key("usergroup_id");
+
+        $rt->addSubRow("subrow1");
+
         $rt->add("Usergroup ID", "usergroup_id")->sort()->searchEq();
-        $rt->add("Name", "name")->sort()->alink("v")->search();
-        $rt->add("Code", "code")->sort()->search();
-        $rt->add("User count", "_Size(UserList)");
-        $rt->subHTML([$this, "user"]);
+        $rt->add("Name", "name")->ss();
+        $rt->add("Code", "code")->ss();
+        $rt->add("User count", "usercount");
 
         $this->write($rt);
     }
 
     public function ds($rt)
     {
-        $w = $rt->where();
-        $d["total"] = UserGroup::Count($w);
-        $d["data"] = UserGroup::find($w, $rt->order(), $rt->limit());
-        return $d;
+        $rt->source = UserGroup::Query();
+        $rt->addSubRow("subrow1", [$this, "user"], "usergroup_id");
+        $rt->add("usercount",function($o){
+            return $o->UserList->count();
+        });
+        return $rt;
     }
 
-    public function user($id)
+    public function user($usergroup_id)
     {
-        $ug = new UserGroup($id);
+        $ug = new UserGroup($usergroup_id);
         $t = $this->createT($ug->User());
 
         $t->addView();

@@ -358,7 +358,7 @@ class App extends \R\App
                 }
             }
 
-            if ($need_check && !System::IP2StepExemptCheck($_SERVER['REMOTE_ADDR'])) {
+            if ($need_check && !$this->IP2StepExemptCheck($_SERVER['REMOTE_ADDR'])) {
                 if (($code == "" || !$user->checkCode($code)) && $user->secret != "") {
                     throw new \Exception("2-step verification", 403);
                 }
@@ -573,5 +573,22 @@ class App extends \R\App
 
         return $response;
     }
-}
 
+    public function IP2StepExemptCheck($ip)
+    {
+        $ips = explode(",", $this->config["user"]["2-step verification white list"]);
+
+        foreach ($ips as $i) {
+            $cx = explode("/", $i);
+            if (sizeof($cx) == 1) {
+                $cx[1] = "255.255.255.255";
+            }
+            $res = ip2long($cx[0]) & ip2long($cx[1]);
+            $res2 = ip2long($ip) & ip2long($cx[1]);
+            if ($res == $res2) {
+                return true;
+            }
+        }
+        return false;
+    }
+}

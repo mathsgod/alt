@@ -34,7 +34,6 @@ class Row
             $r["class"] = call_user_func($this->class, $obj);
         }
         return $r;
-
     }
 }
 
@@ -150,6 +149,21 @@ class RTResponse implements JsonSerializable
         return $c;
     }
 
+    public function addSubRow($name, $func, $key)
+    {
+        $path = $func[0]->path();
+
+        $url = $path . "/$func[1]";
+        $c = new Column();
+        $c->title = "";
+        $c->type = "sub-row";
+        $c->name = $name;
+        $c->url = $url;
+        $c->key = $key;
+        $this->_columns[$name] = $c;
+        return $c;
+    }
+
     public function add($name, $getter)
     {
         $c = new Column();
@@ -186,7 +200,9 @@ class RTResponse implements JsonSerializable
                     if (array_key_exists($c["name"], $this->_columns)) {
                         $col = $this->_columns[$c["name"]];
 
-                        if ($col->type == "delete") {
+                        if ($col->type == "sub-row") {
+                            $d[$c["name"]] = ["url" => $col->url, "params" => [$col->key=>  $object_vars[$col->key]]];
+                        } elseif ($col->type == "delete") {
                             if ($content = (string)$col->getData($obj, $k)) {
                                 $d[$c["name"]] = ["type" => $col->type, "content" => (string)$content];
                             } else {
@@ -204,7 +220,6 @@ class RTResponse implements JsonSerializable
                             } else {
                                 $d[$c["name"]] = (string)$v;
                             }
-
                         }
                     } elseif (array_key_exists($c["name"], $object_vars)) {
                         $d[$c["name"]] = $object_vars[$c["name"]];
@@ -254,7 +269,6 @@ class RTResponse implements JsonSerializable
             } else {
                 $source->orderBy($o["name"] . " " . $o["dir"]);
             }
-
         }
 
 
@@ -385,7 +399,6 @@ class RTResponse implements JsonSerializable
                 } else {
                     $ds[$c] = $d[$c];
                 }
-
             }
             $writer->addRow($ds);
         }

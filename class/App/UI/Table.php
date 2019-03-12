@@ -57,12 +57,10 @@ class Table extends HTMLTableElement
                         } else {
                             $row->attributes["data-index"] = $obj->{$this->key};
                         }
-
                     } else {
                         $row->attributes["data-index"] = $k;
                     }
                 }
-
             } else {
                 $row = $tbody->rows[$i];
             }
@@ -117,39 +115,54 @@ class Table extends HTMLTableElement
     {
         $column = $this->add();
         $column->width(20);
-        $as = $column->a()->addClass("btn btn-xs btn-info")->removeClass("btn-default")->html("<i class='fa fa-fw fa-search'></i>");
-        foreach ($as as $a) {
-            if ($object = p($a)->parent()->data("object")) {
-                p($a)->attr('href', $object->uri('v'));
+
+        foreach ($column->cell() as $c) {
+            $obj = p($c)->data("object");
+            if ($obj instanceof \App\Model) {
+                if ($obj->canRead()) {
+                    $btn = html("a")->class("btn btn-xs btn-info")->href($obj->uri('v'))->html("<i class='fa fa-fw fa-search'></i>");
+                    $c->html($btn);
+                }
             }
         }
-        return $as;
+
+        return $column;
     }
 
     public function addDel()
     {
         $column = $this->add();
         $column->width(20);
-        $as = $column->a()->addClass("btn btn-xs btn-danger confirm")->removeClass("btn-default")->html("<i class='fa fa-fw fa-times'></i>");
-        foreach ($as as $a) {
-            if ($object = p($a)->parent()->data("object")) {
-                p($a)->attr('href', $object->uri('del'));
+
+        foreach ($column->cell() as $c) {
+            $obj = p($c)->data("object");
+            if ($obj instanceof \App\Model) {
+                if ($obj->canDelete()) {
+                    $btn = html("a")->class("btn btn-xs btn-danger confirm")->href($obj->uri('del'))->html("<i class='fa fa-fw fa-times'></i>");
+                    $c->html($btn);
+                }
             }
         }
-        return $as;
+
+        return $column;
     }
+
     public function addEdit()
     {
         $column = $this->add();
         $column->width(20);
-        $as = $column->a()->addClass("btn btn-xs btn-warning")->removeClass("btn-default")->html("<i class='fa fa-fw fa-pencil-alt'></i>");
 
-        foreach ($as as $a) {
-            if ($object = p($a)->parent()->data("object")) {
-                p($a)->attr('href', $object->uri('ae'));
+        foreach ($column->cell() as $c) {
+            $obj = p($c)->data("object");
+            if ($obj instanceof \App\Model) {
+                if ($obj->canRead()) {
+                    $btn = html("a")->class("btn btn-xs btn-warning")->href($obj->uri('ae'))->html("<i class='fa fa-fw fa-pencil-alt'></i>");
+                    $c->html($btn);
+                }
             }
         }
-        return $as;
+
+        return $column;
     }
 
     public function addCheckBox($index, $getter)
@@ -171,8 +184,6 @@ class Table extends HTMLTableElement
                     if ($getter($obj)) {
                         $input->attr("checked", true);
                     }
-
-
                 }
             }
             return $input;

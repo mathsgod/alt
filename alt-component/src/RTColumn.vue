@@ -1,17 +1,23 @@
 <template>
-    <th class="unselectable"
-        v-if="display()"
-        v-bind:class="{
+  <th
+    class="unselectable"
+    v-if="display()"
+    v-bind:class="{
             sortable:sortable,
             sorting_desc:(dir=='desc'),
             sorting_asc:(dir=='asc')
-        }" v-on:click='sort' v-bind:style="style">
-        <div v-bind:title="title" style="overflow:hidden" v-html="title"></div>
-        <div ref="resizer"></div>
-        <template v-if="type=='deletes'">
-            <button class='btn btn-xs btn-danger' v-on:click="$emit('deletes')"><i class='fa fa-fw fa-times'></i></button>
-        </template>
-    </th>
+        }"
+    v-on:click="sort"
+    v-bind:style="style"
+  >
+    <div v-bind:title="title" style="overflow:hidden" v-html="title"></div>
+    <div ref="resizer"></div>
+    <template v-if="type=='deletes'">
+      <button class="btn btn-xs btn-danger" v-on:click="$emit('deletes')">
+        <i class="fa fa-fw fa-times"></i>
+      </button>
+    </template>
+  </th>
 </template>
 <script>
 export default {

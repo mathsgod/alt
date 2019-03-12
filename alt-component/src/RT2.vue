@@ -166,7 +166,9 @@ export default {
   props: {
     ajax: {
       type: Object,
-      default: {}
+      default: () => {
+        return {};
+      }
     },
     pageLength: {
       type: Number,
@@ -208,7 +210,6 @@ export default {
   },
   created: function() {
     var storage = this.storage;
-
     if (storage.responsive) {
       this.responsive = storage.responsive;
     }
@@ -347,14 +348,15 @@ export default {
           .split("/")
           .filter(s => !Number(s))
           .join("/");
-        return $.localStorage.get(id) || {};
+
+        return JSON.parse(localStorage.getItem(id)) || {};
       },
       set(data) {
         let id = this.ajax.url
           .split("/")
           .filter(s => !Number(s))
           .join("/");
-        $.localStorage.set(id, data);
+        localStorage.setItem(id, JSON.stringify(data));
       }
     },
     pageCount() {

@@ -10,9 +10,7 @@ class _index extends ALT\Page\Login
         try {
             $this->app->loginFido2($_POST["username"], $_POST["data"]);
             return ["code" => 200];
-        } catch (Exception $e) {
-
-        }
+        } catch (Exception $e) { }
         return ["error" => ["message" => "login error"]];
     }
 
@@ -24,7 +22,6 @@ class _index extends ALT\Page\Login
         $weba = new WebAuthn($_SERVER["HTTP_HOST"]);
 
         return ["challenge" => $weba->prepare_for_login($credential)];
-
     }
 
     public function get($r)
@@ -57,11 +54,7 @@ class _index extends ALT\Page\Login
         $data["company"] = $config["user"]["company"];
         $data["logo"] = $config["user"]["logo"];
         $data["version"] = $this->app->version();
-
         $data["r"] = $r;
-        if ($config["user"]["2-step verification"] && !System::IP2StepExemptCheck($_SERVER['REMOTE_ADDR'])) {
-            $data["ip2step"] = true;
-        }
 
         return $data;
     }
@@ -75,5 +68,5 @@ class _index extends ALT\Page\Login
             $this->response = $this->response->withHeader("Location", $base . "/?r=" . $name);
         }
     }
-
 }
+

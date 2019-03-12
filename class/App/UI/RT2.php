@@ -2,6 +2,7 @@
 namespace App\UI;
 
 //class RT extends \RT
+
 class RT2 extends \P\HTMLElement
 {
     public $columns = [];
@@ -27,7 +28,6 @@ class RT2 extends \P\HTMLElement
         $this->_page = $page;
 
         $this->responsive = $config["rt2-responsive"];
-
     }
 
     public function order($name, $dir)
@@ -114,5 +114,16 @@ class RT2 extends \P\HTMLElement
         $this->attributes[":exports"] = $this->exports;
         $this->attributes[":order"] = $this->order;
         return parent::__toString();
+    }
+
+    public function addSubRow($name)
+    {
+        $c = new Column();
+        $c->noHide();
+        $c->name = $name;
+        $c->type = "sub-row";
+        $c->width = "1px";
+        $this->columns[] = $c;
+        return $c;
     }
 }
