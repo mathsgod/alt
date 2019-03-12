@@ -1,18 +1,13 @@
 <?php
-// Created By: Raymond Chong
+ // Created By: Raymond Chong
 // Created Date: 2015-09-22
 // Last Updated:
 class System_db_process extends ALT\Page
 {
-	public function get()
-	{
-		$this->write('<div id="content1">Loading...</div>');
-	}
 
 	public function data()
 	{
-
-		$mv = $this->createT($this->app->db->query("Show Full ProcessList"));
+		$mv = $this->createT($this->app->db->query("Show Full ProcessList")->fetchAll());
 		$mv->add("ID", "Id");
 		$mv->add("User", "User");
 		$mv->add("Host", "Host");
@@ -31,23 +26,3 @@ class System_db_process extends ALT\Page
 		$this->app->db->exec("kill $process_id");
 	}
 }
-
-?>
-<script language="javascript">
-function onClickKill(obj){
-	var id=$(obj).attr('data');
-	$.get("System/db_process/kill?process_id="+id).done(function(){
-		load_process();
-	});
-}
-
-$(function(){
-	var f=function(){
-		$("#content1").load("System/db_process/data");
-	};
-	$.timer(5000, function (timer) {
-		f();
-	});
-	f();
-});
-</script>

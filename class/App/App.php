@@ -591,4 +591,21 @@ class App extends \R\App
         }
         return false;
     }
+
+    public function page($path)
+    {
+        $uri = $this->request->getUri()->withPath($path);
+        $request = $this->request->withUri($uri);
+
+        $router = new Router();
+        $route = $router->getRoute($request, $this->loader);
+
+        $request = $request
+            ->withAttribute("action", $route->action)
+            ->withAttribute("route", $route);
+
+        $class = $route->class;
+        $page = new $class($this);
+        return $page;
+    }
 }

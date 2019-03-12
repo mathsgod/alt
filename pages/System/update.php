@@ -46,16 +46,16 @@ class System_update extends ALT\Page
         $gz = CMS_ROOT . "/plugins/$plugins";
 
         file_put_contents($gz, file_get_contents(App::Config("system", "update_source") . "plugins/$plugins"));
-            // remove lib folder
+        // remove lib folder
         `rm -rf $path`;
-            // create empty folder
+        // create empty folder
         mkdir($path);
-            // unzip it
+        // unzip it
         `tar -xvzf $gz -C plugins/$name`;
-            // chmod
+        // chmod
         `find $path -type d -exec chmod 0777 {} +`;
         `find $path -type f -exec chmod 0777 {} +`;
-            // remove gz file
+        // remove gz file
         unlink($gz);
         $this->alert->info("$plugins installed");
         $this->redirect("System/update");
@@ -77,15 +77,16 @@ class System_update extends ALT\Page
     {
 
         // check permission
-        $root = CMS_ROOT;
+        $pi = $this->app->pathInfo();
+        extract($pi);
 
-        $p = App::Request("System/db_check");
+        $p = $this->app->page("System/db_check");
         if ($p->needUpdate()) {
             $this->callout->warning("System", "DB version updated, please update db.");
         }
 
-        if (My\File::_($root . "/plugins")->permission() != "0777") {
-            $this->callout->warning("System", "$root/plugins permission not equal 0777");
+        if (My\File::_($cms_root . "/plugins")->permission() != "0777") {
+            $this->callout->warning("System", "$cms_root/plugins permission not equal 0777");
         }
 
         $this->navbar()->addButton("DB check", "System/db_check");

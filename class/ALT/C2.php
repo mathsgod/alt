@@ -476,7 +476,7 @@ class C2 extends \P\HTMLElement
 		return $p;
 	}
 
-	public function button()
+	public function button($field)
 	{
 		$p = new \BS\ButtonCollection;
 		foreach ($this->cell as $cell) {
@@ -485,6 +485,10 @@ class C2 extends \P\HTMLElement
 			p($cell)->append($btn);
 			if ($object = p($cell)->data("object")) {
 				p($btn)->data("object", $object);
+			}
+
+			if($field){
+				$btn->attr("data-value", is_object($object) ? $object->$field : $object[$field]);
 			}
 
 			$p[] = $btn;

@@ -6,7 +6,7 @@ class System_email_test extends ALT\Page
 {
     public function post()
     {
-        $mail = new App\Mail();
+        $mail = $this->createMail();
         $mail->isSMTP();
         $mail->Subject = $_POST["subject"];
         $mail->setFrom($_POST["sender"]);
