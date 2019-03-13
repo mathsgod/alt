@@ -7500,6 +7500,8 @@ var Ace_component = Object(componentNormalizer["a" /* default */])(
 
 src("alt-tab", Tab);
 src("alt-tab-pane", TabPane);
+src("alt-grid", Grid);
+src("alt-grid-section", GridSection);
 src("alt-box", Box);
 src("alt-box-header", BoxHeader);
 src("alt-box-body", BoxBody);
@@ -7511,8 +7513,6 @@ src("alt-date", src_Date);
 src("alt-datetime", Datetime);
 src("alt-email", Email);
 src("alt-form", Form);
-src("alt-grid", Grid);
-src("alt-grid-section", GridSection);
 src("alt-multiselect", Multiselect);
 src("alt-table", Table);
 src("alt-table-body", TableBody);

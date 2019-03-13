@@ -147,22 +147,28 @@ class Table extends HTMLTableElement
         return $column;
     }
 
+
     public function addEdit()
     {
         $column = $this->add();
         $column->width(20);
 
+        $p = new \P\AnchorCollection();
         foreach ($column->cell() as $c) {
             $obj = p($c)->data("object");
             if ($obj instanceof \App\Model) {
                 if ($obj->canRead()) {
-                    $btn = html("a")->class("btn btn-xs btn-warning")->href($obj->uri('ae'))->html("<i class='fa fa-fw fa-pencil-alt'></i>");
-                    $c->html($btn);
+                    $btn = p("a")->attr([
+                        "class" => "btn btn-xs btn-warning",
+                        "href" => $obj->uri('ae')
+                    ])->html("<i class='fa fa-fw fa-pencil-alt'></i>");
+                    $btn->appendTo($c);
+                    $p[] = $btn[0];
                 }
             }
         }
 
-        return $column;
+        return $p;
     }
 
     public function addCheckBox($index, $getter)

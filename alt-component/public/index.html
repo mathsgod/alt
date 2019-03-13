@@ -36,10 +36,24 @@
         alt-component
         <hr>
 
-        <input type="checkbox" name="test[]"/>
+        <div is="alt-grid" grid-num="0" data-uri="User/v/grid[0]" :sortable="true">
+            <div is="alt-grid-section">
+                <div is="alt-box" :collapsible="true">
+                    <div is="alt-box-header">
+
+                    </div>
+                    <div is="alt-box-body">
+                        body
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <hr />
 
         <input type="checkbox" name="clientservices[]" is="icheck" value="1" />
-        <input type="checkbox" name="clientservices[]" is="icheck" value="123"/>
+        <input type="checkbox" name="clientservices[]" is="icheck" value="123" />
         <input type="checkbox" name="clientservices[]" is="icheck" value="456" />
 
         <!--div is="alt-rt2" :columns="[

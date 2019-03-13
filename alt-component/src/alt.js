@@ -41,6 +41,10 @@ import Ace from "./Ace.vue";
 
 VueRegisterElement("alt-tab", altTab);
 VueRegisterElement("alt-tab-pane", altTabPane);
+
+VueRegisterElement("alt-grid", altGrid);
+VueRegisterElement("alt-grid-section", altGridSection);
+
 VueRegisterElement("alt-box", Box);
 VueRegisterElement("alt-box-header", BoxHeader);
 VueRegisterElement("alt-box-body", BoxBody);
@@ -52,8 +56,6 @@ VueRegisterElement("alt-date", altDate);
 VueRegisterElement("alt-datetime", altDatetime);
 VueRegisterElement("alt-email", altEmail);
 VueRegisterElement("alt-form", altForm);
-VueRegisterElement("alt-grid", altGrid);
-VueRegisterElement("alt-grid-section", altGridSection);
 VueRegisterElement("alt-multiselect", multiselect);
 VueRegisterElement("alt-table", altTable);
 VueRegisterElement("alt-table-body", altTableBody);
