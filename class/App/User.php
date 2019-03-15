@@ -4,7 +4,7 @@ namespace App;
 class User extends Model
 {
 
-    public const STATUS = ["Active", "Inactive"];
+    const STATUS = ["Active", "Inactive"];
 
     public function __construct($id = null)
     {
