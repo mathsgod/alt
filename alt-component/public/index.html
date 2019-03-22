@@ -56,7 +56,20 @@
         <input type="checkbox" name="clientservices[]" is="icheck" value="123" />
         <input type="checkbox" name="clientservices[]" is="icheck" value="456" />
 
-        <!--div is="alt-rt2" :columns="[
+        <hr />
+
+        <div is="alt-rt2" :columns="[
+            {
+                name:'cb',
+                title:'',
+                data:'cb',
+                type:'checkbox'
+            },
+            {
+                name:'eventlog_id',
+                title:'eventlog_id',
+                type:'text'
+            },
           {
               name:'__view__',
               title:'',
@@ -69,7 +82,7 @@
           }
             
           
-          ]" :data="[]" :ajax="{url:'http://127.0.0.1/testdata.php'}" :responsive="false" cell-url :page-length="25" :selectable="false" :buttons="[]" :exports="[]" :order="[]"></div -->
+          ]" :data="[]" :ajax="{url:'http://127.0.0.1/testdata.php'}" :responsive="false" cell-url :page-length="25" :selectable="false" :buttons="[]" :exports="[]" :order="[]"></div>
 
         <!-- div id="div1">
 

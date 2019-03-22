@@ -67,7 +67,7 @@
               v-text="column.getContent(d)"
               v-bind:style="column.cell(d).divStyle"
             ></div>
-            <input type="checkbox" v-if="column.type=='checkbox'" is="icheck">
+            <input type="checkbox" v-if="column.cell(d).type=='checkbox'" is="icheck" @click="column.cell(d).toggleCheckBox" :checked="column.cell(d).checked">
             <input type="checkbox" v-if="column.type=='deletes'">
             <button
               class="btn btn-xs btn-danger"
@@ -151,6 +151,9 @@ export default {
     }
   },
   methods: {
+    clickCheckBox(column,data){
+      console.log("click check box",column,data);
+    },
     toggleSubRow(index, cell) {
       if (this.subRow[index]) {
         this.subRow[index] = false;

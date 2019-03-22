@@ -210,6 +210,7 @@ export default {
   },
   created: function() {
     var storage = this.storage;
+    //console.log(storage);
     if (storage.responsive) {
       this.responsive = storage.responsive;
     }
@@ -228,6 +229,7 @@ export default {
       o.isVisible = true;
 
       storage.columns = Object.assign({}, storage.columns);
+      if (!storage.rows) storage.rows = {};
       var s;
       if ((s = storage.columns[o.name])) {
         if (s.isVisible === false) {
@@ -246,8 +248,26 @@ export default {
         methods: {
           cell(d) {
             var cell = {
-              type: "text"
+              type: "text",
+              column: this
             };
+
+            cell.toggleCheckBox=()=>{
+                console.log(this);
+
+              /*cell.checked = !cell.checked;
+              var id=d[this.name];
+              storage.rows[id].checked = cell.checked;
+              storage.save();*/
+              }
+
+
+            if (this.type == "checkbox") {
+              cell.type = "checkbox";
+              var id = d[this.name];
+              if (!storage.rows[id]) storage.rows[id] = {};
+              cell.checked = storage.rows[id].checked;
+            }
 
             if (this.cellStyle) {
               cell.style = { ...cell.style, ...this.cellStyle };
@@ -262,8 +282,6 @@ export default {
 
             if (d[this.name] == null) {
               return cell;
-            } else if (typeof d[this.name] == "string") {
-              cell.type = "text";
             } else {
               for (var i in d[this.name]) {
                 cell[i] = d[this.name][i];
@@ -320,7 +338,7 @@ export default {
           storage.columns[column.name],
           { isVisible: column.isVisible }
         );
-        this.storage = storage;
+        storage.save();
       });
     });
   },
@@ -342,22 +360,24 @@ export default {
         return column.title;
       });
     },
-    storage: {
-      get() {
-        let id = this.ajax.url
-          .split("/")
-          .filter(s => !Number(s))
-          .join("/");
+    storage() {
+      let id = this.ajax.url
+        .split("/")
+        .filter(s => !Number(s))
+        .join("/");
 
-        return JSON.parse(localStorage.getItem(id)) || {};
-      },
-      set(data) {
-        let id = this.ajax.url
-          .split("/")
-          .filter(s => !Number(s))
-          .join("/");
+      var s = JSON.parse(localStorage.getItem(id)) || {};
+      s.save = () => {
+        var data = {};
+        for (var i in s) {
+          if (typeof s[i] == "function") continue;
+          data[i] = s[i];
+        }
+
         localStorage.setItem(id, JSON.stringify(data));
-      }
+      };
+
+      return s;
     },
     pageCount() {
       return Math.ceil(this.total / this.local.pageLength);
@@ -377,6 +397,15 @@ export default {
     }
   },
   methods: {
+    getChecked(){
+      var d=[];
+      for(var r in this.storage.rows){
+        if(this.storage.rows[r].checked){
+          d.push(r);
+        }
+      }
+      return d;
+    },
     onClickButton(button) {
       var e = button.action + "(this);";
       eval(e);
@@ -452,7 +481,7 @@ export default {
       //save
       var storage = this.storage;
       storage.responsive = this.responsive;
-      this.storage = storage;
+      storage.save();
 
       this.resize();
     },
@@ -472,7 +501,7 @@ export default {
       //save
       var storage = this.storage;
       storage.pageLength = this.local.pageLength;
-      this.storage = storage;
+      storage.save();
 
       this.page = 1;
       this.draw();
@@ -519,7 +548,7 @@ export default {
 
       storage.order = this.local.order;
 
-      this.storage = storage;
+      storage.save();
 
       return this;
     },

@@ -94,6 +94,7 @@ class RT2 extends \P\HTMLElement
     {
         $c = new Column();
         $c->type = "checkbox";
+        $c->name=$field;
         $this->columns[] = $c;
         return $c;
     }
