@@ -4,24 +4,31 @@
 // Created Date: 3/1/2011
 // Last Updated:
 namespace My;
-class TreeNode extends \P\HTMLElement {
+
+use P\Element;
+
+class TreeNode extends Element
+{
 	public $ul = null;
 	public $label;
 	public $options = [];
 
-	public function __construct($tag = "li") {
+	public function __construct($tag = "li")
+	{
 		parent::__construct($tag);
 		if ($tag == "li") {
-			$this->label = new \P\Text();
-			p($this)->append($this->label);
+			$this->label = $this->ownerDocument->createTextNode("");
+			$this->appendChild($this->label);
 		}
 	}
 
-	public function Close() {
+	public function Close()
+	{
 		$this->closed = true;
 	}
 
-	public function addFolder($text) {
+	public function addFolder($text)
+	{
 		if (!$this->ul) {
 			$this->ul = p("ul")->appendTo($this);
 		}
@@ -35,7 +42,8 @@ class TreeNode extends \P\HTMLElement {
 		return $node;
 	}
 
-	public function addFile($text) {
+	public function addFile($text)
+	{
 		if (!$this->ul) {
 			$this->ul = p("ul")->appendTo($this);
 		}
@@ -47,41 +55,43 @@ class TreeNode extends \P\HTMLElement {
 
 		return $node;
 	}
-	
-	public function a(){
-		if(!$this->a){
-			
-			$this->a=p("a");
-			p($this)->wrapInner($this->a);		
+
+	public function a()
+	{
+		if (!$this->a) {
+
+			$this->a = p("a");
+			p($this)->wrapInner($this->a);
 		}
 		return $this->a;
 	}
 
 
-	public function icon($icon) {
+	public function icon($icon)
+	{
 		$this->options["icon"] = $icon;
-		$this->attributes["data-jstree"] = $this->options;
+		$this->setAttribute("data-jstree", json_encode($this->options));
 		return $this;
 	}
 
-	public function disabled($value = true) {
+	public function disabled($value = true)
+	{
 		$this->options["disabled"] = $value;
-		$this->attributes["data-jstree"] = $this->options;
+		$this->setAttribute("data-jstree", json_encode($this->options));
 		return $this;
 	}
 
-	public function opened($value = true) {
+	public function opened($value = true)
+	{
 		$this->options["opened"] = $value;
-		$this->attributes["data-jstree"] = $this->options;
+		$this->setAttribute("data-jstree", json_encode($this->options));
 		return $this;
 	}
 
-	public function selected($value = true) {
+	public function selected($value = true)
+	{
 		$this->options["selected"] = $value;
-		$this->attributes["data-jstree"] = $this->options;
+		$this->setAttribute("data-jstree", json_encode($this->options));
 		return $this;
-
 	}
-
-
 }

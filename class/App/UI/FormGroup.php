@@ -1,13 +1,16 @@
 <?
 namespace App\UI;
 
-class FormGroup extends \P\Element
+use P\HTMLDivElement;
+
+
+class FormGroup extends HTMLDivElement
 {
     public function __construct()
     {
-        parent::__construct("div");
-//        $this->attributes["is"]="bs-form-group";
+        parent::__construct();
+        //        $this->attributes["is"]="bs-form-group";
         $this->classList[] = "form-group";
     }
-
 }
+

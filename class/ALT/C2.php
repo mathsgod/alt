@@ -4,8 +4,8 @@ namespace ALT;
 
 use Exception;
 use My\Func;
-
-class C2 extends \P\Element
+use P\HTMLElement;
+class C2 extends HTMLElement
 {
 	private $_format;
 	public $cell;
@@ -476,7 +476,7 @@ class C2 extends \P\Element
 		return $p;
 	}
 
-	public function button($field)
+	public function button($field=null)
 	{
 		$p = new \BS\ButtonCollection;
 		foreach ($this->cell as $cell) {
@@ -488,7 +488,7 @@ class C2 extends \P\Element
 			}
 
 			if($field){
-				$btn->attr("data-value", is_object($object) ? $object->$field : $object[$field]);
+				p($btn)->attr("data-value", is_object($object) ? $object->$field : $object[$field]);
 			}
 
 			$p[] = $btn;

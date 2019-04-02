@@ -341,7 +341,7 @@ class Page extends \R\Page
 
         $f = new UI\Form($this);
         if ($multipart) {
-            $f->attributes["enctype"] = "multipart/form-data";
+            $f->setAttribute("enctype","multipart/form-data");
         }
 
         $path = $this->path();

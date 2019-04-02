@@ -1,19 +1,25 @@
 <?php
 namespace Xeditable;
-class Text extends \P\HTMLAnchorElement {
-	public function __construct() {
-		parent::__construct();
+
+use \P\Element;
+
+class Text extends Element
+{
+	public function __construct()
+	{
+		parent::__construct("a");
 		$this->setAttribute("href", "javascript:void(0)");
-		$this->setAttribute("is","x-editable");
+		$this->setAttribute("is", "x-editable");
 		$this->setAttribute("data-mode", "inline");
 		$this->setAttribute("data-type", "text");
 	}
 
-	public function __set($name, $value) {
-		if($name=="placeholder"){
+	public function __set($name, $value)
+	{
+		if ($name == "placeholder") {
 			$this->setAttribute("data-placeholder", $value);
 			return;
-		}elseif ($name == "emptyText") {
+		} elseif ($name == "emptyText") {
 			$this->setAttribute("data-emptyText", $value);
 			return;
 		} elseif ($name == "title") {
@@ -33,4 +39,3 @@ class Text extends \P\HTMLAnchorElement {
 	}
 }
 
-?>

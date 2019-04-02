@@ -2,11 +2,9 @@
 
 namespace My\HTML;
 
-class Form extends \P\Element {
-	public function __construct()
-	{
-		parent::__construct("form");
-	}
+use P\HTMLFormElement;
+class Form extends HTMLFormElement {
+
 	public function addHidden($name, $value) {
 		$input = p("input")->appendTo($this);
 		$input->attr("name", $name)->attr("type", "hidden")->val($value);

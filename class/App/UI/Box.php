@@ -3,6 +3,7 @@
 namespace App\UI;
 
 use App\Page;
+use P\HTMLDivElement;
 
 class BoxClassTokenList extends \P\DOMTokenList
 {
@@ -18,7 +19,7 @@ class BoxClassTokenList extends \P\DOMTokenList
     }
 }
 
-class Box extends Element
+class Box extends HTMLDivElement
 {
     const BOX_CLASS = ["box-default", "box-primary", "box-success", "box-info", "box-warning", "box-danger"];
 
@@ -30,9 +31,11 @@ class Box extends Element
     public $dataUri = null;
     private static $NUM = 0;
 
+    
+
     public function __construct(Page $page)
     {
-        parent::__construct("div");
+        parent::__construct();
         $this->page = $page;
 
         $this->setAttribute("is", "alt-box");
@@ -117,10 +120,6 @@ class Box extends Element
         if ($this->dataUri) {
             $this->setAttribute("data-uri", $this->dataUri);
         }
-
-
-        $v = get_object_vars($this);
-
 
         if ($this->collapsible) {
             $this->setAttribute(":collapsible", "true");

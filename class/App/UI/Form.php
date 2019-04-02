@@ -55,7 +55,7 @@ class Form extends \My\HTML\Form
             $this->action($page->uri());
         }
 
-     
+        $this->appendChild($this->box);
     }
 
     public function __toString()
@@ -67,7 +67,6 @@ class Form extends \My\HTML\Form
         if (!$this->show_reset) {
             $this->reset_button->classList->add("hide");
         }
-        p($this)->html($this->box);
         return parent::__toString();
     }
 
@@ -79,8 +78,8 @@ class Form extends \My\HTML\Form
 
     public function addBody($body)
     {
-        $this->box->body()->append((string )$body);
 
+        $this->box->body()->append((string )$body);
         return $this;
     }
 

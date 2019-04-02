@@ -5,8 +5,8 @@ namespace App\UI;
 use App\Page;
 use ALT\C2;
 use My\Func;
-
-class Table extends Element
+use P\HTMLTableElement;
+class Table extends HTMLTableElement
 {
     protected $page;
     protected $objects;
@@ -15,7 +15,7 @@ class Table extends Element
 
     public function __construct($objects, Page $page)
     {
-        parent::__construct("table");
+        parent::__construct();
         $this->objects = $objects;
         $this->page = $page;
         $this->setAttribute("is","alt-table");
@@ -81,7 +81,7 @@ class Table extends Element
             }
         }
 
-        $form_name = $this->attr("form-name");
+        $form_name = p($this)->attr("form-name");
 
         $column->callback = function ($object, $node) use ($form_name) {
             $field = $node->attributes["data-field"];
@@ -121,7 +121,7 @@ class Table extends Element
             if ($obj instanceof \App\Model) {
                 if ($obj->canRead()) {
                     $btn = html("a")->class("btn btn-xs btn-info")->href($obj->uri('v'))->html("<i class='fa fa-fw fa-search'></i>");
-                    $c->html($btn);
+                    p($c)->html($btn);
                 }
             }
         }

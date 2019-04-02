@@ -1,15 +1,21 @@
 <?php
 namespace Xeditable;
-class Textarea extends \P\HTMLAnchorElement {
-    public function __construct() {
-        parent::__construct();
+
+use \P\Element;
+
+class Textarea extends Element
+{
+    public function __construct()
+    {
+        parent::__construct("a");
         $this->setAttribute("href", "javascript:void(0)");
-        $this->setAttribute("is","x-editable");
+        $this->setAttribute("is", "x-editable");
         $this->setAttribute("data-mode", "inline");
         $this->setAttribute("data-type", "textarea");
     }
 
-    public function __set($name, $value) {
+    public function __set($name, $value)
+    {
         if ($name == "emptyText") {
             $this->setAttribute("data-emptyText", $value);
             return;
@@ -33,4 +39,3 @@ class Textarea extends \P\HTMLAnchorElement {
     }
 }
 
-?>

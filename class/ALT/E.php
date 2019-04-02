@@ -1,7 +1,9 @@
 <?php
 namespace ALT;
 
-class E extends \P\Element
+use P\HTMLDivElement;
+
+class E extends HTMLDivElement
 {
     public $object;
     public $row = [];
@@ -11,7 +13,7 @@ class E extends \P\Element
 
     public function __construct($object)
     {
-        parent::__construct("div");
+        parent::__construct();
         $this->setAttribute("is", "alt-e");
         $this->classList[] = "form-horizontal";
         $this->object = $object;
