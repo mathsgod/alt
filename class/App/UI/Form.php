@@ -12,24 +12,24 @@ class Form extends \My\HTML\Form
     private $back_button;
     private $reset_button;
     protected $page;
-    private $box;
+    public $box;
 
     public function __construct(Page $page)
     {
         parent::__construct();
-        //$this->attributes["is"]="alt-form"
+        //$this->setAttribute("is"]="alt-form"
         $this->page = $page;
-        $this->attributes["method"] = "post";
+        $this->setAttribute("method", "post");
 
         $this->box = new Box($page);
+        $this->box->body;
         $this->box->classList->add("box-primary");
-        p($this)->append($this->box);
 
         $this->submit_button = new Button($page);
         $this->submit_button->classList->add("btn-success");
-        $this->submit_button->attributes["type"] = "submit";
-        $this->submit_button->attributes["icon"]="fa fa-check";
-        $this->submit_button->attributes["is"] = "alt-button";
+        $this->submit_button->setAttribute("type", "submit");
+        $this->submit_button->setAttribute("icon", "fa fa-check");
+        $this->submit_button->setAttribute("is", "alt-button");
         $this->submit_button->label("Submit");
 
         $this->box->footer->append($this->submit_button);
@@ -37,23 +37,25 @@ class Form extends \My\HTML\Form
         $this->reset_button = new Button($page);
         $this->reset_button->classList->add("btn-info");
         $this->reset_button->icon("fa fa-rotate-left")->label("Reset");
-        $this->reset_button->attributes["type"] = "reset";
+        $this->reset_button->setAttribute("type", "reset");
         $this->box->footer->append($this->reset_button);
 
         $this->back_button = new Button($page);
         $this->back_button->classList->add("btn-warning");
         $this->back_button->label("Back");
-        $this->back_button->attributes["type"] = "button";
+        $this->back_button->setAttribute("type", "button");
         if ($_GET["fancybox"]) {
-            $this->back_button->attributes["data-fancybox-close"] = true;
+            $this->back_button->setAttribute("data-fancybox-close", true);
         } else {
-            $this->back_button->attributes["onClick"] = 'javascript:history.back(-1)';
+            $this->back_button->setAttribute("onClick", 'javascript:history.back(-1)');
         }
 
         $this->box->footer->append($this->back_button);
         if ($_GET["fancybox"]) {
             $this->action($page->uri());
         }
+
+     
     }
 
     public function __toString()
@@ -65,18 +67,20 @@ class Form extends \My\HTML\Form
         if (!$this->show_reset) {
             $this->reset_button->classList->add("hide");
         }
+        p($this)->html($this->box);
         return parent::__toString();
     }
 
     public function action($action)
     {
-        $this->attributes["action"] = $action;
+        $this->setAttribute("action", $action);
         return $this;
     }
 
     public function addBody($body)
     {
         $this->box->body()->append((string )$body);
+
         return $this;
     }
 
@@ -88,6 +92,6 @@ class Form extends \My\HTML\Form
 
     public function box()
     {
-        return $this->box;
+        return p($this->box);
     }
 }

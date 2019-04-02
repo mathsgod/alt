@@ -8,14 +8,17 @@ class BoxClassTokenList extends \P\DOMTokenList
 {
     public function offsetSet($offset, $value)
     {
-        if (in_array($value, Box::BOX_CLASS)) {
-            $this->token = array_diff($this->token, Box::BOX_CLASS);
+        $values = $this->values();
+        if ($this->values()) {
+            if (in_array($value, BOX::BOX_CLASS)) {
+                $this->value = implode(" ", array_diff($values, BOX::BOX_CLASS));
+            }
         }
         parent::offsetSet($offset, $value);
     }
 }
 
-class Box extends \P\HTMLDivElement
+class Box extends Element
 {
     const BOX_CLASS = ["box-default", "box-primary", "box-success", "box-info", "box-warning", "box-danger"];
 
@@ -29,11 +32,10 @@ class Box extends \P\HTMLDivElement
 
     public function __construct(Page $page)
     {
-        parent::__construct();
+        parent::__construct("div");
         $this->page = $page;
-        $this->classList = new BoxClassTokenList;
 
-        $this->attributes["is"] = "alt-box";
+        $this->setAttribute("is", "alt-box");
         $this->classList->add("box");
 
         $this->dataUri = $page->path() . "/box[" . self::$NUM . "]";
@@ -42,12 +44,11 @@ class Box extends \P\HTMLDivElement
         if ($ui->layout) {
             $layout = json_decode($ui->layout, true);
             if ($layout["collapsed"]) {
-                $this->collapsed=$layout["collapsed"];
+                $this->collapsed = $layout["collapsed"];
             }
         }
 
         self::$NUM++;
-
     }
 
     public function collapsible($collapsible)
@@ -66,19 +67,30 @@ class Box extends \P\HTMLDivElement
     {
         if ($name == "header") {
             $this->header = new BoxHeader($this->page);
+            $this->prependChild($this->header);
             return $this->header;
         }
 
         if ($name == "body") {
             $this->body = new BoxBody($this->page);
+            $this->appendChild($this->body);
             return $this->body;
         }
 
         if ($name == "footer") {
             $this->footer = new BoxFooter($this->page);
+            $this->appendChild($this->footer);
             return $this->footer;
         }
 
+        switch ($name) {
+            case "classList":
+                if (!$this->hasAttribute("class")) {
+                    $this->setAttribute("class", "");
+                }
+                return new BoxClassTokenList($this->attributes->getNamedItem("class"));
+                break;
+        }
         return parent::__get($name);
     }
 
@@ -99,47 +111,34 @@ class Box extends \P\HTMLDivElement
     {
         if ($this->dataUrl) {
             $body = $this->body;
-            $this->attributes["data-url"] = $this->dataUrl;
+            $this->setAttribute("data-url", $this->dataUrl);
         }
 
-        if($this->dataUri){
-            $this->attributes["data-uri"] = $this->dataUri;
+        if ($this->dataUri) {
+            $this->setAttribute("data-uri", $this->dataUri);
         }
 
 
         $v = get_object_vars($this);
 
-        if ($v["header"]) {
-            $this->appendChild($v["header"]);
-        }
-
-        if ($v["body"]) {
-            $this->appendChild($v["body"]);
-        }
-
-        if ($v["footer"]) {
-            $this->appendChild($v["footer"]);
-        }
 
         if ($this->collapsible) {
-            $this->attributes[":collapsible"] = "true";
+            $this->setAttribute(":collapsible", "true");
         }
 
         if ($this->collapsed) {
-            $this->attributes[":collapsed"] = "true";
+            $this->setAttribute(":collapsed", "true");
         }
 
         if ($this->pinable) {
-            $this->attributes[":pinable"] = "true";
+            $this->setAttribute(":pinable", "true");
         }
 
         if ($this->draggable) {
-            $this->attributes[":draggable"] = "true";
+            $this->setAttribute(":draggable", "true");
         }
 
 
         return parent::__toString();
     }
-
-
 }

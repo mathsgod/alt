@@ -25,6 +25,15 @@ class User_ae extends ALT\Page
 
     public function get()
     {
+
+        $b=$this->createBox();
+        $b->header->title="abc";
+        $b->body()->html("abc");
+
+        $this->write($b);
+
+        return;
+
         $obj = $this->object();
         $mv = $this->createE();
 

@@ -19,6 +19,20 @@
     },
     "repositories": [
         {
+            "type": "path",
+            "url": "../bs",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "../p-query",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
             "type": "composer",
             "url": "https://raymond2.hostlink.com.hk/satis/web"
         }
@@ -26,8 +40,6 @@
     "require": {
         "php": ">=5.6",
         "mathsgod/r-psr7": "^2.1.1",
-        "mathsgod/p-query": "^1.1.6",
-        "mathsgod/bs": "1.*",
         "mathsgod/hl-holiday": "^1.2.1",
         "mathsgod/hl-weather": "1.*",
         "mathsgod/html": "1.*",
@@ -44,7 +56,9 @@
         "mathsgod/r-webauthn": "^1.0",
         "mathsgod/r-graphql": "^1.2",
         "mathsgod/r": "^2.5",
-        "mathsgod/r-db": "^3.0"
+        "mathsgod/r-db": "^3.0",
+        "mathsgod/p-query": "master-dev",
+        "mathsgod/bs": "master-dev"
     },
     "require-dev": {
         "phpunit/phpunit": "*"

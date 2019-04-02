@@ -2,8 +2,10 @@
 namespace App\UI;
 
 use App\Page;
+use P\Element;
+use P\Document;
 
-class Tab extends \P\HTMLDivElement
+class Tab extends Element
 {
     public $navs;
     public $content;
@@ -14,17 +16,18 @@ class Tab extends \P\HTMLDivElement
 
     public function __construct(Page $page, $prefix)
     {
-        parent::__construct();
+        parent::__construct("div");
+
         //$this->attributes["is"] = "alt-tab";
         $this->page = $page;
-        $this->classList[] = "nav-tabs-custom";
+        $this->classList->add("nav-tabs-custom");
 
-        $this->navs = new \P\HTMLElement("ul");
+        $this->navs = $this->ownerDocument->createElement("ul");
         $this->navs->classList[] = "nav";
         $this->navs->classList[] = "nav-tabs";
         $this->append($this->navs);
 
-        $this->content = new \P\HTMLDivElement();
+        $this->content =  $this->ownerDocument->createElement("div");
         $this->content->classList[] = "tab-content";
         $this->append($this->content);
 
@@ -33,7 +36,7 @@ class Tab extends \P\HTMLDivElement
         $this->prefix = $prefix;
 
         if ($module) {
-            $this->attributes["data-cookie"] = $page->path() . "/$prefix" . self::$_MyTab;
+            $this->setAttribute("data-cookie", $page->path() . "/$prefix" . self::$_MyTab);
         }
 
         $this->classList[] = "my_tab";
@@ -52,7 +55,7 @@ class Tab extends \P\HTMLDivElement
         return;
         $li = p("li")->addClass("pull-right");
         $a = p("a")->attr("href", "#")->html('<i class="fa fa-thumbtack"></i>')->appendTo($li);
-        $a->attr("@click.prevent",'$emit("toggle-pin")');
+        $a->attr("@click.prevent", '$emit("toggle-pin")');
         p($this->navs)->append($li);
         $this->attributes[":pinable"] = "true";
     }
@@ -78,16 +81,18 @@ class Tab extends \P\HTMLDivElement
             return;
         }
         $ti = new TabItem();
+
         //$li = p("li");
 
         $a = p("a")->attr("href", $href)->text($label)->appendTo($ti->li);
         $id = "tab-{$this->prefix}{$tab_id}";
-
         $a->attr("data-target", "#$id");
         $a->attr("data-toggle", "tabajax");
-        $this->navs->append($ti->li);
-        $div = p("div")->appendTo($this->content);
+        p($this->navs)->append($ti->li);
+
+        $div = p("div");
         $div->addClass("tab-pane")->attr("id", $id);
+        p($this->content)->append($div);
         return $ti;
     }
 

@@ -1,5 +1,5 @@
 <template>
-    <input class="form-control" />
+  <input class="form-control">
 </template>
 <script>
 export default {

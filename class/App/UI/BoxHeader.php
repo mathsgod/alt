@@ -2,17 +2,16 @@
 
 namespace App\UI;
 
-class BoxHeader extends \P\HTMLDivElement
+class BoxHeader extends Element
 {
     protected $page;
-    public $title;
     public $tools;
 
     public function __construct($page)
     {
-        parent::__construct();
+        parent::__construct("div");
         $this->page = $page;
-        $this->attributes["is"] = "alt-box-header";
+        $this->setAttribute("is", "alt-box-header");
         $this->classList[] = "box-header";
 
         $this->tools = new BoxTools($page);
@@ -29,14 +28,15 @@ class BoxHeader extends \P\HTMLDivElement
         return $button;
     }
 
-    public function __toString()
+    public function __set($name, $value)
     {
-        if ($this->title) {
-            $this->prepend($this->title);
+        if($name=="title"){
+            $this->prepend($value);
+            return;
         }
-
-        return parent::__toString();
+        parent::__set($name, $value);
     }
 
-
+    
 }
+

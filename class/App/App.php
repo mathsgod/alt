@@ -249,6 +249,7 @@ class App extends \R\App
                         }
                     }
                 }
+                
             }
 
 
@@ -258,6 +259,7 @@ class App extends \R\App
 
 
             file_put_contents("php://output", (string)$response->getBody());
+            
         } elseif (self::Logined()) {
             $this->redirect("404_not_found");
         } else {

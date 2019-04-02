@@ -19,17 +19,8 @@ class Button extends \BS\Button {
 		return $this;
 	}
 
-	public function icon($class) {
-		$i = p($this)->find("i");
-		if ($i->count() > 0) {
-			$icon = $i[0];
-			p($icon)->addClass($class);
-		} else {
-			$i = p("<i></i>")->addClass($class);
-			p($this)->prepend($i);
-			$i->after(new \P\Text(" "));
-		}
-
+	public function addClass($class){
+		p($this)->addClass($class);
 		return $this;
 	}
 

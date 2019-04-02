@@ -159,13 +159,13 @@ class Page extends \App\Page
 
                     if ($this->_navbar) {
                         $app = $this->app;
-                        $this->_navbar->find("a")->each(function ($i, $o) use ($app) {
+                        p($this->_navbar)->find("a")->each(function ($i, $o) use ($app) {
                             $o = p($o);
                             if (!$app->acl($o->attr("href"))) {
                                 $o->remove();
                             }
                         });
-                        if ($this->_navbar->find("a")->size() || $this->_navbar->find("button")->size()) {
+                        if (p($this->_navbar)->find("a")->size() || $this->_navbar->find("button")->size()) {
                             $data["navbar"] = (string )$this->_navbar;
                         }
                     }
@@ -347,6 +347,7 @@ class Page extends \App\Page
                 $row->append($section);
             }
         }
+
         return $grid;
     }
 }

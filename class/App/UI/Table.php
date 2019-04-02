@@ -3,11 +3,10 @@
 namespace App\UI;
 
 use App\Page;
-use P\HTMLTableElement;
 use ALT\C2;
 use My\Func;
 
-class Table extends HTMLTableElement
+class Table extends Element
 {
     protected $page;
     protected $objects;
@@ -16,10 +15,10 @@ class Table extends HTMLTableElement
 
     public function __construct($objects, Page $page)
     {
-        parent::__construct();
+        parent::__construct("table");
         $this->objects = $objects;
         $this->page = $page;
-        $this->attributes["is"] = "alt-table";
+        $this->setAttribute("is","alt-table");
         $this->classList->add("table");
 
         $this->createTBody();
@@ -32,7 +31,7 @@ class Table extends HTMLTableElement
 
         $this->columns[] = $column;
 
-        if ($this->attributes["form-create"]) {
+        if ($this->getAttribute("form-create")) {
             $column->createTemplate = true;
         }
 
@@ -47,18 +46,19 @@ class Table extends HTMLTableElement
 
         foreach ($this->objects as $k => $obj) {
             if ($tbody->rows->length <= $i) {
+                
                 $row = $tbody->insertRow();
                 if ($obj instanceof \App\Model) {
-                    $row->attributes["data-index"] = $obj->id();
+                    $row->setAttribute("data-index",$obj->id());
                 } else {
                     if ($this->key) {
                         if (is_array($obj)) {
-                            $row->attributes["data-index"] = $obj[$this->key];
+                            $row->setAttribute("data-index",$obj[$this->key]);
                         } else {
-                            $row->attributes["data-index"] = $obj->{$this->key};
+                            $row->setAttribute("data-index",$obj->{$this->key});
                         }
                     } else {
-                        $row->attributes["data-index"] = $k;
+                        $row->setAttribute("data-index",$k);
                     }
                 }
             } else {

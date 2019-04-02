@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2f0d0e04c3d2f15fcfefccce5aa2857f",
+    "content-hash": "c4d438d28f3e354ccb8084bfb29de71e",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -483,21 +483,19 @@
         },
         {
             "name": "mathsgod/bs",
-            "version": "1.0.8",
-            "source": {
-                "type": "git",
-                "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/bs.git",
-                "reference": "1b9b81e0af10369bf19784fe87de7665b8234fad"
-            },
+            "version": "dev-master",
             "dist": {
-                "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/bs/mathsgod-bs-1.0.8-23dbce.zip",
-                "reference": "1b9b81e0af10369bf19784fe87de7665b8234fad",
-                "shasum": "3e5232d26c0e282ccbf642ae6c7d210621c97c7a"
+                "type": "path",
+                "url": "../bs",
+                "reference": "1611c5c3aac64cebc9b77fda2f30d32f1b1f610a",
+                "shasum": null
             },
             "require": {
-                "mathsgod/p-query": "1.*",
+                "mathsgod/p-query": "master-dev",
                 "php": ">=5.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
             },
             "type": "library",
             "autoload": {
@@ -514,7 +512,9 @@
                 }
             ],
             "description": "Raymond php bootstrap library",
-            "time": "2019-01-10T03:11:25+00:00"
+            "transport-options": {
+                "symlink": true
+            }
         },
         {
             "name": "mathsgod/data-structure",
@@ -680,20 +680,16 @@
         },
         {
             "name": "mathsgod/p-query",
-            "version": "1.1.15",
-            "source": {
-                "type": "git",
-                "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/p-query.git",
-                "reference": "e1cb0e99c70597e1311637f06158f145ab5e6c50"
-            },
+            "version": "dev-master",
             "dist": {
-                "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/p-query/mathsgod-p-query-1.1.15-ba6e50.zip",
-                "reference": "e1cb0e99c70597e1311637f06158f145ab5e6c50",
-                "shasum": "cb4df84e155ca237e9c483973b585c5a016af43e"
+                "type": "path",
+                "url": "../p-query",
+                "reference": "65a0991e5770d4cd860eefaed21cce6dccd7e793",
+                "shasum": null
             },
             "require": {
-                "php": ">=5.4"
+                "php": ">=5.4",
+                "symfony/css-selector": "^4.2"
             },
             "require-dev": {
                 "phpunit/phpunit": "*"
@@ -716,7 +712,9 @@
                 }
             ],
             "description": "Raymond php html library",
-            "time": "2019-02-11T03:21:35+00:00"
+            "transport-options": {
+                "symlink": true
+            }
         },
         {
             "name": "mathsgod/r",
@@ -1453,6 +1451,59 @@
             ],
             "description": "Allows installation of Components via Composer.",
             "time": "2015-08-10T12:35:38+00:00"
+        },
+        {
+            "name": "symfony/css-selector",
+            "version": "v4.2.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/css-selector.git",
+                "reference": "48eddf66950fa57996e1be4a55916d65c10c604a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/48eddf66950fa57996e1be4a55916d65c10c604a",
+                "reference": "48eddf66950fa57996e1be4a55916d65c10c604a",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\CssSelector\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jean-François Simon",
+                    "email": "jeanfrancois.simon@sensiolabs.com"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony CssSelector Component",
+            "homepage": "https://symfony.com",
+            "time": "2019-01-16T20:31:39+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -3263,7 +3314,10 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "mathsgod/p-query": 20,
+        "mathsgod/bs": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

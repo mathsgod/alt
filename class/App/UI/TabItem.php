@@ -8,8 +8,8 @@ class TabItem
 
     public function __construct()
     {
-        $this->li = new \P\HTMLElement("li");
-        $this->div = new \P\HTMLDivElement();
+        $this->li = p("li")[0];
+        $this->div = p("div")[0];
         $this->div->classList[]="tab-pane";
     }
 

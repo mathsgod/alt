@@ -2,8 +2,7 @@
 namespace App\UI;
 
 //class RT extends \RT
-
-class RT2 extends \P\HTMLElement
+class RT2 extends Element
 {
     public $columns = [];
     public $data = [];
@@ -22,7 +21,8 @@ class RT2 extends \P\HTMLElement
     public function __construct($objects, $page, $config)
     {
         parent::__construct("div");
-        $this->attributes["is"] = "alt-rt2";
+        
+        $this->setAttribute("is","alt-rt2");
         $this->response = new RTResponse();
 
         $this->_page = $page;
@@ -102,18 +102,16 @@ class RT2 extends \P\HTMLElement
     public function __toString()
     {
 
-        $this->attributes[":columns"] = $this->columns;
-        $this->attributes[":data"] = $this->data;
-        $this->attributes[":ajax"] = $this->ajax;
-        $this->attributes[":responsive"] = $this->responsive ? "true" : "false";
-
-        $this->attributes["cell-url"] = $this->cellUrl;
-
-        $this->attributes[":page-length"] = $this->pageLength;
-        $this->attributes[":selectable"] = $this->selectable ? "true" : "false";
-        $this->attributes[":buttons"] = $this->buttons;
-        $this->attributes[":exports"] = $this->exports;
-        $this->attributes[":order"] = $this->order;
+        $this->setAttribute(":columns",$this->columns);
+        $this->setAttribute(":data",$this->data);
+        $this->setAttribute(":ajax",$this->ajax);
+        $this->setAttribute(":responsive",$this->responsive ? "true" : "false");
+        $this->setAttribute("cell-url",$this->cellUrl);
+        $this->setAttribute(":page-length",$this->pageLength);
+        $this->setAttribute(":selectable",$this->selectable ? "true" : "false");
+        $this->setAttribute(":buttons",$this->buttons);
+        $this->setAttribute(":exports",$this->exports);
+        $this->setAttribute(":order",$this->order);
         return parent::__toString();
     }
 

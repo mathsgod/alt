@@ -9,7 +9,6 @@ class Form extends \My\HTML\Form
     private $submit_button;
     private $back_button;
     private $reset_button;
-    private $_body = [];
     private $page;
     private $box;
 
@@ -71,7 +70,9 @@ class Form extends \My\HTML\Form
 
     public function addBody($body)
     {
-        $this->box->body()->append((string )$body);
+        //$this->box->body()->append((string )$body);
+        $this->box->body()->html($body);
+
         return $this;
     }
 

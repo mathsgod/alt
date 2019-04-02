@@ -1,7 +1,8 @@
 <?php
 
 namespace My;
-class C extends \P\HTMLElement {
+use P\Element;
+class C extends Element {
 	private $_format;
 	public $cell;
 	public $label;
@@ -11,7 +12,7 @@ class C extends \P\HTMLElement {
 		return $this->cell;
 	}
 
-	public function __construct($tag) {
+	public function __construct(string $tag) {
 		parent::__construct($tag);
 		$this->cell = p();
 		$this->c_tpl = p();

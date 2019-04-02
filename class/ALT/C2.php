@@ -5,7 +5,7 @@ namespace ALT;
 use Exception;
 use My\Func;
 
-class C2 extends \P\HTMLElement
+class C2 extends \P\Element
 {
 	private $_format;
 	public $cell;

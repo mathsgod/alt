@@ -2,13 +2,14 @@
 
 namespace App\UI;
 
-class BoxBody extends \P\HTMLDivElement
+class BoxBody extends Element
 {
 
-    public function __construct(){
-        parent::__construct();
-        $this->attributes["is"] = "alt-box-body";
-        $this->classList[]="box-body";
-    }
+    public function __construct()
+    {
+        parent::__construct("div");
 
+        $this->setAttribute("is", "alt-box-body");
+        $this->classList[] = "box-body";
+    }
 }

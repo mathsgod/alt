@@ -25,6 +25,7 @@ class V extends Box
         $this->container = $this->body();
 
         $this->addTable();
+        
     }
 
     public function setColumnRatio($ratio)
@@ -89,6 +90,7 @@ class V extends Box
 
     public function addTable()
     {
+        
         $this->table = p("table")->addClass("table")->appendTo($this->container);
         $this->table->addClass($this->tableClass);
         $this->table->append(p("tbody"));

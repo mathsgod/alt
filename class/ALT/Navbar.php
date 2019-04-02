@@ -2,7 +2,7 @@
 
 namespace ALT;
 
-class Navbar extends \P\HTMLElement
+class Navbar extends \App\UI\Element
 {
     protected $page;
     public function __construct(Page $page)
@@ -11,6 +11,7 @@ class Navbar extends \P\HTMLElement
         parent::__construct("nav");
         $this->classList->add("navbar");
         $this->classList->add("navbar-default");
+
 
         $header = p("div")->addClass("navbar-header")->appendTo($this);
         $button = p("button")->attr("type", "button")->addClass("navbar-toggle collapsed")->appendTo($header);
@@ -29,16 +30,14 @@ class Navbar extends \P\HTMLElement
 
     public function addButton($label = null, $uri = null)
     {
-        $btn = new Button();
+        $btn = new Button("primary", "sm", $uri);
         $this->_content->append($btn);
-        p($btn)->addClass("navbar-btn btn-primary btn-sm");
+        p($btn)->addClass("navbar-btn");
+
 
         if ($label) {
             $label = $this->page->translate($label);
             p($btn)->text($label);
-        }
-        if ($uri) {
-            $btn->href($uri);
         }
         return $btn;
     }
@@ -77,11 +76,10 @@ class Navbar extends \P\HTMLElement
 
     public function addLayoutReset()
     {
-        $btn = new Button();
+        $btn = new Button("primary","sm","UI/reset_layout?uri=" . $this->page->path());
         $this->_content->append($btn);
-        p($btn)->addClass("navbar-btn btn-primary btn-sm");
+        p($btn)->addClass("navbar-btn");
         p($btn)->text("Layout reset");
-        $btn->href("UI/reset_layout?uri=" . $this->page->path());
         $btn->icon("fa fa-fw fa-sync");
         return $btn;
     }

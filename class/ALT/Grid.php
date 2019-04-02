@@ -54,7 +54,7 @@ class Grid extends \P\Query
 		if ($box instanceof \App\UI\Box || $box instanceof \App\UI\Tab) {
 			$box->collapsible(true);
 			$box->pinable(true);
-			$box->attributes["grid-item"] = $this->item;
+			p($box)->attr("grid-item", $this->item);
 		}
 
 
@@ -78,8 +78,6 @@ class Grid extends \P\Query
 		}
 
 		$this->_location[$location[0]][$location[1]][] = $box;
-
 	}
 }
-
-?>
+ 
