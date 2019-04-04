@@ -7,6 +7,7 @@ use R\Psr7\Request;
 use R\Psr7\Response;
 use R\Psr7\JSONStream;
 use R\Set;
+use Exception;
 
 class Page extends \R\Page
 {
@@ -124,6 +125,7 @@ class Page extends \R\Page
                 return null;
             }
         }
+
         return $this->_object;
     }
 
@@ -183,6 +185,7 @@ class Page extends \R\Page
 
     public function __invoke(Request $request, Response $response)
     {
+
         $this->request = $request;
         $this->request = $this->request->withAttribute("module", $this->module());
 
@@ -310,12 +313,7 @@ class Page extends \R\Page
         $route = $this->request->getAttribute("route");
         $path = $route->path;
 
-        if ($module = Module::ByPath($path)) {
-            return $module;
-        }
-        $p = explode("/", $path);
-        $p = array_values(array_filter($p, strlen));
-        return Module::_($p[0]);
+        return Module::ByPath($path);
     }
 
     public function translate($string)
@@ -508,7 +506,7 @@ class Page extends \R\Page
 
         throw new \Exception("method [$name] not found");
 
-        \App::Redirect("404_not_found?uri=" . urlencode($uri));
+        $this->redirect("404_not_found?uri=" . urlencode($uri));
     }
 
     public function getFormBuilder($path = null, $object = null)

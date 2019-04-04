@@ -94,6 +94,7 @@ class Page extends \App\Page
         try{
             $response = parent::__invoke($request, $response);
         }catch(Exception $e){
+            
             if($request->isAccept("text/html") && $request->getMethod() == "get"){
                 $this->alert->danger($e->getMessage());
             }else{

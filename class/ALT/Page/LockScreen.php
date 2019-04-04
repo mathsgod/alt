@@ -2,6 +2,8 @@
 namespace ALT\Page;
 
 use R\Psr7\Stream;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\RequestInterface;
 
 class LockScreen extends \R\Page
 {
@@ -23,12 +25,12 @@ class LockScreen extends \R\Page
         return $p;
     }
 
-    public function __invoke($request, $response)
+    public function __invoke(RequestInterface $request, ResponseInterface $response)
     {
-        $app=$this->app;
+        $app = $this->app;
         if ($request->getMethod() == "get") {
-            
-            $this->_template=\Twig::_($app->getFile("AdminLTE/pages/lockscreen.html"));
+
+            $this->_template = \Twig::_($app->getFile("AdminLTE/pages/lockscreen.html"));
         }
 
         $response = parent::__invoke($request, $response);

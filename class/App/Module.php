@@ -73,36 +73,10 @@ class Module extends Model
     {
         $ps = explode("/", $path);
         $ps = array_values(array_filter($ps, "strlen"));
-        $path = implode("/", $ps);
-
-        $file = self::$_app->loader->findFile($path);
-        if ($file) {
-            //find setting.ini
-            $p = explode("/", dirname($file));
-            $ps = explode("/", dirname($path));
-            while (count($ps)) {
-                if (file_exists($file = implode("/", $p) . "/setting.ini")) {
-                    $m = new Module;
-                    $m->name = implode("/", $ps);
-                    $m->class = implode("/", $ps);
-                    foreach (parse_ini_file($file, true) as $k => $v) {
-                        $m->sequence = PHP_INT_MAX;
-                        $m->$k = $v;
-                    }
-
-                    break;
-                }
-                array_pop($p);
-                array_pop($ps);
-            }
+        if ($module = self::All()[$ps[0]]) {
+            return $module;
         }
-        if (!$m) {
-            $p = explode("/", $path);
-            $p = array_values(array_filter($p, "strlen"));
-            $m = self::_($p[0]);
-        }
-
-        return $m;
+        return new Module();
     }
 
     public static function _($name)
@@ -135,7 +109,7 @@ class Module extends Model
                 $m->$k = $v;
             }
         }
-        
+
 
         // read use ini
         if (file_exists($path = CMS_ROOT . "/$page/$name/setting.ini")) {
@@ -156,7 +130,7 @@ class Module extends Model
                 $m->$k = $v;
             }
         }
-/*
+        /*
         // load from db
         if ($module = Module::first([["name=?", [$m->class]]])) {
             foreach ($module as $k => $v) {
