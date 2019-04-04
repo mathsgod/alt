@@ -18,8 +18,6 @@ class Tab extends Query {
 		$this->content = p("div")->addClass("tab-content");
 		$this->append($this->content);
 
-		$this->object = $object;
-
 		self::$_MyTab++;
 		$module = $route->module;
 

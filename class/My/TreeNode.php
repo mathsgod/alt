@@ -5,9 +5,9 @@
 // Last Updated:
 namespace My;
 
-use P\Element;
+use P\HTMLElement;
 
-class TreeNode extends Element
+class TreeNode extends HTMLElement
 {
 	public $ul = null;
 	public $label;
