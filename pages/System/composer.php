@@ -3,7 +3,8 @@ use App\Composer;
 
 class System_composer extends ALT\Page
 {
-    public function updateComposer(){
+    public function updateComposer()
+    {
         $composer = new App\Composer();
         $composer->exec("self-update");
         return [true];
@@ -46,7 +47,7 @@ EOL;
         $this->write("<pre>" . json_encode($composer->config(), 255) . "</pre>");
     }
 
-    public function info($checkupdate)
+    public function info($checkupdate = false)
     {
 
         $composer = new App\Composer();
@@ -71,5 +72,4 @@ EOL;
         $composer = new App\Composer();
         return $this->info();
     }
-
 }

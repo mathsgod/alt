@@ -3,7 +3,7 @@
 namespace My\HTML;
 use My\Func;
 class Select extends \My\Query {
-    public function __construct($index) {
+    public function __construct($index="") {
         parent::__construct("select");
         if ($index)$this->attr("index", $index);
         $this->addClass("form-control");

@@ -3,8 +3,9 @@
 namespace App\UI;
 
 use App\Page;
+use P\HTMLFormElement;
 
-class Form extends \My\HTML\Form
+class Form extends HTMLFormElement
 {
 
     private $submit_button;
@@ -18,7 +19,7 @@ class Form extends \My\HTML\Form
         parent::__construct();
         //$this->setAttribute("is"]="alt-form"
         $this->page = $page;
-        $this->setAttribute("method", "post");
+        $this->method = "post";
 
         $this->box = new Box($page);
         $this->box->body;
@@ -106,5 +107,12 @@ class Form extends \My\HTML\Form
     public function box()
     {
         return p($this->box);
+    }
+
+    public function addHidden($name, $value)
+    {
+        $input = p("input")->appendTo($this);
+        $input->attr("name", $name)->attr("type", "hidden")->val($value);
+        return $input;
     }
 }

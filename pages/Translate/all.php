@@ -22,7 +22,7 @@ class Translate_all extends ALT\Page
 
         outp($_POST);
         die();
-   
+
         // delete the removed data
         foreach ($_POST["_d"] as $id) {
             $t = new Translate($id);
@@ -71,7 +71,7 @@ class Translate_all extends ALT\Page
     {
         $o = new Translate($data["translate_id"]);
         $o->delete();
-/*
+        /*
         $w = [];
         if ($o->module) {
             $w[] = ["module=?", $o->module];
@@ -95,7 +95,6 @@ class Translate_all extends ALT\Page
         die();*/
 
         return ["code" => 200];
-
     }
     public function update()
     {
@@ -103,7 +102,7 @@ class Translate_all extends ALT\Page
         foreach ($_POST["value"] as $language => $value) {
             $w = [];
             $w[] = ["name=?", $o->name];
-            $w[] = $o->action?["action=?", $o->action]:"action is null";
+            $w[] = $o->action ? ["action=?", $o->action] : "action is null";
             $w[] = ["language=?", $language];
             $w[] = $_POST["module"] ? ["module=?", $_POST["module"]] : "module is null";
             if ($t = Translate::First($w)) {
@@ -138,7 +137,6 @@ class Translate_all extends ALT\Page
         }
 
         return ["data" => array_values($data)];
-
     }
 
     public function data($module)
@@ -149,67 +147,5 @@ class Translate_all extends ALT\Page
             $w[] = "module is null";
         }
         return ["data" => Translate::find($w)];
-    }
-
-    public function get()
-    {
-
-        return;
-
-
-
-        return;
-        $select = new My\HTML\Select();
-        $select->attr("index", "module");
-
-        $select->attr("name", "module");
-        $select->ds($this->app->getModule(), "name", "name");
-        $select->prepend("<option></option>");
-        $select->val($module);
-        $select->onChange('window.self.location="Translate/all?module="+this.value');
-        $ss[] = (string)$select;
-
-        if ($module) {
-            $w[] = ["module=?", $module];
-        } else {
-            $w[] = "module is null";
-        }
-
-
-        $langs = $this->app->config["language"];
-        $lang = $this->app->config["language"][0];
-
-        $w[] = ["language=?", $lang];
-
-        $ts = [];
-        foreach (Translate::find($w) as $t) {
-            $ts[$t->translate_id]["module"] = $t->module;
-            $ts[$t->translate_id]["action"] = $t->action;
-            $ts[$t->translate_id]["name"] = $t->name;
-            $ts[$t->translate_id]["translate_id"] = $t->translate_id;
-
-            $tran = new Translate($t->translate_id);
-            foreach ($langs as $lang => $ll) {
-                $ts[$t->translate_id]["value_$lang"] = (string)$tran->get("$lang");
-            }
-        }
-
-        $myt = $this->createT($ts);
-
-        $myt->formCreate();
-
-
-        $myt->table->row()->attr("index", function ($o) {
-            return $o["translate_id"];
-        });
-
-        $myt->add("Action")->input("action");
-        $myt->add("Name")->input("name");
-        foreach ($langs as $v => $l) {
-            $myt->add($l)->input("value_$v");
-        }
-
-        $ss[] = $myt;
-        $this->write($this->createForm(implode("", $ss)));
     }
 }

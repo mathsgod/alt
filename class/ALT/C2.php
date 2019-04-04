@@ -612,7 +612,7 @@ class C2 extends HTMLElement
 			$cb = new \BS\CheckBox();
 			p($cell)->append($cb);
 
-			$input = $cb->find("input");
+			$input = p($cb)->find("input");
 			$input->attr("is", "icheck");
 			$input->attr("name", $field);
 			$input->attr("data-field", $field);
@@ -625,16 +625,16 @@ class C2 extends HTMLElement
 				}
 
 				if ($this->callback) {
-					call_user_func($this->callback, $object, $cb->find("input")[0]);
+					call_user_func($this->callback, $object, p($cb)->find("input")[0]);
 				}
 			}
 
-			$p[] = $cb[0];
+			$p[] = $cb;
 		}
 
 		if ($this->createTemplate) {
 			$cb = new \BS\CheckBox();
-			$input = $cb->find("input");
+			$input = p($cb)->find("input");
 			$input->attr("name", $field);
 			$input->attr("data-field", $field);
 			$input->addClass("iCheck");
@@ -882,7 +882,7 @@ class C2 extends HTMLElement
 					if (!is_array($data_value)) {
 						$data_value = explode(",", $data_value);
 					}
-					$select->attr("data-value", $data_value);
+					$select->data("value", $data_value);
 				} catch (\Exception $e) {
 
 				}

@@ -33,7 +33,7 @@ class User_myfav extends ALT\Page
 
 
         $t = $this->createT($ds);
-        $t->attr("id", "table1");
+        $t->setAttribute("id", "table1");
         $t->header("My favorite");
         $t->add("", function ($o) {
             return "<i class='fa fa-sort'></i><input type='hidden' name='ui_id[]' value='{$o->ui_id}'/>";

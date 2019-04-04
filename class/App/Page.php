@@ -123,7 +123,6 @@ class Page extends \R\Page
             } catch (\Exception $e) {
                 return null;
             }
-
         }
         return $this->_object;
     }
@@ -180,7 +179,6 @@ class Page extends \R\Page
 
             $this->response = $this->response->withHeader("Location", $referer);
         }
-
     }
 
     public function __invoke(Request $request, Response $response)
@@ -250,7 +248,7 @@ class Page extends \R\Page
                             $route = $this->request->getAttribute("route");
                             $file = $route->file;
 
-                            
+
                             // CHECK HTML
                             if (is_readable($f = substr($file, 0. - 3) . "html")) {
                                 $this->_template = file_get_contents($f);
@@ -337,21 +335,17 @@ class Page extends \R\Page
 
     public function createForm($content = null, $multipart = false)
     {
-        $request = $this->request;
 
         $f = new UI\Form($this);
         if ($multipart) {
-            $f->setAttribute("enctype","multipart/form-data");
+            $f->setAttribute("enctype", "multipart/form-data");
         }
 
-        $path = $this->path();
-        $route = $request->getAttribute("route");
 
         if ($referer = $this->request->getHeader("Referer")[0]) {
 
             $uri = $this->request->getUri()->withUserInfo(null, null);
             $_SESSION['app']["referer"][(string)$uri] = $referer;
-
         }
         if ($content) {
             $f->addBody($content);
@@ -455,8 +449,7 @@ class Page extends \R\Page
     }
 
     public function get()
-    {
-    }
+    { }
 
     public function post()
     {
@@ -485,7 +478,6 @@ class Page extends \R\Page
                 foreach ($files as $name => $file) {
                     $obj->$name = (string)$file->getStream();
                 }
-
             }
         }
 
@@ -557,5 +549,4 @@ class Page extends \R\Page
         }
         return new UI\V($object, $this);
     }
-
 }

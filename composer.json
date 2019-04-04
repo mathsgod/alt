@@ -56,11 +56,11 @@
         "mathsgod/r-webauthn": "^1.0",
         "mathsgod/r-graphql": "^1.2",
         "mathsgod/r": "^2.5",
-        "mathsgod/r-db": "^3.0",
-        "mathsgod/p-query": "master-dev",
-        "mathsgod/bs": "master-dev"
+        "mathsgod/r-db": "^3.0"
     },
     "require-dev": {
+        "mathsgod/bs": "dev-master",
+        "mathsgod/p-query": "dev-master",
         "phpunit/phpunit": "*"
     },
     "suggest": {
