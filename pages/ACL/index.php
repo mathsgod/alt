@@ -7,7 +7,7 @@ class ACL_index extends ALT\Page
     public function get()
     {
         $this->navbar()->addButton("Edit", "ACL/edit")->icon("fa fa-fw fa-edit");
-        $this->navbar()->addButton("Module acl", "ACL/ae_module");
+        //$this->navbar()->addButton("Module acl", "ACL/ae_module");
 
         $tab = $this->createTab();
         $tab->add("All ACL", "list");

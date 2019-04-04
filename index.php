@@ -5,7 +5,6 @@ error_reporting(E_ALL && ~E_WARNING);
 setlocale(LC_ALL, 'en_US.UTF-8'); //do not remove
 
 $loader = require_once(__DIR__ . "/vendor/autoload.php");
-
 /*
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;

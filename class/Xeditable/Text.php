@@ -1,13 +1,15 @@
 <?php
 namespace Xeditable;
 
-use \P\Element;
+use P\HTMLAnchorElement;
 
-class Text extends Element
+class Text extends HTMLAnchorElement
 {
-	public function __construct()
+	public function __construct($value = "")
 	{
-		parent::__construct("a");
+		parent::__construct($value);
+		
+
 		$this->setAttribute("href", "javascript:void(0)");
 		$this->setAttribute("is", "x-editable");
 		$this->setAttribute("data-mode", "inline");
@@ -38,4 +40,3 @@ class Text extends Element
 		parent::__set($name, $value);
 	}
 }
-

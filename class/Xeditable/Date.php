@@ -1,7 +1,8 @@
 <?php
 
 namespace Xeditable;
-class Date extends \P\HTMLAnchorElement {
+use P\HTMLAnchorElement;
+class Date extends HTMLAnchorElement {
 	public function __construct() {
 		parent::__construct();
 		$this->setAttribute("href", "javascript:void(0)");
@@ -35,5 +36,3 @@ class Date extends \P\HTMLAnchorElement {
 		parent::__set($name, $value);
 	}
 }
-
-?>

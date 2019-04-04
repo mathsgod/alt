@@ -1,6 +1,7 @@
 <?php
 namespace Xeditable;
-class Select extends \P\HTMLAnchorElement {
+use \P\HTMLAnchorElement;
+class Select extends HTMLAnchorElement {
     public function __construct() {
     	parent::__construct();
         $this->setAttribute("href", "javascript:void(0)");

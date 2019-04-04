@@ -20,10 +20,21 @@ module.exports = {
       default: false
     },
     trueValue: {
-      default: null
+      default: 1
     },
     falseValue: {
-      default: null
+      default: 0
+    }
+  },
+  watch: {
+    value(val) {
+      if (val === this.trueValue) {
+        this.checked = true;
+        $(this.$el).iCheck("check");
+      } else {
+        this.checked = false;
+        $(this.$el).iCheck("uncheck");
+      }
     }
   },
   created() {},

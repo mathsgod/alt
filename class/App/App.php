@@ -6,9 +6,9 @@ use R\Psr7\Request;
 use R\Psr7\Response;
 use R\Psr7\Stream;
 
-use Cache\Adapter\Apcu\ApcuCachePool;
 use Psr\Log\LoggerInterface;
 use Exception;
+use Composer\Autoload\ClassLoader;
 
 class App extends \R\App
 {
@@ -23,7 +23,7 @@ class App extends \R\App
         return self::$app;
     }
 
-    public function __construct($root, $loader, $logger = null)
+    public function __construct($root, ClassLoader $loader, LoggerInterface $logger = null)
     {
         if ($logger) $logger->debug("App::__construct");
         spl_autoload_register(function ($class) use ($root) {
@@ -250,7 +250,6 @@ class App extends \R\App
                         }
                     }
                 }
-                
             }
 
 
@@ -260,7 +259,6 @@ class App extends \R\App
 
 
             file_put_contents("php://output", (string)$response->getBody());
-            
         } elseif (self::Logined()) {
             $this->redirect("404_not_found");
         } else {

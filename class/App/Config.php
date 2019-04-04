@@ -53,22 +53,4 @@ class Config extends Model
         return $config;
     }
 
-    public function save($acl = true)
-    {
-        $host = $_SERVER["HTTP_HOST"];
-        $pool = new ApcuCachePool();
-        $pool->deleteItem($host . "_config");
-
-        return parent::save($acl);
-    }
-
-    public function delete($acl = true)
-    {
-        $host = $_SERVER["HTTP_HOST"];
-
-        $pool = new ApcuCachePool();
-        $pool->deleteItem($host . "_config");
-
-        return parent::delete($acl);
-    }
 }
