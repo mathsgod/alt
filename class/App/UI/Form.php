@@ -6,8 +6,7 @@ use App\Page;
 
 class Form extends \My\HTML\Form
 {
-    public $show_back = true;
-    public $show_reset = false;
+
     private $submit_button;
     private $back_button;
     private $reset_button;
@@ -56,21 +55,36 @@ class Form extends \My\HTML\Form
         }
 
         $this->appendChild($this->box);
+
+        $this->show_back = true;
+        $this->show_reset = false;
     }
 
-    public function __toString()
+    public function __set($name, $value)
     {
-        if (!$this->show_back) {
-            $this->back_button->classList->add("hide");
+        switch ($name) {
+            case "show_back":
+                if ($value) {
+                    $this->back_button->classList->remove("hide");
+                } else {
+                    $this->back_button->classList->add("hide");
+                }
+                return;
+                break;
+            case "show_reset":
+                if ($value) {
+                    $this->reset_button->classList->remove("hide");
+                } else {
+                    $this->reset_button->classList->add("hide");
+                }
+                return;
+                break;
         }
 
-        if (!$this->show_reset) {
-            $this->reset_button->classList->add("hide");
-        }
-        return parent::__toString();
+        parent::__set($name, $value);
     }
 
-    public function action($action)
+    public function action($action = "")
     {
         $this->setAttribute("action", $action);
         return $this;

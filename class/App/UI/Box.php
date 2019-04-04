@@ -23,15 +23,17 @@ class Box extends HTMLDivElement
 {
     const BOX_CLASS = ["box-default", "box-primary", "box-success", "box-info", "box-warning", "box-danger"];
 
-    protected $page = null;
-    public $collapsible = false;
-    public $collapsed = false;
-    public $pinable = false;
-    public $dataUrl = null;
-    public $dataUri = null;
-    private static $NUM = 0;
+    const ATTRIBUTES = [
+        "dataUrl" => ["name" => "data-url"],
+        "dataUri" => ["name" => "data-uri"],
+        "collapsible" => ["name" => ":collapsible", "type" => "json"],
+        "collapsed" => ["name" => ":collapsed", "type" => "json"],
+        "pinable" => ["name" => ":pinable", "type" => "json"],
+        "draggable" => ["name" => ":draggable", "type" => "json"]
+    ] + parent::ATTRIBUTES;
 
-    
+    protected $page = null;
+    private static $NUM = 0;
 
     public function __construct(Page $page)
     {
@@ -108,36 +110,5 @@ class Box extends HTMLDivElement
             $this->header->title = $title;
         }
         return p($this->header);
-    }
-
-    public function __toString()
-    {
-        if ($this->dataUrl) {
-            $body = $this->body;
-            $this->setAttribute("data-url", $this->dataUrl);
-        }
-
-        if ($this->dataUri) {
-            $this->setAttribute("data-uri", $this->dataUri);
-        }
-
-        if ($this->collapsible) {
-            $this->setAttribute(":collapsible", "true");
-        }
-
-        if ($this->collapsed) {
-            $this->setAttribute(":collapsed", "true");
-        }
-
-        if ($this->pinable) {
-            $this->setAttribute(":pinable", "true");
-        }
-
-        if ($this->draggable) {
-            $this->setAttribute(":draggable", "true");
-        }
-
-
-        return parent::__toString();
     }
 }

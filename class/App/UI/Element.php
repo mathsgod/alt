@@ -1,8 +1,6 @@
 <?
 namespace App\UI;
 
-use P\Document;
-
 class Element  extends \P\Element
 {
     public function setAttribute($name, $value)

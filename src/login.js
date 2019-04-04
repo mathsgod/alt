@@ -103,7 +103,9 @@ var vm = new Vue({
                 } else {
                     if (r.error.message == "2-step verification") {
                         bootbox.prompt("Please input 2-step verification code", result => {
-                            this.login(username, password, result);
+                            if(result){
+                                this.login(username, password, result);
+                            }
                         });
 
                     } else {

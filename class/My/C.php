@@ -1,24 +1,30 @@
 <?php
 
 namespace My;
+
 use P\Element;
-class C extends Element {
+
+class C extends Element
+{
 	private $_format;
 	public $cell;
 	public $label;
 	public $c_tpl;
 
-	public function cell() {
+	public function cell()
+	{
 		return $this->cell;
 	}
 
-	public function __construct(string $tag) {
+	public function __construct(string $tag)
+	{
 		parent::__construct($tag);
 		$this->cell = p();
 		$this->c_tpl = p();
 	}
 
-	public function gf($gf) {
+	public function gf($gf)
+	{
 		foreach ($this->cell as $cell) {
 			p($cell)->attr("data-gf", $gf);
 
@@ -27,12 +33,12 @@ class C extends Element {
 				$gf_obj = Func::_($field)->call($object);
 				p($cell)->text(Func::_($gf)->call($gf_obj));
 			}
-
 		}
 		return $this;
 	}
 
-	public function iconpicker($field) {
+	public function iconpicker($field)
+	{
 		$p = new \BS\ButtonCollection;
 
 		foreach ($this->cell as $cell) {
@@ -50,36 +56,38 @@ class C extends Element {
 
 				$btn->attributes["data-icon"] = Func::_($field)->call($object);
 			}
-
 		}
 		return $p;
 	}
 
-	public function alink($uri) {
+	public function alink($uri)
+	{
 		foreach ($this->cell as $cell) {
 			if ($object = p($cell)->data("object")) {
 				$field = p($cell)->attr("data-field");
-                $next_obj=Func::_($field)->call($object);
-                if(is_object($next_obj)){
-                    $object=$next_obj;
-                }
+				$next_obj = Func::_($field)->call($object);
+				if (is_object($next_obj)) {
+					$object = $next_obj;
+				}
 
-                $href = $object->uri($uri);
+				$href = $object->uri($uri);
 
-                $a = p("a")->attr('href', $href);
-                $a->append(p($cell)->contents());
-                $a->appendTo(p($cell));
+				$a = p("a")->attr('href', $href);
+				$a->append(p($cell)->contents());
+				$a->appendTo(p($cell));
 			}
 		}
 		return $this;
 	}
 
-	public function width($width) {
+	public function width($width)
+	{
 		p($this)->css("width", "{$width}px");
 		return $this;
 	}
 
-	public function attr($name, $value) {
+	public function attr($name, $value)
+	{
 		foreach ($this->cell as $cell) {
 			if ($object = p($cell)->data("object")) {
 				if ($value instanceof \Closure) {
@@ -91,7 +99,8 @@ class C extends Element {
 		return $this;
 	}
 
-	public function format($callback, $params = null) {
+	public function format($callback, $params = null)
+	{
 		foreach ($this->cell as $cell) {
 			if ($object = p($cell)->data("object")) {
 				$content = p($cell)->html();
@@ -105,9 +114,10 @@ class C extends Element {
 			}
 		}
 		return $this;
-    }
+	}
 
-	public function input($field) {
+	public function input($field)
+	{
 		$p = new \P\InputCollection;
 		foreach ($this->cell as $cell) {
 			$input = p("input")->appendTo($cell);
@@ -120,7 +130,7 @@ class C extends Element {
 
 			if ($object = p($cell)->data("object")) {
 				$input->data("object", $object);
-				$input->val(is_object($object) ? $object->$field : $object[$field]);
+				$input->val(is_object($object) ?$object->$field : $object[$field]);
 
 				if ($this->callback) {
 					call_user_func($this->callback, $object, $input[0]);
@@ -129,7 +139,6 @@ class C extends Element {
 
 
 			$p[] = $input[0];
-
 		}
 
 		if ($this->createTemplate) {
@@ -138,16 +147,16 @@ class C extends Element {
 			$input->attr("name", $field);
 			$input->attr("data-field", $field);
 
-            $p[] = $input[0];
-            
+			$p[] = $input[0];
+
 
 			$this->c_tpl[] = $input[0];
-
 		}
 		return $p;
-    }
-	
-	public function ckeditor($field){
+	}
+
+	public function ckeditor($field)
+	{
 		$p = p();
 
 		foreach ($this->cell as $cell) {
@@ -158,7 +167,7 @@ class C extends Element {
 
 			if ($object = p($cell)->data("object")) {
 				$textarea->data("object", $object);
-				$textarea->text(is_object($object) ? $object->$field : $object[$field]);
+				$textarea->text(is_object($object) ?$object->$field : $object[$field]);
 
 				if ($this->callback) {
 					call_user_func($this->callback, $object, $textarea[0]);
@@ -166,7 +175,6 @@ class C extends Element {
 			}
 
 			$p[] = $textarea[0];
-
 		}
 
 
@@ -183,7 +191,8 @@ class C extends Element {
 		return $p;
 	}
 
-	public function textarea($field) {
+	public function textarea($field)
+	{
 		$p = p();
 
 		foreach ($this->cell as $cell) {
@@ -194,7 +203,7 @@ class C extends Element {
 
 			if ($object = p($cell)->data("object")) {
 				$textarea->data("object", $object);
-				$textarea->text(is_object($object) ? $object->$field : $object[$field]);
+				$textarea->text(is_object($object) ?$object->$field : $object[$field]);
 
 				if ($this->callback) {
 					call_user_func($this->callback, $object, $textarea[0]);
@@ -202,7 +211,6 @@ class C extends Element {
 			}
 
 			$p[] = $textarea[0];
-
 		}
 
 
@@ -219,7 +227,8 @@ class C extends Element {
 		return $p;
 	}
 
-	public function select($field) {
+	public function select($field)
+	{
 		$p = new \P\SelectCollection();
 
 		foreach ($this->cell as $cell) {
@@ -230,7 +239,7 @@ class C extends Element {
 
 			if ($object = p($cell)->data("object")) {
 				$select->data("object", $object);
-				$select->attr("data-value", is_object($object) ? $object->$field : $object[$field]);
+				$select->attr("data-value", is_object($object) ?$object->$field : $object[$field]);
 				if ($this->callback) {
 					call_user_func($this->callback, $object, $select[0]);
 				}
@@ -252,7 +261,8 @@ class C extends Element {
 		return $p;
 	}
 
-	public function Xeditable($index, $type = "text") {
+	public function Xeditable($index, $type = "text")
+	{
 		$p = p();
 		foreach ($this->cell as $cell) {
 			if ($type == "text") {
@@ -275,10 +285,10 @@ class C extends Element {
 			$a->appendTo($cell);
 
 			if ($object = p($cell)->data("object")) {
-				if($type!="select"){
-					$a->text(is_object($object) ? $object->$index : $object[$index]);	
+				if ($type != "select") {
+					$a->text(is_object($object) ?$object->$index : $object[$index]);
 				}
-				
+
 				$a->setAttribute("data-pk", $object->id());
 				$a->setAttribute("data-url", $object->uri() . "?xeditable");
 			}
@@ -292,12 +302,14 @@ class C extends Element {
 		return $p;
 	}
 
-	public function ws($value = "pre") {
+	public function ws($value = "pre")
+	{
 		$this->css("white-space", $value);
 		return $this;
 	}
 
-	public function a($field) {
+	public function a($field = null)
+	{
 		$p = new \P\AnchorCollection;
 		foreach ($this->cell as $cell) {
 			$a = p("a")->appendTo($cell);
@@ -316,7 +328,8 @@ class C extends Element {
 		return $p;
 	}
 
-	public function email($field) {
+	public function email($field)
+	{
 		$input = $this->input($field);
 		$input->attr("type", "email");
 
@@ -329,12 +342,12 @@ class C extends Element {
 
 			$addon = p("span")->addClass("input-group-addon")->prependTo($div);
 			$addon->append("<i class='fa fa-envelope-o'></i>");
-
 		}
 		return $input;
 	}
 
-	public function button() {
+	public function button()
+	{
 		$p = new \BS\ButtonCollection;
 		foreach ($this->cell as $cell) {
 			$btn = new HTML\Button();
@@ -349,7 +362,8 @@ class C extends Element {
 		return $p;
 	}
 
-	public function tokenField($field) {
+	public function tokenField($field)
+	{
 		$p = $this->input($field);
 		$p->attr("type", "hidden");
 
@@ -361,18 +375,17 @@ class C extends Element {
 			$is->attr("data-field", $field)->attr("name", $field . "[]");
 
 			if ($object = p($cell)->data("object")) {
-				$value = is_object($object) ? $object->$field : $object[$field];
-				
-				if($value!=""){
-					$is->attr("data-value", explode(",", $value));	
-				}else{
-					$is->attr("data-value","");
+				$value = is_object($object) ?$object->$field : $object[$field];
+
+				if ($value != "") {
+					$is->attr("data-value", explode(",", $value));
+				} else {
+					$is->attr("data-value", "");
 				}
 
 				if ($this->callback) {
 					call_user_func($this->callback, $object, $is);
 				}
-
 			}
 
 			$p[] = $is;
@@ -388,7 +401,8 @@ class C extends Element {
 		return $p;
 	}
 
-	public function inputSelect($field) {
+	public function inputSelect($field)
+	{
 		$p = new \BS\InputSelectCollection();
 		foreach ($this->cell as $cell) {
 			$is = new \BS\InputSelect();
@@ -396,7 +410,7 @@ class C extends Element {
 			p($is)->find("input")->attr("data-field", $field)->attr("name", $field);
 
 			if ($object = p($cell)->data("object")) {
-				p($is)->find("input")->val(is_object($object) ? $object->$field : $object[$field]);
+				p($is)->find("input")->val(is_object($object) ?$object->$field : $object[$field]);
 
 				if ($this->callback) {
 					call_user_func($this->callback, $object, p($is)->find("input")[0]);
@@ -413,16 +427,17 @@ class C extends Element {
 			$this->c_tpl[] = $is;
 		}
 		return $p;
-    }
-    
-    public function checkboxes($field){
-        $p = p();
-        foreach ($this->cell as $cell) {
-        }
-        return $p;
-    }
+	}
 
-	public function checkbox($field) {
+	public function checkboxes($field)
+	{
+		$p = p();
+		foreach ($this->cell as $cell) { }
+		return $p;
+	}
+
+	public function checkbox($field)
+	{
 		//		$p = $this->input($field);
 		//	$p->attr("type", "hidden");
 
@@ -447,7 +462,7 @@ class C extends Element {
 			$input->val(1);
 
 			if ($object = p($cell)->data("object")) {
-				$value = is_object($object) ? $object->$field : $object[$field];
+				$value = is_object($object) ?$object->$field : $object[$field];
 				if ($value) {
 					$input->attr("checked", true);
 				}
@@ -473,11 +488,13 @@ class C extends Element {
 		return $p;
 	}
 
-	public function colorpicker($index) {
+	public function colorpicker($index)
+	{
 		return $this->input($index)->addClass("cp");
 	}
 
-	public function date($field) {
+	public function date($field)
+	{
 		$p = new \P\InputCollection;
 		foreach ($this->cell as $cell) {
 
@@ -487,14 +504,14 @@ class C extends Element {
 
 
 			$input = p("input")->appendTo($div);
-			$input->attr("autocomplete","off");
+			$input->attr("autocomplete", "off");
 			$input->addClass("datetimepicker form-control");
 			$input->attr("format", "YYYY-MM-DD");
 			$input->attr("name", $field);
-            $input->attr("data-field", $field);
+			$input->attr("data-field", $field);
 			if ($object = p($cell)->data("object")) {
 				$input->data("object", $object);
-				$input->val(is_object($object) ? $object->$field : $object[$field]);
+				$input->val(is_object($object) ?$object->$field : $object[$field]);
 
 				if ($this->callback) {
 					call_user_func($this->callback, $object, $input[0]);
@@ -517,12 +534,12 @@ class C extends Element {
 			$p[] = $input[0];
 
 			$this->c_tpl[] = $div[0];
-
 		}
 		return $p;
 	}
 
-	public function time($field) {
+	public function time($field)
+	{
 		$p = p();
 		foreach ($this->cell as $cell) {
 			$div = p("div")->addClass("input-group bootstrap-timepicker")->appendTo($cell);
@@ -534,7 +551,7 @@ class C extends Element {
 			$input->attr("name", $field);
 			$input->attr("data-field", $field);
 			if ($object = p($cell)->data("object")) {
-				$input->val(is_object($object) ? $object->$field : $object[$field]);
+				$input->val(is_object($object) ?$object->$field : $object[$field]);
 
 
 				if ($this->callback) {
@@ -560,13 +577,15 @@ class C extends Element {
 		return $p;
 	}
 
-	public function datetime($index = null) {
+	public function datetime($index = null)
+	{
 		$p = $this->input($index);
 		$p->addClass("datetimepicker");
 		return $p;
 	}
 
-	public function multiSelect($field) {
+	public function multiSelect($field)
+	{
 		$p = new \P\SelectCollection();
 		foreach ($this->cell as $cell) {
 			$input = p("input")->appendTo($cell);
@@ -582,99 +601,101 @@ class C extends Element {
 
 			if ($object = p($cell)->data("object")) {
 				$select->data("object", $object);
-				$select->attr("data-value", is_object($object) ? $object->$field : $object[$field]);
+				$select->attr("data-value", is_object($object) ?$object->$field : $object[$field]);
 				if ($this->callback) {
 					call_user_func($this->callback, $object, $input[0]);
 					call_user_func($this->callback, $object, $select[0]);
 				}
-            }
-            
-            $select->attr("name",$field."[]");
+			}
+
+			$select->attr("name", $field . "[]");
 
 			$p[] = $select[0];
-        }
-        
+		}
+
 
 		return $p;
+	}
 
-    }
-    
-    public function multiSelectPicker($field){
-        $p = new \P\SelectCollection();
-        
-        foreach ($this->cell as $cell) {
-            $select = p("select")->appendTo($cell);
-            $select->addClass("selectpicker");
-            $select->attr("data-live-search","true");
-            $select->attr("data-field", $field);
-            $select->attr("data-actions-box","true");
-            $select->attr("name", $field."[]");
-            $select->attr("multiple", true);
-            //$select->attr("data-width","fit");
+	public function multiSelectPicker($field)
+	{
+		$p = new \P\SelectCollection();
 
-            if ($object = p($cell)->data("object")) {
-                $select->data("object", $object);
-                $select->attr("data-value", is_object($object) ? $object->$field : $object[$field]);
-                if ($this->callback) {
-                    call_user_func($this->callback, $object, $select[0]);
-                }
-            }
+		foreach ($this->cell as $cell) {
+			$select = p("select")->appendTo($cell);
+			$select->addClass("selectpicker");
+			$select->attr("data-live-search", "true");
+			$select->attr("data-field", $field);
+			$select->attr("data-actions-box", "true");
+			$select->attr("name", $field . "[]");
+			$select->attr("multiple", true);
+			//$select->attr("data-width","fit");
 
-            $p[] = $select[0];
-        }
+			if ($object = p($cell)->data("object")) {
+				$select->data("object", $object);
+				$select->attr("data-value", is_object($object) ?$object->$field : $object[$field]);
+				if ($this->callback) {
+					call_user_func($this->callback, $object, $select[0]);
+				}
+			}
 
-        if ($this->createTemplate) {
-            $select = p("select");
-            $select->addClass("form-control");
-            $select->attr("data-live-search","true");
-            $select->attr("data-field", $field);
-            $select->attr("data-actions-box","true");
-            $select->attr("name", $field."[]");
-            $select->attr("multiple", true);
-            
+			$p[] = $select[0];
+		}
 
-            $p[] = $select[0];
-            $this->c_tpl[] = $select[0];
-        }
+		if ($this->createTemplate) {
+			$select = p("select");
+			$select->addClass("form-control");
+			$select->attr("data-live-search", "true");
+			$select->attr("data-field", $field);
+			$select->attr("data-actions-box", "true");
+			$select->attr("name", $field . "[]");
+			$select->attr("multiple", true);
 
-        return $p;        
-    }
 
-    public function selectPicker($field){
-        $p = new \P\SelectCollection();
-        
-        foreach ($this->cell as $cell) {
-            $select = p("select")->appendTo($cell);
-            $select->addClass("form-control selectpicker");
-            $select->attr("data-live-search","true");
-            $select->attr("data-field", $field);
-            $select->attr("name", $field);
+			$p[] = $select[0];
+			$this->c_tpl[] = $select[0];
+		}
 
-            if ($object = p($cell)->data("object")) {
-                $select->data("object", $object);
-                $select->attr("data-value", is_object($object) ? $object->$field : $object[$field]);
-                if ($this->callback) {
-                    call_user_func($this->callback, $object, $select[0]);
-                }
-            }
+		return $p;
+	}
 
-            $p[] = $select[0];
-        }
+	public function selectPicker($field)
+	{
+		$p = new \P\SelectCollection();
 
-        if ($this->createTemplate) {
-            $select = p("select");
-            $select->addClass("form-control selectpicker");
-            $select->attr("data-field", $field);
-            $select->attr("name", $field);
+		foreach ($this->cell as $cell) {
+			$select = p("select")->appendTo($cell);
+			$select->addClass("form-control selectpicker");
+			$select->attr("data-live-search", "true");
+			$select->attr("data-field", $field);
+			$select->attr("name", $field);
 
-            $p[] = $select[0];
-            $this->c_tpl[] = $select[0];
-        }
+			if ($object = p($cell)->data("object")) {
+				$select->data("object", $object);
+				$select->attr("data-value", is_object($object) ?$object->$field : $object[$field]);
+				if ($this->callback) {
+					call_user_func($this->callback, $object, $select[0]);
+				}
+			}
 
-        return $p;        
-    }
+			$p[] = $select[0];
+		}
 
-	public function multiSelect2($field) {
+		if ($this->createTemplate) {
+			$select = p("select");
+			$select->addClass("form-control selectpicker");
+			$select->attr("data-field", $field);
+			$select->attr("name", $field);
+
+			$p[] = $select[0];
+			$this->c_tpl[] = $select[0];
+		}
+
+		return $p;
+	}
+
+	public function multiSelect2($field)
+	{
 		foreach ($this->cell as $cell) {
 			$input = p("input")->appendTo($cell);
 			$input->attr("type", "hidden");
@@ -694,7 +715,8 @@ class C extends Element {
 		return $select;
 	}
 
-	public function select2($field) {
+	public function select2($field)
+	{
 		$p = new \P\SelectCollection();
 
 		foreach ($this->cell as $cell) {
@@ -706,16 +728,13 @@ class C extends Element {
 			if ($object = p($cell)->data("object")) {
 				$select->data("object", $object);
 				try {
-                    $data_value= is_object($object) ? $object->$field : $object[$field];
-                    if(!is_array($data_value)){
-                        $data_value=explode(",",$data_value);
-                    }
+					$data_value = is_object($object) ?$object->$field : $object[$field];
+					if (!is_array($data_value)) {
+						$data_value = explode(",", $data_value);
+					}
 
-					$select->attr("data-value",$data_value);
-				}
-				catch (\Exception $e) {
-
-				}
+					$select->attr("data-value", $data_value);
+				} catch (\Exception $e) { }
 
 				if ($this->callback) {
 					call_user_func($this->callback, $object, $select[0]);
@@ -737,7 +756,8 @@ class C extends Element {
 		return $p;
 	}
 
-	public function helpBlock($text) {
+	public function helpBlock($text)
+	{
 		$p = p();
 		foreach ($this->cell as $cell) {
 			$block = p("p")->appendTo($cell);
@@ -756,24 +776,25 @@ class C extends Element {
 		return $p;
 	}
 
-	public function img($field) {
+	public function img($field)
+	{
 		$p = p();
 		foreach ($this->cell as $cell) {
 			$img = p("img")->appendTo($cell);
 			$img->attr("data-field", $field);
-            if ($object = p($cell)->data("object")) {
-                $img->attr("src", is_object($object) ? $object->$field : $object[$field]);
-            }
+			if ($object = p($cell)->data("object")) {
+				$img->attr("src", is_object($object) ?$object->$field : $object[$field]);
+			}
 			$p[] = $img[0];
 		}
 		return $p;
-    }
-    
-    public function __toString(){
-        if($this->c_tpl){
-            $this->attributes["c-tpl"]=(string)$this->c_tpl;
-        }
-        return  parent::__toString();
-    }
+	}
 
+	public function __toString()
+	{
+		if ($this->c_tpl) {
+			$this->attributes["c-tpl"] = (string)$this->c_tpl;
+		}
+		return  parent::__toString();
+	}
 }

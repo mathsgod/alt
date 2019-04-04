@@ -1,13 +1,16 @@
 <?php
 
 namespace My;
-class T extends \P\Query {
+
+class T extends \P\Query
+{
 	public $objects;
 	public $tr;
 	public $tbody;
 	public $thead;
 	public $columns;
-	public function __construct($objects) {
+	public function __construct($objects)
+	{
 		parent::__construct("table");
 		$this->addClass('table table-hover');
 		$this->objects = $objects;
@@ -28,17 +31,18 @@ class T extends \P\Query {
 
 			$this->tr[] = $tr[0];
 		}
-
 	}
 
-	public function thead() {
+	public function thead()
+	{
 		if ($this->thead)
 			return $this->thead;
 		$this->thead = p("thead")->prependTo($this);
 		return $this->thead;
 	}
 
-	public function add($label, $getter) {
+	public function add($label = "", $getter = null)
+	{
 
 		$column = new C("th");
 		$this->columns[] = $column;
@@ -68,7 +72,7 @@ class T extends \P\Query {
 
 		$form_name = $this->attr("form-name");
 
-		$column->callback = function ($object, $node)use ($form_name) {
+		$column->callback = function ($object, $node) use ($form_name) {
 			$field = $node->attributes["data-field"];
 
 			$tr = p($node)->closest("tr");
@@ -84,17 +88,18 @@ class T extends \P\Query {
 			} else {
 				$node->attributes["name"] = "{$fn}[$id][$field]";
 			}
-		}
-		;
+		};
 
 		return $column;
 	}
 
-	public function row() {
+	public function row()
+	{
 		return $this->tr;
 	}
 
-	public function addDel() {
+	public function addDel()
+	{
 		$column = $this->add();
 		$column->width(20);
 		$as = $column->a()->addClass("btn btn-xs btn-danger confirm")->removeClass("btn-default")->html("<i class='fa fa-times'></i>");
@@ -105,7 +110,8 @@ class T extends \P\Query {
 		}
 		return $as;
 	}
-	public function addEdit() {
+	public function addEdit()
+	{
 		$column = $this->add();
 		$column->width(20);
 		$as = $column->a()->addClass("btn btn-xs btn-warning")->removeClass("btn-default")->html("<i class='fa fa-pencil-alt'></i>");
@@ -118,7 +124,8 @@ class T extends \P\Query {
 		return $as;
 	}
 
-	public function __toString() {
+	public function __toString()
+	{
 		foreach ($this->columns as $column) {
 			if ($column->c_tpl->count()) {
 				$column->attributes["c-tpl"] = (string )$column->c_tpl;
@@ -127,19 +134,21 @@ class T extends \P\Query {
 		return parent::__toString();
 	}
 
-	public function addChildRow($label,$callback) {
-		return $this->add($label, function ($obj)use ($callback) {
-			$childHTML=$callback($obj);
-			if($childHTML===null){
-				return;
-			}
-			
-			$btn=p("button")->html("<i class='fa fa-chevron-up'></i>")->addClass("btn btn-xs btn-primary table-childrow-btn table-childrow-close");
-			$btn->attr('data-child',$childHTML);
-			
-			return $btn; 
+	public function addChildRow($label, $callback)
+	{
+		return $this->add(
+			$label,
+			function ($obj) use ($callback) {
+				$childHTML = $callback($obj);
+				if ($childHTML === null) {
+					return;
+				}
+
+				$btn = p("button")->html("<i class='fa fa-chevron-up'></i>")->addClass("btn btn-xs btn-primary table-childrow-btn table-childrow-close");
+				$btn->attr('data-child', $childHTML);
+
+				return $btn;
 			}
 		);
 	}
-
 }

@@ -2,8 +2,9 @@
 namespace App\UI;
 
 use Closure;
+use P\HTMLDivElement;
 
-class DataTables extends \P\HTMLElement
+class DataTables extends HTMLDivElement
 {
     private $columns = [];
     private $objects = null;
@@ -36,8 +37,8 @@ class DataTables extends \P\HTMLElement
 
     public function __construct($objects,$page)
     {
-        parent::__construct("div");
-        $this->attributes["is"] = "alt-datatables";   
+        parent::__construct();
+        $this->setAttribute("is","alt-datatables");   
 
         $this->objects = $objects;
         $this->_page=$page;

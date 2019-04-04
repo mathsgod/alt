@@ -2,10 +2,10 @@
 namespace App\UI;
 
 use App\Page;
-use P\Element;
-use P\Document;
 
-class Tab extends Element
+use P\HTMLDivElement;
+
+class Tab extends HTMLDivElement
 {
     public $navs;
     public $content;
@@ -16,7 +16,7 @@ class Tab extends Element
 
     public function __construct(Page $page, $prefix)
     {
-        parent::__construct("div");
+        parent::__construct();
 
         //$this->attributes["is"] = "alt-tab";
         $this->page = $page;

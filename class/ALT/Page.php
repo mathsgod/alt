@@ -4,7 +4,7 @@ namespace ALT;
 
 use R\Psr7\Request;
 use R\Psr7\Response;
-use R\Psr7\Stream;
+use Exception;
 
 class Page extends \App\Page
 {
@@ -91,7 +91,16 @@ class Page extends \App\Page
             $this->header["name"] = $this->module()->name;
         }
 
-        $response = parent::__invoke($request, $response);
+        try{
+            $response = parent::__invoke($request, $response);
+        }catch(Exception $e){
+            if($request->isAccept("text/html") && $request->getMethod() == "get"){
+                $this->alert->danger($e->getMessage());
+            }else{
+                throw $e;
+            }
+        }
+
 
         if ($request->isAccept("application/json")) {
             if ($request->getMethod() == "get" && $action == "index") {

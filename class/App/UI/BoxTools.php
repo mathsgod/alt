@@ -2,14 +2,17 @@
 
 namespace App\UI;
 
-class BoxTools extends Element
+use P\HTMLSpanElement;
+
+
+class BoxTools extends HTMLSpanElement
 {
     protected $page;
     public function __construct($page)
     {
-        parent::__construct("span");
+        parent::__construct();
         $this->page = $page;
-        $this->setAttribute("slot","tools");
+        $this->setAttribute("slot", "tools");
     }
 
     public function addButton()

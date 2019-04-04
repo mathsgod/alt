@@ -2,13 +2,15 @@
 
 namespace App\UI;
 
-class BoxFooter extends Element
+use P\HTMLDivElement;
+
+
+class BoxFooter extends HTMLDivElement
 {
 
     public function __construct()
     {
-        parent::__construct("div");
+        parent::__construct();
         $this->classList[] = "box-footer";
     }
 }
-
