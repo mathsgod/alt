@@ -1,5 +1,5 @@
 <?php
- // Created By: Raymond Chong
+// Created By: Raymond Chong
 // Created Date: 19/2/2010
 // Last Updated: 2013-04-12
 use App\EventLog;
@@ -18,7 +18,6 @@ class EventLog_list extends App\Page
         //$rt->attr("data-mode","virtual");
 
         $rt->order("eventlog_id", "desc");
-        $rt->addCheckbox("cb");
         $rt->addView();
         //$rt->addDel();
         $rt->add("ID", "eventlog_id")->ss();
@@ -46,4 +45,3 @@ class EventLog_list extends App\Page
         return $rt;
     }
 }
-
