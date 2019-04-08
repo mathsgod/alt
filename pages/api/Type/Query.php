@@ -60,5 +60,15 @@ class Query
         }
         return false;
     }
- 
+
+    public function UserGroup($root, $args, $context)
+    {
+
+        return new \App\UserGroup($args["usergroup_id"]);
+    }
+    public function UserGroups($root, $args, $context)
+    {
+
+        return \App\UserGroup::Query();
+    }
 }

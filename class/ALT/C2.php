@@ -208,6 +208,7 @@ class C2 extends HTMLElement
 		$p = new \P\InputCollection;
 		foreach ($this->cell as $cell) {
 			try {
+				
 				$input = p("input")->appendTo($cell);
 				$input->attr("is", "alt-input");
 				$input->addClass("form-control");

@@ -43,12 +43,11 @@ class Module_index extends ALT\Page
             $r = new ReflectionClass($class);
 
             try {
-                if ($r->getMethod("__table")) {
-                    $table = $class::__table();
-                    
+                if ($r->getMethod("_table")) {
+                    $table = $class::_table();
                     
                     $btn=html("a")->class("btn btn-xs btn-success");
-                    $btn->i->class('fa fa-plus');
+                    $btn->i->class('fa fa-plus fa-fw');
                     $btn->text(" Column");
                     $table_name=$table->name;
                     $btn->href("Module/add_column?table={$table_name}");
@@ -59,7 +58,7 @@ class Module_index extends ALT\Page
                     $t = $this->createT($class::__db()->table($table)->columns());
                     $t->add("", function ($o) {
                         $btn=html("a")->class("btn btn-xs btn-danger");
-                        $btn->i->class('fa fa-times');
+                        $btn->i->class('fa fa-times fa-fw');
                         $table_name=$o->table()->name;
                         $btn->href("Module/del_column?table={$table_name}&field={$o->Field}");
                         
@@ -67,7 +66,7 @@ class Module_index extends ALT\Page
                     });
                     $t->add("", function ($o) {
                         $btn=html("a")->class("btn btn-xs btn-warning");
-                        $btn->i->class('fa fa-pencil-alt');
+                        $btn->i->class('fa fa-pencil-alt fa-fw');
                         $table_name=$o->table()->name;
                         $btn->href("Module/alter_column?table={$table_name}&field={$o->Field}");
                       
