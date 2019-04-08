@@ -3,19 +3,43 @@ namespace App\UI;
 
 use Closure;
 use P\HTMLDivElement;
+use App\Page;
 
 class DataTables extends HTMLDivElement
 {
+
+    const ATTRIBUTES = [
+        "searching" => [
+            "type" => "json",
+            "name" => "data-searching"
+        ],
+        "paging" => [
+            "type" => "json",
+            "name" => "data-paging"
+        ],
+        "responsive" => [
+            "type" => "json",
+            "name" => "data-responsive"
+        ],
+        "processing" => [
+            "type" => "json",
+            "name" => "data-responsive"
+        ],
+        "dom" => [
+            "name" => "data-dom"
+        ],
+        "pageLength" => [
+            "type"=>"string",
+            "name" => "data-page-length"
+        ]
+    ] + parent::ATTRIBUTES;
+
     private $columns = [];
     private $objects = null;
 
-    public $paging = true;
     public $ajax = null;
     public $serverSide = false;
-    public $searching = true;
     public $ordering = true;
-    public $responsive = true;
-    public $processing = true;
     public $scrollX = false;
     public $order = [];
 
@@ -23,27 +47,28 @@ class DataTables extends HTMLDivElement
 
     public $_order = [];
     public $select = true;
-    public $pageLength = 10;
     public $autoWidth = true;
 
-    public $dom = "<'row'<'col-sm-12'f>><'row'<'col-sm-12'tr>><'row'<'col-sm-7'p><'col-sm-5'i>><'row'<'col-sm-6'B><'col-sm-6'l>>";
 
     //public $buttons = ['print', 'copy', 'excel', 'pdf'];
     public $buttons = [];
 
     public $fixedHeader = ["header" => false];
 
-    public $_page=null;
+    public $page = null;
 
-    public function __construct($objects,$page)
+    public function __construct($objects, Page $page)
     {
         parent::__construct();
-        $this->setAttribute("is","alt-datatables");   
+        $this->setAttribute("is", "alt-datatables");
+        $this->searching = true;
+        $this->responsive = true;
+        $this->processing = true;
+
+        $this->dom = "<'row'<'col-sm-12'f>><'row'<'col-sm-12'tr>><'row'<'col-sm-7'p><'col-sm-5'i>><'row'<'col-sm-6'B><'col-sm-6'l>>";
 
         $this->objects = $objects;
-        $this->_page=$page;
-     
-
+        $this->page = $page;
         $this->response = new DTResponse($objects);
     }
 
@@ -88,17 +113,17 @@ class DataTables extends HTMLDivElement
     {
         $c = new Column();
 
-        if($this->_page){
-            $c->title = $this->_page->translate($title);
-        }else{
+        if ($this->page) {
+            $c->title = $this->page->translate($title);
+        } else {
             $c->title = $title;
         }
-        
+
         $c->descriptor[] = $getter;
 
 
         if ($getter instanceof Closure) {
-            $c->data = md5(new \ReflectionFunction($this->getter));
+            $c->data = md5(new \ReflectionFunction($getter));
             $c->name = $c->data;
         } else {
             $c->data = $getter;
@@ -108,9 +133,9 @@ class DataTables extends HTMLDivElement
         $c->data = str_replace(["(", ")"], "_", $c->data);
 
 
-        
-        if(!$this->serverSide){
-            $c->orderable=true;
+
+        if (!$this->serverSide) {
+            $c->orderable = true;
         }
 
         $this->columns[] = $c;
@@ -132,11 +157,12 @@ class DataTables extends HTMLDivElement
         return $data;
     }
 
+
     public function __toString()
     {
+        $this->setAttribute("data-columns", json_encode($this->columns));
 
-        $this->attributes["data-searching"] = $this->searching ? "true" : "false";
-        $this->attributes["data-columns"] = $this->columns;
+        /* $this->attributes["data-searching"] = $this->searching ? "true" : "false";
         $this->attributes["data-paging"] = $this->paging ? "true" : "false";
         $this->attributes["data-responsive"] = $this->responsive ? "true" : "false";
         $this->attributes["data-processing"] = $this->processing ? "true" : "false";
@@ -147,7 +173,7 @@ class DataTables extends HTMLDivElement
 
         $this->attributes["data-page-length"] = $this->pageLength;
 
-        $this->attributes["data-auto-width"]=$this->autoWidth ? "true" : "false";
+        $this->attributes["data-auto-width"] = $this->autoWidth ? "true" : "false";
 
         if ($this->fixedHeader) {
             $this->attributes["data-fixed-header"] = $this->fixedHeader;
@@ -164,7 +190,7 @@ class DataTables extends HTMLDivElement
         }
 
         $this->attributes["data-order"] = $order;
-
+*/
         if ($this->ajax) {
             if ($this->serverSide) {
 
@@ -178,7 +204,7 @@ class DataTables extends HTMLDivElement
             }
             $this->attributes["data-ajax"] = $this->ajax;
         } else {
-            $this->attributes["data-data"] = $this->_data();
+            $this->setAttribute("data-data", json_encode($this->_data()));
         }
 
 
@@ -186,5 +212,4 @@ class DataTables extends HTMLDivElement
 
         return parent::__toString();
     }
-
 }

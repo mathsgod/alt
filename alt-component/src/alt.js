@@ -38,6 +38,7 @@ import RTHead from "./RTHead.vue";
 import RTBody from "./RTBody.vue";
 import RTColumn from "./RTColumn.vue";
 import Ace from "./Ace.vue";
+import Datatables from "./Datatables.vue";
 
 VueRegisterElement("alt-tab", altTab);
 VueRegisterElement("alt-tab-pane", altTabPane);
@@ -49,6 +50,7 @@ VueRegisterElement("alt-box", Box);
 VueRegisterElement("alt-box-header", BoxHeader);
 VueRegisterElement("alt-box-body", BoxBody);
 VueRegisterElement("alt-box-footer", BoxFooter);
+VueRegisterElement("alt-datatables",Datatables);
 VueRegisterElement("alt-e", altE);
 VueRegisterElement("icheck", icheck);
 VueRegisterElement("datepicker", datepicker);

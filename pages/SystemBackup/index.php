@@ -9,9 +9,8 @@ class SystemBackup_index extends ALT\Page
     {
         // check right
         $folder = getcwd() . "/backup";
-        $c = substr(sprintf('%o', fileperms($folder)), -4);
-        if ($c != "0777") {
-            $this->callout->warning("Warning", "Permission of " . getcwd() . "/backup is not correct ($c), please change the permission of folder to 0777");
+        if (!is_writable($folder)) {
+            $this->callout->warning("Warning", "Permission of $folder is not writable");
         } else {
             $this->navbar()->addButton("Backup now", "SystemBackup/do_run")->addClass("confirm btn-primary");
         }

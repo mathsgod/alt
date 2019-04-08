@@ -48,9 +48,9 @@ class RT2 extends Element
 
         $c->descriptor[] = $getter;
 
-
+        
         if ($getter instanceof Closure) {
-            $c->data = md5(new \ReflectionFunction($this->getter));
+            $c->data = md5(new \ReflectionFunction($getter));
             $c->name = $c->data;
         } else {
             $c->data = $getter;
@@ -61,6 +61,7 @@ class RT2 extends Element
 
 
         $this->columns[] = $c;
+
 
 
         return $c;

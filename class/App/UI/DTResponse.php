@@ -80,7 +80,7 @@ class DTResponse implements JsonSerializable
     {
         $c = new Column();
         $c->title = "";
-        $c->type = "del";
+        $c->type = "delete";
         $c->data = "__del__";
         $c->name = "__del__";
         $c->width="1px";
@@ -89,6 +89,7 @@ class DTResponse implements JsonSerializable
             if (!$obj->canDelete()) {
                 return;
             }
+            return $a=html("a")->class("btn btn-xs btn-danger")->href($obj->uri("del"))->html("<i class='fa fa-fw fa-times'></i>");
         };
         $this->_columns["__del__"] = $c;
         return $c;
