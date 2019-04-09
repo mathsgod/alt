@@ -10,6 +10,14 @@ class User_test extends ALT\Page
     public function get()
     {
 
+        $e = $this->createE();
+
+        $e->add("a")->select("user_id")->ds(App\User::Find())->prepend("<option></option>");
+
+        $this->write($e);
+
+
+        return;
         $box = $this->createBox();
 
         $box->header("test");

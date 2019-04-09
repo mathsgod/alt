@@ -115,4 +115,8 @@ class Form extends HTMLFormElement
         $input->attr("name", $name)->attr("type", "hidden")->val($value);
         return $input;
     }
+
+    public function attr($name,$value){
+        return p($this)->attr($name,$value);
+    }
 }
