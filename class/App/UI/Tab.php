@@ -84,10 +84,18 @@ class Tab extends HTMLDivElement
 
         //$li = p("li");
 
-        $a = p("a")->attr("href", $href)->text($label)->appendTo($ti->li);
+        //$a = p("a")->attr("href", $href)->text($label)->appendTo($ti->li);
+
+
+        $a = p("a")->attr("href", $href)->text($label)[0];
+        $li=p("li")[0];
+        $li->appendChild($a);
+        echo $li;
+        die();
         $id = "tab-{$this->prefix}{$tab_id}";
         $a->attr("data-target", "#$id");
         $a->attr("data-toggle", "tabajax");
+
         p($this->navs)->append($ti->li);
 
         $div = p("div");

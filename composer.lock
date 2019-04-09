@@ -498,21 +498,21 @@
         },
         {
             "name": "mathsgod/p-query",
-            "version": "2.0.7",
+            "version": "2.0.10",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/p-query.git",
-                "reference": "83318961ede2b4d014f2cf2ead5fccd04af91f43"
+                "reference": "cef34e14effc4731036bbffb1f6f88c396d2e59c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/p-query/mathsgod-p-query-2.0.7-cc20d3.zip",
-                "reference": "83318961ede2b4d014f2cf2ead5fccd04af91f43",
-                "shasum": "9725ae099558dbcd7e36f03ab88e78a2ea72609a"
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/p-query/mathsgod-p-query-2.0.10-77d54e.zip",
+                "reference": "cef34e14effc4731036bbffb1f6f88c396d2e59c",
+                "shasum": "673288cb37740c836b3b8a60e7bb09141f3e78be"
             },
             "require": {
                 "php": ">=5.6",
-                "symfony/css-selector": "^4.2"
+                "symfony/css-selector": "^3.4"
             },
             "require-dev": {
                 "phpunit/phpunit": "*"
@@ -536,7 +536,7 @@
                 }
             ],
             "description": "Raymond php html library",
-            "time": "2019-04-08T08:14:48+00:00"
+            "time": "2019-04-09T04:12:26+00:00"
         },
         {
             "name": "mathsgod/r",
@@ -1182,25 +1182,25 @@
         },
         {
             "name": "symfony/css-selector",
-            "version": "v4.2.5",
+            "version": "v3.4.24",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
-                "reference": "48eddf66950fa57996e1be4a55916d65c10c604a"
+                "reference": "8ca29297c29b64fb3a1a135e71cb25f67f9fdccf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/css-selector/zipball/48eddf66950fa57996e1be4a55916d65c10c604a",
-                "reference": "48eddf66950fa57996e1be4a55916d65c10c604a",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/8ca29297c29b64fb3a1a135e71cb25f67f9fdccf",
+                "reference": "8ca29297c29b64fb3a1a135e71cb25f67f9fdccf",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1.3"
+                "php": "^5.5.9|>=7.0.8"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.2-dev"
+                    "dev-master": "3.4-dev"
                 }
             },
             "autoload": {
@@ -1231,7 +1231,7 @@
             ],
             "description": "Symfony CssSelector Component",
             "homepage": "https://symfony.com",
-            "time": "2019-01-16T20:31:39+00:00"
+            "time": "2019-01-16T09:39:14+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
