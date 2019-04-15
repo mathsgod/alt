@@ -1,9 +1,9 @@
 <?
 namespace App\UI;
 
-class Element  extends \P\Element
+class Element  extends \P\HTMLElement
 {
-    public function setAttribute($name, $value)
+    public function setAttribute(string $name, $value=null)
     {
         return parent::setAttribute($name, is_array($value) ? json_encode($value) : $value);
     }

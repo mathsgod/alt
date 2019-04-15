@@ -66,7 +66,6 @@ class RT2 extends Element
 
         return $c;
     }
-
     public function addEdit()
     {
         $c = $this->response->addEdit();
@@ -82,6 +81,7 @@ class RT2 extends Element
         $this->columns[] = $c;
         return $c;
     }
+
 
     public function addDel()
     {
@@ -126,4 +126,5 @@ class RT2 extends Element
         $this->columns[] = $c;
         return $c;
     }
+    
 }
