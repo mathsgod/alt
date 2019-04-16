@@ -3,14 +3,14 @@
 namespace App\UI;
 
 use P\HTMLDivElement;
-
+use App\Page;
 
 class BoxHeader extends HTMLDivElement
 {
     protected $page;
     public $tools;
 
-    public function __construct($page)
+    public function __construct(Page $page)
     {
         parent::__construct();
         $this->page = $page;

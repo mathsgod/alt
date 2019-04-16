@@ -3,12 +3,12 @@
 namespace App\UI;
 
 use P\HTMLSpanElement;
-
+use App\Page;
 
 class BoxTools extends HTMLSpanElement
 {
     protected $page;
-    public function __construct($page)
+    public function __construct(Page $page)
     {
         parent::__construct();
         $this->page = $page;

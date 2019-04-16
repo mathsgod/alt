@@ -28,7 +28,7 @@ class Grid extends \P\Query
 		return $row;
 	}
 
-	public function __toString()
+	public function __toString():string
 	{
 
 		if ($this->sortable) {

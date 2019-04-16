@@ -32,7 +32,7 @@ class Box extends HTMLDivElement
         "draggable" => ["name" => ":draggable", "type" => "json"]
     ] + parent::ATTRIBUTES;
 
-    protected $page = null;
+    protected $page;
     private static $NUM = 0;
 
     public function __construct(Page $page)
@@ -56,13 +56,13 @@ class Box extends HTMLDivElement
         self::$NUM++;
     }
 
-    public function collapsible($collapsible)
+    public function collapsible(bool $collapsible)
     {
         $this->collapsible = $collapsible;
         return $this;
     }
 
-    public function pinable($pinable)
+    public function pinable(bool $pinable)
     {
         $this->pinable = $pinable;
         return $this;

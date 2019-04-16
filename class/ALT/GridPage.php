@@ -1,8 +1,6 @@
 <?php
 namespace ALT;
 
-use R\Psr7\Response;
-use R\Psr7\Stream;
 use R\Psr7\ObjectStream;
 
 class GridPage extends Page
@@ -16,11 +14,11 @@ class GridPage extends Page
 
     public function __invoke($request, $response)
     {
-        $this->request=$request;
+        $this->request = $request;
         $this->_grid = $this->createGrid([1]);
-        $os=new ObjectStream(fopen("php://memory", "r+"));
+        $os = new ObjectStream(fopen("php://memory", "r+"));
         $os->write($this->_grid);
-        $resp=$response->withBody($os);
+        $resp = $response->withBody($os);
         return parent::__invoke($request, $resp);
     }
 }
