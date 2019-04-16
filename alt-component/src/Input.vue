@@ -1,5 +1,12 @@
 <template>
-    <input class="form-control" v-bind="$props" :name="name" :type="type" :value="value" @input="onInput" />
+  <input
+    class="form-control"
+    v-bind="$props"
+    :name="name"
+    :type="type"
+    :value="value"
+    @input="onInput"
+  >
 </template>
 <script>
 export default {
@@ -12,9 +19,15 @@ export default {
   },
   mounted() {
     if (this.required) {
-      $(this.$el).after(
-        '<i class="fa fa-asterisk form-control-feedback" style="top:10px"></i>'
-      );
+      if ($(this.$el).hasClass("input-sm")) {
+        $(this.$el).after(
+          '<i class="fa fa-asterisk form-control-feedback"></i>'
+        );
+      } else {
+        $(this.$el).after(
+          '<i class="fa fa-asterisk form-control-feedback" style="top:10px"></i>'
+        );
+      }
 
       $(this.$el)
         .closest(".form-group")
