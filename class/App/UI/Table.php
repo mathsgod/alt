@@ -86,7 +86,7 @@ class Table extends HTMLTableElement
         $form_name = p($this)->attr("form-name");
 
         $column->callback = function ($object, $node) use ($form_name) {
-            $field = $node->attributes["data-field"];
+            $field = $node->getAttribute("data-field");
 
 
             $tr = p($node)->closest("tr");
@@ -97,10 +97,10 @@ class Table extends HTMLTableElement
             if ($form_name)
                 $fn = $form_name . "[u]";
 
-            if ($node->attributes["multiple"]) {
-                $node->attributes["name"] = "{$fn}[$id][$field][]";
+            if ($node->hasAttribute("multiple")) {
+                $node->setAttribute("name","{$fn}[$id][$field][]");
             } else {
-                $node->attributes["name"] = "{$fn}[$id][$field]";
+                $node->setAttribute("name","{$fn}[$id][$field]");
             }
         };
 

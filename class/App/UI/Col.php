@@ -9,6 +9,7 @@ class Col extends HTMLElement
 {
     public $cell;
     public $label;
+    public $c_tpl;
 
     public function cell()
     {
@@ -189,7 +190,11 @@ class Col extends HTMLElement
 
             $p[] = $input[0];
 
-            $this->setAttribute("c-tpl", $this->getAttribute("c-tpl") . $input[0]);
+            $this->c_tpl[] = $input[0];
+            $this->setAttribute("c-tpl", $this->c_tpl);
+            $p->on("change", function () {
+                $this->setAttribute("c-tpl",  $this->c_tpl);
+            });
         }
         return $p;
     }
@@ -223,7 +228,7 @@ class Col extends HTMLElement
 
         if ($this->createTemplate) {
             $input = p("input");
-            $input->addClass("form-control input-sm");
+            $input->addClass("form-control");
             $input->attr("is", "alt-input");
             $input->attr("name", $field);
             $input->attr("data-field", $field);
@@ -231,12 +236,15 @@ class Col extends HTMLElement
 
             $p[] = $input[0];
 
-            $this->setAttribute("c-tpl", $this->getAttribute("c-tpl") . $input[0]);
+            $this->c_tpl[] = $input[0];
+
+            $this->setAttribute("c-tpl", $this->c_tpl);
+
+            $p->on("change", function () {
+                $this->setAttribute("c-tpl",  $this->c_tpl);
+            });
         }
 
-        $p->on("change",function()use($p){
-            $this->setAttribute("c-tpl", $p);
-        });
 
         return $p;
     }
@@ -284,7 +292,11 @@ class Col extends HTMLElement
             $textarea->attr("data-field", $field);
 
             $p[] = $textarea[0];
-            $this->setAttribute("c-tpl", $this->getAttribute("c-tpl") . $textarea[0]);
+            $this->c_tpl[] = $textarea[0];
+            $this->setAttribute("c-tpl", $this->c_tpl);
+            $p->on("change", function () {
+                $this->setAttribute("c-tpl",  $this->c_tpl);
+            });
         }
 
         return $p;
@@ -324,7 +336,11 @@ class Col extends HTMLElement
             $textarea->attr("data-field", $field);
 
             $p[] = $textarea[0];
-            $this->setAttribute("c-tpl", $this->getAttribute("c-tpl") . $textarea[0]);
+            $this->c_tpl[] = $textarea[0];
+            $this->setAttribute("c-tpl", $this->c_tpl);
+            $p->on("change", function () {
+                $this->setAttribute("c-tpl",  $this->c_tpl);
+            });
         }
 
         return $p;
@@ -358,7 +374,11 @@ class Col extends HTMLElement
             $select->attr("name", $field);
 
             $p[] = $select[0];
-            $this->setAttribute("c-tpl", $this->getAttribute("c-tpl") . $select[0]);
+            $this->c_tpl[] = $select[0];
+            $this->setAttribute("c-tpl", $this->c_tpl);
+            $p->on("change", function () {
+                $this->setAttribute("c-tpl",  $this->c_tpl);
+            });
         }
 
         return $p;
@@ -465,7 +485,11 @@ class Col extends HTMLElement
 
             $p[] = $input[0];
 
-            $this->setAttribute("c-tpl", $this->getAttribute("c-tpl") . $input[0]);
+            $this->c_tpl[] = $input[0];
+            $this->setAttribute("c-tpl", $this->c_tpl);
+            $p->on("change", function () {
+                $this->setAttribute("c-tpl",  $this->c_tpl);
+            });
         }
         return $p;
     }
@@ -542,8 +566,12 @@ class Col extends HTMLElement
             $e->attr("data-tags", "true");
             $e->attr("multiple", true);
 
-            $p[] = $e;
-            $this->setAttribute("c-tpl", $this->getAttribute("c-tpl") . $e[0]);
+            $p[] = $e[0];
+            $this->c_tpl[] = $e[0];
+            $this->setAttribute("c-tpl", $this->c_tpl);
+            $p->on("change", function () {
+                $this->setAttribute("c-tpl",  $this->c_tpl);
+            });
         }
 
         return $p;
@@ -574,7 +602,11 @@ class Col extends HTMLElement
             $is = new \BS\InputSelect();
             p($is)->find("input")->attr("data-field", $field)->attr("name", $field);
             $p[] = $is;
-            $this->setAttribute("c-tpl", $this->getAttribute("c-tpl") . $is);
+            $this->c_tpl[] = $is;
+            $this->setAttribute("c-tpl", $this->c_tpl);
+            $p->on("change", function () {
+                $this->setAttribute("c-tpl",  $this->c_tpl);
+            });
         }
         return $p;
     }
@@ -632,7 +664,12 @@ class Col extends HTMLElement
             $input->attr("data-field", $field);
             $input->addClass("iCheck");
             $input->val(1);
-            $this->setAttribute("c-tpl", $this->getAttribute("c-tpl") . $cb);
+
+            $this->c_tpl[] = $cb;
+            $this->setAttribute("c-tpl", $this->c_tpl);
+            $p->on("change", function () {
+                $this->setAttribute("c-tpl",  $this->c_tpl);
+            });
         }
 
         return $p;
@@ -675,7 +712,11 @@ class Col extends HTMLElement
             $div->attr("name", $field);
             $div->attr("data-field", $field);
             $p[] = $div[0];
-            $this->setAttribute("c-tpl", $this->getAttribute("c-tpl") . $div[0]);
+            $this->c_tpl[] = $div[0];
+            $this->setAttribute("c-tpl", $this->c_tpl);
+            $p->on("change", function () {
+                $this->setAttribute("c-tpl",  $this->c_tpl);
+            });
         }
         return $p;
     }
@@ -715,7 +756,11 @@ class Col extends HTMLElement
             $div->attr("name", $field);
             $div->attr("data-field", $field);
             $p[] = $div[0];
-            $this->setAttribute("c-tpl", $this->getAttribute("c-tpl") . $div[0]);
+            $this->c_tpl[] = $div[0];
+            $this->setAttribute("c-tpl", $this->c_tpl);
+            $p->on("change", function () {
+                $this->setAttribute("c-tpl",  $this->c_tpl);
+            });
         }
         return $p;
     }
@@ -791,7 +836,11 @@ class Col extends HTMLElement
 
 
             $p[] = $select[0];
-            $this->setAttribute("c-tpl", $this->getAttribute("c-tpl") . $select[0]);
+            $this->c_tpl[] = $select[0];
+            $this->setAttribute("c-tpl", $this->c_tpl);
+            $p->on("change", function () {
+                $this->setAttribute("c-tpl",  $this->c_tpl);
+            });
         }
 
         return $p;
@@ -826,7 +875,11 @@ class Col extends HTMLElement
             $select->attr("name", $field);
 
             $p[] = $select[0];
-            $this->setAttribute("c-tpl", $this->getAttribute("c-tpl") . $select[0]);
+            $this->c_tpl[] = $select[0];
+            $this->setAttribute("c-tpl", $this->c_tpl);
+            $p->on("change", function () {
+                $this->setAttribute("c-tpl",  $this->c_tpl);
+            });
         }
 
         return $p;
@@ -888,7 +941,12 @@ class Col extends HTMLElement
             $select->addClass("select2 form-control");
             $select->attr("data-field", $field);
             $select->attr("name", $field);
-            $this->setAttribute("c-tpl", $this->getAttribute("c-tpl") . $select[0]);
+            $this->c_tpl[] = $select[0];
+            $this->setAttribute("c-tpl", $this->c_tpl);
+            $p->on("change", function () {
+                $this->setAttribute("c-tpl",  $this->c_tpl);
+            });
+
 
             $p[] = $select[0];
         }
@@ -909,7 +967,11 @@ class Col extends HTMLElement
             $block = p("p");
             $block->addClass("help-block");
             $block->html($text);
-            $this->setAttribute("c-tpl", $this->getAttribute("c-tpl") . $block[0]);
+            $this->c_tpl[] = $block[0];
+            $this->setAttribute("c-tpl", $this->c_tpl);
+            $p->on("change", function () {
+                $this->setAttribute("c-tpl",  $this->c_tpl);
+            });
         }
 
         return $p;
@@ -928,6 +990,4 @@ class Col extends HTMLElement
         }
         return $p;
     }
-
-
 }

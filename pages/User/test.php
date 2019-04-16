@@ -4,10 +4,17 @@ class User_test extends ALT\Page
 {
     public $_a = [1, 2];
 
+    public function post(){
+
+        outp($_POST);
+        die();
+    }
     public function get()
     {
 
-        $t = $this->createT([]);
+        $t = $this->createT([
+            ["name"=>'a',"name1"=>"b"]
+        ]);
         $t->formCreate(["name" => "t1"]);
         $t->add("name")->input("name")->required();
         
