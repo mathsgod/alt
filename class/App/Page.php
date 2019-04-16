@@ -356,7 +356,7 @@ class Page extends \R\Page
         return new UI\DataTables($objects, $this);
     }
 
-    public function createT($objects)
+    public function createT($objects): UI\T
     {
         return new UI\T($objects, $this);
     }

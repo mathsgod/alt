@@ -1,14 +1,22 @@
 <?php
 
-use P\Document;
-use App\UI\Box;
-
 class User_test extends ALT\Page
 {
     public $_a = [1, 2];
 
     public function get()
     {
+
+        $t = $this->createT([]);
+        $t->formCreate(["name" => "t1"]);
+        $t->add("name")->input("name")->required();
+        
+        $t->add("name1")->input("name1");
+        $t->add("name2")->input("name2");
+
+        $this->write($this->createForm($t));
+
+        return;
 
         $e = $this->createE();
 

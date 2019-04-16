@@ -6,6 +6,7 @@ use App\Page;
 use ALT\C2;
 use My\Func;
 use P\HTMLTableElement;
+
 class Table extends HTMLTableElement
 {
     protected $page;
@@ -18,20 +19,21 @@ class Table extends HTMLTableElement
         parent::__construct();
         $this->objects = $objects;
         $this->page = $page;
-        $this->setAttribute("is","alt-table");
+        $this->setAttribute("is", "alt-table");
         $this->classList->add("table");
 
         $this->createTBody();
     }
 
-    public function add($label = null, $getter = null)
+    public function add($label = null, $getter = null): Col
     {
-        $column = new C2("th");
+        $column = new Col("th");
         $column->default = $this->default;
 
         $this->columns[] = $column;
 
-        if ($this->getAttribute("form-create")) {
+        if ($this->hasAttribute("form-create")) {
+
             $column->createTemplate = true;
         }
 
@@ -46,19 +48,19 @@ class Table extends HTMLTableElement
 
         foreach ($this->objects as $k => $obj) {
             if ($tbody->rows->length <= $i) {
-                
+
                 $row = $tbody->insertRow();
                 if ($obj instanceof \App\Model) {
-                    $row->setAttribute("data-index",$obj->id());
+                    $row->setAttribute("data-index", $obj->id());
                 } else {
                     if ($this->key) {
                         if (is_array($obj)) {
-                            $row->setAttribute("data-index",$obj[$this->key]);
+                            $row->setAttribute("data-index", $obj[$this->key]);
                         } else {
-                            $row->setAttribute("data-index",$obj->{$this->key});
+                            $row->setAttribute("data-index", $obj->{$this->key});
                         }
                     } else {
-                        $row->setAttribute("data-index",$k);
+                        $row->setAttribute("data-index", $k);
                     }
                 }
             } else {
@@ -219,11 +221,6 @@ if(checked){
 
     public function __toString()
     {
-        foreach ($this->columns as $column) {
-            if ($column->c_tpl->count()) {
-                $column->attributes["c-tpl"] = (string )$column->c_tpl;
-            }
-        }
 
         $html = parent::__toString();
         $o = p($html);

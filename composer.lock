@@ -498,17 +498,17 @@
         },
         {
             "name": "mathsgod/p-query",
-            "version": "2.1.1",
+            "version": "2.1.2",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/p-query.git",
-                "reference": "4625663451e114a20e94ed27cdde337517cb5275"
+                "reference": "438905b8ef8fbbde1eff02eb25a659f280292ed0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/p-query/mathsgod-p-query-2.1.1-17c7ee.zip",
-                "reference": "4625663451e114a20e94ed27cdde337517cb5275",
-                "shasum": "eb3e9997274172520c0c86217237653097c1c388"
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/p-query/mathsgod-p-query-2.1.2-4a771e.zip",
+                "reference": "438905b8ef8fbbde1eff02eb25a659f280292ed0",
+                "shasum": "d2d2ef3b6742b25da36d2ff0de2d5e4b811773ab"
             },
             "require": {
                 "php": ">=7.1",
@@ -536,7 +536,7 @@
                 }
             ],
             "description": "Raymond php html library",
-            "time": "2019-04-15T10:11:35+00:00"
+            "time": "2019-04-16T08:24:58+00:00"
         },
         {
             "name": "mathsgod/r",
@@ -1182,7 +1182,7 @@
         },
         {
             "name": "symfony/css-selector",
-            "version": "v3.4.24",
+            "version": "v3.4.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
@@ -1352,16 +1352,16 @@
         },
         {
             "name": "symfony/process",
-            "version": "v3.4.24",
+            "version": "v3.4.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "009f8dda80930e89e8344a4e310b08f9ff07dd2e"
+                "reference": "a9c4dfbf653023b668c282e4e02609d131f4057a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/009f8dda80930e89e8344a4e310b08f9ff07dd2e",
-                "reference": "009f8dda80930e89e8344a4e310b08f9ff07dd2e",
+                "url": "https://api.github.com/repos/symfony/process/zipball/a9c4dfbf653023b668c282e4e02609d131f4057a",
+                "reference": "a9c4dfbf653023b668c282e4e02609d131f4057a",
                 "shasum": ""
             },
             "require": {
@@ -1397,11 +1397,11 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2019-01-16T13:27:11+00:00"
+            "time": "2019-04-08T16:15:54+00:00"
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.4.24",
+            "version": "v3.4.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",

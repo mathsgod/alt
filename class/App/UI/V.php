@@ -25,7 +25,6 @@ class V extends Box
         $this->container = $this->body();
 
         $this->addTable();
-        
     }
 
     public function setColumnRatio($ratio)
@@ -72,12 +71,10 @@ class V extends Box
         $c = count($this->tables[$this->row]);
         $col_class = floor(12 / $c);
 
-        foreach ($row_div->find(">div") as $div) {
-            $div->removeClass();
-            $div->addClass("col-md-" . $col_class);
+        foreach ($row_div->children("div") as $div) {
+            p($div)->removeClass();
+            p($div)->addClass("col-md-" . $col_class);
         }
-
-
         return $this->table;
     }
 
@@ -90,7 +87,7 @@ class V extends Box
 
     public function addTable()
     {
-        
+
         $this->table = p("table")->addClass("table")->appendTo($this->container);
         $this->table->addClass($this->tableClass);
         $this->table->append(p("tbody"));
@@ -135,8 +132,9 @@ class V extends Box
         return $tr;
     }
 
-    public function __get($name){
-        if($name=="header"){
+    public function __get($name)
+    {
+        if ($name == "header") {
             $this->classList->remove('no-border');
             $this->classList->add('box-primary');
         }
