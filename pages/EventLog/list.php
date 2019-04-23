@@ -19,6 +19,9 @@ class EventLog_list extends App\Page
 
         $rt->order("eventlog_id", "desc");
         $rt->addView();
+
+        $rt->addCheckbox("id");
+        //$rt->add("id","cb");
         //$rt->addDel();
         $rt->add("ID", "eventlog_id")->ss();
         $rt->add("Class", "class")->ss();
@@ -38,10 +41,12 @@ class EventLog_list extends App\Page
         $rt->source = EventLog::Query();
         $rt->add("user_id", "User()")->alink("v");
 
-        $rt->add("cb", "eventlog_id");
+     /*   $rt->add("cb", function($o){
+            return "<input is='icheck' type='checkbox' name='cb[$o->eventlog_id]' />";
+        })->type="html";
 
+        */
 
-        //$rt->addCheckbox("id");
         return $rt;
     }
 }
