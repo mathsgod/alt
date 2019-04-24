@@ -38,7 +38,7 @@
         }
     ],
     "require": {
-        "php": ">=5.6",
+        "php": ">=7.0",
         "mathsgod/r-psr7": "^2.1.1",
         "mathsgod/hl-holiday": "^1.2.1",
         "mathsgod/hl-weather": "1.*",
