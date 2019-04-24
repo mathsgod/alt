@@ -123,9 +123,14 @@ class App extends \R\App
         $cms = dirname($server["PHP_SELF"]);
         $document_root = substr($cms_root, 0, -strlen($cms));
 
+        if ($this->config["system"]["document_root"]) {
+            $document_root = $this->config["system"]["document_root"];
+        }
+
         if (substr($document_root, -1) == "/") {
             $document_root = substr($document_root, 0, -1);
         }
+
 
         $composer_base = substr($composer_root, strlen($document_root));
         $composer_base = str_replace(DIRECTORY_SEPARATOR, "/", $composer_base);

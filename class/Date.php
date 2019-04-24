@@ -48,27 +48,27 @@ class Date extends DateTime {
     }
 
     public function addYears($years) {
-        $this->add(date_interval_create_from_date_string("$years years"));
+        return $this->add(date_interval_create_from_date_string("$years years"));
     }
 
     public function addMonths($months) {
-        $this->add(date_interval_create_from_date_string("$months months"));
+        return $this->add(date_interval_create_from_date_string("$months months"));
     }
 
     public function addDays($days) {
-        $this->add(date_interval_create_from_date_string("$days days"));
+        return $this->add(date_interval_create_from_date_string("$days days"));
     }
 
     public function addHours($hours) {
-        $this->add(date_interval_create_from_date_string("$hours hours"));
+        return $this->add(date_interval_create_from_date_string("$hours hours"));
     }
 
     public function addMinutes($minutes) {
-        $this->add(date_interval_create_from_date_string("$minutes minutes"));
+        return $this->add(date_interval_create_from_date_string("$minutes minutes"));
     }
 
     public function addSeconds($seconds) {
-        $this->add(date_interval_create_from_date_string("$seconds seconds"));
+        return $this->add(date_interval_create_from_date_string("$seconds seconds"));
     }
 
     public function isBefore($another) {
@@ -82,6 +82,13 @@ class Date extends DateTime {
     public function isBetween($start, $end) {
         return $this->format("Y-m-d") >= $start && $this->format("Y-m-d") <= $end;
     }
-}
 
-?>
+    public function add($interval)
+    {
+        if (is_string($interval)) {
+            $interval = DateInterval::createFromDateString($interval);
+        }
+
+        return parent::add($interval);
+    }
+}

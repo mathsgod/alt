@@ -11,8 +11,6 @@ class User_v extends ALT\GridPage
 		$this->navbar()->addButton("User group", $obj->uri("e_userlist"));
 		$this->navbar()->addLayoutReset();
 
-
-
 		$mv = $this->createV();
 		$mv->header->title = "Information";
 		$mv->add("Username", "username");

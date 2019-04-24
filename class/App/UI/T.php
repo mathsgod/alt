@@ -6,7 +6,7 @@ class T extends Box
     public $objects;
     public $table;
 
-    public function __construct($objects, $route)
+    public function __construct($objects, \App\Page $route)
     {
         parent::__construct($route);
         $this->objects = $objects;
@@ -56,9 +56,9 @@ class T extends Box
         return $p;
     }
 
-    public function formCreate($options, $default)
+    public function formCreate($options, $default = null)
     {
-        $this->table->attributes["form-create"] = true;
+        $this->table->setAttribute("form-create", true);
 
         if (is_string($options)) {
             $opt = [
@@ -69,7 +69,7 @@ class T extends Box
             $opt = $options;
         }
 
-        $this->table->attributes["form-name"] = $opt["name"];
+        $this->table->setAttribute("form-name", $opt["name"]);
         $this->table->default = $opt["default"];
 
         return $this;
@@ -92,5 +92,4 @@ class T extends Box
             return "<button class='btn btn-xs btn-primary table-childrow-btn table-childrow-close' data-url='$url' data-target=''><i class='fa fa-chevron-up'></i></button>";
         });
     }
-
 }

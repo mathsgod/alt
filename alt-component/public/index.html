@@ -32,10 +32,15 @@
 
 <body>
 
-    <div class="container">
-        alt-component
+    <div class="container" id="div1">
+        alt-component test
 
-        <icheck v-model="c1"></icheck>
+        <hr>
+
+        <div is="Testing"></div>
+
+        <hr>
+        <!-- icheck v-model="c1"></icheck>
 
         <hr>
 
@@ -59,7 +64,7 @@
         <input type="checkbox" name="clientservices[]" is="icheck" value="123" />
         <input type="checkbox" name="clientservices[]" is="icheck" value="456" />
 
-        <hr />
+        <hr / -->
 
         <div is="alt-rt2" :columns="[
             {
@@ -144,6 +149,13 @@
 
         </div -->
     </div>
+
+    <script>
+
+        var vm=new Vue({
+            el:"#div1"
+        });
+    </script>
 
 </body>
 

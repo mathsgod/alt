@@ -8,10 +8,10 @@ class Button extends \BS\Button
     private $page;
     public function __construct(Page $page)
     {
-        $this->page = $page;
         parent::__construct();
+        $this->page = $page;
     }
-    
+
     public function text($text)
     {
         return parent::text($this->page->translate($text));
@@ -28,7 +28,7 @@ class Button extends \BS\Button
         return parent::__toString();
     }
 
-   
+
     public function label($label)
     {
         $text_node = [];
@@ -47,10 +47,10 @@ class Button extends \BS\Button
         return $this;
     }
 
-    public function fancybox(){
-        $this->attr("data-type","ajax");
-        $this->attr("data-fancybox",true);
+    public function fancybox()
+    {
+        $this->attr("data-type", "ajax");
+        $this->attr("data-fancybox", true);
         return $this;
     }
-    
 }
