@@ -19,74 +19,20 @@
           </button>
         </td>
         <td
+          ref="cell"
+          is="rt2-cell"
+          v-bind:index="index"
+          :data="d"
+          v-bind:column="column"
           v-for="(column,key) in visibleColumns"
           :key="'col'+key"
+          :storage="storage"
+          v-on:data-deleted="$emit('data-deleted')"
+          v-on:toggle-sub-row="toggleSubRow(index,$event)"
           v-on:click="onClickCell(column,index)"
-          v-bind:style="column.cell(d).style"
-        >
-          <template v-if="isEditMode(column,index)">
-            <template v-if="column.editType=='text'">
-              <input
-                type="text"
-                class="form-control input-sm"
-                v-bind:value="column.getValue(d)"
-                v-on:blur="updateData(index,d,column,$event.target.value)"
-              >
-            </template>
-            <template v-else-if="column.editType=='select'">
-              <select
-                class="formControl"
-                v-on:blur="updateData(index,d,column,$event.target.value)"
-              >
-                <option
-                  v-for="(opt,opt_key) in column.editData"
-                  :key="'option'+opt_key"
-                  v-bind:value="opt.value"
-                  v-text="opt.label"
-                  v-bind:selected="opt.value==column.getValue(d).value"
-                ></option>
-              </select>
-            </template>
-            <template v-else-if="column.editType=='date'">
-              <input
-                type="text"
-                class="form-control input-sm"
-                v-bind:value="column.getValue(d)"
-                v-on:blur="updateData(index,d,column,$event.target.value)"
-              >
-            </template>
-          </template>
-          <template v-else>
-            <div
-              v-if="column.cell(d).type=='html'"
-              v-html="column.getContent(d)"
-              v-bind:style="column.cell(d).divStyle"
-            ></div>
-            <div
-              v-if="column.cell(d).type=='text'"
-              v-text="column.getContent(d)"
-              v-bind:style="column.cell(d).divStyle"
-            ></div>
-            <input type="checkbox" v-if="column.cell(d).type=='checkbox'" is="icheck" @click="column.cell(d).toggleCheckBox" :checked="column.cell(d).checked">
-            <input type="checkbox" v-if="column.type=='deletes'">
-            <button
-              class="btn btn-xs btn-danger"
-              v-else-if="column.cell(d).type=='delete'"
-              v-on:click="deleteRow(d[column.data].content)"
-            >
-              <i class="fa fa-fw fa-times"></i>
-            </button>
-            <button
-              class="btn btn-xs btn-default"
-              v-else-if="column.type=='sub-row'"
-              v-on:click="toggleSubRow(index,column.cell(d))"
-            >
-              <i v-show="subRow[index]" class="fa fa-fw fa-minus"></i>
-              <i v-show="!subRow[index]" class="fa fa-fw fa-plus"></i>
-            </button>
-            <a v-else-if="column.type=='link'" v-bind:href="column.href" v-html="column.content"></a>
-          </template>
-        </td>
+          v-bind:edit-mode="isEditMode(column,index)"
+          v-on:update-data="updateData(index,d,column,$event)"
+        ></td>
       </tr>
       <tr class="child" v-show="showChild(index)" :key="'child'+index">
         <td v-bind:colspan="showColumnCount">
@@ -113,7 +59,8 @@ export default {
   props: {
     data: Array,
     columns: Array,
-    selectable: Boolean
+    selectable: Boolean,
+    storage: Object
   },
   data() {
     return {
@@ -151,17 +98,22 @@ export default {
     }
   },
   methods: {
-    clickCheckBox(column,data){
-      console.log("click check box",column,data);
+    checkAll(column, value) {
+      var cells = this.$refs.cell.filter(cell => {
+        return cell.column == column;
+      });
+      cells.forEach(cell => {
+        cell.setCheckbox(value);
+      });
     },
-    toggleSubRow(index, cell) {
+    toggleSubRow(index, content) {
       if (this.subRow[index]) {
         this.subRow[index] = false;
       } else {
         this.subRow[index] = true;
         Vue.http
-          .get(cell.url, {
-            params: cell.params
+          .get(content.url, {
+            params: content.params
           })
           .then(resp => {
             this.subRowContent[index] = resp.body;
@@ -185,13 +137,6 @@ export default {
       }
 
       return c;
-    },
-    deleteRow(uri) {
-      if (confirm("Are your sure?")) {
-        this.$http.delete(uri).then(() => {
-          this.$emit("data-deleted");
-        });
-      }
     },
     isSelected(d) {
       return this.selectedData.indexOf(d) >= 0;

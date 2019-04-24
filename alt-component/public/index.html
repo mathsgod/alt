@@ -37,7 +37,7 @@
 
         <hr>
 
-        <div is="Testing"></div>
+
 
         <hr>
         <!-- icheck v-model="c1"></icheck>
@@ -66,7 +66,25 @@
 
         <hr / -->
 
+        <hr>
         <div is="alt-rt2" :columns="[
+            {
+                name:'text1',
+                title:'text1',
+                type:'text',
+                editable:true,
+                editType:'text'
+            },
+            {
+                name:'subrow1',
+                title:'subrow',
+                type:'sub-row'
+            },
+            {
+                name:'__del__',
+                title:'',
+                type:'delete'
+            },
             {
                 name:'cb',
                 title:'',
@@ -77,20 +95,21 @@
                 name:'eventlog_id',
                 title:'eventlog_id',
                 type:'text'
-            },
-          {
-              name:'__view__',
-              title:'',
-              data:'__view__',
-              type:'html'
-          },{
-              name:'subrow1',
-              title:'subrow',
-              type:'sub-row'
-          }
-            
-          
-          ]" :data="[]" :ajax="{url:'http://127.0.0.1/testdata.php'}" :responsive="false" cell-url :page-length="25" :selectable="false" :buttons="[]" :exports="[]" :order="[]"></div>
+            },{
+                name:'url1',
+                title:'url1',
+                type:'text'
+            }
+          ]" :data="[]" :ajax="{url:'http://127.0.0.1/testdata.php'}" :responsive="false" cell-url :page-length="25"
+           :selectable="false" :buttons="[
+               {
+                   title:'submit',
+                   action:'submit1',
+
+                   
+               }
+               
+           ]" :exports="[]" :order="[]"></div>
 
         <!-- div id="div1">
 
@@ -150,12 +169,12 @@
         </div -->
     </div>
 
-    <script>
 
-        var vm=new Vue({
-            el:"#div1"
-        });
-    </script>
+<script>
+    function submit1(rt){
+        console.log(rt.getChecked('cb'));
+    }
+</script>
 
 </body>
 

@@ -126,5 +126,7 @@ class RT2 extends Element
         $this->columns[] = $c;
         return $c;
     }
+
+    
     
 }

@@ -35,6 +35,12 @@ module.exports = {
         this.checked = false;
         $(this.$el).iCheck("uncheck");
       }
+    },checked(val){
+      if(val){
+        $(this.$el).iCheck("check");
+      }else{
+        $(this.$el).iCheck("uncheck");
+      }
     }
   },
   created() {},

@@ -7,6 +7,11 @@ table.rt > thead button.multiselect {
 </style>
 <template>
   <div class="box no-border" is="alt-box" ref="box">
+    <div class="box-body no-padding" v-if="buttons.length>0">
+        <button v-for="(button,index) in buttons" :key="index" v-text="button.title" @click="onClickButton(button)"></button>
+    </div>
+
+
     <div class="box-body no-padding" is="alt-box-body" :class="{'table-responsive':!responsive}">
       <table class="table table-hover table-condensed table-bordered rt" ref="table">
         <thead>
@@ -20,12 +25,13 @@ table.rt > thead button.multiselect {
             <th
               v-for="(column,key) in visibleColumns"
               :key="key"
-              is="alt-column"
+              is="rt2-column"
               v-bind="column.$data"
               v-on:order="order"
               v-on:draw="draw"
               v-on:search="$emit('search',$event)"
               ref="column"
+              v-on:check-all="checkAll(column,$event)"
             ></th>
           </tr>
           <tr v-if="isSearchable">
@@ -47,6 +53,7 @@ table.rt > thead button.multiselect {
           ref="tbody"
           v-on:update-data="updateData"
           v-on:data-deleted="draw"
+          :storage="storage"
         ></tbody>
       </table>
     </div>
@@ -118,7 +125,7 @@ table.rt > thead button.multiselect {
         >
           <i class="fa fa-tv"></i>
         </button>
-        
+
         <button
           @click="resetLocaStorage"
           class="btn btn-default btn-sm"
@@ -251,17 +258,7 @@ export default {
               type: "text",
               column: this
             };
-
-            cell.toggleCheckBox=()=>{
-                console.log(this);
-
-              /*cell.checked = !cell.checked;
-              var id=d[this.name];
-              storage.rows[id].checked = cell.checked;
-              storage.save();*/
-              }
-
-
+  
             if (this.type == "checkbox") {
               cell.type = "checkbox";
               var id = d[this.name];
@@ -397,12 +394,14 @@ export default {
     }
   },
   methods: {
-    getChecked(){
-      var d=[];
-      for(var r in this.storage.rows){
-        if(this.storage.rows[r].checked){
+    checkAll(column,value){
+      this.$refs.tbody.checkAll(column,value);
+    },
+    getChecked(name) {
+      var d = [];
+      var rows=this.storage.rows[name];
+      for (var r in rows) {
           d.push(r);
-        }
       }
       return d;
     },
