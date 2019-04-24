@@ -38,11 +38,7 @@
         }
     ],
     "require": {
-<<<<<<< HEAD
         "php": ">=7.0",
-=======
-        "php": ">=7.1",
->>>>>>> master
         "mathsgod/r-psr7": "^2.1.1",
         "mathsgod/hl-holiday": "^1.2.1",
         "mathsgod/hl-weather": "1.*",
