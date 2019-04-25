@@ -87,9 +87,10 @@
             },
             {
                 name:'cb',
-                title:'',
-                data:'cb',
-                type:'checkbox'
+                title:null,
+                type:'checkbox',
+                orderable:false,
+                searchable:false
             },
             {
                 name:'eventlog_id',
@@ -105,8 +106,7 @@
                {
                    title:'submit',
                    action:'submit1',
-
-                   
+                   class:['btn','btn-xs','btn-primary']
                }
                
            ]" :exports="[]" :order="[]"></div>

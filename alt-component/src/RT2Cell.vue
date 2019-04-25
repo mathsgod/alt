@@ -7,6 +7,7 @@
           class="form-control input-sm"
           v-bind:value="column.getValue(data)"
           v-on:blur="updateData($event.target.value)"
+          :style="cssStyle"
         >
       </template>
       <template v-else-if="column.editType=='select'">
@@ -30,8 +31,8 @@
       </template>
     </template>
     <template v-else>
-      <div v-if="type=='text'" v-text="content"></div>
-      <div v-if="type=='html'" v-html="content"></div>
+      <div v-if="type=='text'" v-text="content" :style="divStyle"></div>
+      <div v-if="type=='html'" v-html="content" :style="divStyle"></div>
       <input
         type="checkbox"
         v-if="type=='checkbox'"
@@ -117,7 +118,7 @@ export default {
   },
   methods: {
     checked() {
-      this.storage.rows = this.storage.row || {};
+      this.storage.rows = this.storage.rows|| {};
       this.storage.rows[this.column.name] =
         this.storage.rows[this.column.name] || {};
 
@@ -144,11 +145,7 @@ export default {
       this.$emit("click");
     },
     setCheckbox(value) {
-      this.storage.rows = this.storage.row || {};
-
-      if (typeof this.storage.rows[this.column.name] !== "object") {
-        delete this.storage.rows[this.column.name];
-      }
+      this.storage.rows = this.storage.rows || {};
 
       this.storage.rows[this.column.name] =
         this.storage.rows[this.column.name] || {};

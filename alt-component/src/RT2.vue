@@ -8,10 +8,14 @@ table.rt > thead button.multiselect {
 <template>
   <div class="box no-border" is="alt-box" ref="box">
     <div class="box-body no-padding" v-if="buttons.length>0">
-        <button v-for="(button,index) in buttons" :key="index" v-text="button.title" @click="onClickButton(button)"></button>
+      <button
+        v-for="(button,index) in buttons"
+        :key="index"
+        v-text="button.title"
+        @click="onClickButton(button)"
+        :class="button.class"
+      ></button>
     </div>
-
-
     <div class="box-body no-padding" is="alt-box-body" :class="{'table-responsive':!responsive}">
       <table class="table table-hover table-condensed table-bordered rt" ref="table">
         <thead>
@@ -258,7 +262,7 @@ export default {
               type: "text",
               column: this
             };
-  
+
             if (this.type == "checkbox") {
               cell.type = "checkbox";
               var id = d[this.name];
@@ -394,14 +398,14 @@ export default {
     }
   },
   methods: {
-    checkAll(column,value){
-      this.$refs.tbody.checkAll(column,value);
+    checkAll(column, value) {
+      this.$refs.tbody.checkAll(column, value);
     },
     getChecked(name) {
       var d = [];
-      var rows=this.storage.rows[name];
+      var rows = this.storage.rows[name];
       for (var r in rows) {
-          d.push(r);
+        d.push(r);
       }
       return d;
     },
