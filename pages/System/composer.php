@@ -5,28 +5,28 @@ class System_composer extends ALT\Page
 {
     public function updateComposer()
     {
-        $composer = new App\Composer();
+        $composer = new Composer($this->app);
         $composer->exec("self-update");
         return [true];
     }
 
     public function addRaymondRepo()
     {
-        $composer = new App\Composer();
+        $composer = new Composer($this->app);
         $composer->exec("config repositories.hostlink-raymond composer https://raymond2.hostlink.com.hk/satis/web");
         return [true];
     }
 
     public function changeOwner()
     {
-        $composer = new App\Composer();
+        $composer = new Composer($this->app);
         $composer->changeOwn();
         return [true];
     }
 
     public function run()
     {
-        $composer = new App\Composer();
+        $composer = new Composer($this->app);
         $ret = $composer->exec($_POST["cmd"]);
 
         unlink($composer->path() . "/.htaccess");
@@ -43,14 +43,14 @@ EOL;
 
     public function jsonFile()
     {
-        $composer = new App\Composer();
+        $composer = new Composer($this->app);
         $this->write("<pre>" . json_encode($composer->config(), 255) . "</pre>");
     }
 
     public function info($checkupdate = false)
     {
 
-        $composer = new App\Composer();
+        $composer = new Composer($this->app);
         $package = $composer->info($checkupdate);
 
         $installed = array_map(function ($o) {
@@ -69,7 +69,6 @@ EOL;
 
     public function installedPackages()
     {
-        $composer = new App\Composer();
         return $this->info();
     }
 }

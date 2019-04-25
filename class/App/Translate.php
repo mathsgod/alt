@@ -1,6 +1,9 @@
 <?php
 namespace App;
 
+use Symfony\Component\Yaml\Yaml;
+
+
 class Translate extends Model
 {
 	private static $_CACHE = [];
@@ -19,10 +22,22 @@ class Translate extends Model
 			if ($ini[$language]) $data = array_merge($data, $ini[$language]);
 		}
 
+		if ($yml = self::$_app->getFile("translate.yml")) {
+			$yml = Yaml::parseFile($yml);
+			if ($yml[$lang[0]]) $data = array_merge($data, $yml[$lang[0]]);
+			if ($yml[$language]) $data = array_merge($data, $yml[$language]);
+		}
+
 		if ($ini = self::$_app->getFile("pages/translate.ini")) {
 			$ini = parse_ini_file($ini, true);
 			if ($ini[$lang[0]]) $data = array_merge($data, $ini[$lang[0]]);
 			if ($ini[$language]) $data = array_merge($data, $ini[$language]);
+		}
+
+		if ($yml = self::$_app->getFile("pages/translate.yml")) {
+			$yml = Yaml::parseFile($yml);
+			if ($yml[$lang[0]]) $data = array_merge($data, $yml[$lang[0]]);
+			if ($yml[$language]) $data = array_merge($data, $yml[$language]);
 		}
 
 		if ($ini = self::$_app->getFile("pages/{$module}/translate.ini")) {
@@ -31,6 +46,11 @@ class Translate extends Model
 			if ($ini[$language]) $data = array_merge($data, $ini[$language]);
 		}
 
+		if ($yml = self::$_app->getFile("pages/{$module}/translate.yml")) {
+			$yml = Yaml::parseFile($yml);
+			if ($yml[$lang[0]]) $data = array_merge($data, $yml[$lang[0]]);
+			if ($yml[$language]) $data = array_merge($data, $yml[$language]);
+		}
 
 		if (!isset(self::$_CACHE_DB)) {
 			self::$_CACHE_DB = [];

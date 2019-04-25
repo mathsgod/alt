@@ -4,8 +4,10 @@ namespace App;
 
 class Composer
 {
-    public function __construct()
+    public $app;
+    public function __construct(App $app)
     {
+        $this->app = $app;
     }
 
     public function auth()
@@ -48,6 +50,19 @@ class Composer
         }
     }
 
+    public function getPHP()
+    {
+        $v = PHP_VERSION_ID;
+        $v = (string)intval($v / 100);
+        $v = $v[0] . intval(substr($v, 1));
+
+        $php = "php$v";
+        if (`$php -v`) {
+            return $php;
+        }
+        return "php";
+    }
+
     public function exec($command)
     {
         $cwd = getcwd();
@@ -57,10 +72,11 @@ class Composer
         $phar = $this->phar();
         chdir($this->path());
 
+        $php = $this->getPHP();
         if ($command) {
-            $ret = `php $phar $command 2>&1`;
+            $ret = `$php $phar $command 2>&1`;
         } else {
-            $ret = `php $phar 2>&1`;
+            $ret = `$php $phar 2>&1`;
         }
 
         chdir($cwd);
@@ -80,7 +96,7 @@ class Composer
 
     public function path()
     {
-        $p = \App::_()->pathInfo();
+        $p = $this->app->pathInfo();
         return $p["composer_root"];
     }
 

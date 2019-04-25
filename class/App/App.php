@@ -155,7 +155,6 @@ class App extends \R\App
             $this->logger->debug("App request uri:" . $this->request->getUri());
         }
 
-
         $this->base = $this->request->getUri()->getBasePath();
 
         $pi = $this->pathInfo();
@@ -404,7 +403,7 @@ class App extends \R\App
     {
         if ($_SESSION["app"]["version"])
             return $_SESSION["app"]["version"];
-        $composer = new Composer();
+        $composer = new Composer($this);
         $package = $composer->package("mathsgod/alt");
         $_SESSION["app"]["version"] = $package->version;
         return $_SESSION["app"]["version"];
