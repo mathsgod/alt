@@ -12,7 +12,7 @@ class Tab extends HTMLDivElement
     public static $_TabID = 0;
     public static $_MyTab = 0;
     protected $page;
-    public $prefix;
+
 
     public function __construct(Page $page, $prefix)
     {
@@ -33,7 +33,7 @@ class Tab extends HTMLDivElement
 
         self::$_MyTab++;
         $module = $page->module();
-        $this->prefix = $prefix;
+        $this->setAttribute("prefix",$prefix);
 
         if ($module) {
             $this->setAttribute("data-cookie", $page->path() . "/$prefix" . self::$_MyTab);
@@ -86,7 +86,8 @@ class Tab extends HTMLDivElement
 
         $a = p("a")->attr("href", $href)->text($label)->appendTo($ti->li);
 
-        $id = "tab-{$this->prefix}{$tab_id}";
+        $prefix=$this->getAttribute("prefix");
+        $id = "tab-{$prefix}{$tab_id}";
         $a->attr("data-target", "#$id");
         $a->attr("data-toggle", "tabajax");
 
