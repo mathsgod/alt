@@ -4,7 +4,8 @@ class User_test extends ALT\Page
 {
     public $_a = [1, 2];
 
-    public function post(){
+    public function post()
+    {
 
         outp($_POST);
         die();
@@ -12,12 +13,38 @@ class User_test extends ALT\Page
     public function get()
     {
 
+
+        $grid = $this->createGrid([2]);
+
+        $v = $this->createV();
+        $v->add("Username", "username");
+        $grid->add($v, [0, 0]);
+        $this->write($grid);
+
+        $v = $this->createV();
+        $v->add("First name", "first_name");
+        $grid->add($v, [0, 1]);
+        $this->write($grid);
+
+        return;
+
+        $this->write($grid);
+
+        return;
+        $v = $this->createV();
+
+        $v->add("content", function () {
+            return "<pre v-pre>{abc}</pre>";
+        });
+        $this->write($v);
+
+        return;
         $t = $this->createT([
-            ["name"=>'a',"name1"=>"b"]
+            ["name" => 'a', "name1" => "b"]
         ]);
         $t->formCreate(["name" => "t1"]);
         $t->add("name")->input("name")->required();
-        
+
         $t->add("name1")->input("name1");
         $t->add("name2")->input("name2");
 

@@ -91,13 +91,13 @@ class Page extends \App\Page
             $this->header["name"] = $this->module()->name;
         }
 
-        try{
+        try {
             $response = parent::__invoke($request, $response);
-        }catch(Exception $e){
-            
-            if($request->isAccept("text/html") && $request->getMethod() == "get"){
+        } catch (Exception $e) {
+
+            if ($request->isAccept("text/html") && $request->getMethod() == "get") {
                 $this->alert->danger($e->getMessage());
-            }else{
+            } else {
                 throw $e;
             }
         }
@@ -125,7 +125,7 @@ class Page extends \App\Page
                 //$this->addLib("components/moment");
                 //$this->addLib("bootboxjs");
                 //$this->addLib("jquery-ui");
-//                $this->addLib("twbs/bootstrap");
+                //                $this->addLib("twbs/bootstrap");
                 //$this->addLib("components/bootstrap-datepicker");
                 //$this->addLib("bootstrap-colorpicker");
                 $this->addLib("i18next");
@@ -254,7 +254,7 @@ class Page extends \App\Page
                 }
 
 
-                
+
                 /*if(file_exists()){
 
                 }
@@ -307,7 +307,7 @@ class Page extends \App\Page
 
                 $request = $request->withAttribute("module", $this->module());
                 return $this->master->__invoke($request, $response);
-                
+
                 //return $response->withBody(new Stream($this->master_tpl($request,$response)));
             } else {
                 return $response;
@@ -333,7 +333,7 @@ class Page extends \App\Page
         return new \App\UI\E($object, $this);
     }
 
-    public function createGrid($sizes)
+    public function createGrid(array $sizes = [1]): Grid
     {
         $route = $this->request->getAttribute("route");
         $action = $route->action;

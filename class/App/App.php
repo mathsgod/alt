@@ -335,8 +335,10 @@ class App extends \R\App
         }
 
         //check AuthLock
-        if (AuthLock::IsLock()) {
-            throw new \Exception("IP locked 180 seconds", 403);
+        if ($this->config["user"]["auth-lockout"]) {
+            if (AuthLock::IsLock()) {
+                throw new \Exception("IP locked 180 seconds", 403);
+            }
         }
 
         $sth = $this->db->prepare("select user_id,password from User where username=:username and status=0");

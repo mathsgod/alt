@@ -28,9 +28,8 @@ class Grid extends \P\Query
 		return $row;
 	}
 
-	public function __toString():string
+	public function __toString(): string
 	{
-
 		if ($this->sortable) {
 			$this->attr(":sortable", "true");
 		}
@@ -41,7 +40,7 @@ class Grid extends \P\Query
 				$s = $r->find("section")[$section];
 				// sorting
 				ksort($sections);
-				foreach ($sections as $item => $items) {
+				foreach ($sections as $items) {
 					p($s)->append((string)$items);
 				}
 			}
@@ -56,7 +55,6 @@ class Grid extends \P\Query
 			$box->pinable(true);
 			p($box)->attr("grid-item", $this->item);
 		}
-
 
 		if ($this->layout) {
 			foreach ($this->layout as $row => $sections) {
@@ -76,8 +74,11 @@ class Grid extends \P\Query
 				}
 			}
 		}
+		
 
 		$this->_location[$location[0]][$location[1]][] = $box;
+
+
+		return $this;
 	}
 }
- 
