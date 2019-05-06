@@ -883,7 +883,7 @@ class C2 extends HTMLElement
 				try {
 					$data_value = is_object($object) ? $object->$field : $object[$field];
 					if (is_array($data_value)) {
-						$data_value = implode(",", $data_value);
+						$data_value = json_encode($data_value);
 					}
 
 					$select[0]->setAttribute("data-value", $data_value);
