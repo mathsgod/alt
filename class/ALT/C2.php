@@ -617,6 +617,7 @@ class C2 extends HTMLElement
 			$input->attr("is", "icheck");
 			$input->attr("name", $field);
 			$input->attr("data-field", $field);
+			$input->attr("true-value","true");
 			$input->val(1);
 
 			if ($object = p($cell)->data("object")) {
@@ -638,6 +639,7 @@ class C2 extends HTMLElement
 			$input = p($cb)->find("input");
 			$input->attr("name", $field);
 			$input->attr("data-field", $field);
+			$input->attr("true-value","true");
 			$input->addClass("iCheck");
 			$input->val(1);
 			$this->c_tpl[] = $cb;
