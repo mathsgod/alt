@@ -35,6 +35,7 @@ class User_e_userlist extends ALT\Page
         })->asArray();
 
         $obj->usergroup_id = $ug;
+
         $mv = $this->createE($obj);
         $mv->add("Name", "__toString()");
 

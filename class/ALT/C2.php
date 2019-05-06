@@ -880,10 +880,12 @@ class C2 extends HTMLElement
 				$select->data("object", $object);
 				try {
 					$data_value = is_object($object) ? $object->$field : $object[$field];
-					if (!is_array($data_value)) {
-						$data_value = explode(",", $data_value);
+					if (is_array($data_value)) {
+						$data_value = implode(",", $data_value);
 					}
-					$select->data("value", $data_value);
+
+					$select[0]->setAttribute("data-value", $data_value);
+
 				} catch (\Exception $e) {
 
 				}

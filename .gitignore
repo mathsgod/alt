@@ -3,6 +3,7 @@ node_modules
 /vendor
 /components
 /cache
+/logs
 
 # local env files
 .env.local
