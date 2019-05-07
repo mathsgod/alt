@@ -80,7 +80,7 @@ class E extends HTMLDivElement
         $form_group = new \App\UI\FormGroup();
         p($form_group)->append("<label class='col-sm-2 control-label'>$label</label>");
 
-        $c2 = new C2("div");
+        $c2 = new \App\UI\Col("div");
         //$form_group->setAttribute("is","bs-form-group");
         $c2->classList->add('col-sm-10');
 

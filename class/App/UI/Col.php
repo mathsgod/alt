@@ -358,7 +358,7 @@ class Col extends HTMLElement
 
             if ($object = p($cell)->data("object")) {
                 $select->data("object", $object);
-                $select->attr("data-value", is_object($object) ? $object->$field : $object[$field]);
+                $select[0]->setAttribute("data-value", json_encode(is_object($object) ? $object->$field : $object[$field]));
                 if ($this->callback) {
                     call_user_func($this->callback, $object, $select[0]);
                 }
@@ -922,10 +922,7 @@ class Col extends HTMLElement
                 $select->data("object", $object);
                 try {
                     $data_value = is_object($object) ? $object->$field : $object[$field];
-                    if (!is_array($data_value)) {
-                        $data_value = explode(",", $data_value);
-                    }
-                    $select->data("value", $data_value);
+                    $select[0]->setAttribute("data-value", json_encode($data_value));
                 } catch (\Exception $e) { }
 
                 if ($this->callback) {
