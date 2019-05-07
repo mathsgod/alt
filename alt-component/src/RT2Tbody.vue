@@ -97,6 +97,11 @@ export default {
       );
     }
   },
+  mounted() {
+    this.$parent.$on("reset-local-storage", () => {
+      this.$emit("reset-local-storage");
+    });
+  },
   methods: {
     checkAll(column, value) {
       var cells = this.$refs.cell.filter(cell => {

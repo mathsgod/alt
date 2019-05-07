@@ -75,6 +75,10 @@ export default {
   mounted() {
     this.cssStyle = this.column.cellStyle;
 
+    this.$on("reset-local-storage", () => {
+      console.log("reset");
+    });
+
     if (this.column.wrap) {
       this.divStyle = {
         "word-wrap": "break-word",
@@ -118,7 +122,7 @@ export default {
   },
   methods: {
     checked() {
-      this.storage.rows = this.storage.rows|| {};
+      this.storage.rows = this.storage.rows || {};
       this.storage.rows[this.column.name] =
         this.storage.rows[this.column.name] || {};
 

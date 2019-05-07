@@ -158,7 +158,7 @@ table.rt > thead button.multiselect {
 
       <div class="pull-left btn-group">
         <button
-          v-for="(button,index) in buttons"
+          v-for="(button,index) in buttons | isBottomButton"
           :key="index"
           @click="onClickButton(button)"
           class="btn btn-default btn-sm"
@@ -219,9 +219,21 @@ export default {
     };
     return data;
   },
+  filters:{
+    isBottomButton(button){
+      if(button.text){
+        return true;
+      }
+      return false;
+
+    }
+  },
   created: function() {
-    var storage = this.storage;
-    //console.log(storage);
+ 
+
+    /////-------------------
+
+    var storage=this.storage;
     if (storage.responsive) {
       this.responsive = storage.responsive;
     }
@@ -351,6 +363,28 @@ export default {
     window.addEventListener("resize", this.resize);
   },
   computed: {
+    storage(){
+      var storage=JSON.parse(localStorage.getItem(this.id)) || {};
+      storage.save = () => {
+        var data = {};
+        for (var i in storage) {
+          if (typeof storage[i] == "function") continue;
+          data[i] = storage[i];
+        }
+
+        localStorage.setItem(this.id, JSON.stringify(data));
+      };
+
+      storage.clear = () => {
+        localStorage.removeItem(this.id);
+        for (var i in storage) {
+          if (typeof storage[i] == "function") continue;
+          delete storage[i];
+        }
+      };
+
+      return storage;
+    },
     visibleColumns() {
       return this.columns.filter(column => {
         return column.isDisplay();
@@ -361,24 +395,11 @@ export default {
         return column.title;
       });
     },
-    storage() {
-      let id = this.ajax.url
+    id() {
+      return this.ajax.url
         .split("/")
         .filter(s => !Number(s))
         .join("/");
-
-      var s = JSON.parse(localStorage.getItem(id)) || {};
-      s.save = () => {
-        var data = {};
-        for (var i in s) {
-          if (typeof s[i] == "function") continue;
-          data[i] = s[i];
-        }
-
-        localStorage.setItem(id, JSON.stringify(data));
-      };
-
-      return s;
     },
     pageCount() {
       return Math.ceil(this.total / this.local.pageLength);
@@ -471,11 +492,8 @@ export default {
         });
     },
     resetLocaStorage() {
-      let id = this.ajax.url
-        .split("/")
-        .filter(s => !Number(s))
-        .join("/");
-      $.localStorage.remove(id);
+      this.storage.clear();
+      this.$emit("reset-local-storage");
       this.draw();
     },
     toggleResponsive() {
