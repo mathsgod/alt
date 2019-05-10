@@ -58,11 +58,11 @@ class Func
                 }
             }
         } else {
-            if (is_array($func)) {
+            /*if (is_array($func)) {
                 $v = $func[0]->$func[1]($obj);
-            } elseif (function_exists($func)) {
+            } /*elseif (function_exists($func)) {
                 eval('$v=' . $func . '($obj);');
-            } elseif (is_array($obj)) {
+            } else*/if (is_array($obj)) {
                 $v = $obj[$func];
             } else {
                 $v = $func;

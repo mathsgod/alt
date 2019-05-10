@@ -9,29 +9,16 @@ class EventLog_list extends App\Page
 {
     public function get()
     {
-
         $rt = $this->createRT2([$this, "ds"]);
-
-        //$rt->attr("page-number",2);
-
-        //$rt->attr("data-pagination", ["top", "bottom"]);
-        //$rt->attr("data-mode","virtual");
-
         $rt->order("eventlog_id", "desc");
         $rt->addView();
-
-        $rt->addCheckbox("id");
-        //$rt->add("id","cb");
-        //$rt->addDel();
         $rt->add("ID", "eventlog_id")->ss();
         $rt->add("Class", "class")->ss();
         $rt->add("Object ID", "id")->ss();
         $rt->add("Action", "action")->ss();
         $rt->add("User", "user_id")->searchOption(User::find());
         $rt->add("Created time", "created_time")->sort()->searchDate();
-        //   $rt->add("Target","target")->width("100px");
-
-
+        $rt->add("Status", "status")->sort()->searchOption(EventLog::STATUS);
 
         $this->write($rt);
     }
@@ -41,11 +28,7 @@ class EventLog_list extends App\Page
         $rt->source = EventLog::Query();
         $rt->add("user_id", "User()")->alink("v");
 
-     /*   $rt->add("cb", function($o){
-            return "<input is='icheck' type='checkbox' name='cb[$o->eventlog_id]' />";
-        })->type="html";
-
-        */
+        $rt->add("status", "Status()");
 
         return $rt;
     }

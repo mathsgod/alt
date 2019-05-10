@@ -109,7 +109,7 @@ class V extends Box
         $label = ($this->page) ? $this->page->translate($label) : $label;
         $tbody = $this->table->find("tbody");
 
-        $tr = new \My\C("tr");
+        $tr = new Col("tr");
         p($tr)->appendTo($tbody);
         $th = p("th")->addClass("bg-primary")->append($label);
         $th->appendTo($tr);
