@@ -193,6 +193,13 @@ abstract class Model extends \R\ORM\Model
             }
 
             $f = "_" . $field;
+
+            if (array_key_exists($f, $static)) {
+                return $static[$f][$this->$field];
+            }
+
+            $f = "_" . $function;
+
             if (array_key_exists($f, $static)) {
                 return $static[$f][$this->$field];
             }

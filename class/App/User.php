@@ -3,6 +3,7 @@ namespace App;
 
 class User extends Model
 {
+    public static $_Test=null;
 
     const STATUS = ["Active", "Inactive"];
 
@@ -12,6 +13,9 @@ class User extends Model
         if (!$id) {
             $this->join_date = date("Y-m-d");
         }
+
+        User::$_Test=["a","b"];
+        
     }
 
     public static function Login($username, $password, $code = null)

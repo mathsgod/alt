@@ -13,8 +13,12 @@ class User_test extends ALT\Page
     public function get()
     {
 
+        $a=new App\User();
+        $a->test=1;
+        outp($a->Test());
         //create T test
 
+        
         
 
         return;
