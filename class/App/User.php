@@ -3,8 +3,6 @@ namespace App;
 
 class User extends Model
 {
-    public static $_Test=null;
-
     const STATUS = ["Active", "Inactive"];
 
     public function __construct($id = null)
@@ -13,9 +11,6 @@ class User extends Model
         if (!$id) {
             $this->join_date = date("Y-m-d");
         }
-
-        User::$_Test=["a","b"];
-        
     }
 
     public static function Login($username, $password, $code = null)
@@ -178,7 +173,7 @@ class User extends Model
 
 
         if ($name instanceof UserGroup) {
-            $group = $group;
+            $group = $name;
         } else {
             $group = UserGroup::_($name);
         }

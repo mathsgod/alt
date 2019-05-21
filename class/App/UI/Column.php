@@ -110,6 +110,13 @@ class Column implements JsonSerializable
         return $this;
     }
 
+    public function filter($filter)
+    {
+        $this->filter = $filter;
+        $this->type = "html";
+        return $this;
+    }
+
     public function format($format)
     {
         $this->format = $format;
@@ -281,20 +288,18 @@ class Column implements JsonSerializable
             if (is_object($result)) {
                 $last_obj = $result;
             }
-            if (is_string($descriptor)) {
-                $htmlspecialchars = true;
-            }
         }
 
         if ($this->format) {
-            $result = \My\Func::_($this->format)->call($result);
-            $htmlspecialchars = false;
+            if (is_string($this->format) && function_exists($this->format)) {
+                $func = $this->format;
+                $result = $func($result);
+            } else {
+                $result = \My\Func::_($this->format)->call($result);
+            }
         }
 
-
         if ($this->alink && $last_obj) {
-            $htmlspecialchars = false;
-
 
             $a = html("a")->href($last_obj->uri($this->alink));
             $a->text($result);
@@ -332,8 +337,4 @@ class Column implements JsonSerializable
         if ($this->className) $data["className"] = implode(" ", $this->className);
         return $data;
     }
-
-
 }
-
-
