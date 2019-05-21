@@ -32,7 +32,7 @@ class Func
         $func = $this->function;
 
         if ($func instanceof \Closure || is_array($func)) {
-            $parameter = array();
+            $parameter = [];
             $parameter[] = $obj;
             $parameter[] = $n;
             foreach ($this->parameter as $p) {
@@ -47,30 +47,26 @@ class Func
 
         if (is_object($obj)) {
             if (in_array($func, array_keys(get_object_vars($obj)))) {
-                $v = $obj->$func;
+                return $obj->$func;
             } elseif (function_exists($func)) {
-                $v = $func($obj);
+                return $func($obj);
             } else {
                 try {
+                    $v = "";
                     eval('$v=$obj->' . $func . ";");
+                    return $v;
                 } catch (Exception $e) {
-                    $v = $e->getMessage();
+                    return  $e->getMessage();
                 }
             }
-        } else {
-            /*if (is_array($func)) {
-                $v = $func[0]->$func[1]($obj);
-            } /*elseif (function_exists($func)) {
-                eval('$v=' . $func . '($obj);');
-            } else*/if (is_array($obj)) {
-                $v = $obj[$func];
-            } else {
-                $v = $func;
+        } elseif (is_array($obj)) {
+            if (isset($obj[$func])) {
+                return $obj[$func];
+            } elseif (function_exists($func)) {
+                return $func($obj);
             }
         };
 
-        return $v;
+        return $func;
     }
 }
-
-?>
