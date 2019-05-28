@@ -234,6 +234,9 @@ export default {
     /////-------------------
 
     var storage=this.storage;
+
+    storage.rows={};
+    
     if (storage.responsive) {
       this.responsive = storage.responsive;
     }
