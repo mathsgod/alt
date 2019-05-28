@@ -131,7 +131,7 @@ table.rt > thead button.multiselect {
         </button>
 
         <button
-          @click="resetLocaStorage"
+          @click="resetLocalStorage"
           class="btn btn-default btn-sm"
           type="button"
           title="clear cache"
@@ -419,6 +419,11 @@ export default {
     }
   },
   methods: {
+    clearChecked(name){
+      var d = [];
+      this.storage.rows[name]={};
+      this.storage.save();
+    },
     checkAll(column, value) {
       this.$refs.tbody.checkAll(column, value);
     },
@@ -491,7 +496,7 @@ export default {
           console.log("done");
         });
     },
-    resetLocaStorage() {
+    resetLocalStorage() {
       this.storage.clear();
       this.$emit("reset-local-storage");
       this.draw();

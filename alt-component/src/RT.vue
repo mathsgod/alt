@@ -188,7 +188,7 @@ table.dataTable tbody td.selected {
                     <i class="fa fa-tv"></i>
                 </button>
 
-                <button @click="resetLocaStorage" class="btn btn-default btn-sm" type="button" title="clear cache" data-toggle="tooltip">
+                <button @click="resetLoclStorage" class="btn btn-default btn-sm" type="button" title="clear cache" data-toggle="tooltip">
                     <i class="fa fa-times-circle"></i>
                 </button>
             </div>

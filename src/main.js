@@ -4,7 +4,6 @@ window.jQuery = $;
 window.$ = $;
 
 
-
 import "jquery-ui-dist/jquery-ui.min.js";
 
 import "bootstrap";
