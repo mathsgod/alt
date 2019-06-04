@@ -6,3 +6,6 @@ $app = new App\App(__DIR__, $loader);
 $a=new App\Composer();
 
 echo $a->getPHP();
+
+
+123
