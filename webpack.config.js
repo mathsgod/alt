@@ -59,6 +59,11 @@ module.exports = {
                 to: "bootstrap",
                 toType: "dir"
             }, {
+                from: "node_modules/datatables.net-scroller-dt",
+                to:"datatables.net-scroller-dt",
+                toType: "dir",
+            },
+            {
                 from: "node_modules/fullcalendar/dist",
                 to: "fullcalendar",
                 toType: "dir"

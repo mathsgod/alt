@@ -12,6 +12,9 @@ import "daterangepicker";
 import "bootstrap-select";
 import "datatables-all/media/js/dataTables.bootstrap.min.js";
 
+import scroller from 'datatables.net-scroller-dt';
+scroller(window, $);
+
 import "select2";
 
 import "@fancyapps/fancybox";
