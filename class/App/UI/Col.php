@@ -643,6 +643,9 @@ class Col extends HTMLElement
             $input->attr("name", $field);
             $input->attr("data-field", $field);
             $input->val(1);
+            $input->attr("true-value","true");
+            $input->attr("false-value","false");
+
 
             if ($object = p($cell)->data("object")) {
                 $value = is_object($object) ? $object->$field : $object[$field];
