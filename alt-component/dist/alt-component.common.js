@@ -3999,12 +3999,12 @@ var Datepicker_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var Datepicker = (Datepicker_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"72abb94c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Date.vue?vue&type=template&id=76029190&
-var Datevue_type_template_id_76029190_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"input-group"},[_c('span',{staticClass:"input-group-addon"},[_c('i',{class:_vm.icon})]),_c("datepicker",_vm._b({ref:"datepicker",tag:"input",attrs:{"value":_vm.value},on:{"input":function($event){return _vm.$emit('input',$event)}}},'input',_vm.$props,false)),(_vm.required)?_c('i',{staticClass:"fa fa-asterisk form-control-feedback",staticStyle:{"top":"10px"}}):_vm._e()],1)])}
-var Datevue_type_template_id_76029190_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"72abb94c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Date.vue?vue&type=template&id=1fd91a1c&
+var Datevue_type_template_id_1fd91a1c_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"input-group"},[_c('span',{staticClass:"input-group-addon"},[_c('i',{class:_vm.icon})]),_c("datepicker",_vm._b({ref:"datepicker",tag:"input",attrs:{"value":_vm.value,"autocomplete":"off"},on:{"input":function($event){return _vm.$emit('input',$event)}}},'input',_vm.$props,false)),(_vm.required)?_c('i',{staticClass:"fa fa-asterisk form-control-feedback",staticStyle:{"top":"10px"}}):_vm._e()],1)])}
+var Datevue_type_template_id_1fd91a1c_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/Date.vue?vue&type=template&id=76029190&
+// CONCATENATED MODULE: ./src/Date.vue?vue&type=template&id=1fd91a1c&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-plugin-babel/node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Date.vue?vue&type=script&lang=js&
 //
@@ -4071,8 +4071,8 @@ var Datevue_type_template_id_76029190_staticRenderFns = []
 
 var Date_component = Object(componentNormalizer["a" /* default */])(
   src_Datevue_type_script_lang_js_,
-  Datevue_type_template_id_76029190_render,
-  Datevue_type_template_id_76029190_staticRenderFns,
+  Datevue_type_template_id_1fd91a1c_render,
+  Datevue_type_template_id_1fd91a1c_staticRenderFns,
   false,
   null,
   null,
