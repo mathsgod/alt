@@ -4,6 +4,7 @@ namespace App\UI;
 
 use P\HTMLDivElement;
 use App\Page;
+use BS\Button;
 
 class BoxHeader extends HTMLDivElement
 {
@@ -23,10 +24,9 @@ class BoxHeader extends HTMLDivElement
 
     public function addButton($label, $uri)
     {
-        $button = new Button($this->page);
+        $button = new Button("default","btn-xs",$uri);
         $button->classList[] = "btn-xs";
         $button->text($label);
-        $button->href($uri);
         $this->appendChild($button);
         return $button;
     }

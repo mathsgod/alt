@@ -21,6 +21,8 @@ class System_example_createT extends ALT\Page
         $t->add("To", "to");
         $t->add("Final", "final");
 
+        $t->setCreate("User/ae")->fancybox();
+
         $this->write($t);
     }
 }

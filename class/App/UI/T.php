@@ -49,11 +49,9 @@ class T extends Box
         return $this->table->addDel();
     }
 
-    public function setCreate($uri)
+    public function setCreate(string $uri)
     {
-        $p = new \P\AnchorCollection();
-        $p[] = $this->header->addButton()->icon("fa fa-fw fa-plus")->addClass("btn-primary")->attr("href", $uri);
-        return $p;
+        return $this->header->addButton(null,$uri)->icon("fa fa-fw fa-plus")->addClass("btn-primary");
     }
 
     public function formCreate($options, $default = null)

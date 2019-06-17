@@ -4,6 +4,7 @@ namespace App\UI;
 use Exception;
 use My\Func;
 use P\HTMLElement;
+use BS\InputSelect;
 
 class Col extends HTMLElement
 {
