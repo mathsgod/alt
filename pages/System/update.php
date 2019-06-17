@@ -12,7 +12,7 @@ class System_update extends ALT\Page
     public function getVersionList()
     {
 
-        $composer = new App\Composer();
+        $composer = new App\Composer($this->app);
 
         $auth = $composer->auth();
         $username = $auth["http-basic"]["raymond2.hostlink.com.hk"]["username"];

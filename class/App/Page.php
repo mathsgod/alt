@@ -55,7 +55,10 @@ class Page extends \R\Page
             $path = $this->app->config["user"]["roxy_fileman_path"];
             $path = str_replace("{username}", $this->app->user->username, $path);
             $_SESSION["roxy_fileman_path"] = $path;
-            mkdir(System::$root . "$path");
+
+            $pi = $this->app->pathinfo();
+            $path = $pi["system_root"] . $path;
+            mkdir($path);
         }
 
         return $p;
