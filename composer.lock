@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6ab9747f1e3f9cd275c0781b7cace805",
+    "content-hash": "5a012241dfacf5b594f45734c02d21da",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -433,22 +433,25 @@
         },
         {
             "name": "mathsgod/hl-weather",
-            "version": "1.0.16",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/hl-weather.git",
-                "reference": "06ca408b630fffabe678a0b0f17003f1a5ead235"
+                "reference": "c75d14d2fcb54e1dc80f3810c17bfcf4247b1363"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/hl-weather/mathsgod-hl-weather-1.0.16-950731.zip",
-                "reference": "06ca408b630fffabe678a0b0f17003f1a5ead235",
-                "shasum": "20b7b2add6ae45d43224f53bce85d30c962b40da"
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/hl-weather/mathsgod-hl-weather-2.0.0-10bbba.zip",
+                "reference": "c75d14d2fcb54e1dc80f3810c17bfcf4247b1363",
+                "shasum": "157450ed2c96936bcddf68912a207fe7af3cfbe1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.5"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "HL\\": "/"
+                    "HL\\": "src/"
                 }
             },
             "authors": [
@@ -458,7 +461,7 @@
                 }
             ],
             "description": "Hong Kong weather forecast",
-            "time": "2018-11-06T05:21:37+00:00"
+            "time": "2019-06-18T04:02:50+00:00"
         },
         {
             "name": "mathsgod/html",

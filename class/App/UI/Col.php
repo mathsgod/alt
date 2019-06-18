@@ -406,11 +406,12 @@ class Col extends HTMLElement
             } else {
                 throw new \Exception("Xeditable type $type not found");
             }
-            $a->appendTo($cell);
+            $cell->append($a);
+            //$a->appendTo($cell);
 
             if ($object = p($cell)->data("object")) {
                 if ($type != "select") {
-                    $a->text(is_object($object) ? $object->$index : $object[$index]);
+                    p($a)->text(is_object($object) ? $object->$index : $object[$index]);
                 }
 
                 $a->setAttribute("data-pk", $object->id());
