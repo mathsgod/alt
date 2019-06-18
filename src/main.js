@@ -15,7 +15,7 @@ import PNotify from "pnotify/dist/pnotify";
 import "pnotify/dist/pnotify.nonblock";
 //import "datatables-all";
 import "datatables-all/media/js/dataTables.bootstrap.min.js";
-import scroller from "datatables.net-scroller-dt";
+//import scroller from "datatables.net-scroller-dt";
 //scroller(window, $);
 window.bootbox = bootbox;
 
