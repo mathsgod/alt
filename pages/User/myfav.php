@@ -13,8 +13,6 @@ class User_myfav extends ALT\Page
             $ui->layout = json_encode($content, JSON_UNESCAPED_UNICODE);
             $ui->save();
         }
-
-
     }
 
     public function get()
@@ -50,14 +48,17 @@ class User_myfav extends ALT\Page
 
         $t->add("Icon", function ($ui) {
             $icon = $ui->content()["icon"];
-            $i = p("i")->addClass("fa")->addClass($icon);
+            $i = p("i")->addClass("fa");
+            if ($icon) {
+                $i->addClass($icon);
+            }
             $color = $ui->content()["color"];
             if ($color) {
                 $i->addClass($color);
             }
             return $i;
         });
-	// $t->add("Link", "link");
+        // $t->add("Link", "link");
         $f = p("form")->attr("id", "form1")->attr("method", "post")->append($t);
         $this->write($f);
     }
@@ -66,14 +67,14 @@ class User_myfav extends ALT\Page
 ?>
 
 <script>
-document.addEventListener("DOMContentLoaded",function(){
-    $("#table1 table>tbody").sortable({
-		handle:".fa-sort",
-		axis: "y",
-		cursor: "move",
-		update:function(event,ui){
-			$("#form1").ajaxSubmit();
-		}
-	});
-});
+    document.addEventListener("DOMContentLoaded", function() {
+        $("#table1 table>tbody").sortable({
+            handle: ".fa-sort",
+            axis: "y",
+            cursor: "move",
+            update: function(event, ui) {
+                $("#form1").ajaxSubmit();
+            }
+        });
+    });
 </script>

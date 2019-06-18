@@ -26,7 +26,7 @@ class User_v extends ALT\GridPage
 		$mv->add("Default page", "default_page");
 		$mv->add("Language", "language");
 		$mv->add("Status", "Status()");
-		$mv->add("Status", "status")->format("tick");
+		//		$mv->add("Status", "status")->format("tick");
 		// $grid = $this->createGrid([1]);
 		// $grid->add($mv, [0, 0]);
 		// $mv->footer()->button()->text("test");

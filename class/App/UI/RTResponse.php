@@ -201,7 +201,7 @@ class RTResponse implements JsonSerializable
                         $col = $this->_columns[$c["name"]];
 
                         if ($col->type == "sub-row") {
-                            $d[$c["name"]] = ["url" => $col->url, "params" => [$col->key=>  $object_vars[$col->key]]];
+                            $d[$c["name"]] = ["url" => $col->url, "params" => [$col->key =>  $object_vars[$col->key]]];
                         } elseif ($col->type == "delete") {
                             if ($content = (string)$col->getData($obj, $k)) {
                                 $d[$c["name"]] = ["type" => $col->type, "content" => (string)$content];
@@ -296,25 +296,25 @@ class RTResponse implements JsonSerializable
                     $source->where($w);
                     continue;
                 } elseif ($c["searchMethod"] == "like") {
-                    $w = [];
-                    $w[] = [$c["name"] . " like ?", "%$value%"];
-                    $source->where($w);
+                    $name = ":" . $c["name"];
+                    $source->where($c["name"] . " like $name", [$name => "%$value%"]);
                 } elseif ($c["searchMethod"] == "equal") {
-                    $w = [];
-                    $w[] = [$c["name"] . " = ?", $value];
-                    $source->where($w);
+                    $name = ":" . $c["name"];
+                    $source->where($c["name"] . " = $name", [$name => $value]);
                 } elseif ($c["searchMethod"] == "date") {
 
                     if ($value["from"] == $value["to"]) {
-                        $w = [];
                         $field = $c["name"];
-                        $w[] = ["date(`$field`) = ?", $value["from"]];
-                        $source->where($w);
+                        $name = ":" . $field;
+                        $source->where("date(`$field`) = $name", [$name => $value["from"]]);
                     } else {
-                        $w = [];
                         $field = $c["name"];
-                        $w[] = ["date(`$field`) between ? and ?", [$value["from"], $value["to"]]];
-                        $source->where($w);
+                        $field_from = ":" . $field . "_from";
+                        $field_to = ":" . $field . "_to";
+                        $source->where("date(`$field`) between $field_from and $field_to", [
+                            $field_from => $value["from"],
+                            $field_to => $value["to"]
+                        ]);
                     }
                 }
             }

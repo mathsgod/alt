@@ -15,11 +15,11 @@ class User_index extends ALT\Page
         $tab->add("All user", "list", -1); //->addClass("bg-yellow");
 
 
-        if ($this->app->user->isAdmin()) {
-            //            $tab->add("Test DT", "list2");
-            //            $tab->add("Test RT2", "list3");
+        //        if ($this->app->user->isAdmin()) {
+        //            $tab->add("Test DT", "list2");
+        //            $tab->add("Test RT2", "list3");
 
-        }
+        //      }
 
         //$tab->add("Test","list2");
         $this->write($tab);
