@@ -585,12 +585,13 @@ class Col extends HTMLElement
         foreach ($this->cell as $cell) {
 
             $is = new InputSelect();
-            $is->setAttribute("data-field", $field);
-            $is->setAttribute("name", $field);
+            $input=p($is)->find("input");
+            $input->attr("data-field", $field);
+            $input->attr("name", $field);
             $cell->append($is);
 
             if ($object = p($cell)->data("object")) {
-                $is->setAttribute("value", is_object($object) ? $object->$field : $object[$field]);
+                $input->val(is_object($object) ? $object->$field : $object[$field]);
 
                 if ($this->callback) {
                     call_user_func($this->callback, $object, $is);
