@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5a012241dfacf5b594f45734c02d21da",
+    "content-hash": "f9c4e0e31e00360d96d2c3bb10413ef6",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -336,17 +336,17 @@
         },
         {
             "name": "mathsgod/data-structure",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/data-structure.git",
-                "reference": "a0c1ad17124317567ac5974ccb3670353769c6f2"
+                "reference": "03b72b74e5198f9dfc035b1556efe6c4896a9918"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/data-structure/mathsgod-data-structure-1.0.0-3c11ad.zip",
-                "reference": "a0c1ad17124317567ac5974ccb3670353769c6f2",
-                "shasum": "310714b5857e1c5ad5e0e73c70a8fe032a7cac6f"
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/data-structure/mathsgod-data-structure-1.0.1-c1c45f.zip",
+                "reference": "03b72b74e5198f9dfc035b1556efe6c4896a9918",
+                "shasum": "60026eebc3f2a2f78bd4c527842ba9da65f83da3"
             },
             "type": "library",
             "autoload": {
@@ -361,7 +361,39 @@
                 }
             ],
             "description": "Data structure",
-            "time": "2018-12-28T03:00:00+00:00"
+            "time": "2019-06-20T04:53:46+00:00"
+        },
+        {
+            "name": "mathsgod/gql-php-generator",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/gql-php-generator.git",
+                "reference": "4a36ccb9d60fc0fb11f93354a582d408678d16d0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/gql-php-generator/mathsgod-gql-php-generator-1.0.0-82786a.zip",
+                "reference": "4a36ccb9d60fc0fb11f93354a582d408678d16d0",
+                "shasum": "d685fd9ca43968a2e5617a7d42b9188ead86bd83"
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GQL\\": "src"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Raymond Chong",
+                    "email": "mathsgod@yahoo.com"
+                }
+            ],
+            "description": "A library used for generator gql file by input pdo",
+            "time": "2019-07-04T03:09:13+00:00"
         },
         {
             "name": "mathsgod/graphql-php-directive-resolvers",
@@ -501,17 +533,17 @@
         },
         {
             "name": "mathsgod/p-query",
-            "version": "2.0.15",
+            "version": "2.0.16",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/p-query.git",
-                "reference": "ae499982d5567fee902e2b43f68e4124fc0f2656"
+                "reference": "db5af6a48a5c4255b10c854ee8514024da1943e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/p-query/mathsgod-p-query-2.0.15-2b4ae4.zip",
-                "reference": "ae499982d5567fee902e2b43f68e4124fc0f2656",
-                "shasum": "2047d448aa4a5cf9e496148d502d30b1065f2ed7"
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/p-query/mathsgod-p-query-2.0.16-707f2e.zip",
+                "reference": "db5af6a48a5c4255b10c854ee8514024da1943e7",
+                "shasum": "c25680f5d141bee9875bcf429f2e36b037505648"
             },
             "require": {
                 "php": ">=7.0",
@@ -539,7 +571,7 @@
                 }
             ],
             "description": "Raymond php html library",
-            "time": "2019-05-07T09:31:57+00:00"
+            "time": "2019-07-03T10:08:07+00:00"
         },
         {
             "name": "mathsgod/r",
@@ -587,21 +619,21 @@
         },
         {
             "name": "mathsgod/r-db",
-            "version": "3.0.12",
+            "version": "3.0.16",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/r-db.git",
-                "reference": "5d9fb254cb0fec71d6ca420d4adb0f0aac146021"
+                "reference": "9ba24df37036357a0c1246a05013706a4ba07a3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/r-db/mathsgod-r-db-3.0.12-72c5b3.zip",
-                "reference": "5d9fb254cb0fec71d6ca420d4adb0f0aac146021",
-                "shasum": "bd3aef5287f9f0eccceb5c21a2428b3543c7c901"
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/r-db/mathsgod-r-db-3.0.16-1b3875.zip",
+                "reference": "9ba24df37036357a0c1246a05013706a4ba07a3a",
+                "shasum": "0d93965d8fdb3a0224042fe8d34f5bbcbd97b478"
             },
             "require": {
-                "mathsgod/data-structure": "^1.0",
-                "php": ">=5.4"
+                "mathsgod/data-structure": "1.0.1",
+                "php": ">=7.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "*"
@@ -621,7 +653,7 @@
                 }
             ],
             "description": "raymond framework db",
-            "time": "2019-03-15T04:04:08+00:00"
+            "time": "2019-07-04T03:34:41+00:00"
         },
         {
             "name": "mathsgod/r-graphql",
@@ -1185,7 +1217,7 @@
         },
         {
             "name": "symfony/css-selector",
-            "version": "v3.4.28",
+            "version": "v3.4.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
@@ -1355,16 +1387,16 @@
         },
         {
             "name": "symfony/process",
-            "version": "v3.4.28",
+            "version": "v3.4.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "afe411c2a6084f25cff55a01d0d4e1474c97ff13"
+                "reference": "d129c017e8602507688ef2c3007951a16c1a8407"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/afe411c2a6084f25cff55a01d0d4e1474c97ff13",
-                "reference": "afe411c2a6084f25cff55a01d0d4e1474c97ff13",
+                "url": "https://api.github.com/repos/symfony/process/zipball/d129c017e8602507688ef2c3007951a16c1a8407",
+                "reference": "d129c017e8602507688ef2c3007951a16c1a8407",
                 "shasum": ""
             },
             "require": {
@@ -1400,11 +1432,11 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2019-05-22T12:54:11+00:00"
+            "time": "2019-05-30T15:47:52+00:00"
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.4.28",
+            "version": "v3.4.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
@@ -1518,16 +1550,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v2.11.2",
+            "version": "v2.11.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "84a463403da1c81afbcedda8f0e788c78bd25a79"
+                "reference": "699ed2342557c88789a15402de5eb834dedd6792"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/84a463403da1c81afbcedda8f0e788c78bd25a79",
-                "reference": "84a463403da1c81afbcedda8f0e788c78bd25a79",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/699ed2342557c88789a15402de5eb834dedd6792",
+                "reference": "699ed2342557c88789a15402de5eb834dedd6792",
                 "shasum": ""
             },
             "require": {
@@ -1581,7 +1613,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2019-06-05T11:17:07+00:00"
+            "time": "2019-06-18T15:37:11+00:00"
         },
         {
             "name": "webonyx/graphql-php",

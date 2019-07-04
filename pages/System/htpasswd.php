@@ -8,7 +8,9 @@ class System_htpasswd extends ALT\Page
         $password = $_POST["password"];
         $encrypted_password = crypt($password, base64_encode($password));
 
-        $this->write($username . ':' . $encrypted_password);
+
+        $this->alert->info($username . ':' . $encrypted_password);
+        $this->redirect();
     }
 
     public function get()

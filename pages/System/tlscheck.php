@@ -11,8 +11,10 @@ class System_tlscheck extends ALT\Page
         $data = curl_exec($ch);
         curl_close($ch);
 
-        $json = json_decode($data);
-        outp($json->tls_version);
-        outp($json);
+        $json = json_decode($data, true);
+
+
+        $this->write("TLS version:" . $json["tls_version"]);
+        $this->write("<pre>$json</pre>");
     }
 }

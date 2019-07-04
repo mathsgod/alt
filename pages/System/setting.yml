@@ -24,5 +24,20 @@ menu:
   DB:
     link: System/db
     icon: fa fa-database fa-fw
-  
+  GQL generator:
+    link: System/gql/generate
+    icon: fa fa-file fa-fw
+  htpasswd generator:
+    link: System/htpasswd
+    icon: fa fa-key fa-fw
+  shell:
+    link: System/shell
+    icon: fa fa-keyboard fa-fw
+  TLS check:
+    link: System/tlscheck
+    icon: fa fa-lock fa-fw
+  PDO log:
+    link: System/pdo
+    icon: fa fa-list-alt fa-fw
+
   
