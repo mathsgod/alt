@@ -6,7 +6,7 @@ use App\Page;
 class Button extends \BS\Button
 {
     private $page;
-    public function __construct(Page $page, $href)
+    public function __construct(Page $page, $href=null)
     {
         parent::__construct(null, null, $href);
         $this->page = $page;
