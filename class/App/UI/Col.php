@@ -705,8 +705,8 @@ class Col extends HTMLElement
                     if ($this->callback) {
                         call_user_func($this->callback, $object, $div[0]);
                     }
-                    $p[] = $div[0];
                 }
+                $p[] = $div[0];
             } catch (Exception $e) {
                 $cell->append("<p class='form-control-static'>" . $e->getMessage() . "</p>");
             }
@@ -751,8 +751,8 @@ class Col extends HTMLElement
                 if ($this->callback) {
                     call_user_func($this->callback, $object, $div[0]);
                 }
-                $p[] = $div[0];
             }
+            $p[] = $div[0];
         }
 
         if ($this->createTemplate) {

@@ -4081,12 +4081,12 @@ var Date_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var src_Date = (Date_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"72abb94c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Datetime.vue?vue&type=template&id=f8847de4&
-var Datetimevue_type_template_id_f8847de4_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"input-group"},[_c('span',{staticClass:"input-group-addon"},[_c('i',{class:_vm.icon})]),_c('input',_vm._b({ref:"input",staticClass:"form-control",attrs:{"name":_vm.name},domProps:{"value":_vm.value}},'input',_vm.$props,false)),(_vm.required)?_c('i',{staticClass:"fa fa-asterisk form-control-feedback",staticStyle:{"top":"10px"}}):_vm._e()])])}
-var Datetimevue_type_template_id_f8847de4_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"72abb94c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Datetime.vue?vue&type=template&id=1e13dd6a&
+var Datetimevue_type_template_id_1e13dd6a_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"input-group"},[_c('span',{staticClass:"input-group-addon"},[_c('i',{class:_vm.icon})]),_c('input',_vm._b({ref:"input",staticClass:"form-control",attrs:{"name":_vm.name},domProps:{"value":_vm.value}},'input',_vm.$props,false)),(_vm.required)?_c('i',{staticClass:"fa fa-asterisk form-control-feedback",staticStyle:{"top":"10px"}}):_vm._e()])])}
+var Datetimevue_type_template_id_1e13dd6a_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/Datetime.vue?vue&type=template&id=f8847de4&
+// CONCATENATED MODULE: ./src/Datetime.vue?vue&type=template&id=1e13dd6a&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-plugin-babel/node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Datetime.vue?vue&type=script&lang=js&
 //
@@ -4118,6 +4118,12 @@ var Datetimevue_type_template_id_f8847de4_staticRenderFns = []
     icon: {
       type: String,
       default: "far fa-calendar-alt"
+    },
+    minDate: {
+      default: false
+    },
+    maxDate: {
+      default: false
     }
   },
   mounted: function mounted() {
@@ -4131,7 +4137,9 @@ var Datetimevue_type_template_id_f8847de4_staticRenderFns = []
     }
 
     $(this.$refs.input).datetimepicker({
-      format: this.format
+      format: this.format,
+      minDate: this.minDate,
+      maxDate: this.maxDate
     });
   }
 });
@@ -4147,8 +4155,8 @@ var Datetimevue_type_template_id_f8847de4_staticRenderFns = []
 
 var Datetime_component = Object(componentNormalizer["a" /* default */])(
   src_Datetimevue_type_script_lang_js_,
-  Datetimevue_type_template_id_f8847de4_render,
-  Datetimevue_type_template_id_f8847de4_staticRenderFns,
+  Datetimevue_type_template_id_1e13dd6a_render,
+  Datetimevue_type_template_id_1e13dd6a_staticRenderFns,
   false,
   null,
   null,

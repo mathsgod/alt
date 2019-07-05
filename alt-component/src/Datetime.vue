@@ -1,13 +1,13 @@
 <template>
-    <div>
-        <div class="input-group">
-            <span class="input-group-addon">
-                <i :class="icon"></i>
-            </span>
-            <input class="form-control" ref="input" v-bind="$props" :value="value" :name="name"/>
-            <i v-if="required" class="fa fa-asterisk form-control-feedback" style="top:10px"></i>
-        </div>
+  <div>
+    <div class="input-group">
+      <span class="input-group-addon">
+        <i :class="icon"></i>
+      </span>
+      <input class="form-control" ref="input" v-bind="$props" :value="value" :name="name" />
+      <i v-if="required" class="fa fa-asterisk form-control-feedback" style="top:10px"></i>
     </div>
+  </div>
 </template>
 <script>
 export default {
@@ -28,6 +28,12 @@ export default {
     icon: {
       type: String,
       default: "far fa-calendar-alt"
+    },
+    minDate: {
+      default: false
+    },
+    maxDate: {
+      default: false
     }
   },
   mounted() {
@@ -41,7 +47,9 @@ export default {
       }
     }
     $(this.$refs.input).datetimepicker({
-      format: this.format
+      format: this.format,
+      minDate: this.minDate,
+      maxDate: this.maxDate
     });
   }
 };
