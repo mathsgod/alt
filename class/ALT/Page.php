@@ -175,7 +175,7 @@ class Page extends \App\Page
                                 $o->remove();
                             }
                         });
-                        if (p($this->_navbar)->find("a")->size() || $this->_navbar->find("button")->size()) {
+                        if (p($this->_navbar)->find("a")->size() || p($this->_navbar)->find("button")->size()) {
                             $data["navbar"] = (string )$this->_navbar;
                         }
                     }
