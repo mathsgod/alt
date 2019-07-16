@@ -792,7 +792,7 @@ class Col extends HTMLElement
                 if (is_string($value)) {
                     $value = explode(",", $value);
                 }
-                $select->attr("data-value", $value);
+                $select->attr("data-value", json_encode($value, JSON_UNESCAPED_UNICODE));
                 if ($this->callback) {
                     call_user_func($this->callback, $object, $input[0]);
                     call_user_func($this->callback, $object, $select[0]);
@@ -822,7 +822,11 @@ class Col extends HTMLElement
 
             if ($object = p($cell)->data("object")) {
                 $select->data("object", $object);
-                $select->attr("data-value", is_object($object) ? $object->$field : $object[$field]);
+                $value = is_object($object) ? $object->$field : $object[$field];
+                if (is_string($value)) {
+                    $value = explode(",", $value);
+                }
+                $select->attr("data-value", json_encode($value, JSON_UNESCAPED_UNICODE));
                 if ($this->callback) {
                     call_user_func($this->callback, $object, $select[0]);
                 }
