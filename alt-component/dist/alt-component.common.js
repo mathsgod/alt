@@ -7765,12 +7765,12 @@ var RT2Tbodyvue_type_template_id_5227b893_staticRenderFns = []
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom.iterable.js
 var web_dom_iterable = __webpack_require__("ac6a");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"72abb94c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/RT2Row.vue?vue&type=template&id=2fece6af&
-var RT2Rowvue_type_template_id_2fece6af_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('tr',{class:_vm.getClass,on:{"click":_vm.onClick}},[(_vm.hasHideColumn)?_c('td',[_c('button',{staticClass:"btn btn-default btn-xs",on:{"click":function($event){return _vm.$emit('toggle-row-child')},"mouseenter":function($event){return _vm.$emit('mouse-enter-row')},"mouseleave":function($event){return _vm.$emit('mouse-leave-row')}}},[(!_vm.showChild)?_c('i',{staticClass:"fa fa-fw fa-chevron-up"}):_vm._e(),(_vm.showChild)?_c('i',{staticClass:"fa fa-fw fa-chevron-down"}):_vm._e()])]):_vm._e(),_vm._l((_vm.columns),function(column,index){return _c("rt2-cell",{key:'col_'+index,tag:"td",attrs:{"data":_vm.data,"storage":_vm.storage,"column":column,"edit-mode":_vm.isEditMode(column)},on:{"click":function($event){return _vm.$emit('cell-clicked',column)},"data-deleted":function($event){return _vm.$emit('data-deleted')},"toggle-sub-row":function($event){return _vm.$emit('toggleSubRow',$event)},"update-data":function($event){return _vm.$emit('update-data',[_vm.data,column,$event])}}})})],2)}
-var RT2Rowvue_type_template_id_2fece6af_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"72abb94c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/RT2Row.vue?vue&type=template&id=63d06ac9&
+var RT2Rowvue_type_template_id_63d06ac9_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('tr',{class:_vm.getClass,on:{"click":_vm.onClick}},[(_vm.hasHideColumn)?_c('td',[_c('button',{staticClass:"btn btn-default btn-xs",on:{"click":function($event){return _vm.$emit('toggle-row-child')},"mouseenter":function($event){return _vm.$emit('mouse-enter-row')},"mouseleave":function($event){return _vm.$emit('mouse-leave-row')}}},[(!_vm.showChild)?_c('i',{staticClass:"fa fa-fw fa-chevron-up"}):_vm._e(),(_vm.showChild)?_c('i',{staticClass:"fa fa-fw fa-chevron-down"}):_vm._e()])]):_vm._e(),_vm._l((_vm.columns),function(column,index){return _c("rt2-cell",{key:'col_'+index,tag:"td",attrs:{"data":_vm.data,"storage":_vm.storage,"column":column,"edit-mode":_vm.isEditMode(column)},on:{"click":function($event){return _vm.$emit('cell-clicked',column)},"data-deleted":function($event){return _vm.$emit('data-deleted')},"toggle-sub-row":function($event){return _vm.$emit('toggle-sub-row',$event)},"update-data":function($event){return _vm.$emit('update-data',[_vm.data,column,$event])}}})})],2)}
+var RT2Rowvue_type_template_id_63d06ac9_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/RT2Row.vue?vue&type=template&id=2fece6af&
+// CONCATENATED MODULE: ./src/RT2Row.vue?vue&type=template&id=63d06ac9&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.number.constructor.js
 var es6_number_constructor = __webpack_require__("c5f6");
@@ -8122,8 +8122,8 @@ var RT2Cell_component = Object(componentNormalizer["a" /* default */])(
 
 var RT2Row_component = Object(componentNormalizer["a" /* default */])(
   src_RT2Rowvue_type_script_lang_js_,
-  RT2Rowvue_type_template_id_2fece6af_render,
-  RT2Rowvue_type_template_id_2fece6af_staticRenderFns,
+  RT2Rowvue_type_template_id_63d06ac9_render,
+  RT2Rowvue_type_template_id_63d06ac9_staticRenderFns,
   false,
   null,
   null,

@@ -21,7 +21,7 @@
       :edit-mode="isEditMode(column)"
       @click="$emit('cell-clicked',column)"
       @data-deleted="$emit('data-deleted')"
-      @toggle-sub-row="$emit('toggleSubRow',$event)"
+      @toggle-sub-row="$emit('toggle-sub-row',$event)"
       @update-data="$emit('update-data',[data,column,$event])"
     ></td>
   </tr>
