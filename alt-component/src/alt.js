@@ -30,10 +30,6 @@ import altButton from "./Button.vue";
 import altCell from "./Cell.vue";
 import altRT from "./RT.vue";
 import RT2 from "./RT2.vue";
-import RTPagination from "./RTPagination.vue";
-import RT2Tbody from "./RT2Tbody.vue";
-import RT2Column from "./RT2Column.vue";
-import RTInfo from "./RTInfo.vue";
 
 
 import altColumn from "./Column.vue";
@@ -45,10 +41,6 @@ import RTColumn from "./RTColumn.vue";
 
 import Ace from "./Ace.vue";
 import Datatables from "./Datatables.vue";
-import RT2Cell from "./RT2Cell.vue";
-
-VueRegisterElement("rt2-cell", RT2Cell);
-VueRegisterElement("rt2-column", RT2Column);
 
 VueRegisterElement("alt-tab", altTab);
 VueRegisterElement("alt-tab-pane", altTabPane);
@@ -79,9 +71,6 @@ VueRegisterElement("alt-button", altButton);
 VueRegisterElement("alt-cell", altCell);
 VueRegisterElement("alt-rt", altRT);
 VueRegisterElement("alt-rt2", RT2);
-VueRegisterElement("rt-pagination", RTPagination);
-VueRegisterElement("rt2-tbody", RT2Tbody);
-VueRegisterElement("rt-info", RTInfo);
 VueRegisterElement("alt-column", altColumn);
 VueRegisterElement("alt-column-search", altColumnSearch);
 VueRegisterElement("select2", select2);

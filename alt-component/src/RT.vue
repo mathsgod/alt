@@ -106,120 +106,181 @@ table.dataTable tbody td.selected {
 </style>
 
 <template>
-    <alt-box ref="box">
-        <alt-box-body class="no-padding" :class="{'table-responsive':!tableResponsive}">
-            <div style="position: relative; clear: both;">
+  <alt-box ref="box">
+    <alt-box-body class="no-padding" :class="{'table-responsive':!tableResponsive}">
+      <div style="position: relative; clear: both;">
+        <div :style="tableContainerStyle">
+          <rt-table
+            class="rt table-bordered"
+            :responsive="tableResponsive"
+            :sort-field="sortField"
+            :sort-dir="sortDir"
+            :cell-url="cellUrl"
+            :selectable="selectable"
+            :page-number="page"
+            :page-size="page_size"
+            v-on:resized="resized"
+            :data-url="source"
+            ref="table"
+            v-on:refreshed="refreshed"
+            v-on:loading="$refs.box.showLoading()"
+            v-on:loaded="$refs.box.hideLoading()"
+          >
+            <slot></slot>
+          </rt-table>
+        </div>
 
-                <div :style="tableContainerStyle">
-                    <rt-table class="rt table-bordered" 
-                        :responsive="tableResponsive" 
-                        :sort-field="sortField" 
-                        :sort-dir="sortDir" 
-                        :cell-url="cellUrl"
-                        :selectable="selectable"
-                        :page-number="page" 
-                        :page-size="page_size" v-on:resized="resized" :data-url="source" ref="table" v-on:refreshed="refreshed"
-                        v-on:loading="$refs.box.showLoading()" v-on:loaded="$refs.box.hideLoading()">
-                        <slot></slot>
-                    </rt-table>
-                </div>
+        <div style="position:absolute; top:0; left:0; overflow:hidden;" v-if="hasFixedColumn">
+          <table
+            class="table table-hover table-condensed rt table-bordered"
+            style="background-color: white"
+          >
+            <thead>
+              <tr>
+                <th
+                  :data-width="c.getWidth()"
+                  :style="{width:c.getWidth()+'px'}"
+                  class="unselectable sorting_desc"
+                  v-for="(c,index) in fixedColumns()"
+                  :key="index"
+                >{{c.field}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(d,index) in getData()" :key="index">
+                <td
+                  :style="{width:c.getWidth()+'px', height:c.getHeight()+'px'}"
+                  v-for="(c,key) in fixedColumns()"
+                  :key="key"
+                >
+                  <span v-html="c.getDataValue(d)" />
+                  <span>{{c.$el.offsetWidth}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </alt-box-body>
 
-                <div style="position:absolute; top:0; left:0; overflow:hidden;" v-if="hasFixedColumn">
+    <alt-box-footer>
+      <div
+        is="rt-pagination"
+        :page="page"
+        :page-count="page_count"
+        v-on:first-page="$refs.table.firstPage()"
+        v-on:last-page="$refs.table.lastPage()"
+        v-on:prev-page="$refs.table.prevPage()"
+        v-on:next-page="$refs.table.nextPage()"
+        v-on:change-page="$refs.table.gotoPage($event)"
+      ></div>
 
-                    <table class="table table-hover table-condensed rt table-bordered" style="background-color: white">
-                        <thead>
-                            <tr>
-                                <th :data-width="c.getWidth()" :style="{width:c.getWidth()+'px'}" class="unselectable sorting_desc" v-for="(c,index) in fixedColumns()" :key="index">{{c.field}}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(d,index) in getData()" :key="index">
-                                <td :style="{width:c.getWidth()+'px', height:c.getHeight()+'px'}" v-for="(c,key) in fixedColumns()" :key="key">
-                                    <span v-html="c.getDataValue(d)" />
-                                    <span>{{c.$el.offsetWidth}}</span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+      <div class="pull-left btn-group">
+        <button
+          @click="$refs.table.refresh()"
+          class="btn btn-default btn-sm"
+          type="button"
+          title="重新載入"
+          data-toggle="tooltip"
+        >
+          <i class="fa fa-sync-alt"></i>
+        </button>
+      </div>
 
-            </div>
-
-        </alt-box-body>
-
-        <alt-box-footer>
-            <div is="rt-pagination" :page="page" :page-count="page_count" v-on:first-page="$refs.table.firstPage()" v-on:last-page="$refs.table.lastPage()"
-                v-on:prev-page="$refs.table.prevPage()" v-on:next-page="$refs.table.nextPage()" v-on:change-page="$refs.table.gotoPage($event)"></div>
-
-            <div class="pull-left btn-group">
-                <button @click="$refs.table.refresh()" class="btn btn-default btn-sm" type="button" title="重新載入" data-toggle="tooltip">
-                    <i class="fa fa-sync-alt"></i>
-                </button>
-            </div>
-
-            <div class="pull-left dropup">
-                <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-                    <span class="icon glyphicon glyphicon-th-list"></span>
-                </button>
-                <ul class="dropdown-menu" ref="column_menu">
-                    <!-- li v-for="(col,key) in columns" v-if="col.title" :key="key">
+      <div class="pull-left dropup">
+        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+          <span class="icon glyphicon glyphicon-th-list"></span>
+        </button>
+        <ul class="dropdown-menu" ref="column_menu">
+          <!-- li v-for="(col,key) in columns" v-if="col.title" :key="key">
                         <a href="#" class="small" data-value="option1" tabIndex="-1" @click.prevent="col.toggleVisible()">
                             <input type="checkbox" v-model="col.isVisible" />&nbsp;{{col.title}}</a>
-                    </li -->
-                    <li v-for="(col,key) in columnSequence" v-if="getColumn(col).title" :key="key" :data-field="col">
-                        <a href="#" class="small" data-value="option1" tabIndex="-1" @click.prevent="getColumn(col).toggleVisible()">
-                            <input type="checkbox" v-model="getColumn(col).isVisible" />&nbsp;{{getColumn(col).title}}</a>
-                    </li>
-                </ul>
-            </div>
+          </li-->
+          <li
+            v-for="(col,key) in columnSequence"
+            v-if="getColumn(col).title"
+            :key="key"
+            :data-field="col"
+          >
+            <a
+              href="#"
+              class="small"
+              data-value="option1"
+              tabindex="-1"
+              @click.prevent="getColumn(col).toggleVisible()"
+            >
+              <input type="checkbox" v-model="getColumn(col).isVisible" />
+              &nbsp;{{getColumn(col).title}}
+            </a>
+          </li>
+        </ul>
+      </div>
 
-            <div class="pull-left">
-                <select class="form-control input-sm" style="width:70px" @change="changePageSize()" v-model="page_size">
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                    <option value="500">500</option>
-                </select>
-            </div>
+      <div class="pull-left">
+        <select
+          class="form-control input-sm"
+          style="width:70px"
+          @change="changePageSize()"
+          v-model="page_size"
+        >
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+          <option value="500">500</option>
+        </select>
+      </div>
 
-            <div class="pull-left btn-group">
-                <button @click="toggleResponsive" :class="{active:tableResponsive}" class="btn btn-default btn-sm" type="button" title="Responsive" data-toggle="tooltip">
-                    <i class="fa fa-tv"></i>
-                </button>
+      <div class="pull-left btn-group">
+        <button
+          @click="toggleResponsive"
+          :class="{active:tableResponsive}"
+          class="btn btn-default btn-sm"
+          type="button"
+          title="Responsive"
+          data-toggle="tooltip"
+        >
+          <i class="fa fa-tv"></i>
+        </button>
 
-                <button @click="resetLocalStorage" class="btn btn-default btn-sm" type="button" title="clear cache" data-toggle="tooltip">
-                    <i class="fa fa-times-circle"></i>
-                </button>
-            </div>
+        <button
+          @click="resetLocalStorage"
+          class="btn btn-default btn-sm"
+          type="button"
+          title="clear cache"
+          data-toggle="tooltip"
+        >
+          <i class="fa fa-times-circle"></i>
+        </button>
+      </div>
 
-            <div class="pull-left dropdown" v-if="showExport()">
-                <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
-                    Export
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li v-if="exportXlsx">
-                        <a href="#" @click.prevent="exportFile('xlsx')">XLSX</a>
-                    </li>
-                    <li v-if="exportCsv">
-                        <a href="#" @click.prevent="exportFile('csv')">CSV</a>
-                    </li>
-                </ul>
-            </div>
+      <div class="pull-left dropdown" v-if="showExport()">
+        <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+          Export
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+          <li v-if="exportXlsx">
+            <a href="#" @click.prevent="exportFile('xlsx')">XLSX</a>
+          </li>
+          <li v-if="exportCsv">
+            <a href="#" @click.prevent="exportFile('csv')">CSV</a>
+          </li>
+        </ul>
+      </div>
 
+      <div class="pull-left btn-group" v-if="$slots.buttons">
+        <slot name="buttons"></slot>
+      </div>
 
-
-            <div class="pull-left btn-group" v-if="$slots.buttons">
-                <slot name="buttons"></slot>
-            </div>
-
-            <rt-info class="pull-right" :total="total" :from="from" :to="to"></rt-info>
-        </alt-box-footer>
-    </alt-box>
+      <rt-info class="pull-right" :total="total" :from="from" :to="to"></rt-info>
+    </alt-box-footer>
+  </alt-box>
 </template>
 
 <script>
+import RtInfo from "./RTInfo";
+import RtPagination from "./RTPagination";
 export default {
   name: "alt-rt",
   props: {

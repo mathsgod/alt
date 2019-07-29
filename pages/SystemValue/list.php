@@ -8,28 +8,31 @@ class SystemValue_list extends App\Page
 {
     public function get()
     {
-        $jq = $this->createRT([$this, "ds"]);
+        $rt = $this->createRT2([$this, "ds"]);
 
-        $jq->addEdit();
-        $jq->addDel();
-        $jq->Order("name", "asc");
-        $jq->add("Name", "name")->sort()->search();
+        $rt->addEdit();
+        $rt->addDel();
+        $rt->Order("name", "asc");
+        $rt->add("Name", "name")->ss();
 
         foreach ($this->app->config["language"] as $v => $l) {
-            $jq->add($l, function ($obj) use ($v) {
-                return nl2br(SystemValue::_($obj->name, $v));
-            })->index("value_$l");
+            $rt->add($l, "value_$v");
         }
 
-        $this->write($jq);
+        $this->write($rt);
     }
-    public function ds($jq)
+    public function ds($rt)
     {
-        $w = $jq->where();
-        $w[] = "language='en'";
-        return array(
-            "total" => SystemValue::Count($w),
-            "data" => SystemValue::Find($w, $jq->Order(), $jq->Limit())
+        $rt->source = SystemValue::Query(
+            ["language" => "en"]
         );
+
+        foreach ($this->app->config["language"] as $v => $l) {
+            $rt->add("value_$v", function ($obj) use ($v) {
+                return nl2br(SystemValue::_($obj->name, $v));
+            })->type = "html";
+        }
+
+        return $rt;
     }
 }

@@ -1,5 +1,5 @@
 <template>
-  <td @click="onClick">
+  <td @click="$emit('click',$event)" :style="style">
     <template v-if="editMode">
       <template v-if="column.editType=='text'">
         <input
@@ -7,11 +7,10 @@
           class="form-control input-sm"
           v-bind:value="column.getValue(data)"
           v-on:blur="updateData($event.target.value)"
-          :style="cssStyle"
-        >
+        />
       </template>
       <template v-else-if="column.editType=='select'">
-        <select class="formControl" v-on:blur="updateData(index,d,column,$event.target.value)">
+        <select class="formControl" v-on:blur="updateData($event.target.value)">
           <option
             v-for="(opt,opt_key) in column.editData"
             :key="'option'+opt_key"
@@ -26,8 +25,8 @@
           type="text"
           class="form-control input-sm"
           v-bind:value="column.getValue(d)"
-          v-on:blur="updateData(index,d,column,$event.target.value)"
-        >
+          v-on:blur="updateData($event.target.value)"
+        />
       </template>
     </template>
     <template v-else>
@@ -39,7 +38,7 @@
         is="icheck"
         @change="toggleCheckBox($event)"
         v-bind:checked="checked()"
-      >
+      />
       <button class="btn btn-xs btn-danger" v-else-if="type=='delete'" @click="deleteRow()">
         <i class="fa fa-fw fa-times"></i>
       </button>
@@ -64,19 +63,22 @@ export default {
     column: Object,
     storage: Object,
     editMode: Boolean,
-    cssStyle: Object,
-    divStyle: Object
+    cssStyle: {
+      type: Object,
+      default() {
+        return {};
+      }
+    }
   },
   data() {
     return {
-      showSubRow: false
+      showSubRow: false,
+      divStyle: {}
     };
   },
   mounted() {
-    this.cssStyle = this.column.cellStyle;
-
     this.$on("reset-local-storage", () => {
-      console.log("reset");
+      //      console.log("reset");
     });
 
     if (this.column.wrap) {
@@ -87,6 +89,10 @@ export default {
     }
   },
   computed: {
+    style() {
+      var style = this.column.cellStyle || {};
+      return Object.assign(style, this.cssStyle);
+    },
     type() {
       var o = this.data[this.column.name];
       var t = this.column.type;
@@ -145,9 +151,6 @@ export default {
       }
       return o;
     },
-    onClick() {
-      this.$emit("click");
-    },
     setCheckbox(value) {
       this.storage.rows = this.storage.rows || {};
 
@@ -190,8 +193,8 @@ export default {
         return;
       }
 
-      if (column.editType == "select") {
-        if (this.data[column.data].value != value) {
+      if (this.column.editType == "select") {
+        if (this.data[this.column.data].value != value) {
           //          r[column.data].value = value;
           //        r[column.data].content = column.editData[value].label;
           this.$emit("update-data", value);

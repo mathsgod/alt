@@ -2,38 +2,25 @@
   <tbody>
     <template v-for="(d,index) in data">
       <tr
-        v-on:click="onClickRow(d)"
-        v-bind:class="getRowClass(d)"
-        :style="getStyle(d)"
-        :key="'row'+index"
-      >
-        <td v-if="hasHideColumn">
-          <button
-            class="btn btn-default btn-xs"
-            v-on:click="toggleRowChild(index)"
-            v-on:mouseenter="mouseEnterRow(index)"
-            v-on:mouseleave="mouseLeaveRow(index)"
-          >
-            <i v-if="!showIndex[index]" class="fa fa-fw fa-chevron-up"></i>
-            <i v-if="showIndex[index]" class="fa fa-fw fa-chevron-down"></i>
-          </button>
-        </td>
-        <td
-          ref="cell"
-          is="rt2-cell"
-          v-bind:index="index"
-          :data="d"
-          v-bind:column="column"
-          v-for="(column,key) in visibleColumns"
-          :key="'col'+key"
-          :storage="storage"
-          v-on:data-deleted="$emit('data-deleted')"
-          v-on:toggle-sub-row="toggleSubRow(index,$event)"
-          v-on:click="onClickCell(column,index)"
-          v-bind:edit-mode="isEditMode(column,index)"
-          v-on:update-data="updateData(index,d,column,$event)"
-        ></td>
-      </tr>
+        is="rt2-row"
+        :index="index"
+        :key="'row_'+index"
+        :data="d"
+        :columns="visibleColumns"
+        :storage="storage"
+        :has-hide-column="hasHideColumn"
+        :show-child="showIndex[index]"
+        :editColumn="editColumn"
+        :editIndex="editIndex"
+        @toggle-row-child="toggleRowChild(index)"
+        @mouse-enter-row="mouseEnterRow(index)"
+        @mouse-leave-row="mouseLeaveRow(index)"
+        @cell-clicked="onClickCell(index,$event)"
+        @update-data="updateData(index,...$event)"
+        @toggle-sub-row="toggleSubRow(index,$event)"
+        @data-deleted="$emit('data-deleted')"
+      ></tr>
+
       <tr class="child" v-show="showChild(index)" :key="'child'+index">
         <td v-bind:colspan="showColumnCount">
           <ul>
@@ -54,6 +41,7 @@
 </template>
 
 <script>
+import Rt2Row from "./RT2Row";
 export default {
   name: "rt2-tbody",
   props: {
@@ -62,6 +50,9 @@ export default {
     selectable: Boolean,
     storage: Object
   },
+  components: {
+    "rt2-row": Rt2Row
+  },
   data() {
     return {
       subRow: [],
@@ -69,13 +60,20 @@ export default {
       subRowColumn: null,
       hoverChild: [],
       showIndex: [],
-      editMode: false,
       editColumn: null,
-      editIndex: null,
-      selectedData: []
+      editIndex: null
     };
   },
   computed: {
+    selectedData() {
+      return this.$children
+        .filter(child => {
+          return child.selected;
+        })
+        .map(child => {
+          return child.data;
+        });
+    },
     hideColumns() {
       return this.columns.filter(column => {
         return column.hide;
@@ -127,44 +125,8 @@ export default {
       }
       this.$forceUpdate();
     },
-    getStyle(d) {
-      if (d.__row__.style) {
-        return d.__row__.style;
-      }
-    },
-    getRowClass(d) {
-      var c = [];
-      if (this.isSelected(d)) {
-        c.push("selected");
-      }
-      if (d.__row__) {
-        c = c.concat(d.__row__.class);
-      }
-
-      return c;
-    },
-    isSelected(d) {
-      return this.selectedData.indexOf(d) >= 0;
-    },
-    onClickRow(d) {
-      if (!this.selectable) return;
-      if (this.isSelected(d)) {
-        var index = this.selectedData.indexOf(d);
-        this.selectedData.splice(index, 1);
-      } else {
-        this.selectedData.push(d);
-      }
-    },
-    isEditMode: function(column, index) {
-      if (!this.editMode) return false;
-      if (this.editColumn == column && this.editIndex == index) {
-        return true;
-      }
-      return false;
-    },
-    onClickCell: function(column, index) {
+    onClickCell(index, column) {
       if (!column.editable) return false;
-      this.editMode = true;
       this.editColumn = column;
       this.editIndex = index;
     },
@@ -197,8 +159,8 @@ export default {
       this.$forceUpdate();
     },
     updateData(index, r, column, value) {
-      if (!column.editable) return;
-      this.editMode = false;
+      this.editColumn = null;
+      this.editIndex = null;
 
       if (column.editType == "text") {
         if (column.getValue(r) != value) {
@@ -215,12 +177,6 @@ export default {
           this.$emit("update-data", r._key, column.data, value);
         }
       }
-      /* else {
-                    if (r[column.field] != value) {
-                        r[column.field] = value;
-                        this.$emit("update-data", r._key, column.field, value);
-                    }
-                }*/
     }
   }
 };

@@ -1,0 +1,79 @@
+<template>
+  <tr @click="onClick" v-bind:class="getClass">
+    <td v-if="hasHideColumn">
+      <button
+        class="btn btn-default btn-xs"
+        @click="$emit('toggle-row-child')"
+        @mouseenter="$emit('mouse-enter-row')"
+        @mouseleave="$emit('mouse-leave-row')"
+      >
+        <i v-if="!showChild" class="fa fa-fw fa-chevron-up"></i>
+        <i v-if="showChild" class="fa fa-fw fa-chevron-down"></i>
+      </button>
+    </td>
+    <td
+      is="rt2-cell"
+      v-for="(column,index) in columns"
+      :data="data"
+      :key="'col_'+index"
+      :storage="storage"
+      :column="column"
+      :edit-mode="isEditMode(column)"
+      @click="$emit('cell-clicked',column)"
+      @data-deleted="$emit('data-deleted')"
+      @toggle-sub-row="$emit('toggleSubRow',$event)"
+      @update-data="$emit('update-data',[data,column,$event])"
+    ></td>
+  </tr>
+</template>
+<script>
+import Rt2Cell from "./RT2Cell";
+export default {
+  name: "rt2-row",
+  props: {
+    data: Object,
+    columns: Array,
+    storage: Object,
+    hasHideColumn: Boolean,
+    showChild: Boolean,
+    editMode: Boolean,
+    editIndex: Number,
+    editColumn: Object,
+    index: Number
+  },
+  data() {
+    return {
+      selected: false
+    };
+  },
+  components: {
+    "rt2-cell": Rt2Cell
+  },
+  computed: {
+    getClass() {
+      var c = {};
+      if (this.selected) {
+        c.selected = true;
+      }
+      return c;
+    },
+    style() {
+      var style = this.data.__row__.style || {};
+      return style;
+    }
+  },
+  methods: {
+    onClick() {
+      this.selected = !this.selected;
+      this.$emit("click");
+    },
+    isEditMode(column) {
+      if (this.editColumn == column && this.editIndex == this.index) {
+        return true;
+      }
+      return false;
+    }
+  }
+};
+</script>
+

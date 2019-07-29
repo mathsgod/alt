@@ -17,52 +17,23 @@ table.rt > thead button.multiselect {
       ></button>
     </div>
     <div class="box-body no-padding" is="alt-box-body" :class="{'table-responsive':!responsive}">
-      <table class="table table-hover table-condensed table-bordered rt" ref="table">
-        <thead>
-          <tr>
-            <td v-if="hasHideColumn">
-              <button class="btn btn-default btn-xs" v-on:click="toggleChild">
-                <i v-if="!showChild" class="fa fa-fw fa-chevron-up"></i>
-                <i v-if="showChild" class="fa fa-fw fa-chevron-down"></i>
-              </button>
-            </td>
-            <th
-              v-for="(column,key) in visibleColumns"
-              :key="key"
-              is="rt2-column"
-              v-bind="column.$data"
-              v-on:order="order"
-              v-on:draw="draw"
-              v-on:search="$emit('search',$event)"
-              ref="column"
-              v-on:check-all="checkAll(column,$event)"
-            ></th>
-          </tr>
-          <tr v-if="isSearchable">
-            <td v-if="hasHideColumn"></td>
-            <td
-              v-for="(column,key) in visibleColumns"
-              :key="key"
-              is="alt-column-search"
-              v-bind="column.$data"
-              v-on:search="search"
-            ></td>
-          </tr>
-        </thead>
-        <tbody
-          is="rt2-tbody"
-          :selectable="selectable"
-          :data="data()"
-          :columns="columns"
-          ref="tbody"
-          v-on:update-data="updateData"
-          v-on:data-deleted="draw"
-          :storage="storage"
-        ></tbody>
-      </table>
+      <table
+        is="rt2-table"
+        ref="table"
+        :columns="columns"
+        :data="data()"
+        :selectable="selectable"
+        :storage="storage"
+        @search="search(...$event)"
+        @order="order"
+        @draw="draw"
+        @update-data="updateData"
+        @data-deleted="draw"
+      ></table>
     </div>
-    <div class="box-footer">
-      <rt-pagination
+    <div is="alt-box-footer">
+      <div
+        is="rt-pagination"
         :page="page"
         :page-count="pageCount"
         v-on:change-page="gotoPage"
@@ -70,7 +41,7 @@ table.rt > thead button.multiselect {
         v-on:next-page="nextPage"
         v-on:prev-page="prevPage"
         v-on:last-page="lastPage"
-      ></rt-pagination>
+      ></div>
 
       <div class="pull-left btn-group">
         <button
@@ -111,7 +82,7 @@ table.rt > thead button.multiselect {
               tabindex="-1"
               @click.prevent="column.toggleVisible()"
             >
-              <input type="checkbox" v-model="column.isVisible">
+              <input type="checkbox" v-model="column.isVisible" />
               &nbsp;{{column.title}}
             </a>
           </li>
@@ -172,6 +143,14 @@ table.rt > thead button.multiselect {
   </div>
 </template>
 <script>
+import AltBox from "./Box"
+import AltBody from "./BoxBody"
+import AltFooter from "./BoxFooter"
+import Rt2Table from "./RT2Table";
+import RtInfo from "./RTInfo";
+import RtPagination from "./RTPagination";
+
+
 export default {
   name: "alt-rt2",
   props: {
@@ -200,11 +179,18 @@ export default {
       }
     }
   },
+  components: {
+    AltBox,
+    AltBody,
+    AltFooter,
+    Rt2Table,
+    RtPagination,
+    RtInfo
+  },
   data() {
     var data = {
       hoverChild: [],
       total: 0,
-      showChild: false,
       showIndex: [],
       local: {
         search: {},
@@ -219,24 +205,21 @@ export default {
     };
     return data;
   },
-  filters:{
-    isBottomButton(button){
-      if(button.text){
+  filters: {
+    isBottomButton(button) {
+      if (button.text) {
         return true;
       }
       return false;
-
     }
   },
   created: function() {
- 
-
     /////-------------------
 
-    var storage=this.storage;
+    var storage = this.storage;
 
-    storage.rows={};
-    
+    storage.rows = {};
+
     if (storage.responsive) {
       this.responsive = storage.responsive;
     }
@@ -366,8 +349,8 @@ export default {
     window.addEventListener("resize", this.resize);
   },
   computed: {
-    storage(){
-      var storage=JSON.parse(localStorage.getItem(this.id)) || {};
+    storage() {
+      var storage = JSON.parse(localStorage.getItem(this.id)) || {};
       storage.save = () => {
         var data = {};
         for (var i in storage) {
@@ -388,11 +371,7 @@ export default {
 
       return storage;
     },
-    visibleColumns() {
-      return this.columns.filter(column => {
-        return column.isDisplay();
-      });
-    },
+
     columnsHasTitle() {
       return this.columns.filter(column => {
         return column.title;
@@ -413,22 +392,13 @@ export default {
         to: Math.min(this.page * this.local.pageLength, this.total),
         total: this.total
       };
-    },
-    isSearchable() {
-      return this.columns.some(o => o.searchable);
-    },
-    hasHideColumn() {
-      return this.columns.some(o => o.hide);
     }
   },
   methods: {
-    clearChecked(name){
+    clearChecked(name) {
       var d = [];
-      this.storage.rows[name]={};
+      this.storage.rows[name] = {};
       this.storage.save();
-    },
-    checkAll(column, value) {
-      this.$refs.tbody.checkAll(column, value);
     },
     getChecked(name) {
       var d = [];
@@ -513,15 +483,6 @@ export default {
       storage.save();
 
       this.resize();
-    },
-    toggleChild() {
-      this.showChild = !this.showChild;
-      if (this.showChild) {
-        this.$refs.tbody.showAllChild();
-      } else {
-        this.$refs.tbody.hideAllChild();
-      }
-      this.$forceUpdate();
     },
     getColumn(index) {
       return this.columns[index];
@@ -636,13 +597,14 @@ export default {
 
       this.$nextTick(() => {
         //console.log("--");
-        var parentWidth = this.$refs.table.parentElement.offsetWidth;
+        var parentWidth = this.$refs.table.$el.parentElement.offsetWidth;
         //console.log("parentWidth", parentWidth);
 
         var total = () => {
           let total = 0;
+
           this.columns.forEach((c, i) => {
-            let c_el = this.$refs.column[i];
+            let c_el = this.$refs.table.$refs.thead.$refs.column[i];
             if (c_el) {
               total += c_el.$el.offsetWidth;
             }
