@@ -6,7 +6,7 @@ table.rt > thead button.multiselect {
 }
 </style>
 <template>
-  <div class="box no-border" is="alt-box" ref="box">
+  <div class="box no-border" is="box" ref="box">
     <div class="box-body no-padding" v-if="buttons.length>0">
       <button
         v-for="(button,index) in buttons"
@@ -16,7 +16,7 @@ table.rt > thead button.multiselect {
         :class="button.class"
       ></button>
     </div>
-    <div class="box-body no-padding" is="alt-box-body" :class="{'table-responsive':!responsive}">
+    <div class="box-body no-padding" is="box-body" :class="{'table-responsive':!responsive}">
       <table
         is="rt2-table"
         ref="table"
@@ -31,7 +31,7 @@ table.rt > thead button.multiselect {
         @data-deleted="draw"
       ></table>
     </div>
-    <div is="alt-box-footer">
+    <div is="box-footer">
       <div
         is="rt-pagination"
         :page="page"
@@ -143,9 +143,9 @@ table.rt > thead button.multiselect {
   </div>
 </template>
 <script>
-import AltBox from "./Box";
-import AltBody from "./BoxBody";
-import AltFooter from "./BoxFooter";
+import Box from "./Box";
+import BoxBody from "./BoxBody";
+import BoxFooter from "./BoxFooter";
 import Rt2Table from "./RT2Table";
 import RtInfo from "./RTInfo";
 import RtPagination from "./RTPagination";
@@ -179,9 +179,9 @@ export default {
     }
   },
   components: {
-    AltBox,
-    AltBody,
-    AltFooter,
+    Box,
+    BoxBody,
+    BoxFooter,
     Rt2Table,
     RtPagination,
     RtInfo

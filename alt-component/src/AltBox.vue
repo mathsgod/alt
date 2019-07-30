@@ -1,14 +1,18 @@
 <template>
-  <div class="box" :class="{'collapsed-box':collapsed}">
-    <div class="overlay" v-if="loading">
-      <i class="fa fa-spin fa-sync-alt"></i>
+    <div class="box" :class="{'collapsed-box':collapsed}">
+
+        <div class="overlay" v-if="loading">
+            <i class="fa fa-spin fa-sync-alt"></i>
+        </div>
+
+        <slot></slot>
     </div>
-    <slot></slot>
-  </div>
 </template>
+
 <script>
+/* eslint-disable */
 export default {
-  name: "box",
+  name: "alt-box",
   data: function() {
     return {
       loading: false,
@@ -24,23 +28,34 @@ export default {
     aclGroup: Array,
     dataUri: String,
     dataAclUri: String,
-    dataUrl: String
+    dataUrl: String,
+    dataUri: String
   },
   computed: {
     header() {
       return this.$children.filter(o => {
-        return o.$vnode.componentOptions.tag == "box-header";
+        return o.$vnode.componentOptions.tag == "alt-box-header";
       });
     },
     body() {
-      return this.$children.filter(o => {
-        return o.$vnode.componentOptions.tag == "box-body";
-      });
+      return this.$slots.default
+        .filter(o => {
+          if (o.componentOptions == undefined) return false;
+          return o.componentOptions.tag == "alt-box-body";
+        })
+        .map(o => {
+          return o.componentInstance;
+        });
     },
     footer() {
-      return this.$children.filter(o => {
-        return o.$vnode.componentOptions.tag == "box-footer";
-      });
+      return this.$slots.default
+        .filter(o => {
+          if (o.componentOptions == undefined) return false;
+          return o.componentOptions.tag == "alt-box-footer";
+        })
+        .map(o => {
+          return o.componentInstance;
+        });
     }
   },
   mounted() {
@@ -50,9 +65,6 @@ export default {
       h.collapsed = this.collapsed;
       h.dataUrl = this.dataUrl;
       h.pinable = this.pinable;
-
-      h.acl = this.acl;
-      h.aclGroup = this.aclGroup;
     });
 
     this.header.forEach(h => {
@@ -60,13 +72,15 @@ export default {
         this.isPinned = isPinned;
       });
 
-      h.$on("closed", () => {
-        this.$emit("closed");
-        this.$el.parentNode.removeChild(this.$el);
-      });
-
       h.$on("collapsed", collapsed => {
-        this.$emit("collapsed", collapsed);
+        var data = {};
+        data.type = "box";
+        data.layout = {
+          collapsed: collapsed
+        };
+        data.uri = this.dataUri;
+
+        this.$http.post("UI/save", data);
 
         this.body.forEach(e => {
           if (collapsed) {
@@ -82,26 +96,9 @@ export default {
             $(e.$el).slideDown(500);
           }
         });
-
-        if (!this.dataUri) {
-          console.log("data-url not found");
-          return;
-        }
-        var data = {};
-        data.type = "box";
-        data.layout = {
-          collapsed: collapsed
-        };
-        data.uri = this.dataUri;
-
-        this.$http.post("UI/save", data);
       });
 
       h.$on("acl", acl => {
-        if (!this.dataAclUri) {
-          console.log("data-acl-uri not found");
-          return;
-        }
         var data = acl;
         data.path = this.dataAclUri;
         this.$http.post("ACL/box", data);
@@ -114,10 +111,6 @@ export default {
   },
   methods: {
     reload() {
-      if (!this.dataUri) {
-        console.log("data-uri not found");
-        return;
-      }
       this.showLoading();
       this.$http.get(this.dataUrl).then(resp => {
         this.hideLoading();
@@ -139,3 +132,4 @@ export default {
   }
 };
 </script>
+

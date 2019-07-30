@@ -28,16 +28,49 @@
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
+
+    <link rel="stylesheet" href="AdminLTE/dist/css/AdminLTE.min.css" />
 </head>
 
-<body>
+<body class="hold-transition skin-blue">
 
     <div class="container" id="div1">
         alt-component test
 
         <hr>
 
+        <box class="box-primary" :collapsible="true" :collapsed="false" :closeable="true" :pinable="true" :acl="true" :acl-group="[
+            {name:'admin',selected:true,disabled:true},
+            {name:'test',selected:false}
+        ]">
 
+            <box-header>
+                box header
+            </box-header>
+
+            <box-body>
+                box body
+            </box-body>
+
+            <box-footer>
+                box footer
+            </box-footer>
+
+        </box>
+
+        <!-- 
+        <div class="box box-primary">
+            <div class="box-header">
+                <h1>Title</h1>
+                
+            </div>
+            <div class="box-body ">
+                body
+            </div>
+        </div>
+
+
+-->
 
         <hr>
         <!-- icheck v-model="c1"></icheck>
@@ -101,8 +134,7 @@
                 title:'url1',
                 type:'text'
             }
-          ]" :data="[]" :ajax="{url:'http://127.0.0.1/testdata.php'}" :responsive="false" cell-url :page-length="25"
-           :selectable="false" :buttons="[
+          ]" :data="[]" :ajax="{url:'http://127.0.0.1/testdata.php'}" :responsive="false" cell-url :page-length="25" :selectable="false" :buttons="[
                {
                    title:'submit',
                    action:'submit1',
@@ -170,11 +202,11 @@
     </div>
 
 
-<script>
-    function submit1(rt){
-        console.log(rt.getChecked('cb'));
-    }
-</script>
+    <script>
+        function submit1(rt) {
+            console.log(rt.getChecked('cb'));
+        }
+    </script>
 
 </body>
 

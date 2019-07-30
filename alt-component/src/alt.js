@@ -1,8 +1,10 @@
 import VueRegisterElement from "vue-register-element/src/index.js";
 import icheck from './icheck.vue';
 
+import Box from "./Box.vue";
+
 import Input from './Input.vue';
-import Box from './Box.vue';
+import AltBox from './AltBox.vue';
 import BoxHeader from './BoxHeader.vue';
 import BoxBody from './BoxBody.vue';
 import BoxFooter from './BoxFooter.vue';
@@ -48,10 +50,14 @@ VueRegisterElement("alt-tab-pane", altTabPane);
 VueRegisterElement("alt-grid", altGrid);
 VueRegisterElement("alt-grid-section", altGridSection);
 
-VueRegisterElement("alt-box", Box);
+VueRegisterElement("box", Box);
+VueRegisterElement("alt-box", AltBox);
+VueRegisterElement("box-header", BoxHeader);
 VueRegisterElement("alt-box-header", BoxHeader);
 VueRegisterElement("alt-box-body", BoxBody);
+VueRegisterElement("box-body", BoxBody);
 VueRegisterElement("alt-box-footer", BoxFooter);
+VueRegisterElement("box-footer", BoxFooter);
 VueRegisterElement("alt-datatables",Datatables);
 VueRegisterElement("alt-e", altE);
 VueRegisterElement("icheck", icheck);
