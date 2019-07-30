@@ -22,7 +22,7 @@
       @click="$emit('cell-clicked',column)"
       @data-deleted="$emit('data-deleted')"
       @toggle-sub-row="$emit('toggle-sub-row',$event)"
-      @update-data="$emit('update-data',[data,column,$event])"
+      @update-data="updateData(column,$event)"
     ></td>
   </tr>
 </template>
@@ -39,7 +39,8 @@ export default {
     editMode: Boolean,
     editIndex: Number,
     editColumn: Object,
-    index: Number
+    index: Number,
+    selectable: Boolean
   },
   data() {
     return {
@@ -63,7 +64,26 @@ export default {
     }
   },
   methods: {
+    updateData(column, value) {
+      var r = this.data;
+      if (column.editType == "text") {
+        if (column.getValue(r) != value) {
+          r[column.data] = value;
+          this.$emit("update-data", r._key, column.data, value);
+        }
+        return;
+      }
+
+      if (column.editType == "select") {
+        if (r[column.data].value != value) {
+          r[column.data].value = value;
+          r[column.data].content = column.editData[value].label;
+          this.$emit("update-data", r._key, column.data, value);
+        }
+      }
+    },
     onClick() {
+      if (!this.selectable) return;
       this.selected = !this.selected;
       this.$emit("click");
     },

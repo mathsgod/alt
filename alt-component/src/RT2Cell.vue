@@ -6,7 +6,8 @@
           type="text"
           class="form-control input-sm"
           v-bind:value="column.getValue(data)"
-          v-on:blur="updateData($event.target.value)"
+          @blur="updateData($event.target.value)"
+          @keyup.enter="updateData($event.target.value)"
         />
       </template>
       <template v-else-if="column.editType=='select'">

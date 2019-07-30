@@ -44,7 +44,7 @@ class User_list extends ALT\Page
         $rt->buttons[] = ["text" => "Hello", "action" => "onClickHello"];
          */
 
-        $rt->selectable = true;
+        //$rt->selectable = true;
         $rt->cellUrl = "User";
         $this->write($rt);
     }

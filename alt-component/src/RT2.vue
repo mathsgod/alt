@@ -143,13 +143,12 @@ table.rt > thead button.multiselect {
   </div>
 </template>
 <script>
-import AltBox from "./Box"
-import AltBody from "./BoxBody"
-import AltFooter from "./BoxFooter"
+import AltBox from "./Box";
+import AltBody from "./BoxBody";
+import AltFooter from "./BoxFooter";
 import Rt2Table from "./RT2Table";
 import RtInfo from "./RTInfo";
 import RtPagination from "./RTPagination";
-
 
 export default {
   name: "alt-rt2",
@@ -454,16 +453,23 @@ export default {
           link.click();
         });
     },
-    updateData(key, field, value) {
+    updateData(data) {
       if (!this.cellUrl) {
         console.log("cell-url not found");
         return;
       }
+      if (!data.key) {
+        console.log("key cannot be null");
+        return;
+      }
+      if (!data.field) {
+        console.log("field cannot be null");
+      }
       this.$http
         .post(this.cellUrl, {
-          _pk: key,
-          name: field,
-          value: value
+          _pk: data.key,
+          name: data.field,
+          value: data.value
         })
         .then(resp => {
           console.log("done");

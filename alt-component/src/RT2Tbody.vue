@@ -12,11 +12,12 @@
         :show-child="showIndex[index]"
         :editColumn="editColumn"
         :editIndex="editIndex"
+        :selectable="selectable"
         @toggle-row-child="toggleRowChild(index)"
         @mouse-enter-row="mouseEnterRow(index)"
         @mouse-leave-row="mouseLeaveRow(index)"
         @cell-clicked="onClickCell(index,$event)"
-        @update-data="updateData(index,...$event)"
+        @update-data="updateData"
         @toggle-sub-row="toggleSubRow(index,$event)"
         @data-deleted="$emit('data-deleted')"
       ></tr>
@@ -41,6 +42,7 @@
 </template>
 
 <script>
+import Vue from "vue";
 import Rt2Row from "./RT2Row";
 export default {
   name: "rt2-tbody",
@@ -158,25 +160,14 @@ export default {
       this.hoverChild[index] = true;
       this.$forceUpdate();
     },
-    updateData(index, r, column, value) {
+    updateData(key, field, value) {
       this.editColumn = null;
       this.editIndex = null;
-
-      if (column.editType == "text") {
-        if (column.getValue(r) != value) {
-          r[column.data] = value;
-          this.$emit("update-data", r._key, column.data, value);
-        }
-        return;
-      }
-
-      if (column.editType == "select") {
-        if (r[column.data].value != value) {
-          r[column.data].value = value;
-          r[column.data].content = column.editData[value].label;
-          this.$emit("update-data", r._key, column.data, value);
-        }
-      }
+      this.$emit("update-data", {
+        key: key,
+        field: field,
+        value: value
+      });
     }
   }
 };

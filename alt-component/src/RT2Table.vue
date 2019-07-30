@@ -17,7 +17,7 @@
       :data="data"
       :columns="columns"
       :storage="storage"
-      @update-data="$emit('update-data')"
+      @update-data="$emit('update-data',$event)"
       @data-deleted="$emit('data-deleted')"
     ></tbody>
   </table>
