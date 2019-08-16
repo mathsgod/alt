@@ -1,5 +1,5 @@
 <?php
- // Created By: Raymond Chong
+// Created By: Raymond Chong
 // Last Updated:
 use App\Config;
 use App\User;
@@ -25,9 +25,6 @@ class User_ae extends ALT\Page
 
     public function get()
     {
-
-
-
         $obj = $this->object();
         $mv = $this->createE();
 
