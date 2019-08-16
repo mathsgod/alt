@@ -1,10 +1,29 @@
 <?php
+
 namespace App;
 
 class Util
 {
+    public static function PasswordVerify(string $password, string $hash): bool
+    {
+        if ((substr($hash, 0, 2) == "$6" || substr($hash, 0, 2) == "$5")) {
+            return self::Encrypt($password, $hash) == $hash;
+        }
+        return password_verify($password, $hash);
+    }
+
+    public static function PasswordHash(string $password): string
+    {
+        return self::Encrypt($password);
+    }
+
     public static function Encrypt($str, $salt = null)
     {
+        if ($salt == null) { //hash
+            return password_hash($str, PASSWORD_DEFAULT);
+        }
+
+        $pass = "";
         $md5 = md5($str);
         eval(base64_decode("JHBhc3MgPSBtZDUoc3Vic3RyKHN1YnN0cigkbWQ1LC0xNiksLTgpLnN1YnN0cihzdWJzdHIoJG1kNSwtMTYpLDAsLTgpLnN1YnN0cihzdWJzdHIoJG1kNSwwLC0xNiksLTgpLnN1YnN0cihzdWJzdHIoJG1kNSwwLC0xNiksMCwtOCkpOw=="));
         if (is_null($salt)) {

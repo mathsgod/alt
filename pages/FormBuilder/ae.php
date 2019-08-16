@@ -16,6 +16,13 @@ class FormBuilder_ae extends ALT\Page
 
     public function get()
     {
+
+        if(!$this->app->composer->hasPackage("kevinchappell/form-builder")){
+            $this->alert->warning("please install kevinchappell/form-builder");
+            return;
+        }
+        //kevinchappell/form-builder
+
         $e=$this->createE();
         $e->add("Name")->input("name")->required();
 

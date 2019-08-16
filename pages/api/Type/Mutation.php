@@ -3,6 +3,16 @@ namespace Type;
 
 class Mutation
 {
+    public function login($root, $args, $context)
+    {
+        try {
+            $context->login($args["username"], $args["password"], $args["code"]);
+            return true;
+        } catch (Exception $e) {
+            throw new Error($e->getMessage());
+        }
+    }
+    
     public function me($root, $args, $context)
     {
         if ($context->user->user_id == 2) return null;

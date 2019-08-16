@@ -96,6 +96,7 @@ class App extends \R\App
         foreach (SystemValue::Query() as $sv) {
             $this->system_value[$sv->language][$sv->name] = $sv;
         }
+        $this->composer = new Composer($this);
     }
 
     public function getFile($file)
@@ -199,7 +200,7 @@ class App extends \R\App
                 if ($code = $response->getStatusCode()) {
                     http_response_code($code);
                 }
-                file_put_contents("php://output", (string)$response->getBody());
+                file_put_contents("php://output", (string) $response->getBody());
                 return;
             }
         }
@@ -262,7 +263,7 @@ class App extends \R\App
             }
 
 
-            file_put_contents("php://output", (string)$response->getBody());
+            file_put_contents("php://output", (string) $response->getBody());
         } elseif (self::Logined()) {
             $this->redirect("404_not_found");
         } else {
@@ -299,7 +300,7 @@ class App extends \R\App
 
     public function logined()
     {
-        return (boolean)$_SESSION["app"]["login"];
+        return (bool) $_SESSION["app"]["login"];
     }
 
     public function loginFido2($username, $assertion)
@@ -341,22 +342,25 @@ class App extends \R\App
             }
         }
 
-        $sth = $this->db->prepare("select user_id,password from User where username=:username and status=0");
-        $sth->execute([":username" => $username]);
-        $row = $sth->fetch();
-        $sth->closeCursor();
-        if (is_null($row)) {
-            AuthLock::Add();
-            throw new \Exception("Login error", 403);
-        }
-        $user_id = $row["user_id"];
-        $p = $row["password"];
+        $user = User::Query([
+            "username" => $username,
+            "status" => 0
+        ])->first();
 
-        if (Util::Encrypt($password, $p) != $p) {
+        if (!$user) {
             AuthLock::Add();
             throw new \Exception("Login error", 403);
         }
-        $user = new User($user_id);
+
+        if (!$user->verifyPassword($password)) {
+            AuthLock::Add();
+            throw new \Exception("Login error", 403);
+        }
+
+        if ($user->expiry_date && strtotime($user->expiry_date) < time()) {
+            throw new \Exception("Login error", 403);
+        }
+
         if ($this->config["user"]["2-step verification"]) {
             $need_check = true;
             if ($setting = $user->setting()) {
@@ -372,12 +376,7 @@ class App extends \R\App
             }
         }
 
-        if ($user->expiry_date && strtotime($user->expiry_date) < time()) {
-            AuthLock::Add();
-            throw new \Exception("Login error", 403);
-        }
-
-        $_SESSION["app"]["user_id"] = $user_id;
+        $_SESSION["app"]["user_id"] = $user->user_id;
 
         $_SESSION["app"]["user"] = $user;
 
@@ -540,7 +539,7 @@ class App extends \R\App
 
         if ($smtp && $smtp->value) {
             $this->IsSMTP();
-            $this->Host = (string)$smtp;
+            $this->Host = (string) $smtp;
             $this->SMTPAuth = true;
             $this->Username = $this->config["user"]["smtp-username"];
             $this->Password = $this->config["user"]["smtp-password"];

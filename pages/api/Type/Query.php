@@ -13,16 +13,6 @@ class Query
         return $context->user;
     }
 
-    public function login($root, $args, $context)
-    {
-        try {
-            $context->login($args["username"], $args["password"], $args["code"]);
-            return true;
-        } catch (Exception $e) {
-            throw new Error($e->getMessage());
-        }
-    }
-
     public function forgotPassword($root, $args, $context)
     {
         $w[] = ["username=?", $args["username"]];

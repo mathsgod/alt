@@ -1,5 +1,8 @@
 <?php
+
 namespace App;
+
+use \Firebase\JWT\JWT;
 
 class User extends Model
 {
@@ -13,6 +16,17 @@ class User extends Model
         }
     }
 
+    public function verifyPassword(string $password): bool
+    {
+        if (!Util::PasswordVerify($password, $this->password)) {
+            return false;
+        }
+
+        if (substr($this->password, 0, 2) == "$6" || substr($this->password, 0, 2) == "$5") {
+            $this->update(["password" => Util::PasswordHash($password)]);
+        }
+        return true;
+    }
     public static function Login($username, $password, $code = null)
     {
         $sth = self::__db()->prepare("select user_id,password from User where username=:username and status=0");
@@ -32,6 +46,10 @@ class User extends Model
             return false;
         }
 
+        if (!$user->access_token) {
+            $user->access_token = sha1(uniqid());
+            $user->save();
+        }
 
         return $user;
     }
@@ -252,7 +270,7 @@ class User extends Model
     public function sendPassword()
     {
         $password = Util::GeneratePassword();
-        $e_pwd = Util::Encrypt($password);
+        $e_pwd = Util::PasswordHash($password);
 
         $ret = $this->update(["password" => $e_pwd]);
 
@@ -307,5 +325,27 @@ class User extends Model
             return UserGroup::Query()->where($w);
         }
         return parent::__get($name);
+    }
+
+    public function jwt()
+    {
+        $key = self::$_app->config["system"]["secret"];
+
+        if (!$key) {
+            $key = $this->password;
+        }
+
+        $payload = [
+            "user_id" => $this->user_id,
+            "username" => $this->username
+        ];
+        $head = [
+            "iss" => self::$_app->config["user"]["domain"],
+          //  "aud" => self::$_app->config["user"]["domain"],
+            "iat" => time(),
+            "nbf" => time(),
+            "exp" => time() + 3600
+        ];
+        return JWT::encode($payload, $key, "HS256", null, $head);
     }
 }

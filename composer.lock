@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f9c4e0e31e00360d96d2c3bb10413ef6",
+    "content-hash": "323214029d58ce18cf2aec08400fd319",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -167,6 +167,52 @@
                 "bootstrap"
             ],
             "time": "2017-02-28T14:32:02+00:00"
+        },
+        {
+            "name": "firebase/php-jwt",
+            "version": "v5.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/firebase/php-jwt.git",
+                "reference": "9984a4d3a32ae7673d6971ea00bae9d0a1abba0e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/9984a4d3a32ae7673d6971ea00bae9d0a1abba0e",
+                "reference": "9984a4d3a32ae7673d6971ea00bae9d0a1abba0e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": " 4.8.35"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Firebase\\JWT\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Neuman Vong",
+                    "role": "Developer",
+                    "email": "neuman+pear@twilio.com"
+                },
+                {
+                    "name": "Anant Narayanan",
+                    "role": "Developer",
+                    "email": "anant@php.net"
+                }
+            ],
+            "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
+            "homepage": "https://github.com/firebase/php-jwt",
+            "time": "2017-06-27T22:17:23+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -1715,6 +1761,43 @@
                 "instantiate"
             ],
             "time": "2015-06-14T21:17:01+00:00"
+        },
+        {
+            "name": "kevinchappell/form-builder",
+            "version": "v3.2.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kevinchappell/formBuilder.git",
+                "reference": "52894295d7d73c1092b849a9fa368715abb1e435"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kevinchappell/formBuilder/zipball/52894295d7d73c1092b849a9fa368715abb1e435",
+                "reference": "52894295d7d73c1092b849a9fa368715abb1e435",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kevin Chappell",
+                    "role": "Developer",
+                    "email": "kevin.b.chappell@gmail.com",
+                    "homepage": "https://kevin-chappell.com"
+                }
+            ],
+            "description": "jQuery formBuilder",
+            "homepage": "https://formbuilder.online",
+            "keywords": [
+                "builder",
+                "form",
+                "form builder",
+                "formbuilder"
+            ],
+            "time": "2019-06-26T19:29:50+00:00"
         },
         {
             "name": "myclabs/deep-copy",

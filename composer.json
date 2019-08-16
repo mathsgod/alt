@@ -58,10 +58,12 @@
         "mathsgod/r-db": "^3.0",
         "mathsgod/p-query": "^2.0",
         "mathsgod/bs": "^1.1",
-        "mathsgod/gql-php-generator": "^1.0"
+        "mathsgod/gql-php-generator": "^1.0",
+        "firebase/php-jwt": "^5.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "*"
+        "phpunit/phpunit": "*",
+        "kevinchappell/form-builder": "^3.2"
     },
     "suggest": {
         "ckeditor/ckeditor": "JavaScript WYSIWYG web text editor.",

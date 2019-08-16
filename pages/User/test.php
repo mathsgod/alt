@@ -13,6 +13,8 @@ class User_test extends ALT\Page
     public function get()
     {
 
+//        outp($this->app->user->jwt());
+        return;
         $a=new App\User();
         $a->test=1;
         outp($a->Test());

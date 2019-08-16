@@ -79,13 +79,14 @@ var vm = new Vue({
                 }
             });
         }, login(username, password, code) {
-            this.$gql.query("api", {
+            this.$gql.mutation("api", {
                 login: {
                     __args: {
                         username: username,
                         password: password,
                         code: code ? code : ""
-                    }
+                    },
+                    username: true
                 }
             }).then(resp => {
                 var r = resp.data;
@@ -103,7 +104,7 @@ var vm = new Vue({
                 } else {
                     if (r.error.message == "2-step verification") {
                         bootbox.prompt("Please input 2-step verification code", result => {
-                            if(result){
+                            if (result) {
                                 this.login(username, password, result);
                             }
                         });
