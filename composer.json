@@ -59,7 +59,8 @@
         "mathsgod/p-query": "^2.0",
         "mathsgod/bs": "^1.1",
         "mathsgod/gql-php-generator": "^1.0",
-        "firebase/php-jwt": "^5.0"
+        "firebase/php-jwt": "^5.0",
+        "fortawesome/font-awesome": "^5.10"
     },
     "require-dev": {
         "phpunit/phpunit": "*",

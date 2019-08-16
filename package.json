@@ -8,7 +8,6 @@
   },
   "dependencies": {
     "@fancyapps/fancybox": "^3.5.7",
-    "@fortawesome/fontawesome-free": "^5.9.0",
     "bootbox": "^4.4.0",
     "bootstrap": "^3.4.1",
     "bootstrap-datepicker": "^1.9.0",
@@ -23,7 +22,7 @@
     "detect-browser": "^3.0.1",
     "fullcalendar": "^3.10.0",
     "ionicons": "^4.5.8",
-    "jquery": "^2.2.4",
+    "jquery": "^3.4.1",
     "jquery-ui-dist": "^1.12.1",
     "jquery-validation": "^1.19.1",
     "less": "^3.9.0",

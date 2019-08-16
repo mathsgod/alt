@@ -175,8 +175,11 @@ class MasterPage
         };
         $data["sidebar_menu"] = $menu_gen($ms);
 
+
         extract($app->pathInfo());
+        
         $system = $system_base;
+        $data["composer_base"]=$composer_base;
         $data["script"][] = "$system/js/cookie.js";
         $data["script"][] = "$system/js/jquery.storageapi.min.js";
 
