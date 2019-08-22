@@ -1,6 +1,4 @@
 import VueRegisterElement from "vue-register-element/src/index.js";
-import icheck from './icheck.vue';
-
 import Box from "./Box.vue";
 
 import Input from './Input.vue';
@@ -60,7 +58,6 @@ VueRegisterElement("alt-box-footer", BoxFooter);
 VueRegisterElement("box-footer", BoxFooter);
 VueRegisterElement("alt-datatables",Datatables);
 VueRegisterElement("alt-e", altE);
-VueRegisterElement("icheck", icheck);
 VueRegisterElement("datepicker", datepicker);
 VueRegisterElement("alt-date", altDate);
 VueRegisterElement("alt-datetime", altDatetime);

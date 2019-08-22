@@ -21,6 +21,7 @@
     "daterangepicker": "^3.0.5",
     "detect-browser": "^3.0.1",
     "fullcalendar": "^3.10.0",
+    "icheck": "git+https://github.com/mathsgod/icheck.git",
     "ionicons": "^4.5.8",
     "jquery": "^3.4.1",
     "jquery-ui-dist": "^1.12.1",

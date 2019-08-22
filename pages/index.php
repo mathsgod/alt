@@ -1,4 +1,5 @@
 <?php
+
 use App\Config;
 use App\System;
 use App\User;
@@ -45,8 +46,6 @@ class _index extends ALT\Page\Login
             return;
         }
 
-        $this->addLib("iCheck");
-
         $pi = $this->app->pathInfo();
 
         $data["system_base"] = $pi["system_base"];
@@ -69,4 +68,3 @@ class _index extends ALT\Page\Login
         }
     }
 }
-

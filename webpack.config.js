@@ -51,6 +51,11 @@ module.exports = {
         }),
         new CopyWebpackPlugin([
             {
+                from: "node_modules/icheck/dist",
+                to: "icheck",
+                toType: "dir"
+            },
+            {
                 from: "node_modules/datatables-all/media",
                 to: "datatables",
                 toType: "dir"
@@ -60,7 +65,7 @@ module.exports = {
                 toType: "dir"
             }, {
                 from: "node_modules/datatables.net-scroller-dt",
-                to:"datatables.net-scroller-dt",
+                to: "datatables.net-scroller-dt",
                 toType: "dir",
             },
             {
@@ -115,15 +120,15 @@ module.exports = {
                 from: "node_modules/moment/min",
                 to: "moment",
                 toType: "dir"
-            },{
+            }, {
                 from: "vendor/mathsgod/r-webauthn/dist",
                 to: "r-webauthn",
                 toType: "dir"
-            },{
+            }, {
                 from: "node_modules/tippy.js/umd/index.all.min.js",
                 to: "tippy.js",
                 toType: "dir"
-            },{
+            }, {
                 from: "node_modules/popper.js/dist/umd/popper.min.js",
                 to: "popper.js",
                 toType: "dir"
