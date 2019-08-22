@@ -1,4 +1,5 @@
 <?php
+
 namespace App\UI;
 
 //class RT extends \RT
@@ -21,8 +22,8 @@ class RT2 extends Element
     public function __construct($objects, $page, $config)
     {
         parent::__construct("div");
-        
-        $this->setAttribute("is","alt-rt2");
+
+        $this->setAttribute("is", "alt-rt2");
         $this->response = new RTResponse();
 
         $this->_page = $page;
@@ -30,13 +31,13 @@ class RT2 extends Element
         $this->responsive = $config["rt2-responsive"];
     }
 
-    public function order($name, $dir)
+    public function order(string $name, $dir = null)
     {
         $this->order[] = ["name" => $name, "dir" => $dir];
         return $this;
     }
 
-    public function add($title, $getter)
+    public function add(string $title, $getter)
     {
         $c = new Column();
 
@@ -48,7 +49,7 @@ class RT2 extends Element
 
         $c->descriptor[] = $getter;
 
-        
+
         if ($getter instanceof Closure) {
             $c->data = md5(new \ReflectionFunction($getter));
             $c->name = $c->data;
@@ -95,7 +96,7 @@ class RT2 extends Element
     {
         $c = new Column();
         $c->type = "checkbox";
-        $c->name=$field;
+        $c->name = $field;
         $this->columns[] = $c;
         return $c;
     }
@@ -103,16 +104,16 @@ class RT2 extends Element
     public function __toString()
     {
 
-        $this->setAttribute(":columns",$this->columns);
-        $this->setAttribute(":data",$this->data);
-        $this->setAttribute(":ajax",$this->ajax);
-        $this->setAttribute(":responsive",$this->responsive ? "true" : "false");
-        $this->setAttribute("cell-url",$this->cellUrl);
-        $this->setAttribute(":page-length",$this->pageLength);
-        $this->setAttribute(":selectable",$this->selectable ? "true" : "false");
-        $this->setAttribute(":buttons",$this->buttons);
-        $this->setAttribute(":exports",$this->exports);
-        $this->setAttribute(":order",$this->order);
+        $this->setAttribute(":columns", $this->columns);
+        $this->setAttribute(":data", $this->data);
+        $this->setAttribute(":ajax", $this->ajax);
+        $this->setAttribute(":responsive", $this->responsive ? "true" : "false");
+        $this->setAttribute("cell-url", $this->cellUrl);
+        $this->setAttribute(":page-length", $this->pageLength);
+        $this->setAttribute(":selectable", $this->selectable ? "true" : "false");
+        $this->setAttribute(":buttons", $this->buttons);
+        $this->setAttribute(":exports", $this->exports);
+        $this->setAttribute(":order", $this->order);
         return parent::__toString();
     }
 
@@ -126,7 +127,4 @@ class RT2 extends Element
         $this->columns[] = $c;
         return $c;
     }
-
-    
-    
 }
