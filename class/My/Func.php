@@ -60,7 +60,7 @@ class Func
                 }
             }
         } elseif (is_array($obj)) {
-            if (isset($obj[$func])) {
+            if (array_key_exists($func,$obj)) {
                 return $obj[$func];
             } elseif (function_exists($func)) {
                 return $func($obj);
