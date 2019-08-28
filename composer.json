@@ -60,7 +60,8 @@
         "mathsgod/bs": "^1.1",
         "mathsgod/gql-php-generator": "^1.0",
         "firebase/php-jwt": "^5.0",
-        "fortawesome/font-awesome": "^5.10"
+        "fortawesome/font-awesome": "^5.10",
+        "vakata/jstree": "^3.3"
     },
     "require-dev": {
         "phpunit/phpunit": "*",
