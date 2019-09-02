@@ -1,6 +1,8 @@
 <?php
 namespace Type;
 
+use \GraphQL\Error\Error;
+
 class Mutation
 {
     public function login($root, $args, $context)
@@ -8,7 +10,7 @@ class Mutation
         try {
             $context->login($args["username"], $args["password"], $args["code"]);
             return true;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             throw new Error($e->getMessage());
         }
     }
