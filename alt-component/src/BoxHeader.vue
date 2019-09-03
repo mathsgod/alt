@@ -11,7 +11,7 @@
         <i class="fa fa-sync-alt"></i>
       </button>
 
-      <div class="btn-group" v-if="aclGroup">
+      <div class="btn-group" v-if="aclGroup.length">
         <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
           <i class="fa fa-lock"></i>
         </button>
