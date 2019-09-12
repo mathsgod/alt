@@ -65,6 +65,7 @@ class Func
             } elseif (function_exists($func)) {
                 return $func($obj);
             }
+            return "";
         }else{
             if (function_exists($func)) {
                 return $func($obj);
