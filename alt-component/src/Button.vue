@@ -1,5 +1,5 @@
 <template>
-  <button @click="onClick">
+  <button @click="onClick" v-bind="$props">
     <i v-if="iconClass" :class="displayIcon"></i>
     <slot></slot>
   </button>

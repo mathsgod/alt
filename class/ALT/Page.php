@@ -44,7 +44,7 @@ class Page extends \App\Page
 
 
     private $_navbar;
-    public function navbar()
+    public function navbar(): Navbar
     {
         if (!$this->_navbar) {
             $this->_navbar = new Navbar($this);
@@ -176,7 +176,7 @@ class Page extends \App\Page
                             }
                         });
                         if (p($this->_navbar)->find("a")->size() || p($this->_navbar)->find("button")->size()) {
-                            $data["navbar"] = (string )$this->_navbar;
+                            $data["navbar"] = (string) $this->_navbar;
                         }
                     }
                 }
@@ -264,7 +264,7 @@ class Page extends \App\Page
 
 
                 $data["content"] .= $echo_content;
-                $data["content"] .= (string)$response;
+                $data["content"] .= (string) $response;
 
 
                 $data["css"][] = "$system/AdminLTE/dist/css/AdminLTE.css";

@@ -5831,12 +5831,12 @@ var roxyfileman_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var roxyfileman = (roxyfileman_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"72abb94c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Button.vue?vue&type=template&id=42670f6c&
-var Buttonvue_type_template_id_42670f6c_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('button',{on:{"click":_vm.onClick}},[(_vm.iconClass)?_c('i',{class:_vm.displayIcon}):_vm._e(),_vm._t("default")],2)}
-var Buttonvue_type_template_id_42670f6c_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"72abb94c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Button.vue?vue&type=template&id=09db414d&
+var Buttonvue_type_template_id_09db414d_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('button',_vm._b({on:{"click":_vm.onClick}},'button',_vm.$props,false),[(_vm.iconClass)?_c('i',{class:_vm.displayIcon}):_vm._e(),_vm._t("default")],2)}
+var Buttonvue_type_template_id_09db414d_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/Button.vue?vue&type=template&id=42670f6c&
+// CONCATENATED MODULE: ./src/Button.vue?vue&type=template&id=09db414d&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-plugin-babel/node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Button.vue?vue&type=script&lang=js&
 //
@@ -5897,8 +5897,8 @@ var Buttonvue_type_template_id_42670f6c_staticRenderFns = []
 
 var Button_component = Object(componentNormalizer["a" /* default */])(
   src_Buttonvue_type_script_lang_js_,
-  Buttonvue_type_template_id_42670f6c_render,
-  Buttonvue_type_template_id_42670f6c_staticRenderFns,
+  Buttonvue_type_template_id_09db414d_render,
+  Buttonvue_type_template_id_09db414d_staticRenderFns,
   false,
   null,
   null,
