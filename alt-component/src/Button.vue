@@ -1,6 +1,6 @@
 <template>
     <button @click="onClick">
-        <i v-if="iconClass" :class="iconClass"></i>
+        <i v-if="submitting" :class="iconClass"></i>
         <slot></slot>
     </button>
 </template>
