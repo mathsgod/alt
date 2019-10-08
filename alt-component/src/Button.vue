@@ -1,8 +1,8 @@
 <template>
-    <button @click="onClick">
-        <i v-if="submitting" :class="iconClass"></i>
-        <slot></slot>
-    </button>
+  <button @click="onClick">
+    <i v-if="iconClass" :class="displayIcon"></i>
+    <slot></slot>
+  </button>
 </template>
 <script>
 export default {
@@ -17,6 +17,14 @@ export default {
       iconClass: this.icon
     };
   },
+  computed: {
+    displayIcon() {
+      if (!this.submitting) {
+        return this.iconClass;
+      }
+      return "fa fa-spinner fa-spin";
+    }
+  },
   methods: {
     onClick(event) {
       if (this.type == "submit") {
@@ -30,8 +38,6 @@ export default {
         }
 
         this.submitting = true;
-
-        this.iconClass = "fa fa-spinner fa-spin";
       }
     }
   }
