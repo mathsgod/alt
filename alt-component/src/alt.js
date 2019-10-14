@@ -1,4 +1,4 @@
-import VueRegisterElement from "vue-register-element/src/index.js";
+import VueRegisterElement from "vue-register-element/dist/main.js";
 import Box from "./Box.vue";
 
 import Input from './Input.vue';
@@ -56,7 +56,7 @@ VueRegisterElement("alt-box-body", BoxBody);
 VueRegisterElement("box-body", BoxBody);
 VueRegisterElement("alt-box-footer", BoxFooter);
 VueRegisterElement("box-footer", BoxFooter);
-VueRegisterElement("alt-datatables",Datatables);
+VueRegisterElement("alt-datatables", Datatables);
 VueRegisterElement("alt-e", altE);
 VueRegisterElement("datepicker", datepicker);
 VueRegisterElement("alt-date", altDate);

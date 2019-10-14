@@ -1,27 +1,27 @@
 {
-  "_from": "datatables.net-scroller-dt",
-  "_id": "datatables.net-scroller-dt@2.0.0",
+  "_from": "datatables.net-scroller-dt@2.0.1",
+  "_id": "datatables.net-scroller-dt@2.0.1",
   "_inBundle": false,
-  "_integrity": "sha512-QS3u5T6dVTQUIY607jUPn2j3j5zmB3x++WfBxKo7Qr61EiPlrXflyIE+KL6PCxsHlM5dYQkUSyy4iONPlbP5Kw==",
+  "_integrity": "sha512-a2WnNiX4GqaEb+uCjFybz5QewZXgpZynk0HqpFS4XwK23zBUQGkKuoBqesc4cYLnrb90ga3tgFq6yMc5JDVfAw==",
   "_location": "/datatables.net-scroller-dt",
   "_phantomChildren": {},
   "_requested": {
-    "type": "tag",
+    "type": "version",
     "registry": true,
-    "raw": "datatables.net-scroller-dt",
+    "raw": "datatables.net-scroller-dt@2.0.1",
     "name": "datatables.net-scroller-dt",
     "escapedName": "datatables.net-scroller-dt",
-    "rawSpec": "",
+    "rawSpec": "2.0.1",
     "saveSpec": null,
-    "fetchSpec": "latest"
+    "fetchSpec": "2.0.1"
   },
   "_requiredBy": [
     "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/datatables.net-scroller-dt/-/datatables.net-scroller-dt-2.0.0.tgz",
-  "_shasum": "55e7ecca124b3d230c0064b4dcc7b0cdea5a8c2d",
-  "_spec": "datatables.net-scroller-dt",
+  "_resolved": "https://registry.npmjs.org/datatables.net-scroller-dt/-/datatables.net-scroller-dt-2.0.1.tgz",
+  "_shasum": "7226ca0502492b06ef17a0eab4b63ac63f57cd3b",
+  "_spec": "datatables.net-scroller-dt@2.0.1",
   "_where": "C:\\Users\\maths\\Desktop\\web\\alt",
   "author": {
     "name": "SpryMedia Ltd",
@@ -33,7 +33,7 @@
   "bundleDependencies": false,
   "dependencies": {
     "datatables.net-dt": "^1.10.15",
-    "datatables.net-scroller": "2.0.0",
+    "datatables.net-scroller": "2.0.1",
     "jquery": ">=1.7"
   },
   "deprecated": false,
@@ -58,5 +58,5 @@
     "url": "git+https://github.com/DataTables/Dist-DataTables-Scroller-DataTables.git"
   },
   "style": "css/scroller.dataTables.css",
-  "version": "2.0.0"
+  "version": "2.0.1"
 }

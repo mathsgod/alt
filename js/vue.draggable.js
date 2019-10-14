@@ -12,7 +12,8 @@ Vue.component("draggable", {
         list: {
             type: Array
         }, options: {
-            type: Object, default: () => {
+            type: Object,
+            default: function () {
                 return {
 
                 };
