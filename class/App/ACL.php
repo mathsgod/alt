@@ -1,4 +1,5 @@
 <?php
+
 namespace App;
 
 use R\Set;
@@ -70,7 +71,6 @@ class ACL extends Model
     private static $_CACHE = [];
     public static function Allow($path, $action = null, $user = null, $debug = false)
     {
-
         $raw_path = $path;
         $p = parse_url($path);
         $path = $p["path"];
@@ -168,13 +168,12 @@ class ACL extends Model
         $w[] = implode(" or ", $u);
 
         if (!isset(self::$_CACHE[$user->user_id])) {
-            self::$_CACHE[$user->user_id] = (array)self::Find($w);
+            self::$_CACHE[$user->user_id] = (array) self::Find($w);
         }
-
 
         foreach (self::$_CACHE[$user->user_id] as $acl) {
             if ($acl->module == $module) {
-                if ($acl->path == $path) {
+                if ($acl->path == $ps[0]) {
                     $v = $acl->value();
                     if ($v == "deny") {
                         return false;
@@ -194,61 +193,17 @@ class ACL extends Model
                     }
                 }
 
-                if ($acl->action == $action) {
-                    $v = $acl->value();
-                    if ($v == "deny") {
-                        return false;
-                    }
-                    if ($v == "allow") {
-                        $result = true;
+                if ($action !== null) {
+                    if ($acl->action == $action) {
+                        $v = $acl->value();
+                        if ($v == "deny") {
+                            return false;
+                        }
+                        if ($v == "allow") {
+                            $result = true;
+                        }
                     }
                 }
-            }
-        }
-
-        return $result;
-
-
-
-
-
-        $path = implode("/", $ps);
-        // ---------------------------------------------------------------------
-        $w = array();
-        $w[] = "module = " . App::_()->db->quote($module);
-        $u = array();
-        $u[] = "user_id=" . $user->user_id;
-        foreach ($ugs as $ug) {
-            $u[] = "usergroup_id=$ug->usergroup_id";
-        }
-        if (!$user->isGuest()) {
-            $u[] = "special_user=3";
-        }
-        $w[] = implode(" or ", $u);
-
-        $u2 = "action='FC'";
-
-        $path = App::_()->db->quote($path);
-        if ($action) {
-            $u3[] = "action='$action'";
-        } else {
-            $u3[] = "(((type=0 and path=$path) or (type=1 and $path regexp path)))";
-        }
-        $u3 = implode(" and ", $u3);
-
-        $w[] = "($u2) or ($u3)";
-
-        if ($debug) {
-            outp($w);
-        }
-
-        foreach (ACL::find($w) as $acl) {
-            $v = $acl->value();
-            if ($v == "deny") {
-                return false;
-            }
-            if ($v == "allow") {
-                $result = true;
             }
         }
 
