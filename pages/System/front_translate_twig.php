@@ -236,33 +236,8 @@ class System_front_translate_twig extends \ALT\Page
 
     public function googleTranslate()
     {
-
         $t = new R\Translate;
-
         return ["text" => $t->translate($_POST["text"], $_POST["from"], $_POST["to"])];
-
-        $p = [];
-        $p["client"] = "gtx";
-        $p["sl"] = $_POST["from"];
-        $p["tl"] = $_POST["to"];
-        $p["dt"] = "t";
-        $p["q"] = $_POST["text"];
-        $p["ie"] = "UTF-8";
-        $p["oe"] = "UTF-8";
-
-
-        $options = [
-            "ssl" => [
-                "verify_peer" => false,
-                "verify_peer_name" => false,
-                "header" => "user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36"
-            ]
-        ];
-
-        $resp = file_get_contents("https://translate.googleapis.com/translate_a/single?" . http_build_query($p), false, stream_context_create($options));
-        $resp = json_decode($resp, true);
-
-        return ["text" => $resp[0][0][0]];
     }
 
     public function t2s()

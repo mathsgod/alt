@@ -61,10 +61,11 @@
                                     <tr v-for="d in renderData">
 
                                         <td v-if="d.edit" :colspan="langs.length + 1">
-                                            <button @click="onClickTran(selected_data,selected_lang)" class="btn btn-xs btn-success">Source</button>
+                                            <button @click="copyFromSourceSingle(selected_data,selected_lang)" class="btn btn-xs btn-success"><i class="far fa-fw fa-copy"></i> Copy from source</button>
+                                            <button @click="onClickTran(selected_data,selected_lang)" class="btn btn-xs btn-success"><i class="fab fa-fw fa-google"></i> Translate from source</button>
                                             <button v-if="selected_lang=='zh_CN'" @click.prevent="onClickT2S(selected_data)" class="btn btn-xs btn-success">T2S</button>
-                                            <button v-if="selected_lang=='en_US'" @click.prevent="onClickT2E(selected_data)" class="btn btn-xs btn-success">T2E</button>
-                                            <button v-if="selected_lang=='zh_HK'" @click.prevent="onClickE2T(selected_data)" class="btn btn-xs btn-success">E2T</button>
+                                            <button v-if="selected_lang=='en_US'" @click.prevent="onClickT2E(selected_data)" class="btn btn-xs btn-success"><i class="fab fa-fw fa-google"></i> T2E</button>
+                                            <button v-if="selected_lang=='zh_HK'" @click.prevent="onClickE2T(selected_data)" class="btn btn-xs btn-success"><i class="fab fa-fw fa-google"></i> E2T</button>
                                             <button class="btn btn-xs btn-success" @click.prevent="selected_data = null"><i class="fa fa-check"></i></button>
                                             <textarea v-model="selected_data.msgstr[selected_lang]" class="form-control" :style="{height: edit_height+ 'px'}" :placeholder="selected_lang"></textarea>
                                         </td>
@@ -242,25 +243,28 @@
                 return ds;
             }
         }, methods: {
-            loadGlobalToSingle(){
+            copyFromSourceSingle(d, lang) {
+                d.msgstr[lang] = d.msgid;
+            },
+            loadGlobalToSingle() {
                 if (confirm("Are you sure load global data to current translate?")) {
-                    this.$http.get("System/front_translate_twig/globalData").then(resp=>{
-                        var entries=resp.data.entries;
+                    this.$http.get("System/front_translate_twig/globalData").then(resp => {
+                        var entries = resp.data.entries;
 
-                        entries.forEach(entry=>{
+                        entries.forEach(entry => {
 
-                            var d=this.data.find(d=>{
-                                return d.msgid==entry.name
+                            var d = this.data.find(d => {
+                                return d.msgid == entry.name
                             });
 
-                            if(d){
-                                d.msgstr=entry.value;
+                            if (d) {
+                                d.msgstr = entry.value;
                             }
 
                         });
 
                     });
-                    
+
                 }
             },
             onApplyGlobal() {
@@ -454,141 +458,5 @@
     function onClickFile(file) {
         vm.selectFile(file);
     }
-    /*
-    var app = angular.module('twig', []).controller('TwigController', function ($scope, $http) {
-        console.log("angular start");
-
-        $scope.langs = [];
-        $scope.data = [];
-        $scope.file = "";
-        $scope.unuse = [];
-        $scope.microsoft_access_token = "";
-
-        $http.get("System/front_translate_twig/getLang").then(function (r) {
-            $scope.langs = r.data;
-        });
-
-        $http.get("System/front_translate_twig/getMicrosoftAccessToken").then(function (r) {
-            $scope.microsoft_access_token = r.data;
-        });
-
-        $scope.onClickTran = function (d, lang) {
-            $http.post("System/front_translate_twig/googleTranslate", {
-                from: 'auto',
-                to: lang,
-                text: d.msgid,
-            }).then(function (r) {
-                d.msgstr[lang] = r.data.text;
-            });
-        };
-
-        $scope.onClickE2T = function (d) {
-            $http.post("System/front_translate_twig/googleTranslate", {
-                from: "en",
-                to: "zh-TW",
-                text: d.msgstr.en_US,
-            }).then(function (r) {
-                d.msgstr.zh_HK = r.data.text;
-            });
-
-
-        };
-
-        $scope.onClickTC2EN = function (d) {
-            $http.post("System/front_translate_twig/googleTranslate", {
-                from: "zh-TW",
-                to: "en",
-                text: d.msgstr.zh_HK
-            }).then(function (r) {
-                d.msgstr.en_US = r.data.text;
-            });
-        };
-
-
-        $scope.onClickT2S = function (d) {
-            $http.post("System/front_translate_twig/t2s", {
-                str: d.msgstr.zh_HK
-            }).then(function (r) {
-                d.msgstr.zh_CN = r.data.text;
-
-            });
-        };
-
-        $scope.onClickAllT2S = function () {
-            $scope.data.forEach($scope.onClickT2S);
-        };
-
-        $scope.onClickAllT2E = function () {
-            $scope.data.forEach($scope.onClickTC2EN);
-        };
-
-        $scope.onClickAllE2T = function () {
-            $scope.data.forEach($scope.onClickE2T);
-        };
-
-        $scope.onClickFile = function (file) {
-            $scope.file = file;
-            var param = $.param({
-                file: file
-            });
-            $http.get("System/front_translate_twig/getTran?" + param).then(function (r) {
-                $scope.data = r.data.data;
-                $scope.unuse = r.data.unuse;
-                //console.log(data);
-            });
-
-        };
-
-        $scope.onClickSave = function () {
-            $http.post("System/front_translate_twig", {
-                file: $scope.file,
-                data: $scope.data
-            }).then(function (data) {
-                $scope.selected_data = null;
-            });
-
-        };
-
-        $scope.onClickData = function (d) {
-            $scope.selected_data = d;
-        }
-
-        $scope.onClickTranSource = function (lang) {
-            $scope.data.forEach(function (d) {
-                $http.post("System/front_translate_twig/googleTranslate", {
-                    from: 'auto',
-                    to: lang,
-                    text: d.msgid,
-                }).then(function (r) {
-                    d.msgstr[lang] = r.data.text;
-                })
-
-            });
-        };
-
-        $scope.onClickTranAll = function () {
-            $scope.langs.forEach(function (lang) {
-                $scope.data.forEach(function (d) {
-                    $http.post("System/front_translate_twig/googleTranslate", {
-                        from: 'auto',
-                        to: lang,
-                        text: d.msgid,
-                    }).then(function (r) {
-                        d.msgstr[lang] = r.data.text;
-                    })
-
-                });
-            });
-        };
-
-
-    });
-
-    angular.bootstrap($("#twig"), ['twig']);
-
-    function onClickFile(file) {
-        $("#twig").data().$scope.onClickFile(file);
-    }
-    */
 
 </script> {% endverbatim %}
