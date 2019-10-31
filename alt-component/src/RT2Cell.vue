@@ -37,7 +37,7 @@
         type="checkbox"
         v-if="type=='checkbox'"
         is="icheck"
-        @change="toggleCheckBox($event)"
+        @input="toggleCheckBox($event)"
         v-bind:checked="checked()"
       />
       <button class="btn btn-xs btn-danger" v-else-if="type=='delete'" @click="deleteRow()">
@@ -167,7 +167,7 @@ export default {
       this.$forceUpdate();
     },
     toggleCheckBox(e) {
-      this.setCheckbox(e.target.checked);
+      this.setCheckbox(e);
     },
     isEditMode() {
       return false;

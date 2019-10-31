@@ -84,3 +84,9 @@ VueRegisterElement("rt-column", RTColumn);
 VueRegisterElement("rt-body", RTBody);
 VueRegisterElement("ace", Ace);
 VueRegisterElement("alt-input", Input);
+
+import RTInfo from "./RTInfo.vue";
+import RTPageination from "./RTPagination.vue";
+VueRegisterElement("rt-info", RTInfo);
+VueRegisterElement("rt-pagination", RTPageination);
+
