@@ -1,10 +1,12 @@
 <?
+
 namespace App\UI;
 
 use Exception;
 use My\Func;
 use P\HTMLElement;
 use BS\InputSelect;
+use P\InputCollection;
 
 class Col extends HTMLElement
 {
@@ -200,9 +202,14 @@ class Col extends HTMLElement
         return $p;
     }
 
-    public function input($field)
+    public function number($field = null): InputCollection
     {
-        $p = new \P\InputCollection;
+        return $this->input($field)->type("number");
+    }
+
+    public function input($field): InputCollection
+    {
+        $p = new InputCollection;
         foreach ($this->cell as $cell) {
             try {
 
@@ -585,7 +592,7 @@ class Col extends HTMLElement
         foreach ($this->cell as $cell) {
 
             $is = new InputSelect();
-            $input=p($is)->find("input");
+            $input = p($is)->find("input");
             $input->attr("data-field", $field);
             $input->attr("name", $field);
             $cell->append($is);
@@ -645,8 +652,8 @@ class Col extends HTMLElement
             $input->attr("name", $field);
             $input->attr("data-field", $field);
             $input->val(1);
-            $input->attr("true-value","true");
-            $input->attr("false-value","false");
+            $input->attr("true-value", "true");
+            $input->attr("false-value", "false");
 
 
             if ($object = p($cell)->data("object")) {
