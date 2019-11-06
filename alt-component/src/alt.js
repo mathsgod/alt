@@ -16,7 +16,7 @@ import altForm from "./Form.vue";
 import altGrid from "./Grid.vue";
 import altGridSection from "./GridSection.vue";
 import multiselect from "./Multiselect.vue";
-import select2 from "./Select2.vue";
+//import select2 from "./Select2.vue";
 import multiselect2 from "./Multiselect2.vue";
 import altTab from "./Tab.vue";
 import altTable from "./Table.vue";
@@ -76,7 +76,7 @@ VueRegisterElement("alt-rt", altRT);
 VueRegisterElement("alt-rt2", RT2);
 VueRegisterElement("alt-column", altColumn);
 VueRegisterElement("alt-column-search", altColumnSearch);
-VueRegisterElement("select2", select2);
+//VueRegisterElement("select2", select2);
 VueRegisterElement("multiselect2", multiselect2);
 VueRegisterElement("rt-table", RTTable);
 VueRegisterElement("rt-head", RTHead);
@@ -90,3 +90,6 @@ import RTPageination from "./RTPagination.vue";
 VueRegisterElement("rt-info", RTInfo);
 VueRegisterElement("rt-pagination", RTPageination);
 
+
+import select2 from "vue-select2/src/Select2.vue";
+VueRegisterElement("select2", select2);

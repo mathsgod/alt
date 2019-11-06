@@ -11,7 +11,8 @@
     "vue": "^2.6.10",
     "vue-localstorage": "^0.6.2",
     "vue-register-element": "git+https://github.com/mathsgod/VueRegisterElement.git",
-    "vue-resource": "^1.5.1"
+    "vue-resource": "^1.5.1",
+    "vue-select2": "git+https://github.com/mathsgod/vue-select2.git"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.12.0",

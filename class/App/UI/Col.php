@@ -920,8 +920,11 @@ class Col extends HTMLElement
         $select = $this->select2($field);
         $select->attr("multiple", true);
         $select->attr("name", $field . "[]");
-        $select->attr("is", "multiselect2");
 
+        $a = json_decode($select->attr(":value"), true);
+        if (is_string($a)) {
+            $select->attr(":value", json_encode(explode(",", $a)));
+        }
         return $select;
     }
 
@@ -931,6 +934,7 @@ class Col extends HTMLElement
 
         foreach ($this->cell as $cell) {
             $select = p("select")->appendTo($cell);
+            $select->addClass("form-control");
             $select->attr("is", "select2");
             $select->attr("data-field", $field);
             $select->attr("name", $field);
@@ -939,7 +943,7 @@ class Col extends HTMLElement
                 $select->data("object", $object);
                 try {
                     $data_value = is_object($object) ? $object->$field : $object[$field];
-                    $select[0]->setAttribute("data-value", json_encode($data_value));
+                    $select->attr(":value", json_encode($data_value));
                 } catch (\Exception $e) { }
 
                 if ($this->callback) {
