@@ -122,28 +122,16 @@ class Page extends \App\Page
             if ($this->request->getMethod() == "get" && $this->master) {
 
                 $this->addLib("json-viewer");
-                //$this->addLib("components/moment");
-                //$this->addLib("bootboxjs");
-                //$this->addLib("jquery-ui");
-                //                $this->addLib("twbs/bootstrap");
-                //$this->addLib("components/bootstrap-datepicker");
-                //$this->addLib("bootstrap-colorpicker");
+
                 $this->addLib("i18next");
                 $this->addLib("components/bootstrap-datetimepicker");
 
-                $this->addLib("jquery-validation");
+
                 $this->addLib("purl");
 
-                //$this->addLib("hostlink/fancybox");
-                //$this->addLib("daterangepicker");
-                //$this->addLib("pnotify");
-                //$this->addLib('iCheck');
 
                 $this->addLib("timepicker");
-                //$this->addLib("select2");
                 $this->addLib("bootstrap-wysihtml5");
-                //$this->addLib("bootstrap-multiselect");
-                // $this->addLib("touchPoint");
                 $this->addLib("slimScroll");
                 $this->addLib("fastclick");
 
@@ -151,8 +139,6 @@ class Page extends \App\Page
                 $this->addLib("json-viewer");
 
                 $this->addLib("bassjobsen/bootstrap-3-typeahead");
-                //$this->addLib("bootstrap-select/bootstrap-select");
-                //$this->addLib("DataTables");
                 $this->addLib("ace");
 
                 $data = [];
@@ -198,7 +184,7 @@ class Page extends \App\Page
                     }
                 }
 
-                $plugins = new \App\Plugin("Sortable");
+                $plugins = new \App\Plugin("Sortable", $this->app);
 
                 $data["jquery"] = $plugins->jss();
 
@@ -208,16 +194,20 @@ class Page extends \App\Page
                 $data["system_base"] = $system_base;
 
 
-                $plugins = new \App\Plugin("vue");
+                $plugins = new \App\Plugin("vue", $this->app);
                 $data["vue"] = $plugins->jss();
 
                 $data["jss"][] = "$system/dist/moment/moment-with-locales.min.js";
                 $data["jss"][] = "$system/dist/fullcalendar/fullcalendar.min.js";
+
                 if ($this->app->locale != "en") {
                     $data["jss"][] = "$system/dist/fullcalendar/locale/" . $this->app->locale . ".js";
                 }
 
+                $plugin = $this->app->plugin("jquery-validation");
+                $data["jss"] = array_merge($data["jss"], $plugin->jss());
 
+                $data["jss"][] = "$system/js/jquery.validation.init.js";
 
                 $data["script"][] = "$system/AdminLTE/dist/js/app.js";
 
@@ -239,10 +229,13 @@ class Page extends \App\Page
                 //$data["script"][] = "$system/js/layout.js";
                 $data["script"][] = "$system/js/default.js";
 
+                if (getcwd() !== "C:\Users\maths\Desktop\web\alt") {
 
-                foreach (glob(getcwd() . "/js/*") as $file) {
-                    $data["script"][] = "js/" . basename($file);
+                    foreach (glob(getcwd() . "/js/*") as $file) {
+                        $data["script"][] = "js/" . basename($file);
+                    }
                 }
+
 
                 $path_info = \App::_()->pathInfo();
                 if (file_exists($path_info["cms_root"] . "/pages/" . $this->path() . ".js")) {

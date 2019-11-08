@@ -40,7 +40,7 @@ class Page extends \R\Page
         if ($this->_lib[$name]) {
             return $this->_lib[$name];
         }
-        $p = new Plugin($name);
+        $p = new Plugin($name,$this->app);
 
         foreach ($p->setting["require"] as $require) {
             $this->addLib($require);

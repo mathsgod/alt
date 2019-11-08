@@ -614,4 +614,9 @@ class App extends \R\App
         $page = new $class($this);
         return $page;
     }
+
+    public function plugin(string $name):Plugin
+    {
+        return new Plugin($name, $this);
+    }
 }

@@ -215,6 +215,8 @@ class MasterPage
             $data["favs"][] = $content;
         }
 
+        //print_r($data["jss"])
+
         $stream = new Stream($this->_template->render($data));
 
 

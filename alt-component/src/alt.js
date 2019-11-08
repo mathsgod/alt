@@ -2,7 +2,6 @@ import VueRegisterElement from "vue-register-element/dist/main.js";
 import Box from "./Box.vue";
 
 import Input from './Input.vue';
-import AltBox from './AltBox.vue';
 import BoxHeader from './BoxHeader.vue';
 import BoxBody from './BoxBody.vue';
 import BoxFooter from './BoxFooter.vue';
@@ -49,7 +48,7 @@ VueRegisterElement("alt-grid", altGrid);
 VueRegisterElement("alt-grid-section", altGridSection);
 
 VueRegisterElement("box", Box);
-VueRegisterElement("alt-box", AltBox);
+VueRegisterElement("alt-box", Box);
 VueRegisterElement("box-header", BoxHeader);
 VueRegisterElement("alt-box-header", BoxHeader);
 VueRegisterElement("alt-box-body", BoxBody);

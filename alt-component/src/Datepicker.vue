@@ -33,6 +33,7 @@ export default {
     this.datepicker = $(this.$el).datepicker(this.$props);
     this.datepicker.on("change", o => {
       this.$emit("input", o.target.value);
+      this.$emit("change", o.target.value);
     });
   }
 };

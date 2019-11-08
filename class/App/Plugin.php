@@ -8,9 +8,9 @@ class Plugin
     public $path;
     public $setting;
     private static $plugins = [];
-    public static function Load($name)
+    public static function Load($name, App $app)
     {
-        $p = new Plugin($name);
+        $p = new Plugin($name, $app);
         self::$plugins[] = $name;
 
         foreach ($p->setting["php"] as $php) {
@@ -20,9 +20,9 @@ class Plugin
         return $p;
     }
 
-    public function __construct($name)
+    public function __construct($name, App $app)
     {
-        extract(\App::_()->pathInfo());
+        extract($app->pathInfo());
 
         $this->name = $name;
         $path = [];
@@ -41,7 +41,7 @@ class Plugin
         $yml_file = $system_root . "/plugins.yml";
 
 
-        $config = \App::_()->plugins_setting;
+        $config = $app->plugins_setting;
 
 
         if ($config[$name]) {
