@@ -83,7 +83,7 @@ VueRegisterElement("rt-head", RTHead);
 VueRegisterElement("rt-column", RTColumn);
 VueRegisterElement("rt-body", RTBody);
 VueRegisterElement("ace", Ace);
-VueRegisterElement("alt-input", Input);
+//VueRegisterElement("alt-input", Input);
 
 import RTInfo from "./RTInfo.vue";
 import RTPageination from "./RTPagination.vue";
@@ -93,3 +93,7 @@ VueRegisterElement("rt-pagination", RTPageination);
 
 import select2 from "vue-select2/src/Select2.vue";
 VueRegisterElement("select2", select2);
+
+//import Vue from 'vue';
+//window.Vue.component("alt-input", Input);
+VueRegisterElement("alt-input", Input);

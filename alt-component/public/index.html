@@ -38,13 +38,46 @@
     <div class="container" id="div1">
         alt-component test
 
+        <div id="div-input">
+            <input is="alt-input" class="abc" required name="test" type="text" v-model="a" />
+
+            <div ref="d1"></div>
+
+
+            <button @click="addInput">ADD</button>
+
+        </div>
+        <script>
+
+            var vm1;
+            document.addEventListener("DOMContentLoaded", () => {
+                vm1 = new Vue({
+                    el: "#div-input",
+
+                    data: {
+                        a: "hello",
+
+                    },
+                    methods: {
+                        addInput() {
+                            $(this.$refs.d1).append("<input type='text' is='alt-input' />");
+                        }
+                    }
+                });
+            });
+
+        </script>
+
+
+
+
         <hr>
 
+        <!-- 
         <div id="div2">
             <div is="box">
 
                 <div is="box-body">
-                    <input is="icheck" v-model="data1" v-on:input="actionChecked"></input>
                     <div>{{data1}}</div>
 
                 </div>
@@ -67,6 +100,8 @@
 
         </script>
 
+    
+
 
 
         <box class="box-primary" :collapsible="true" :collapsed="false" :closeable="true" :pinable="true" :acl="true" :acl-group="[
@@ -87,7 +122,7 @@
             </box-footer>
 
         </box>
-
+-->
         <!-- 
         <div class="box box-primary">
             <div class="box-header">
@@ -130,6 +165,7 @@
         <hr / -->
 
         <hr>
+        <!--
         <div is="alt-rt2" :columns="[
             {
                 name:'text1',
@@ -172,7 +208,7 @@
                }
                
            ]" :exports="[]" :order="[]"></div>
-
+-->
         <!-- div id="div1">
 
             < select is="select2" name="domain_id" value="2699">

@@ -1,21 +1,17 @@
 <template>
   <input
     class="form-control"
-    v-bind="$props"
-    :name="name"
-    :type="type"
+    :required="required"
     :value="value"
-    @input="onInput"
-  >
+    @input="$emit('input',$event.target.value)"
+  />
 </template>
 <script>
 export default {
   name: "alt-input",
   props: {
-    type: String,
-    name: String,
     required: Boolean,
-    value: String
+    value: {}
   },
   mounted() {
     if (this.required) {
@@ -38,13 +34,6 @@ export default {
         $(this.$el).addClass("form-group has-feedback");
       }
       //   $(this.$el).closest("form").validate()
-    }
-  },
-  methods: {
-    onInput(event) {
-      this.$emit("input", event.target.value);
-
-      //this.$emit("input",);
     }
   }
 };

@@ -10,6 +10,8 @@ type Query{
     loginWebAuthn(username:String!,assertion:String!):Boolean
     UserGroup(usergroup_id:Int!):UserGroup
     UserGroups:[UserGroup]
+    forgotPassword(username:String!,email:String!):Boolean
+    
 }
 
 type Me{

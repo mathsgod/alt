@@ -3955,16 +3955,14 @@ var main_default = /*#__PURE__*/__webpack_require__.n(main);
 // EXTERNAL MODULE: ./src/Box.vue + 4 modules
 var Box = __webpack_require__("4e45");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"ba5a360c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Input.vue?vue&type=template&id=08be3326&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('input',_vm._b({staticClass:"form-control",attrs:{"name":_vm.name,"type":_vm.type},domProps:{"value":_vm.value},on:{"input":_vm.onInput}},'input',_vm.$props,false))}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"ba5a360c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Input.vue?vue&type=template&id=71e863b2&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('input',{staticClass:"form-control",attrs:{"required":_vm.required},domProps:{"value":_vm.value},on:{"input":function($event){return _vm.$emit('input',$event.target.value)}}})}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/Input.vue?vue&type=template&id=08be3326&
+// CONCATENATED MODULE: ./src/Input.vue?vue&type=template&id=71e863b2&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-plugin-babel/node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Input.vue?vue&type=script&lang=js&
-//
-//
 //
 //
 //
@@ -3976,10 +3974,8 @@ var staticRenderFns = []
 /* harmony default export */ var Inputvue_type_script_lang_js_ = ({
   name: "alt-input",
   props: {
-    type: String,
-    name: String,
     required: Boolean,
-    value: String
+    value: {}
   },
   mounted: function mounted() {
     if (this.required) {
@@ -3996,11 +3992,6 @@ var staticRenderFns = []
         $(this.$el).addClass("form-group has-feedback");
       } //   $(this.$el).closest("form").validate()
 
-    }
-  },
-  methods: {
-    onInput: function onInput(event) {
-      this.$emit("input", event.target.value); //this.$emit("input",);
     }
   }
 });
@@ -7531,14 +7522,17 @@ main_default()("rt-table", RTTable);
 main_default()("rt-head", RTHead);
 main_default()("rt-column", RTColumn);
 main_default()("rt-body", RTBody);
-main_default()("ace", Ace);
-main_default()("alt-input", Input);
+main_default()("ace", Ace); //VueRegisterElement("alt-input", Input);
+
 
 
 main_default()("rt-info", RTInfo["a" /* default */]);
 main_default()("rt-pagination", RTPagination["a" /* default */]);
 
-main_default()("select2", Select2);
+main_default()("select2", Select2); //import Vue from 'vue';
+//window.Vue.component("alt-input", Input);
+
+main_default()("alt-input", Input);
 // CONCATENATED MODULE: C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/lib/commands/build/entry-lib-no-default.js
 
 
