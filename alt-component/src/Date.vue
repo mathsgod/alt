@@ -1,13 +1,21 @@
 <template>
-<div>
+  <div>
     <div class="input-group">
-        <span class="input-group-addon">
-            <i :class="icon"></i>
-        </span>
-        <input is="datepicker" ref="datepicker" :value="value" v-bind="$props" @input="$emit('input',$event)" autocomplete="off"/>
-        <i v-if="required" class="fa fa-asterisk form-control-feedback" style="top:10px"></i>
+      <span class="input-group-addon">
+        <i :class="icon"></i>
+      </span>
+      <input
+        is="datepicker"
+        ref="datepicker"
+        :value="value"
+        v-bind="$props"
+        @input="$emit('input',$event)"
+        @change="$emit('change',$event)"
+        autocomplete="off"
+      />
+      <i v-if="required" class="fa fa-asterisk form-control-feedback" style="top:10px"></i>
     </div>
-</div>
+  </div>
 </template>
 <script>
 export default {

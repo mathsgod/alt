@@ -96,3 +96,6 @@ VueRegisterElement("select2", select2);
 //import Vue from 'vue';
 //window.Vue.component("alt-input", Input);
 VueRegisterElement("alt-input", Input);
+
+import daterangepicker from "./daterangepicker.vue";
+VueRegisterElement("daterangepicker", daterangepicker);
