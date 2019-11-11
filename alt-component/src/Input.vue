@@ -3,6 +3,7 @@
     class="form-control"
     :required="required"
     :value="value"
+    :type="type"
     @input="$emit('input',$event.target.value)"
     @change="$emit('change',$event.target.value)"
   />
@@ -12,7 +13,11 @@ export default {
   name: "alt-input",
   props: {
     required: Boolean,
-    value: {}
+    value: {},
+    type: {
+      type: String,
+      default: "text"
+    }
   },
   mounted() {
     if (this.required) {

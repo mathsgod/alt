@@ -3946,14 +3946,15 @@ var main_default = /*#__PURE__*/__webpack_require__.n(main);
 // EXTERNAL MODULE: ./src/Box.vue + 4 modules
 var Box = __webpack_require__("4e45");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"ba5a360c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Input.vue?vue&type=template&id=ac16df60&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('input',{staticClass:"form-control",attrs:{"required":_vm.required},domProps:{"value":_vm.value},on:{"input":function($event){return _vm.$emit('input',$event.target.value)},"change":function($event){return _vm.$emit('change',$event.target.value)}}})}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"ba5a360c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Input.vue?vue&type=template&id=290f8365&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('input',{staticClass:"form-control",attrs:{"required":_vm.required,"type":_vm.type},domProps:{"value":_vm.value},on:{"input":function($event){return _vm.$emit('input',$event.target.value)},"change":function($event){return _vm.$emit('change',$event.target.value)}}})}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/Input.vue?vue&type=template&id=ac16df60&
+// CONCATENATED MODULE: ./src/Input.vue?vue&type=template&id=290f8365&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-plugin-babel/node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Input.vue?vue&type=script&lang=js&
+//
 //
 //
 //
@@ -3967,7 +3968,11 @@ var staticRenderFns = []
   name: "alt-input",
   props: {
     required: Boolean,
-    value: {}
+    value: {},
+    type: {
+      type: String,
+      default: "text"
+    }
   },
   mounted: function mounted() {
     if (this.required) {
@@ -4217,14 +4222,22 @@ var Datepicker_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var Datepicker = (Datepicker_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"ba5a360c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Date.vue?vue&type=template&id=1fd91a1c&
-var Datevue_type_template_id_1fd91a1c_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"input-group"},[_c('span',{staticClass:"input-group-addon"},[_c('i',{class:_vm.icon})]),_c("datepicker",_vm._b({ref:"datepicker",tag:"input",attrs:{"value":_vm.value,"autocomplete":"off"},on:{"input":function($event){return _vm.$emit('input',$event)}}},'input',_vm.$props,false)),(_vm.required)?_c('i',{staticClass:"fa fa-asterisk form-control-feedback",staticStyle:{"top":"10px"}}):_vm._e()],1)])}
-var Datevue_type_template_id_1fd91a1c_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"ba5a360c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Date.vue?vue&type=template&id=926f53fe&
+var Datevue_type_template_id_926f53fe_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"input-group"},[_c('span',{staticClass:"input-group-addon"},[_c('i',{class:_vm.icon})]),_c("datepicker",_vm._b({ref:"datepicker",tag:"input",attrs:{"value":_vm.value,"autocomplete":"off"},on:{"input":function($event){return _vm.$emit('input',$event)},"change":function($event){return _vm.$emit('change',$event)}}},'input',_vm.$props,false)),(_vm.required)?_c('i',{staticClass:"fa fa-asterisk form-control-feedback",staticStyle:{"top":"10px"}}):_vm._e()],1)])}
+var Datevue_type_template_id_926f53fe_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/Date.vue?vue&type=template&id=1fd91a1c&
+// CONCATENATED MODULE: ./src/Date.vue?vue&type=template&id=926f53fe&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-plugin-babel/node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Date.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4289,8 +4302,8 @@ var Datevue_type_template_id_1fd91a1c_staticRenderFns = []
 
 var Date_component = Object(componentNormalizer["a" /* default */])(
   src_Datevue_type_script_lang_js_,
-  Datevue_type_template_id_1fd91a1c_render,
-  Datevue_type_template_id_1fd91a1c_staticRenderFns,
+  Datevue_type_template_id_926f53fe_render,
+  Datevue_type_template_id_926f53fe_staticRenderFns,
   false,
   null,
   null,
@@ -7274,6 +7287,79 @@ var Select2_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var Select2 = (Select2_component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"ba5a360c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/daterangepicker.vue?vue&type=template&id=bc5c97d0&
+var daterangepickervue_type_template_id_bc5c97d0_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('input',{domProps:{"value":_vm.value}})}
+var daterangepickervue_type_template_id_bc5c97d0_staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/daterangepicker.vue?vue&type=template&id=bc5c97d0&
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/objectSpread.js + 1 modules
+var objectSpread = __webpack_require__("cebc");
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-plugin-babel/node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/daterangepicker.vue?vue&type=script&lang=js&
+
+//
+//
+//
+//
+/* harmony default export */ var daterangepickervue_type_script_lang_js_ = ({
+  name: "daterangepicker",
+  props: {
+    options: {
+      default: Object
+    },
+    value: {}
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    var d = {
+      locale: {
+        format: "YYYY-MM-DD"
+      }
+    };
+    console.log(this.value);
+
+    var options = Object(objectSpread["a" /* default */])({}, d, {}, this.options);
+
+    var dp = window.$(this.$el).daterangepicker(options);
+
+    if (!this.value) {
+      $(this.$el).val("");
+    }
+
+    window.$(this.$el).on("apply.daterangepicker", function (e, picker) {
+      var value = picker.startDate.format(d.locale.format) + " - " + picker.endDate.format(d.locale.format);
+
+      _this.$emit("change", value, picker);
+
+      _this.$emit("input", value, picker);
+    });
+  }
+});
+// CONCATENATED MODULE: ./src/daterangepicker.vue?vue&type=script&lang=js&
+ /* harmony default export */ var src_daterangepickervue_type_script_lang_js_ = (daterangepickervue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/daterangepicker.vue
+
+
+
+
+
+/* normalize component */
+
+var daterangepicker_component = Object(componentNormalizer["a" /* default */])(
+  src_daterangepickervue_type_script_lang_js_,
+  daterangepickervue_type_template_id_bc5c97d0_render,
+  daterangepickervue_type_template_id_bc5c97d0_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* harmony default export */ var daterangepicker = (daterangepicker_component.exports);
 // CONCATENATED MODULE: ./src/alt.js
 
 
@@ -7361,6 +7447,8 @@ main_default()("select2", Select2); //import Vue from 'vue';
 //window.Vue.component("alt-input", Input);
 
 main_default()("alt-input", Input);
+
+main_default()("daterangepicker", daterangepicker);
 // CONCATENATED MODULE: C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/lib/commands/build/entry-lib-no-default.js
 
 

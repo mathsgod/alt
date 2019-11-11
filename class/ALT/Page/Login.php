@@ -1,4 +1,5 @@
 <?php
+
 namespace ALT\Page;
 
 use R\Psr7\Stream;
@@ -11,7 +12,7 @@ class Login extends \R\Page
 
     public function addLib($name)
     {
-        $p = new \App\Plugin($name);
+        $p = new \App\Plugin($name, $this->app);
 
         foreach ($p->setting["require"] as $require) {
             $this->addLib($require);
@@ -43,9 +44,9 @@ class Login extends \R\Page
                 $data = [];
             }
 
-            
-            $p = new \App\Plugin("vue");
-            $data["vue"]=$p;
+
+            $p = new \App\Plugin("vue",$this->app);
+            $data["vue"] = $p;
 
 
             foreach ($this->_lib as $name => $p) {
