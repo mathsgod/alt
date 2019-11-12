@@ -466,6 +466,7 @@ class Col extends HTMLElement
         foreach ($this->cell as $cell) {
             try {
                 $input = p("input")->appendTo($cell);
+                $input->addClass("input-sm");
                 $input->attr("is", "alt-email");
                 $input->attr("name", $field);
                 $input->attr("data-field", $field);
