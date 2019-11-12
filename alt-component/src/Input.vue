@@ -1,9 +1,7 @@
 <template>
   <input
     class="form-control"
-    :required="required"
-    :value="value"
-    :type="type"
+    v-bind="$props"
     @input="$emit('input',$event.target.value)"
     @change="$emit('change',$event.target.value)"
   />
@@ -20,24 +18,21 @@ export default {
     }
   },
   mounted() {
+    let $el = window.$(this.$el);
     if (this.required) {
-      if ($(this.$el).hasClass("input-sm")) {
-        $(this.$el).after(
-          '<i class="fa fa-asterisk form-control-feedback"></i>'
-        );
+      if ($el.hasClass("input-sm")) {
+        $el.after('<i class="fa fa-asterisk form-control-feedback"></i>');
       } else {
-        $(this.$el).after(
+        $el.after(
           '<i class="fa fa-asterisk form-control-feedback" style="top:10px"></i>'
         );
       }
 
-      $(this.$el)
-        .closest(".form-group")
-        .addClass("has-feedback");
-      if ($(this.$el).closest(".form-group").length == 0) {
-        $(this.$el).css("margin-bottom", "0px");
+      $el.closest(".form-group").addClass("has-feedback");
+      if ($el.closest(".form-group").length == 0) {
+        $el.css("margin-bottom", "0px");
 
-        $(this.$el).addClass("form-group has-feedback");
+        $el.addClass("form-group has-feedback");
       }
       //   $(this.$el).closest("form").validate()
     }

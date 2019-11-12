@@ -3955,16 +3955,14 @@ var main_default = /*#__PURE__*/__webpack_require__.n(main);
 // EXTERNAL MODULE: ./src/Box.vue + 4 modules
 var Box = __webpack_require__("4e45");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"ba5a360c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Input.vue?vue&type=template&id=290f8365&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('input',{staticClass:"form-control",attrs:{"required":_vm.required,"type":_vm.type},domProps:{"value":_vm.value},on:{"input":function($event){return _vm.$emit('input',$event.target.value)},"change":function($event){return _vm.$emit('change',$event.target.value)}}})}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"ba5a360c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Input.vue?vue&type=template&id=1ae5cd07&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('input',_vm._b({staticClass:"form-control",on:{"input":function($event){return _vm.$emit('input',$event.target.value)},"change":function($event){return _vm.$emit('change',$event.target.value)}}},'input',_vm.$props,false))}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/Input.vue?vue&type=template&id=290f8365&
+// CONCATENATED MODULE: ./src/Input.vue?vue&type=template&id=1ae5cd07&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-plugin-babel/node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Input.vue?vue&type=script&lang=js&
-//
-//
 //
 //
 //
@@ -3984,18 +3982,20 @@ var staticRenderFns = []
     }
   },
   mounted: function mounted() {
+    var $el = window.$(this.$el);
+
     if (this.required) {
-      if ($(this.$el).hasClass("input-sm")) {
-        $(this.$el).after('<i class="fa fa-asterisk form-control-feedback"></i>');
+      if ($el.hasClass("input-sm")) {
+        $el.after('<i class="fa fa-asterisk form-control-feedback"></i>');
       } else {
-        $(this.$el).after('<i class="fa fa-asterisk form-control-feedback" style="top:10px"></i>');
+        $el.after('<i class="fa fa-asterisk form-control-feedback" style="top:10px"></i>');
       }
 
-      $(this.$el).closest(".form-group").addClass("has-feedback");
+      $el.closest(".form-group").addClass("has-feedback");
 
-      if ($(this.$el).closest(".form-group").length == 0) {
-        $(this.$el).css("margin-bottom", "0px");
-        $(this.$el).addClass("form-group has-feedback");
+      if ($el.closest(".form-group").length == 0) {
+        $el.css("margin-bottom", "0px");
+        $el.addClass("form-group has-feedback");
       } //   $(this.$el).closest("form").validate()
 
     }
@@ -4470,12 +4470,12 @@ var E_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var E = (E_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"ba5a360c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Email.vue?vue&type=template&id=121fe762&
-var Emailvue_type_template_id_121fe762_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"input-group"},[_vm._m(0),_c('input',_vm._b({staticClass:"form-control",attrs:{"type":"email","name":_vm.name},domProps:{"value":_vm.value}},'input',_vm.$props,false)),(_vm.required)?_c('i',{staticClass:"fa fa-asterisk form-control-feedback",staticStyle:{"top":"10px"}}):_vm._e()])}
-var Emailvue_type_template_id_121fe762_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('span',{staticClass:"input-group-addon"},[_c('i',{staticClass:"far fa-envelope"})])}]
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"ba5a360c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Email.vue?vue&type=template&id=a1969490&
+var Emailvue_type_template_id_a1969490_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"input-group"},[_vm._m(0),_c('input',_vm._b({staticClass:"form-control",attrs:{"type":"email"},on:{"input":function($event){return _vm.$emit('input',$event.target.value)},"change":function($event){return _vm.$emit('change',$event.target.value)}}},'input',_vm.$props,false))])}
+var Emailvue_type_template_id_a1969490_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('span',{staticClass:"input-group-addon"},[_c('i',{staticClass:"far fa-envelope"})])}]
 
 
-// CONCATENATED MODULE: ./src/Email.vue?vue&type=template&id=121fe762&
+// CONCATENATED MODULE: ./src/Email.vue?vue&type=template&id=a1969490&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-plugin-babel/node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Email.vue?vue&type=script&lang=js&
 //
@@ -4487,20 +4487,27 @@ var Emailvue_type_template_id_121fe762_staticRenderFns = [function () {var _vm=t
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ var Emailvue_type_script_lang_js_ = ({
   props: {
-    name: String,
     required: Boolean,
-    type: Boolean,
-    value: String
+    id: String,
+    name: String,
+    value: {}
   },
   mounted: function mounted() {
     if (this.required) {
-      $(this.$el).closest(".form-group").addClass("has-feedback");
+      var $el = window.$(this.$el);
+      $el.after('<i class="fa fa-asterisk form-control-feedback"></i>');
+      $el.closest(".form-group").addClass("has-feedback");
 
-      if ($(this.$el).closest(".form-group").length == 0) {
-        $(this.$el).css("margin-bottom", "0px");
-        $(this.$el).addClass("form-group has-feedback");
+      if ($el.closest(".form-group").length == 0) {
+        $el.css("margin-bottom", "0px");
+        $el.addClass("form-group has-feedback");
       }
     }
   }
@@ -4517,8 +4524,8 @@ var Emailvue_type_template_id_121fe762_staticRenderFns = [function () {var _vm=t
 
 var Email_component = Object(componentNormalizer["a" /* default */])(
   src_Emailvue_type_script_lang_js_,
-  Emailvue_type_template_id_121fe762_render,
-  Emailvue_type_template_id_121fe762_staticRenderFns,
+  Emailvue_type_template_id_a1969490_render,
+  Emailvue_type_template_id_a1969490_staticRenderFns,
   false,
   null,
   null,
