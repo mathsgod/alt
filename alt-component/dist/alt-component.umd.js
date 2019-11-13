@@ -5581,12 +5581,12 @@ var roxyfileman_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var roxyfileman = (roxyfileman_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"ba5a360c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Button.vue?vue&type=template&id=4c5dfc73&
-var Buttonvue_type_template_id_4c5dfc73_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('button',{attrs:{"type":_vm.type},on:{"click":_vm.onClick}},[(_vm.iconClass)?_c('i',{class:_vm.displayIcon}):_vm._e(),_vm._t("default")],2)}
-var Buttonvue_type_template_id_4c5dfc73_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"ba5a360c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Button.vue?vue&type=template&id=e78bcfa6&
+var Buttonvue_type_template_id_e78bcfa6_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('button',{attrs:{"type":_vm.type},on:{"click":_vm.onClick}},[(_vm.iconClass)?_c('i',{class:_vm.displayIcon}):_vm._e(),_vm._t("default")],2)}
+var Buttonvue_type_template_id_e78bcfa6_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/Button.vue?vue&type=template&id=4c5dfc73&
+// CONCATENATED MODULE: ./src/Button.vue?vue&type=template&id=e78bcfa6&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-plugin-babel/node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Button.vue?vue&type=script&lang=js&
 //
@@ -5599,7 +5599,11 @@ var Buttonvue_type_template_id_4c5dfc73_staticRenderFns = []
   name: "alt-button",
   props: {
     icon: String,
-    type: String
+    type: String,
+    submitCheck: {
+      type: Boolean,
+      default: true
+    }
   },
   data: function data() {
     return {
@@ -5609,11 +5613,11 @@ var Buttonvue_type_template_id_4c5dfc73_staticRenderFns = []
   },
   computed: {
     displayIcon: function displayIcon() {
-      if (!this.submitting) {
-        return this.iconClass;
+      if (this.submitting && this.submitCheck) {
+        return "fa fa-spinner fa-spin";
       }
 
-      return "fa fa-spinner fa-spin";
+      return this.iconClass;
     }
   },
   methods: {
@@ -5625,7 +5629,7 @@ var Buttonvue_type_template_id_4c5dfc73_staticRenderFns = []
           return false;
         }
 
-        if (this.submitting) {
+        if (this.submitting && this.submitCheck) {
           event.preventDefault();
           return;
         }
@@ -5647,8 +5651,8 @@ var Buttonvue_type_template_id_4c5dfc73_staticRenderFns = []
 
 var Button_component = Object(componentNormalizer["a" /* default */])(
   src_Buttonvue_type_script_lang_js_,
-  Buttonvue_type_template_id_4c5dfc73_render,
-  Buttonvue_type_template_id_4c5dfc73_staticRenderFns,
+  Buttonvue_type_template_id_e78bcfa6_render,
+  Buttonvue_type_template_id_e78bcfa6_staticRenderFns,
   false,
   null,
   null,
