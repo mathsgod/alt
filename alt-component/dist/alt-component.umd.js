@@ -3955,14 +3955,16 @@ var main_default = /*#__PURE__*/__webpack_require__.n(main);
 // EXTERNAL MODULE: ./src/Box.vue + 4 modules
 var Box = __webpack_require__("4e45");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"ba5a360c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Input.vue?vue&type=template&id=1ae5cd07&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('input',_vm._b({staticClass:"form-control",on:{"input":function($event){return _vm.$emit('input',$event.target.value)},"change":function($event){return _vm.$emit('change',$event.target.value)}}},'input',_vm.$props,false))}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"ba5a360c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Input.vue?vue&type=template&id=584a0160&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('input',{class:_vm.inputClass,attrs:{"required":_vm.required,"type":_vm.type},domProps:{"value":_vm.value},on:{"input":function($event){return _vm.$emit('input',$event.target.value)},"change":function($event){return _vm.$emit('change',$event.target.value)}}})}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/Input.vue?vue&type=template&id=1ae5cd07&
+// CONCATENATED MODULE: ./src/Input.vue?vue&type=template&id=584a0160&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-plugin-babel/node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Input.vue?vue&type=script&lang=js&
+//
+//
 //
 //
 //
@@ -3979,25 +3981,37 @@ var staticRenderFns = []
     type: {
       type: String,
       default: "text"
-    }
+    },
+    sm: Boolean,
+    lg: Boolean
   },
   mounted: function mounted() {
     var $el = window.$(this.$el);
 
     if (this.required) {
-      if ($el.hasClass("input-sm")) {
-        $el.after('<i class="fa fa-asterisk form-control-feedback"></i>');
-      } else {
-        $el.after('<i class="fa fa-asterisk form-control-feedback" style="top:10px"></i>');
-      }
-
+      $el.after('<i class="fa fa-asterisk form-control-feedback"></i>');
       $el.closest(".form-group").addClass("has-feedback");
 
       if ($el.closest(".form-group").length == 0) {
         $el.css("margin-bottom", "0px");
         $el.addClass("form-group has-feedback");
-      } //   $(this.$el).closest("form").validate()
+      }
+    }
+  },
+  computed: {
+    inputClass: function inputClass() {
+      var c = [];
+      c.push("form-control");
 
+      if (this.sm) {
+        c.push("input-sm");
+      }
+
+      if (this.lg) {
+        c.push("input-lg");
+      }
+
+      return c;
     }
   }
 });
@@ -4160,12 +4174,12 @@ var BoxBody = __webpack_require__("ea96");
 // EXTERNAL MODULE: ./src/BoxFooter.vue + 4 modules
 var BoxFooter = __webpack_require__("1776");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"ba5a360c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Datepicker.vue?vue&type=template&id=cff0a78c&
-var Datepickervue_type_template_id_cff0a78c_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('input',{staticClass:"form-control",domProps:{"value":_vm.value}})}
-var Datepickervue_type_template_id_cff0a78c_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"ba5a360c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Datepicker.vue?vue&type=template&id=24255039&
+var Datepickervue_type_template_id_24255039_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('input',{domProps:{"value":_vm.value}})}
+var Datepickervue_type_template_id_24255039_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/Datepicker.vue?vue&type=template&id=cff0a78c&
+// CONCATENATED MODULE: ./src/Datepicker.vue?vue&type=template&id=24255039&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-plugin-babel/node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Datepicker.vue?vue&type=script&lang=js&
 //
@@ -4221,8 +4235,8 @@ var Datepickervue_type_template_id_cff0a78c_staticRenderFns = []
 
 var Datepicker_component = Object(componentNormalizer["a" /* default */])(
   src_Datepickervue_type_script_lang_js_,
-  Datepickervue_type_template_id_cff0a78c_render,
-  Datepickervue_type_template_id_cff0a78c_staticRenderFns,
+  Datepickervue_type_template_id_24255039_render,
+  Datepickervue_type_template_id_24255039_staticRenderFns,
   false,
   null,
   null,
@@ -4231,12 +4245,12 @@ var Datepicker_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var Datepicker = (Datepicker_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"ba5a360c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Date.vue?vue&type=template&id=926f53fe&
-var Datevue_type_template_id_926f53fe_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"input-group"},[_c('span',{staticClass:"input-group-addon"},[_c('i',{class:_vm.icon})]),_c("datepicker",_vm._b({ref:"datepicker",tag:"input",attrs:{"value":_vm.value,"autocomplete":"off"},on:{"input":function($event){return _vm.$emit('input',$event)},"change":function($event){return _vm.$emit('change',$event)}}},'input',_vm.$props,false)),(_vm.required)?_c('i',{staticClass:"fa fa-asterisk form-control-feedback",staticStyle:{"top":"10px"}}):_vm._e()],1)])}
-var Datevue_type_template_id_926f53fe_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"ba5a360c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Date.vue?vue&type=template&id=fea72e30&
+var Datevue_type_template_id_fea72e30_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"input-group"},[_c('span',{staticClass:"input-group-addon"},[_c('i',{class:_vm.icon})]),_c("datepicker",_vm._b({ref:"datepicker",tag:"input",class:_vm.inputClass,attrs:{"type":"text","value":_vm.value,"autocomplete":"off"},on:{"input":function($event){return _vm.$emit('input',$event)},"change":function($event){return _vm.$emit('change',$event)}}},'input',_vm.$props,false)),(_vm.required)?_c('i',{staticClass:"fa fa-asterisk form-control-feedback"}):_vm._e()],1)}
+var Datevue_type_template_id_fea72e30_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/Date.vue?vue&type=template&id=926f53fe&
+// CONCATENATED MODULE: ./src/Date.vue?vue&type=template&id=fea72e30&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-plugin-babel/node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Date.vue?vue&type=script&lang=js&
 //
@@ -4261,6 +4275,8 @@ var Datevue_type_template_id_926f53fe_staticRenderFns = []
 /* harmony default export */ var Datevue_type_script_lang_js_ = ({
   name: "alt-date",
   props: {
+    sm: Boolean,
+    lg: Boolean,
     value: {
       type: String
     },
@@ -4297,6 +4313,22 @@ var Datevue_type_template_id_926f53fe_staticRenderFns = []
         $(this.$el).addClass("form-group has-feedback");
       }
     }
+  },
+  computed: {
+    inputClass: function inputClass() {
+      var c = [];
+      c.push("form-control");
+
+      if (this.sm) {
+        c.push("input-sm");
+      }
+
+      if (this.lg) {
+        c.push("input-lg");
+      }
+
+      return c;
+    }
   }
 });
 // CONCATENATED MODULE: ./src/Date.vue?vue&type=script&lang=js&
@@ -4311,8 +4343,8 @@ var Datevue_type_template_id_926f53fe_staticRenderFns = []
 
 var Date_component = Object(componentNormalizer["a" /* default */])(
   src_Datevue_type_script_lang_js_,
-  Datevue_type_template_id_926f53fe_render,
-  Datevue_type_template_id_926f53fe_staticRenderFns,
+  Datevue_type_template_id_fea72e30_render,
+  Datevue_type_template_id_fea72e30_staticRenderFns,
   false,
   null,
   null,
@@ -4470,12 +4502,12 @@ var E_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var E = (E_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"ba5a360c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Email.vue?vue&type=template&id=73aadab5&
-var Emailvue_type_template_id_73aadab5_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"input-group"},[_vm._m(0),_c('input',{class:_vm.inputClass,attrs:{"type":"email","id":_vm.id,"name":_vm.name,"required":_vm.required},domProps:{"value":_vm.value},on:{"input":function($event){return _vm.$emit('input',$event.target.value)},"change":function($event){return _vm.$emit('change',$event.target.value)}}}),(_vm.required)?_c('i',{staticClass:"fa fa-asterisk form-control-feedback"}):_vm._e()])}
-var Emailvue_type_template_id_73aadab5_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('span',{staticClass:"input-group-addon"},[_c('i',{staticClass:"far fa-envelope"})])}]
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"ba5a360c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Email.vue?vue&type=template&id=b4f8935c&
+var Emailvue_type_template_id_b4f8935c_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"input-group"},[_vm._m(0),_c('alt-input',{attrs:{"type":"email","id":_vm.id,"name":_vm.name,"value":_vm.value,"required":_vm.required,"sm":_vm.sm,"lg":_vm.lg},on:{"input":function($event){return _vm.$emit('input',$event)},"change":function($event){return _vm.$emit('change',$event)}}})],1)}
+var Emailvue_type_template_id_b4f8935c_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('span',{staticClass:"input-group-addon"},[_c('i',{staticClass:"far fa-envelope"})])}]
 
 
-// CONCATENATED MODULE: ./src/Email.vue?vue&type=template&id=73aadab5&
+// CONCATENATED MODULE: ./src/Email.vue?vue&type=template&id=b4f8935c&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-plugin-babel/node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Email.vue?vue&type=script&lang=js&
 //
@@ -4496,36 +4528,18 @@ var Emailvue_type_template_id_73aadab5_staticRenderFns = [function () {var _vm=t
 //
 //
 //
+
 /* harmony default export */ var Emailvue_type_script_lang_js_ = ({
   props: {
     required: Boolean,
     id: String,
     name: String,
     value: {},
-    sm: Boolean
+    sm: Boolean,
+    lg: Boolean
   },
-  mounted: function mounted() {
-    if (this.required) {
-      var $el = window.$(this.$el);
-      $el.closest(".form-group").addClass("has-feedback");
-
-      if ($el.closest(".form-group").length == 0) {
-        $el.css("margin-bottom", "0px");
-        $el.addClass("form-group has-feedback");
-      }
-    }
-  },
-  computed: {
-    inputClass: function inputClass() {
-      var c = [];
-      c.push("form-control");
-
-      if (this.sm) {
-        c.push("input-sm");
-      }
-
-      return c;
-    }
+  components: {
+    "alt-input": Input
   }
 });
 // CONCATENATED MODULE: ./src/Email.vue?vue&type=script&lang=js&
@@ -4540,8 +4554,8 @@ var Emailvue_type_template_id_73aadab5_staticRenderFns = [function () {var _vm=t
 
 var Email_component = Object(componentNormalizer["a" /* default */])(
   src_Emailvue_type_script_lang_js_,
-  Emailvue_type_template_id_73aadab5_render,
-  Emailvue_type_template_id_73aadab5_staticRenderFns,
+  Emailvue_type_template_id_b4f8935c_render,
+  Emailvue_type_template_id_b4f8935c_staticRenderFns,
   false,
   null,
   null,

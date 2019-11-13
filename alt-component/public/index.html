@@ -40,8 +40,24 @@
 
         <div id="div-input">
 
+            <div class="form-group form-group-sm">
+                <alt-email required v-model="email" name="email" id="email"></alt-email>
+            </div>
+
+            <div v-text="email">
+
+            </div>
+
             <div class="form-group">
-                <alt-email sm required value="raymond@hostlink.com.hk" name="email" id="email"></alt-email>
+                <alt-date lg required></alt-date>
+            </div>
+
+            <div class="form-group">
+                <alt-input required value="alt-input"></alt-input>
+            </div>
+
+            <div class="form-group">
+                <alt-input sm required></alt-input>
             </div>
 
 

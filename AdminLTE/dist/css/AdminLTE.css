@@ -1339,7 +1339,7 @@ a:focus {
 .form-control-feedback.fa,
 .form-control-feedback.far,
 .form-control-feedback.fas,
-.form-control-feedback.fab, {
+.form-control-feedback.fab {
   line-height: 34px;
 }
 .input-lg + .form-control-feedback.fa,

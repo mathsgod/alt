@@ -9,7 +9,11 @@ export default {
   name: "alt-button",
   props: {
     icon: String,
-    type: String
+    type: String,
+    submitCheck: {
+      type: Boolean,
+      default: true
+    }
   },
   data() {
     return {
@@ -19,10 +23,10 @@ export default {
   },
   computed: {
     displayIcon() {
-      if (!this.submitting) {
-        return this.iconClass;
+      if (this.submitting && this.submitCheck) {
+        return "fa fa-spinner fa-spin";
       }
-      return "fa fa-spinner fa-spin";
+      return this.iconClass;
     }
   },
   methods: {
@@ -32,7 +36,7 @@ export default {
         if (!$(form).valid()) {
           return false;
         }
-        if (this.submitting) {
+        if (this.submitting && this.submitCheck) {
           event.preventDefault();
           return;
         }

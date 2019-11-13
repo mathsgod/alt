@@ -1,5 +1,5 @@
 <template>
-    <input class="form-control" :value="value"/>
+    <input :value="value"/>
 </template>
 <script>
 export default {

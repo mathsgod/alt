@@ -1,4 +1,5 @@
 <?php
+
 namespace ALT;
 
 use P\HTMLDivElement;
@@ -32,7 +33,7 @@ class E extends HTMLDivElement
         $this->content = p("div")->addClass("col-md-12")->appendTo($this);
         $this->contents[] = $this->content;
 
-		//resize
+        //resize
         $col = floor(12 / count($this->contents));
         foreach ($this->contents as $content) {
             $content->removeClass();
@@ -96,8 +97,6 @@ class E extends HTMLDivElement
             $static->addClass("form-control-static");
             if ($getter instanceof \Closure) {
                 $static->html($getter($this->object));
-
-                     
             } else {
                 $result = \My\Func::_($getter)->call($this->object);
 

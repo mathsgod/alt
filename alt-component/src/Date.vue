@@ -1,26 +1,28 @@
 <template>
-  <div>
-    <div class="input-group">
-      <span class="input-group-addon">
-        <i :class="icon"></i>
-      </span>
-      <input
-        is="datepicker"
-        ref="datepicker"
-        :value="value"
-        v-bind="$props"
-        @input="$emit('input',$event)"
-        @change="$emit('change',$event)"
-        autocomplete="off"
-      />
-      <i v-if="required" class="fa fa-asterisk form-control-feedback" style="top:10px"></i>
-    </div>
+  <div class="input-group">
+    <span class="input-group-addon">
+      <i :class="icon"></i>
+    </span>
+    <input
+      type="text"
+      :class="inputClass"
+      is="datepicker"
+      ref="datepicker"
+      :value="value"
+      v-bind="$props"
+      @input="$emit('input',$event)"
+      @change="$emit('change',$event)"
+      autocomplete="off"
+    />
+    <i v-if="required" class="fa fa-asterisk form-control-feedback"></i>
   </div>
 </template>
 <script>
 export default {
   name: "alt-date",
   props: {
+    sm: Boolean,
+    lg: Boolean,
     value: {
       type: String
     },
@@ -57,6 +59,19 @@ export default {
         $(this.$el).css("margin-bottom", "0px");
         $(this.$el).addClass("form-group has-feedback");
       }
+    }
+  },
+  computed: {
+    inputClass() {
+      let c = [];
+      c.push("form-control");
+      if (this.sm) {
+        c.push("input-sm");
+      }
+      if (this.lg) {
+        c.push("input-lg");
+      }
+      return c;
     }
   }
 };

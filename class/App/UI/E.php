@@ -1,4 +1,5 @@
 <?php
+
 namespace App\UI;
 
 use App\Page;

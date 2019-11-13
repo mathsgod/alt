@@ -3,47 +3,32 @@
     <span class="input-group-addon">
       <i class="far fa-envelope"></i>
     </span>
-    <input
+    <alt-input
       type="email"
-      :class="inputClass"
       :id="id"
       :name="name"
       :value="value"
       :required="required"
-      @input="$emit('input',$event.target.value)"
-      @change="$emit('change',$event.target.value)"
-    />
-    <i v-if="required" class="fa fa-asterisk form-control-feedback"></i>
+      :sm="sm"
+      :lg="lg"
+      @input="$emit('input',$event)"
+      @change="$emit('change',$event)"
+    ></alt-input>
   </div>
 </template>
 <script>
+import input from "./Input.vue";
 export default {
   props: {
     required: Boolean,
     id: String,
     name: String,
     value: {},
-    sm: Boolean
+    sm: Boolean,
+    lg: Boolean
   },
-  mounted() {
-    if (this.required) {
-      let $el = window.$(this.$el);
-      $el.closest(".form-group").addClass("has-feedback");
-      if ($el.closest(".form-group").length == 0) {
-        $el.css("margin-bottom", "0px");
-        $el.addClass("form-group has-feedback");
-      }
-    }
-  },
-  computed: {
-    inputClass() {
-      let c = [];
-      c.push("form-control");
-      if (this.sm) {
-        c.push("input-sm");
-      }
-      return c;
-    }
+  components: {
+    "alt-input": input
   }
 };
 </script>
