@@ -59,7 +59,7 @@ export default {
       });
 
       search.on("change", () => {
-        this.$emit("search", this.name, search.val());
+        this.$emit("search", [this.name, search.val()]);
       });
 
       return;
