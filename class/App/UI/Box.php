@@ -58,13 +58,13 @@ class Box extends HTMLDivElement
 
     public function collapsible(bool $collapsible)
     {
-        $this->collapsible = $collapsible;
+        $this->setAttribute("collapsible", $collapsible);
         return $this;
     }
 
     public function pinable(bool $pinable)
     {
-        $this->pinable = $pinable;
+        $this->setAttribute("pinable", $pinable);
         return $this;
     }
 

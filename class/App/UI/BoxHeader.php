@@ -15,7 +15,7 @@ class BoxHeader extends HTMLDivElement
     {
         parent::__construct();
         $this->page = $page;
-        $this->setAttribute("is", "alt-box-header");
+        $this->setAttribute("is", "box-header");
         $this->classList[] = "box-header";
 
         $this->tools = new BoxTools($page);

@@ -13,7 +13,7 @@ class BoxBody extends HTMLDivElement
         parent::__construct();
         $this->page = $page;
 
-        $this->setAttribute("is", "alt-box-body");
+        $this->setAttribute("is", "box-body");
         $this->classList[] = "box-body";
     }
 }
