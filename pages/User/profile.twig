@@ -48,7 +48,7 @@
                         credentialCreationOptions: true
                     }
                 }).then(resp => {
-                    var webn = new WebAuthn();
+                    var webn = new WebAuthn.WebAuthn();
                     webn.register(resp.data.data.me.credentialCreationOptions).then(resp => {
                         this.webAuthnRegister(resp);
                     }).catch(resp => {

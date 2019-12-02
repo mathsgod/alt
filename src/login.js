@@ -21,7 +21,7 @@ var vm = new Vue({
                         }
                     }
                 }).then(resp => {
-                    var a = new WebAuthn();
+                    var a = new WebAuthn.WebAuthn();
                     a.authenticate(resp.data.data.credentialRequestOptions).then(info => {
                         this.$gql.query("api", {
                             loginWebAuthn: {

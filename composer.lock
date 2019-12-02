@@ -645,7 +645,7 @@
             "version": "2.0.16",
             "source": {
                 "type": "git",
-                "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/p-query.git",
+                "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/p-query.git",
                 "reference": "db5af6a48a5c4255b10c854ee8514024da1943e7"
             },
             "dist": {
@@ -687,7 +687,7 @@
             "version": "2.5.0",
             "source": {
                 "type": "git",
-                "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/r.git",
+                "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r.git",
                 "reference": "7a01e234331fcfec1ab4ab2708de302bed06d9d4"
             },
             "dist": {
@@ -731,7 +731,7 @@
             "version": "3.0.16",
             "source": {
                 "type": "git",
-                "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/r-db.git",
+                "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r-db.git",
                 "reference": "9ba24df37036357a0c1246a05013706a4ba07a3a"
             },
             "dist": {
@@ -769,7 +769,7 @@
             "version": "1.2.3",
             "source": {
                 "type": "git",
-                "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/r-graphql.git",
+                "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r-graphql.git",
                 "reference": "4f7a9500cf06a9b70bbf0af5ad3bce14f6396561"
             },
             "dist": {
@@ -868,17 +868,17 @@
         },
         {
             "name": "mathsgod/r-webauthn",
-            "version": "1.0.5",
+            "version": "1.0.9",
             "source": {
                 "type": "git",
-                "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/r-webauthn.git",
-                "reference": "2783ba9f62d1330c233dc96d06403d065be2bf45"
+                "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r-webauthn.git",
+                "reference": "b184ee468a6a4b5067cec8493075738df57d643b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/r-webauthn/mathsgod-r-webauthn-1.0.5-695529.zip",
-                "reference": "2783ba9f62d1330c233dc96d06403d065be2bf45",
-                "shasum": "41c1f5f16d593b85d8813f37d8b5448484a903ff"
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/r-webauthn/mathsgod-r-webauthn-1.0.9-765867.zip",
+                "reference": "b184ee468a6a4b5067cec8493075738df57d643b",
+                "shasum": "d3ffa5ecd72330c9b1b991bd21fa88cddfed3399"
             },
             "require": {
                 "2tvenom/cborencode": "^1.0",
@@ -898,7 +898,7 @@
                 }
             ],
             "description": "Web authentication for php",
-            "time": "2019-10-14T03:48:47+00:00"
+            "time": "2019-12-02T04:22:48+00:00"
         },
         {
             "name": "moment/moment",
