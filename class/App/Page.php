@@ -40,7 +40,7 @@ class Page extends \R\Page
         if ($this->_lib[$name]) {
             return $this->_lib[$name];
         }
-        $p = new Plugin($name,$this->app);
+        $p = new Plugin($name, $this->app);
 
         foreach ($p->setting["require"] as $require) {
             $this->addLib($require);
@@ -242,7 +242,7 @@ class Page extends \R\Page
                     }
                     if ($echo_content) {
                         $content = $echo_content;
-                        $content .= (string)$response;
+                        $content .= (string) $response;
 
                         return $response->withBody(new Stream($content));
                     }
@@ -271,7 +271,7 @@ class Page extends \R\Page
                         }
                     }
                     if ($this->template_type == "html") {
-                        $content = (string)$response;
+                        $content = (string) $response;
                         $content .= $this->_template;
                     } elseif ($this->_template instanceof \Twig_Template) {
                         $data = $this->data;
@@ -290,7 +290,7 @@ class Page extends \R\Page
                         $response->setHeader("Content-Type", "text/html; charset=UTF-8");
                     } else {
                         $content = $echo_content;
-                        $content .= (string)$response;
+                        $content .= (string) $response;
                     }
 
                     if ($request->getMethod() == "get") {
@@ -346,7 +346,7 @@ class Page extends \R\Page
         if ($referer = $this->request->getHeader("Referer")[0]) {
 
             $uri = $this->request->getUri()->withUserInfo(null, null);
-            $_SESSION['app']["referer"][(string)$uri] = $referer;
+            $_SESSION['app']["referer"][(string) $uri] = $referer;
         }
         if ($content) {
             $f->addBody($content);
@@ -396,7 +396,7 @@ class Page extends \R\Page
         } else {
             $dt = new \App\UI\DataTables(null, $this);
             $dt->serverSide = true;
-            $dt->ajax["url"] = (string)$objects[0]->request->getURI() . "/" . $objects[1];
+            $dt->ajax["url"] = (string) $objects[0]->request->getURI() . "/" . $objects[1];
             $dt->boxStyle();
             $dt->pageLength = 25;
         }
@@ -419,7 +419,7 @@ class Page extends \R\Page
     {
         //$rt = new UI\RT($objects, $module ? $module : $this->module(), $this->request);
         $rt = new UI\RT2(null, $this, $this->app->config);
-        $rt->ajax["url"] = (string)$objects[0]->request->getURI()->getPath() . "/" . $objects[1] . "?" . $this->request->getUri()->getQuery();
+        $rt->ajax["url"] = (string) $objects[0]->request->getURI()->getPath() . "/" . $objects[1] . "?" . $this->request->getUri()->getQuery();
         $rt->ajax["url"] = substr($rt->ajax["url"], 1);
 
 
@@ -477,7 +477,21 @@ class Page extends \R\Page
 
             if ($files = $this->request->getUploadedFiles()) {
                 foreach ($files as $name => $file) {
-                    $obj->$name = (string)$file->getStream();
+
+                    if (property_exists($obj, $name)) {
+                        $obj->$name = (string) $file->getStream();
+                    }
+                    if (property_exists($obj, $name . "_name")) {
+                        $obj->{$name . "_name"} = $file->getClientFilename();
+                    }
+
+                    if (property_exists($obj, $name . "_type")) {
+                        $obj->{$name . "_type"} = $file->getClientMediaType();
+                    }
+
+                    if (property_exists($obj, $name . "_size")) {
+                        $obj->{$name . "_size"} = $file->getSize();
+                    }
                 }
             }
         }
@@ -488,7 +502,7 @@ class Page extends \R\Page
         } else {
             $msg = $this->module()->name . " ";
             if (method_exists($obj, '__toString')) {
-                $msg .= (string)$obj . " ";
+                $msg .= (string) $obj . " ";
             }
             $msg .= $id ? "updated" : "created";
             $this->app->alert->success($msg);
