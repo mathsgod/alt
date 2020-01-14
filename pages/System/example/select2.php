@@ -12,7 +12,7 @@ class System_example_select2 extends ALT\Page
     {
         $e = $this->createE([
             "select2" => 0,
-            "m2" => "0,1",
+            "m2" => "0,1,2",
             "ms" => "0,1"
 
         ]);
