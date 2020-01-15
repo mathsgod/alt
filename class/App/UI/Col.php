@@ -668,7 +668,8 @@ HTML
     public function checkboxes($field)
     {
         $p = p();
-        foreach ($this->cell as $cell) { }
+        foreach ($this->cell as $cell) {
+        }
         return $p;
     }
 
@@ -715,12 +716,17 @@ HTML
         }
 
         if ($this->createTemplate) {
-            $cb = new \BS\CheckBox();
-            $input = p($cb)->find("input");
+            $hidden_input = p("<input type='hidden'/>");
+            $hidden_input->val(0);
+            $hidden_input->attr("name", $field);
+            $hidden_input->attr("data-field", $field);
+
+            $input = p("<input type='checkbox'/>");
             $input->attr("name", $field);
             $input->attr("data-field", $field);
-            $input->addClass("iCheck");
+            //$input->attr("is", "icheck");
             $input->val(1);
+
 
             $this->c_tpl[] = $cb;
             $this->setAttribute("c-tpl", $this->c_tpl);
@@ -988,7 +994,8 @@ HTML
                 try {
                     $data_value = is_object($object) ? $object->$field : $object[$field];
                     $select->attr(":value", json_encode($data_value));
-                } catch (\Exception $e) { }
+                } catch (\Exception $e) {
+                }
 
                 if ($this->callback) {
                     call_user_func($this->callback, $object, $select[0]);
