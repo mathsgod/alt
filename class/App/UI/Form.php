@@ -8,9 +8,9 @@ use P\HTMLFormElement;
 class Form extends HTMLFormElement
 {
 
-    private $submit_button;
-    private $back_button;
-    private $reset_button;
+    public $submit_button;
+    public $back_button;
+    public $reset_button;
     protected $page;
     public $box;
 
