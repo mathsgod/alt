@@ -91,9 +91,10 @@ new Vue({
 			return;
 		},
 		filterMenu(text, menu) {
+			text = text.toLowerCase();
 			var m = [];
 			for (var i in menu) {
-				if (menu[i].keyword.indexOf(text) >= 0) {
+				if (menu[i].keyword.toLowerCase().indexOf(text) >= 0) {
 					m.push(menu[i]);
 					continue;
 				}
