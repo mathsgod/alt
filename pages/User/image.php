@@ -32,7 +32,7 @@ class User_image extends R\Page
             header("location: {$basepath}data/{$user->username}/profile.image");
         } else {
 
-            header("location: {$base}/images/user.png");
+            header("location: /{$base}/images/user.png");
         }
     }
 }
