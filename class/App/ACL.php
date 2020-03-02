@@ -171,6 +171,13 @@ class ACL extends Model
             self::$_CACHE[$user->user_id] = (array) self::Find($w);
         }
 
+        
+        if ($action === null) {
+            if (!$ps[0]) {
+                $ps[0] = "index";
+            }
+        }
+
         foreach (self::$_CACHE[$user->user_id] as $acl) {
             if ($acl->module == $module) {
                 if ($acl->path == $ps[0] && !$acl->action) {
