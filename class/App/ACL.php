@@ -173,7 +173,7 @@ class ACL extends Model
 
         foreach (self::$_CACHE[$user->user_id] as $acl) {
             if ($acl->module == $module) {
-                if ($acl->path == $ps[0]) {
+                if ($acl->path == $ps[0] && !$acl->action) {
                     $v = $acl->value();
                     if ($v == "deny") {
                         return false;
