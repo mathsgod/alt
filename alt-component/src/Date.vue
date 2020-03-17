@@ -37,6 +37,10 @@ export default {
       type: String,
       default: "yyyy-mm-dd"
     },
+    disabled: {
+      type: Boolean,
+      defalut: false
+    },
     todayHighlight: {
       type: Boolean,
       default: true

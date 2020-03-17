@@ -25,6 +25,10 @@ export default {
       type: String,
       default: "YYYY-MM-DD HH:mm"
     },
+    disabled: {
+      type: Boolean,
+      defalut: false
+    },
     icon: {
       type: String,
       default: "far fa-calendar-alt"
