@@ -8,6 +8,7 @@ use R\Psr7\Response;
 use R\Psr7\JSONStream;
 use R\Set;
 use Exception;
+use Psr\Http\Message\ResponseInterface;
 
 class Page extends \R\Page
 {
@@ -186,7 +187,7 @@ class Page extends \R\Page
         }
     }
 
-    public function __invoke(Request $request, Response $response)
+    public function __invoke(Request $request, Response $response):ResponseInterface
     {
 
         $this->request = $request;

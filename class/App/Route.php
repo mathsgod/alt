@@ -1,4 +1,5 @@
 <?php
+
 namespace App;
 
 class Route extends \R\Route
@@ -43,19 +44,18 @@ class Route extends \R\Route
         }
 
         $this->path = "/" . implode("/", $t);
-        
+
         $this->psr0($request, $loader);
 
         if (is_readable($this->file)) {
             require_once($this->file);
         }
-
-
         if (class_exists($this->class, false)) {
             $loader->addClassMap([$this->class => $this->file]);
             return;
         }
 
+  
         if ($this->class[0] == "_") {
             $class = substr($this->class, 1);
             if (class_exists($class, false)) {
@@ -74,7 +74,6 @@ class Route extends \R\Route
         }
         if (class_exists($class, false)) {
             $this->class = $class;
-
         }
     }
 
@@ -92,7 +91,7 @@ class Route extends \R\Route
 
         while (count($qs)) {
             $path = implode("/", $qs);
- 
+
 
             if (file_exists($file = $root . $base . $page . $path . "/index.php")) {
                 $this->file = $file;

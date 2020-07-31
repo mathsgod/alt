@@ -1,6 +1,6 @@
 <?php
 
-class User_v extends ALT\GridPage
+class User_v extends ALT\Page
 {
 	public function get()
 	{

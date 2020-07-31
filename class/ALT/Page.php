@@ -5,6 +5,7 @@ namespace ALT;
 use R\Psr7\Request;
 use R\Psr7\Response;
 use Exception;
+use Psr\Http\Message\ResponseInterface;
 
 class Page extends \App\Page
 {
@@ -52,7 +53,7 @@ class Page extends \App\Page
         return $this->_navbar;
     }
 
-    public function __invoke(Request $request, Response $response)
+    public function __invoke(Request $request, Response $response): ResponseInterface
     {
         $action = $request->getAttribute("action");
         $this->request = $request;

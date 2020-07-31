@@ -1,4 +1,5 @@
 <?php
+
 use App\User;
 
 class User_index extends ALT\Page

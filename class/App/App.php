@@ -223,11 +223,12 @@ class App extends \R\App
         $request = $this->request->withAttribute("included_content", ob_get_contents());
         ob_end_clean();
 
+        
+        
 
         $request = $request
             ->withAttribute("action", $route->action)
             ->withAttribute("route", $route);
-
 
     
         if (!$class = $route->class) {

@@ -8,8 +8,9 @@ $loader = require_once(__DIR__ . "/vendor/autoload.php");
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
-$log = new Logger('App');
-$log->pushHandler(new StreamHandler(__DIR__ . '/logs/' . date("Y-m-d") . ".log", Logger::DEBUG));
+session_start();
+//$log = new Logger('App');
+//$log->pushHandler(new StreamHandler(__DIR__ . '/logs/' . date("Y-m-d") . ".log", Logger::DEBUG));
 
-$app = new App\App(__DIR__, $loader, $log);
+$app = new App\App(__DIR__, $loader);
 $app->run();
