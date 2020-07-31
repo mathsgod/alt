@@ -9,7 +9,7 @@ class Mutation
     {
         try {
             $context->login($args["username"], $args["password"], $args["code"]);
-            return true;
+            return $context->user;
         } catch (\Exception $e) {
             throw new Error($e->getMessage());
         }

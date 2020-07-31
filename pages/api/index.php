@@ -1,8 +1,14 @@
 <?php
+
 use R\GraphQL\Schema;
 
 class api_index extends R\Page
 {
+    public function get()
+    {
+        $this->write("api");
+    }
+
     public function post()
     {
         $loader = new \Composer\Autoload\ClassLoader();
@@ -22,6 +28,5 @@ class api_index extends R\Page
         $result = $schema->executeQuery($query, $variableValues);
 
         $this->write(json_encode($result));
-
     }
 }

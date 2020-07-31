@@ -9,6 +9,7 @@ use R\Psr7\Stream;
 use Psr\Log\LoggerInterface;
 use Exception;
 use Composer\Autoload\ClassLoader;
+use Psr\Http\Message\RequestInterface;
 
 class App extends \R\App
 {
@@ -211,6 +212,10 @@ class App extends \R\App
             "class" => "_404_not_found",
             "file" => $pi["system_root"] . "/pages/404_not_found.php"
         ]);
+
+        $this->router->addRoute(function (RequestInterface $request, $loader) {
+            return new Route($request, $loader);
+        });
 
 
         ob_start();
