@@ -19,20 +19,6 @@
     },
     "repositories": [
         {
-            "type": "path",
-            "url": "../bs",
-            "options": {
-                "symlink": true
-            }
-        },
-        {
-            "type": "path",
-            "url": "../p-query",
-            "options": {
-                "symlink": true
-            }
-        },
-        {
             "type": "composer",
             "url": "https://raymond2.hostlink.com.hk/satis/web"
         }

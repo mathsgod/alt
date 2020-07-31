@@ -1,4 +1,4 @@
-<?
+<?php
 class System_log extends App\Page
 {
     public function get()

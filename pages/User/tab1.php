@@ -1,4 +1,4 @@
-<?
+<?php
 
 class User_tab1 extends ALT\Page
 {

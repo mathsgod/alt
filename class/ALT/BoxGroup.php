@@ -1,4 +1,4 @@
-<?
+<?php
 
 namespace ALT;
 class BoxGroup extends \P\HTMLDivElement {

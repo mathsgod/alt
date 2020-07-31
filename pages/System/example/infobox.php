@@ -1,4 +1,4 @@
-<?
+<?php
 
 class System_example_infobox extends ALT\Page
 {

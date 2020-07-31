@@ -1,4 +1,4 @@
-<?
+<?php
 namespace ALT;
 
 use \Box\Spout\Writer\WriterFactory;

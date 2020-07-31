@@ -1,4 +1,4 @@
-<?
+<?php
 namespace App;
 
 use R\Psr7\JSONStream;

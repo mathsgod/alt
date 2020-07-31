@@ -1,4 +1,4 @@
-<?
+<?php
 namespace ALT;
 
 class Callout extends \ArrayObject

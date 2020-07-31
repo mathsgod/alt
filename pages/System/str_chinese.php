@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 
    *mbstring are required*

@@ -1,4 +1,4 @@
-<?
+<?php
 class System_example_createT extends ALT\Page
 {
     public function get()

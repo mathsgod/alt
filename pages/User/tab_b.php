@@ -1,4 +1,4 @@
-<?
+<?php
 
 class User_tab_b extends App\Page
 {

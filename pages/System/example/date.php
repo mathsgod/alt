@@ -1,4 +1,4 @@
-<?
+<?php
 class System_example_date extends ALT\Page
 {
     public function get()

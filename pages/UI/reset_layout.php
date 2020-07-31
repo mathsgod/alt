@@ -1,4 +1,4 @@
-<?
+<?php
 
 class UI_reset_layout extends App\Page
 {

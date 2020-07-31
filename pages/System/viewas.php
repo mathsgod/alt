@@ -1,4 +1,4 @@
-<?
+<?php
 
 class System_viewas extends ALT\Page
 {

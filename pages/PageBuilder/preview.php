@@ -1,4 +1,4 @@
-<?
+<?php
 
 class PageBuilder_preview extends App\Page
 {

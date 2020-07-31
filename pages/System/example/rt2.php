@@ -1,4 +1,4 @@
-<?
+<?php
 
 class System_example_rt2 extends ALT\Page
 {

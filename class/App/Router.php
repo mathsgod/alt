@@ -1,4 +1,4 @@
-<?
+<?php
 namespace App;
 
 class Router extends \R\Router

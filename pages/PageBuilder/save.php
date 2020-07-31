@@ -1,4 +1,4 @@
-<?
+<?php
 
 class PageBuilder_save extends App\Page
 {

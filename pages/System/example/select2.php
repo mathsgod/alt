@@ -1,4 +1,4 @@
-<?
+<?php
 
 class System_example_select2 extends ALT\Page
 {

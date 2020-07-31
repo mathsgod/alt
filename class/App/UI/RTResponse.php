@@ -1,4 +1,4 @@
-<?
+<?php
 namespace App\UI;
 
 use \Box\Spout\Writer\WriterFactory;

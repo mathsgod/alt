@@ -1,4 +1,4 @@
-<?
+<?php
 class System_db_table extends ALT\Page
 {
     public function get()

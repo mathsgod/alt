@@ -1,4 +1,4 @@
-<?
+<?php
 
 class ACL_box extends App\Page
 {
