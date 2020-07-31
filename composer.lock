@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "114b8ff3039100af67205d1e6fb3d602",
+    "content-hash": "f1af70a3cb682e543b3574b0e750b6f9",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -410,7 +410,7 @@
             "version": "1.1.2",
             "source": {
                 "type": "git",
-                "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/bs.git",
+                "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/bs.git",
                 "reference": "4de5a1690d5e497d964e35d2d4660cbf9f026c6c"
             },
             "dist": {
@@ -448,7 +448,7 @@
             "version": "1.0.1",
             "source": {
                 "type": "git",
-                "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/data-structure.git",
+                "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/data-structure.git",
                 "reference": "03b72b74e5198f9dfc035b1556efe6c4896a9918"
             },
             "dist": {
@@ -477,7 +477,7 @@
             "version": "1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/gql-php-generator.git",
+                "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/gql-php-generator.git",
                 "reference": "4a36ccb9d60fc0fb11f93354a582d408678d16d0"
             },
             "dist": {
@@ -542,7 +542,7 @@
             "version": "1.2.3",
             "source": {
                 "type": "git",
-                "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/hl-holiday.git",
+                "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/hl-holiday.git",
                 "reference": "dc6fc401124fe469d610af48b5c325a70e5923fb"
             },
             "dist": {
@@ -577,7 +577,7 @@
             "version": "2.0.0",
             "source": {
                 "type": "git",
-                "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/hl-weather.git",
+                "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/hl-weather.git",
                 "reference": "c75d14d2fcb54e1dc80f3810c17bfcf4247b1363"
             },
             "dist": {
@@ -609,7 +609,7 @@
             "version": "1.0.10",
             "source": {
                 "type": "git",
-                "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/html.git",
+                "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/html.git",
                 "reference": "acc624763cb07ed960cfdacc1c568cee12ec8f6a"
             },
             "dist": {
@@ -642,17 +642,11 @@
         },
         {
             "name": "mathsgod/p-query",
-            "version": "2.0.16",
+            "version": "2.2.2",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/p-query.git",
-                "reference": "db5af6a48a5c4255b10c854ee8514024da1943e7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/p-query/mathsgod-p-query-2.0.16-707f2e.zip",
-                "reference": "db5af6a48a5c4255b10c854ee8514024da1943e7",
-                "shasum": "c25680f5d141bee9875bcf429f2e36b037505648"
+                "reference": "e87629052414cf54e1a807061d345473559de81c"
             },
             "require": {
                 "php": ">=7.0",
@@ -670,8 +664,13 @@
                     "function/function.php"
                 ]
             },
+            "scripts": {
+                "test": [
+                    "phpunit tests"
+                ]
+            },
             "license": [
-                "proprietary"
+                "MIT"
             ],
             "authors": [
                 {
@@ -679,26 +678,20 @@
                     "email": "mathsgod@yahoo.com"
                 }
             ],
-            "description": "Raymond php html library",
-            "time": "2019-07-03T10:08:07+00:00"
+            "description": "Using jQuery liked method to parse html by using php",
+            "time": "2020-06-19T02:44:34+00:00"
         },
         {
             "name": "mathsgod/r",
-            "version": "2.5.0",
+            "version": "3.5.1",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r.git",
-                "reference": "7a01e234331fcfec1ab4ab2708de302bed06d9d4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/r/mathsgod-r-2.5.0-e62d3b.zip",
-                "reference": "7a01e234331fcfec1ab4ab2708de302bed06d9d4",
-                "shasum": "5770105c1ebafc4f602e7687a06e45c01727235e"
+                "reference": "2ab6fa7fead3dd45fd0dbffffcab8244d441570c"
             },
             "require": {
                 "mathsgod/r-psr7": "2.*",
-                "php": ">=5.4",
+                "php": ">=7.0",
                 "psr/log": "*"
             },
             "require-dev": {
@@ -711,8 +704,13 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "R\\": "class"
+                    "R\\": "src/"
                 }
+            },
+            "scripts": {
+                "test": [
+                    "phpunit tests"
+                ]
             },
             "license": [
                 "proprietary"
@@ -724,25 +722,21 @@
                 }
             ],
             "description": "raymond core",
-            "time": "2019-02-01T09:52:53+00:00"
+            "time": "2020-07-31T03:21:26+00:00"
         },
         {
             "name": "mathsgod/r-db",
-            "version": "3.0.16",
+            "version": "3.5.2",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r-db.git",
-                "reference": "9ba24df37036357a0c1246a05013706a4ba07a3a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/r-db/mathsgod-r-db-3.0.16-1b3875.zip",
-                "reference": "9ba24df37036357a0c1246a05013706a4ba07a3a",
-                "shasum": "0d93965d8fdb3a0224042fe8d34f5bbcbd97b478"
+                "reference": "2e0713d006f5c8653b0b641c59fecdc4fd418ba9"
             },
             "require": {
-                "mathsgod/data-structure": "1.0.1",
-                "php": ">=7.0"
+                "ext-pdo": "*",
+                "mathsgod/data-structure": "~1.0.1",
+                "php": ">=7.0",
+                "psr/log": "^1.1"
             },
             "require-dev": {
                 "phpunit/phpunit": "*"
@@ -762,7 +756,7 @@
                 }
             ],
             "description": "raymond framework db",
-            "time": "2019-07-04T03:34:41+00:00"
+            "time": "2020-06-19T02:31:15+00:00"
         },
         {
             "name": "mathsgod/r-graphql",
@@ -803,7 +797,7 @@
             "version": "2.2.4",
             "source": {
                 "type": "git",
-                "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/r-psr7.git",
+                "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r-psr7.git",
                 "reference": "7f802036cefd646370c07d1a9bc9362e2e734c49"
             },
             "dist": {
@@ -839,7 +833,7 @@
             "version": "1.0.1",
             "source": {
                 "type": "git",
-                "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/r-translate.git",
+                "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r-translate.git",
                 "reference": "cb9a3c6b389705521c152ec8544dfe946604b47e"
             },
             "dist": {
@@ -1322,6 +1316,7 @@
                 }
             ],
             "description": "Allows installation of Components via Composer.",
+            "abandoned": "oomphinc/composer-installers-extender",
             "time": "2015-08-10T12:35:38+00:00"
         },
         {
@@ -3333,5 +3328,6 @@
     "platform": {
         "php": ">=7.0"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }

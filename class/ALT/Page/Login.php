@@ -2,6 +2,9 @@
 
 namespace ALT\Page;
 
+use Psr\Http\Message\ResponseInterface;
+use R\Psr7\Request;
+use R\Psr7\Response;
 use R\Psr7\Stream;
 
 class Login extends \R\Page
@@ -27,7 +30,7 @@ class Login extends \R\Page
     }
 
 
-    public function __invoke($request, $response)
+    public function __invoke(Request $request, Response $response):ResponseInterface
     {
 
         $resp = parent::__invoke($request, $response);
@@ -38,14 +41,16 @@ class Login extends \R\Page
             $this->_twig["environment"] = new \Twig_Environment($this->_twig["loader"]);
             $this->_template = $this->_twig["environment"]->loadTemplate("AdminLTE/pages/login.html");
         }
+
         $data = $resp->getBody()->getContents();
+       
         if ($this->_template) {
             if (!$data) {
                 $data = [];
             }
 
 
-            $p = new \App\Plugin("vue",$this->app);
+            $p = new \App\Plugin("vue", $this->app);
             $data["vue"] = $p;
 
 

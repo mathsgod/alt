@@ -205,7 +205,8 @@ class App extends \R\App
             }
         }
 
-        $router = new Router();
+
+        $router=$this->router;
         $router->add("GET", "404_not_found", [
             "class" => "_404_not_found",
             "file" => $pi["system_root"] . "/pages/404_not_found.php"
@@ -223,6 +224,7 @@ class App extends \R\App
             ->withAttribute("route", $route);
 
 
+    
         if (!$class = $route->class) {
             if ($this->user->isAdmin()) {
                 $page = new ClassNotExistPage($this);

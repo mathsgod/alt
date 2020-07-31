@@ -1,9 +1,4 @@
 <?php
-
-use App\Config;
-use App\System;
-use App\User;
-
 class _index extends ALT\Page\Login
 {
     public function fido2()
@@ -11,7 +6,8 @@ class _index extends ALT\Page\Login
         try {
             $this->app->loginFido2($_POST["username"], $_POST["data"]);
             return ["code" => 200];
-        } catch (Exception $e) { }
+        } catch (Exception $e) {
+        }
         return ["error" => ["message" => "login error"]];
     }
 
