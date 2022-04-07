@@ -3,11 +3,12 @@
 namespace App;
 
 use R\Psr7\Stream;
-use R\Psr7\Request;
-use R\Psr7\Response;
 use R\Psr7\JSONStream;
-use R\Set;
-use Exception;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+use Twig\Template;
 
 class Page extends \R\Page
 {
@@ -18,6 +19,11 @@ class Page extends \R\Page
     private $data = [];
 
     protected $alert;
+
+    /**
+     * @var ServerRequestInterface $request
+     */
+    protected $request;
 
     public function __construct(App $app)
     {
@@ -166,7 +172,7 @@ class Page extends \R\Page
     public function _redirect($uri = null)
     {
         if ($uri) {
-            $location = $this->request->getUri()->getBasePath() . "/" . $uri;
+            $location = $this->request->getUri() . "/" . $uri;
             $this->response = $this->response->withHeader("Location", $location);
             return;
         }
@@ -186,9 +192,9 @@ class Page extends \R\Page
         }
     }
 
-    public function __invoke(Request $request, Response $response)
-    {
 
+    function __invoke(ServerRequestInterface $request, ResponseInterface $response)
+    {
         $this->request = $request;
         $this->request = $this->request->withAttribute("module", $this->module());
 
@@ -232,8 +238,19 @@ class Page extends \R\Page
 
 
         $action = $request->getAttribute("action");
-        foreach ($this->request->HttpAccept() as $accept) {
-            switch ($accept["media"]) {
+        //get accept
+        $accept = $request->getHeader("Accept");
+        if ($accept) {
+            $accept = $accept[0];
+        }
+        //explode accept
+        $accepts = explode(",", $accept);
+        $accepts = array_map(function ($a) {
+            return trim($a);
+        }, $accepts);
+
+        foreach ($accepts as $accept) {
+            switch ($accept) {
                 case "application/json":
                     if ($request->getMethod() == "get" && $action == "index") {
                         return $response
@@ -249,7 +266,7 @@ class Page extends \R\Page
                     return $response;
                 case "text/html":
                 default:
-                    if ($request->isAccept("text/html") || $request->isAccept("*/*")) {
+                    if (in_array("text/html", $accepts) || in_array("*/*", $accepts)) {
                         if ($request->getMethod() == "get") {
                             $route = $this->request->getAttribute("route");
                             $file = $route->file;
@@ -264,16 +281,16 @@ class Page extends \R\Page
                                 $template_path = $pi["dirname"];
                                 $template_file = $pi["filename"] . ".twig";
 
-                                $this->_twig["loader"] = new \Twig_Loader_Filesystem($template_path);
-                                $this->_twig["environment"] = new \Twig_Environment($this->_twig["loader"]);
-                                $this->_template = $this->_twig["environment"]->loadTemplate($template_file);
+                                $this->_twig["loader"] = new FilesystemLoader($template_path);
+                                $this->_twig["environment"] = new Environment($this->_twig["loader"]);
+                                $this->_template = $this->_twig["environment"]->load($template_file);
                             }
                         }
                     }
                     if ($this->template_type == "html") {
                         $content = (string)$response;
                         $content .= $this->_template;
-                    } elseif ($this->_template instanceof \Twig_Template) {
+                    } elseif ($this->_template instanceof Template) {
                         $data = $this->data;
                         $ret = $response->getBody()->getContents();
                         if (is_array($ret)) {
@@ -287,7 +304,7 @@ class Page extends \R\Page
 
                         $content .= $echo_content;
                         $content .= $this->_template->render($data);
-                        $response->setHeader("Content-Type", "text/html; charset=UTF-8");
+                        $response = $response->withHeader("Content-Type", "text/html; charset=UTF-8");
                     } else {
                         $content = $echo_content;
                         $content .= (string)$response;
@@ -301,7 +318,7 @@ class Page extends \R\Page
                         if ($request->getQueryParams()["fancybox"]) {
                             $content = "<div style='width:80%'>" . $content . "</div>";
                         }
-                    }        
+                    }
 
                     return $response->withBody(new Stream($content));
                     break;
@@ -441,7 +458,10 @@ class Page extends \R\Page
     {
         $obj = $this->object();
         $obj->delete();
-        if ($this->request->isAccept("application/json") || $this->request->getHeader("X-Requested-With")) {
+
+        //get accept
+        $accept = $this->request->getHeaderLine("Accept");
+        if (strpos($accept, "application/json") !== false || $this->request->hasHeader("X-Requested-With")) {
             return ["code" => 200];
         } else {
             $this->alert->success($this->module()->name . " deleted");
@@ -450,7 +470,8 @@ class Page extends \R\Page
     }
 
     public function get()
-    { }
+    {
+    }
 
     public function post()
     {
@@ -483,7 +504,8 @@ class Page extends \R\Page
         }
 
         $obj->save();
-        if ($this->request->isAccept("application/json") || $this->request->getHeader("X-Requested-With")) {
+        $accept = $this->request->getHeaderLine("Accept");
+        if (strpos($accept, "application/json") !== false || $this->request->hasHeader("X-Requested-With")) {
             return ["code" => 200];
         } else {
             $msg = $this->module()->name . " ";

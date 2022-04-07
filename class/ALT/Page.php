@@ -5,6 +5,8 @@ namespace ALT;
 use R\Psr7\Request;
 use R\Psr7\Response;
 use Exception;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class Page extends \App\Page
 {
@@ -52,7 +54,8 @@ class Page extends \App\Page
         return $this->_navbar;
     }
 
-    public function __invoke(Request $request, Response $response)
+
+    function __invoke(ServerRequestInterface $request, ResponseInterface $response)
     {
         $action = $request->getAttribute("action");
         $this->request = $request;
@@ -86,16 +89,18 @@ class Page extends \App\Page
             }
         }
 
-        if ($request->isAccept("text/html") && $request->getMethod() == "get") {
+        $accept = $request->getHeaderLine('Accept');
+        if (strpos($accept, 'text/html') !== false  && $request->getMethod() == "get") {
             $this->master = new MasterPage($this->app);
             $this->header["name"] = $this->module()->name;
         }
+
 
         try {
             $response = parent::__invoke($request, $response);
         } catch (Exception $e) {
 
-            if ($request->isAccept("text/html") && $request->getMethod() == "get") {
+            if (strpos($accept, 'text/html') !== false  && $request->getMethod() == "get") {
                 $this->alert->danger($e->getMessage());
             } else {
                 throw $e;
@@ -103,7 +108,7 @@ class Page extends \App\Page
         }
 
 
-        if ($request->isAccept("application/json")) {
+        if (strpos($accept, 'application/json') !== false) {
             if ($request->getMethod() == "get" && $action == "index") {
                 return $response;
             }
@@ -113,12 +118,12 @@ class Page extends \App\Page
             return $response;
         }
 
-        if ($request->getHeader("X-Requested-With")) {
+        if ($request->hasHeader("X-Requested-With")) {
             return $response;
         }
 
 
-        if ($request->isAccept("text/html") || $request->isAccept("*/*")) {
+        if (strpos($accept, 'text/html') !== false || strpos($accept, '*/*') !== false) {
             if ($this->request->getMethod() == "get" && $this->master) {
 
                 $this->addLib("json-viewer");

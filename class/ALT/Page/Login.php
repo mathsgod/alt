@@ -1,7 +1,10 @@
 <?php
+
 namespace ALT\Page;
 
 use R\Psr7\Stream;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 class Login extends \R\Page
 {
@@ -33,20 +36,23 @@ class Login extends \R\Page
 
         if ($request->getMethod() == "get") {
             $pi = $this->app->pathInfo();
-            $this->_twig["loader"] = new \Twig_Loader_Filesystem($pi["system_root"]);
-            $this->_twig["environment"] = new \Twig_Environment($this->_twig["loader"]);
-            $this->_template = $this->_twig["environment"]->loadTemplate("AdminLTE/pages/login.html");
+            $this->_twig["loader"] = new  FilesystemLoader($pi["system_root"]);
+            $env = new Environment($this->_twig["loader"]);;
+            $this->_twig["environment"] = $env;
+
+            $this->_template = $env->load("AdminLTE/pages/login.html");
         }
+
         $data = $resp->getBody()->getContents();
+        $data = json_decode($data, true);
+
         if ($this->_template) {
             if (!$data) {
                 $data = [];
             }
 
-            
             $p = new \App\Plugin("vue");
-            $data["vue"]=$p;
-
+            $data["vue"] = $p;
 
             foreach ($this->_lib as $name => $p) {
                 foreach ($p->setting["css"] as $css_f) {
