@@ -262,7 +262,7 @@ class MasterPage
         });
         $this->_twig["environment"]->addFunction($function);
 
-        $this->_template = $this->_twig["environment"]->loadTemplate(basename($template_file));
+        $this->_template = $this->_twig["environment"]->load(basename($template_file));
     }
     public function template()
     {
