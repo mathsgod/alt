@@ -17,35 +17,15 @@
             "function/function.php"
         ]
     },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../bs",
-            "options": {
-                "symlink": true
-            }
-        },
-        {
-            "type": "path",
-            "url": "../p-query",
-            "options": {
-                "symlink": true
-            }
-        },
-        {
-            "type": "composer",
-            "url": "https://raymond2.hostlink.com.hk/satis/web"
-        }
-    ],
     "require": {
-        "php": ">=7.0",
-        "mathsgod/r-psr7": "^2.1.1",
+        "php": "^8.0",
+        "mathsgod/r-psr7": "^2.0",
         "mathsgod/hl-holiday": "^1.2.1",
         "mathsgod/hl-weather": "^2.0",
         "mathsgod/html": "1.*",
         "mathsgod/r-translate": "1.*",
         "twig/twig": "*",
-        "twig/extensions": "*",
+        "twig/extra-bundle": "*",
         "bassjobsen/bootstrap-3-typeahead": "4.*",
         "eonasdan/bootstrap-datetimepicker": "4.*",
         "robinherbots/jquery.inputmask": "^4.0",
