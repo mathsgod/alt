@@ -9,6 +9,9 @@ use R\Psr7\Stream;
 use Psr\Log\LoggerInterface;
 use Exception;
 use Composer\Autoload\ClassLoader;
+use Symfony\Bundle\TwigBundle\TwigBundle;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 class App extends \R\App
 {
@@ -284,7 +287,7 @@ class App extends \R\App
 
         if ($referer = $this->request->getHeader("Referer")[0]) {
             if ($url = $_SESSION["app"]["referer"][$referer]) {
-                $response = $response->withHeader("Location", $url);
+                $this->response = $this->response->withHeader("Location", $url);
             }
         }
     }
@@ -482,11 +485,12 @@ class App extends \R\App
                 $o = str_replace("{root}", $root, $o);
             });
 
-            $twig["loader"] = new \Twig_Loader_Filesystem($root);
-            $twig["environment"] = new \Twig_Environment($twig["loader"], $config);
-            $twig["environment"]->addExtension(new \Twig_Extensions_Extension_I18n());
+            $twig["loader"] = new  FilesystemLoader($root);
+            $twig["environment"] = $env = new Environment($twig["loader"], $config);
 
-            return $twig["environment"]->loadTemplate($template_file);
+            //            $twig["environment"]->addExtension(new \Twig_Extensions_Extension_I18n());
+
+            return $env->load($template_file);
         }
     }
 
@@ -540,11 +544,12 @@ class App extends \R\App
         $smtp = $this->config["user"]["smtp"];
 
         if ($smtp && $smtp->value) {
-            $this->IsSMTP();
+            /*             $this->IsSMTP();
             $this->Host = (string) $smtp;
             $this->SMTPAuth = true;
             $this->Username = $this->config["user"]["smtp-username"];
             $this->Password = $this->config["user"]["smtp-password"];
+ */
         }
 
         return $mail;
@@ -558,7 +563,7 @@ class App extends \R\App
             $uri .= "?" . $q;
         }
 
-        $base = $request->getUri()->getBasePath();
+        $base = $request->getUri();
         if ($this->logined()) {
 
             if ($request->getHeader("accept")[0] == "application/json") {
