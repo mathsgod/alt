@@ -1,7 +1,11 @@
 <?php
+
 namespace ALT;
 
 use R\Psr7\Stream;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+use Twig\TwigFunction;
 
 class MasterPage
 {
@@ -19,7 +23,7 @@ class MasterPage
         $app = $this->app;
         $config = $app->config;
         $data = $this->data;
-     
+
         // get the data
         $data["lang"] = \My::Language();
         if ($config["user"]["development"]) {
@@ -177,9 +181,9 @@ class MasterPage
 
 
         extract($app->pathInfo());
-        
+
         $system = $system_base;
-        $data["composer_base"]=$composer_base;
+        $data["composer_base"] = $composer_base;
         $data["script"][] = "$system/js/cookie.js";
         $data["script"][] = "$system/js/jquery.storageapi.min.js";
 
@@ -229,16 +233,15 @@ class MasterPage
 
         if ($setting["layout"] == "top-nav") {
             $template_file = $app->getFile("AdminLTE/top-nav.html");
-
         } else {
             $template_file = $app->getFile("AdminLTE/index.html");
         }
 
         $template_dir = dirname($template_file);
         //\Twig_Autoloader::register();
-        $this->_twig["loader"] = new \Twig_Loader_Filesystem($template_dir);
-        $this->_twig["environment"] = new \Twig_Environment($this->_twig["loader"]);
-        $this->_twig["environment"]->addExtension(new \Twig_Extensions_Extension_I18n());
+        $this->_twig["loader"] = new FilesystemLoader($template_dir);
+        $this->_twig["environment"] = $env = new Environment($this->_twig["loader"]);
+        //$this->_twig["environment"]->addExtension(new \Twig_Extensions_Extension_I18n());
 
         if ($config = $this->app->config["user"]["roxy_fileman_path"]) {
             $_SESSION["roxy_fileman_path"] = str_replace("{username}", $user->username, $config);
@@ -249,7 +252,7 @@ class MasterPage
             $translate_res[$k] = $v;
         }
         // translate function
-        $function = new \Twig_SimpleFunction('_', function ($a) use ($translate_res) {
+        $function = new TwigFunction('_', function ($a) use ($translate_res) {
             $lang = \App::User()->language;
             if ($text = $translate_res[$lang][$a]) {
                 return $text;
