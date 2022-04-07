@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bee6168d4414e30ee3a5e57b2fa9a26b",
+    "content-hash": "7bf9d973a272321652ea012765f60536",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -694,24 +694,24 @@
         },
         {
             "name": "mathsgod/bs",
-            "version": "1.1.2",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mathsgod/bs.git",
-                "reference": "4de5a1690d5e497d964e35d2d4660cbf9f026c6c"
+                "reference": "da64a50aca462b97f38baf4528c9626daef16bcc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mathsgod/bs/zipball/4de5a1690d5e497d964e35d2d4660cbf9f026c6c",
-                "reference": "4de5a1690d5e497d964e35d2d4660cbf9f026c6c",
+                "url": "https://api.github.com/repos/mathsgod/bs/zipball/da64a50aca462b97f38baf4528c9626daef16bcc",
+                "reference": "da64a50aca462b97f38baf4528c9626daef16bcc",
                 "shasum": ""
             },
             "require": {
-                "mathsgod/p-query": "^2.0",
-                "php": ">=5.6"
+                "mathsgod/p-query": "^3.2",
+                "php": "^8.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "*"
+                "phpunit/phpunit": "^9.5"
             },
             "type": "library",
             "autoload": {
@@ -731,9 +731,9 @@
             "description": "Raymond php bootstrap library",
             "support": {
                 "issues": "https://github.com/mathsgod/bs/issues",
-                "source": "https://github.com/mathsgod/bs/tree/1.1.2"
+                "source": "https://github.com/mathsgod/bs/tree/1.2.0"
             },
-            "time": "2019-06-17T06:30:53+00:00"
+            "time": "2022-04-07T09:36:01+00:00"
         },
         {
             "name": "mathsgod/data-structure",
@@ -989,20 +989,20 @@
         },
         {
             "name": "mathsgod/p-query",
-            "version": "2.4.0",
+            "version": "3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mathsgod/p-query.git",
-                "reference": "982b6f8439919c917f323ea82af3f4f70ae2c0cb"
+                "reference": "be9e95599449073360a281de7fec0d1d5f9c5931"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mathsgod/p-query/zipball/982b6f8439919c917f323ea82af3f4f70ae2c0cb",
-                "reference": "982b6f8439919c917f323ea82af3f4f70ae2c0cb",
+                "url": "https://api.github.com/repos/mathsgod/p-query/zipball/be9e95599449073360a281de7fec0d1d5f9c5931",
+                "reference": "be9e95599449073360a281de7fec0d1d5f9c5931",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.0",
+                "php": "^8.0",
                 "symfony/css-selector": "*"
             },
             "require-dev": {
@@ -1030,9 +1030,9 @@
             "description": "Using jQuery liked method to parse html by using php",
             "support": {
                 "issues": "https://github.com/mathsgod/p-query/issues",
-                "source": "https://github.com/mathsgod/p-query/tree/2.4.0"
+                "source": "https://github.com/mathsgod/p-query/tree/3.2.1"
             },
-            "time": "2020-11-16T05:10:50+00:00"
+            "time": "2021-10-28T05:11:38+00:00"
         },
         {
             "name": "mathsgod/php-psr7",
