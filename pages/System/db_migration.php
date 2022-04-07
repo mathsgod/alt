@@ -3,7 +3,8 @@ class System_db_migration extends ALT\Page
 {
     public function post()
     {
-        $db = new DB\PDO($_POST["database"], $_POST["hostname"], $_POST["username"], $_POST["password"]);
+        
+        $db = new R\DB\Schema($_POST["database"], $_POST["hostname"], $_POST["username"], $_POST["password"]);
         $this->migrate($this->app->db, $db);
     }
 

@@ -22,6 +22,7 @@ class User_index extends ALT\Page
         //      }
 
         //$tab->add("Test","list2");
-        $this->write($tab);
+        $this->write($tab); 
+
     }
 }

@@ -374,11 +374,15 @@ class App extends \R\App
                     throw new \Exception("2-step verification", 403);
                 }
             }
-        }
+        }        
 
+        if($user->is("Security") && (date("H:i") <= "08:00 am") && (date("H:i") >= "21:59 pm")){
+            throw new \Exception("登入失敗，使用時間為早上8時至晚上10時", 403);
+        }
+        
         $_SESSION["app"]["user_id"] = $user->user_id;
 
-        $_SESSION["app"]["user"] = $user;
+        $_SESSION["app"]["user"] = $user;        
 
         $_SESSION["app"]["login"] = true;
 

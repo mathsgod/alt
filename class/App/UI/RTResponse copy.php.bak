@@ -4,7 +4,7 @@ namespace App\UI;
 
 use \Box\Spout\Writer\WriterFactory;
 use \Box\Spout\Common\Type;
-use Epost\QueryList;
+
 use JsonSerializable;
 use Exception;
 
@@ -176,11 +176,6 @@ class RTResponse implements JsonSerializable
         return $c;
     }
 
-    public function setDataMap(callable $mapping)
-    {
-        $this->data_mapping = $mapping;
-    }
-
     public function data()
     {
         foreach ($this->fields as $c) {
@@ -190,19 +185,11 @@ class RTResponse implements JsonSerializable
         $source = $this->filteredSource();
 
         if ($this->page) {
-            if ($source instanceof \EPOST\QueryList) {
-                $source->limit($this->length);
-                $source->offset(($this->page - 1) * $this->length);
-            } else {
-                $source->limit([$this->page, $this->length]);
-            }
+            $source->limit([$this->page, $this->length]);
         }
 
         $data = [];
         foreach ($source as $obj) {
-            if ($this->data_mapping) {
-                $obj = call_user_func($this->data_mapping, $obj);
-            }
             $d = [];
 
             $d["__row__"] = $this->row->getData($obj);
@@ -217,22 +204,22 @@ class RTResponse implements JsonSerializable
                         if ($col->type == "sub-row") {
                             $d[$c["name"]] = ["url" => $col->url, "params" => [$col->key =>  $object_vars[$col->key]]];
                         } elseif ($col->type == "delete") {
-                            if ($content = (string) $col->getData($obj, $k)) {
-                                $d[$c["name"]] = ["type" => $col->type, "content" => (string) $content];
+                            if ($content = (string)$col->getData($obj, $k)) {
+                                $d[$c["name"]] = ["type" => $col->type, "content" => (string)$content];
                             } else {
                                 $d[$c["name"]] = null;
                             }
                         } elseif ($col->type != "text") {
-                            $d[$c["name"]] = ["type" => $col->type, "content" => (string) $col->getData($obj, $k)];
+                            $d[$c["name"]] = ["type" => $col->type, "content" => (string)$col->getData($obj, $k)];
                         } elseif ($col->type == "html") {
-                            $d[$c["name"]] = ["type" => "html", "content" => (string) $col->getData($obj, $k)];
+                            $d[$c["name"]] = ["type" => "html", "content" => (string)$col->getData($obj, $k)];
                         } else {
                             $v = $col->getData($obj, $k);
 
                             if (is_array($v)) {
                                 $d[$c["name"]] = $v;
                             } else {
-                                $d[$c["name"]] = (string) $v;
+                                $d[$c["name"]] = (string)$v;
                             }
                         }
                     } elseif (array_key_exists($c["name"], $object_vars)) {
@@ -274,28 +261,16 @@ class RTResponse implements JsonSerializable
     {
         $source = clone $this->source;
 
-        if ($source instanceof QueryList) {
-            foreach ($this->order as $o) {
-                $column = $this->_columns[$o["name"]];
-                if ($column->order) {
-                    $source->orderBy([$column->order => $o["dir"]]);
-                } else {
-                    $source->orderBy([$o["name"] => $o["dir"]]);
-                }
-            }
-        } else {
-            foreach ($this->order as $o) {
-                $column = $this->_columns[$o["name"]];
-                if ($column->order) {
-                    $source->orderBy($column->order . " " . $o["dir"]);
-                } elseif ($column->sortCallback) {
-                    $source->orderBy(call_user_func($column->sortCallback) . " " . $o["dir"]);
-                } else {
-                    $source->orderBy($o["name"] . " " . $o["dir"]);
-                }
+        foreach ($this->order as $o) {
+            $column = $this->_columns[$o["name"]];
+            if ($column->order) {
+                $source->orderBy($column->order . " " . $o["dir"]);
+            } elseif ($column->sortCallback) {
+                $source->orderBy(call_user_func($column->sortCallback) . " " . $o["dir"]);
+            } else {
+                $source->orderBy($o["name"] . " " . $o["dir"]);
             }
         }
-
 
 
         foreach ($this->request["columns"] as $k => $c) {

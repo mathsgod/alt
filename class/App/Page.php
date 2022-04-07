@@ -301,7 +301,7 @@ class Page extends \R\Page
                         if ($request->getQueryParams()["fancybox"]) {
                             $content = "<div style='width:80%'>" . $content . "</div>";
                         }
-                    }
+                    }        
 
                     return $response->withBody(new Stream($content));
                     break;

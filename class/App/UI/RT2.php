@@ -127,4 +127,34 @@ class RT2 extends Element
         $this->columns[] = $c;
         return $c;
     }
+
+    public function validate(RTResponse $r): bool
+    {
+        foreach ($r->request["columns"] as $col) {
+            if (!$col["name"]) return false;
+            $c = $this->getColumn($col["name"]);
+            if (!$c) {
+                return false;
+            }
+        }
+
+        foreach ($r->order as $order) {
+            if (!$order["name"]) return false;
+            if (($order["dir"] != "desc") && ($order["dir"] != "asc")) return false;
+            $c = $this->getColumn($order["name"]);
+            if (!$c) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private function getColumn(string $name)
+    {
+        foreach ($this->columns as $col) {
+            if ($col->name == $name) {
+                return $col;
+            }
+        }
+    }
 }
