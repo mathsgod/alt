@@ -52,8 +52,6 @@ class App extends \R\App
 
         $root = $this->root;
 
-        define(SYSTEM, $path);
-        define(CMS_ROOT, $root);
 
         $this->loader->addPsr4("", $root . "/class");
         $this->loader->addPsr4("", SYSTEM . "/class");
@@ -91,7 +89,7 @@ class App extends \R\App
             $this->locale = $this->user->language;
         }
 
-        $this->entity = new Entity();
+        //        $this->entity = new Entity();
 
         foreach (SystemValue::Query() as $sv) {
             $this->system_value[$sv->language][$sv->name] = $sv;
@@ -374,15 +372,15 @@ class App extends \R\App
                     throw new \Exception("2-step verification", 403);
                 }
             }
-        }        
+        }
 
-        if($user->is("Security") && (date("H:i") <= "08:00 am") && (date("H:i") >= "21:59 pm")){
+        if ($user->is("Security") && (date("H:i") <= "08:00 am") && (date("H:i") >= "21:59 pm")) {
             throw new \Exception("登入失敗，使用時間為早上8時至晚上10時", 403);
         }
-        
+
         $_SESSION["app"]["user_id"] = $user->user_id;
 
-        $_SESSION["app"]["user"] = $user;        
+        $_SESSION["app"]["user"] = $user;
 
         $_SESSION["app"]["login"] = true;
 
