@@ -98,9 +98,9 @@ class Table extends HTMLTableElement
                 $fn = $form_name . "[u]";
 
             if ($node->hasAttribute("multiple")) {
-                $node->setAttribute("name","{$fn}[$id][$field][]");
+                $node->setAttribute("name", "{$fn}[$id][$field][]");
             } else {
-                $node->setAttribute("name","{$fn}[$id][$field]");
+                $node->setAttribute("name", "{$fn}[$id][$field]");
             }
         };
 
@@ -229,6 +229,6 @@ if(checked){
                 p($o)->wrapInner("<div class='form-group no-margin'></div>");
             }
         });
-        return (string )$o;
+        return (string)$o;
     }
 }

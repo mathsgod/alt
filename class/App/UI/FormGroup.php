@@ -1,4 +1,5 @@
-<?
+<?php
+
 namespace App\UI;
 
 use P\HTMLDivElement;
@@ -13,4 +14,3 @@ class FormGroup extends HTMLDivElement
         $this->classList[] = "form-group";
     }
 }
-

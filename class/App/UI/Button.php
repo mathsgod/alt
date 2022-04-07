@@ -1,4 +1,5 @@
 <?php
+
 namespace App\UI;
 
 use App\Page;
@@ -6,7 +7,7 @@ use App\Page;
 class Button extends \BS\Button
 {
     private $page;
-    public function __construct(Page $page, $href=null)
+    public function __construct(Page $page, $href = null)
     {
         parent::__construct(null, null, $href);
         $this->page = $page;
@@ -19,7 +20,7 @@ class Button extends \BS\Button
 
     public function __toString()
     {
-        if ($href = $this->attr("href")) {
+        if ($href = $this->getAttribute("href")) {
             if (!\App\ACL::Allow($href)) {
                 return "";
             }
@@ -49,8 +50,8 @@ class Button extends \BS\Button
 
     public function fancybox()
     {
-        $this->attr("data-type", "ajax");
-        $this->attr("data-fancybox", true);
+        $this->setAttribute("data-type", "ajax");
+        $this->setAttribute("data-fancybox", true);
         return $this;
     }
 }

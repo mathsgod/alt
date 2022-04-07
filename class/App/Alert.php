@@ -1,4 +1,5 @@
-<?
+<?php
+
 namespace App;
 
 class Alert
@@ -26,7 +27,7 @@ class Alert
         $_SESSION["app"]["message"][] = [
             "type" => "danger",
             "message" => $message,
-            "icon"=>"fa fa-exclamation-circle"
+            "icon" => "fa fa-exclamation-circle"
         ];
     }
 
@@ -35,7 +36,7 @@ class Alert
         $_SESSION["app"]["message"][] = [
             "type" => "warning",
             "message" => $message,
-            "icon"=>"fa fa-exclamation-triangle"
+            "icon" => "fa fa-exclamation-triangle"
         ];
     }
 }

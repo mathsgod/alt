@@ -2,6 +2,8 @@
 
 namespace App\UI;
 
+use Closure;
+
 //class RT extends \RT
 class RT2 extends Element
 {
@@ -104,16 +106,16 @@ class RT2 extends Element
     public function __toString()
     {
 
-        $this->setAttribute(":columns", $this->columns);
-        $this->setAttribute(":data", $this->data);
+        $this->setAttribute(":columns", json_encode($this->columns));
+        $this->setAttribute(":data", json_encode($this->data));
         $this->setAttribute(":ajax", $this->ajax);
         $this->setAttribute(":responsive", $this->responsive ? "true" : "false");
         $this->setAttribute("cell-url", $this->cellUrl);
         $this->setAttribute(":page-length", $this->pageLength);
         $this->setAttribute(":selectable", $this->selectable ? "true" : "false");
-        $this->setAttribute(":buttons", $this->buttons);
-        $this->setAttribute(":exports", $this->exports);
-        $this->setAttribute(":order", $this->order);
+        $this->setAttribute(":buttons", json_encode($this->buttons));
+        $this->setAttribute(":exports", json_encode($this->exports));
+        $this->setAttribute(":order", json_encode($this->order));
         return parent::__toString();
     }
 

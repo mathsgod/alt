@@ -93,7 +93,7 @@ class Box extends HTMLDivElement
                 if (!$this->hasAttribute("class")) {
                     $this->setAttribute("class", "");
                 }
-                return new BoxClassTokenList($this->attributes->getNamedItem("class"));
+                return new BoxClassTokenList($this, "class");
                 break;
         }
         return parent::__get($name);

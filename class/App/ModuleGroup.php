@@ -1,7 +1,7 @@
 <?php
+
 namespace App;
-class ModuleGroup extends Model{
 
+class ModuleGroup extends Model
+{
 }
-
-?>
