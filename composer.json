@@ -31,20 +31,20 @@
         "robinherbots/jquery.inputmask": "^4.0",
         "phpmailer/phpmailer": "6.*",
         "symfony/yaml": "3.*",
-        "monolog/monolog": "^1.24",
+        "monolog/monolog": "^2.4",
         "mathsgod/r-webauthn": "^1.0",
         "mathsgod/r-graphql": "^1.2",
-        "mathsgod/r": "^2.5",
+        "mathsgod/r": "^2.6",
         "mathsgod/r-db": "^3.0",
         "mathsgod/p-query": "^2.0",
         "mathsgod/bs": "^1.1",
         "mathsgod/gql-php-generator": "^1.0",
         "firebase/php-jwt": "^5.0",
         "fortawesome/font-awesome": "^5.10",
-        "vakata/jstree": "^3.3"
+        "vakata/jstree": "^3.3",
+        "phpunit/phpunit": "^9.5"
     },
     "require-dev": {
-        "phpunit/phpunit": "*",
         "kevinchappell/form-builder": "^3.2"
     },
     "suggest": {
