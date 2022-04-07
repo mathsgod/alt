@@ -269,7 +269,7 @@ class Page extends \App\Page
 
 
                 $data["content"] .= $echo_content;
-                $data["content"] .= (string) $response;
+                $data["content"] .=  $response->getBody()->getContents();
 
 
                 $data["css"][] = "$system/AdminLTE/dist/css/AdminLTE.css";

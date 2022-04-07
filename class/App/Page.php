@@ -288,7 +288,7 @@ class Page extends \R\Page
                         }
                     }
                     if ($this->template_type == "html") {
-                        $content = (string)$response;
+                        $content = $response->getBody()->getContents();
                         $content .= $this->_template;
                     } elseif ($this->_template instanceof Template) {
                         $data = $this->data;
@@ -307,7 +307,7 @@ class Page extends \R\Page
                         $response = $response->withHeader("Content-Type", "text/html; charset=UTF-8");
                     } else {
                         $content = $echo_content;
-                        $content .= (string)$response;
+                        $content .= $response->getBody()->getContents();
                     }
 
                     if ($request->getMethod() == "get") {
