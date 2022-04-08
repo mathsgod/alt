@@ -30,7 +30,7 @@
         "eonasdan/bootstrap-datetimepicker": "4.*",
         "robinherbots/jquery.inputmask": "^4.0",
         "phpmailer/phpmailer": "6.*",
-        "symfony/yaml": "3.*",
+        "symfony/yaml": "^6.0",
         "monolog/monolog": "^2.4",
         "mathsgod/r-webauthn": "^1.0",
         "mathsgod/r-graphql": "^1.2",
