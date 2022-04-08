@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7b0260c40a71e5f73f1444c822ec95cb",
+    "content-hash": "722dc7d240c27d182efc32f1a0e8435c",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -1179,7 +1179,7 @@
         },
         {
             "name": "mathsgod/r-db",
-            "version": "dev-theorchards",
+            "version": "3.1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mathsgod/r-db.git",
@@ -1218,7 +1218,7 @@
             "description": "raymond framework db",
             "support": {
                 "issues": "https://github.com/mathsgod/r-db/issues",
-                "source": "https://github.com/mathsgod/r-db/tree/theorchards"
+                "source": "https://github.com/mathsgod/r-db/tree/3.1.1.2"
             },
             "time": "2022-04-08T10:07:43+00:00"
         },
@@ -4700,9 +4700,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "mathsgod/r-db": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
