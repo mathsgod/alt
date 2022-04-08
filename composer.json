@@ -24,8 +24,7 @@
         "mathsgod/hl-weather": "^2.0",
         "mathsgod/html": "1.*",
         "mathsgod/r-translate": "1.*",
-        "twig/twig": "*",
-        "twig/extra-bundle": "*",
+        "twig/twig": "^2.14",
         "bassjobsen/bootstrap-3-typeahead": "4.*",
         "eonasdan/bootstrap-datetimepicker": "4.*",
         "robinherbots/jquery.inputmask": "^4.0",
@@ -42,7 +41,8 @@
         "firebase/php-jwt": "^5.0",
         "fortawesome/font-awesome": "^5.10",
         "vakata/jstree": "^3.3",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.5",
+        "twig/extensions": "^1.5"
     },
     "require-dev": {
         "kevinchappell/form-builder": "^3.2"
