@@ -1,4 +1,5 @@
-<?
+<?php
+
 namespace App;
 
 class Router extends \R\Router
@@ -35,7 +36,7 @@ class Router extends \R\Router
                 return $r;
             }
         }
-        
+
         return new Route($request, $loader);
     }
 }

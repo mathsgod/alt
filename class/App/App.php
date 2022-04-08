@@ -1,4 +1,4 @@
-<?
+<?php
 
 namespace App;
 
@@ -21,7 +21,7 @@ class App extends \R\App
     public $locale = "zh-hk";
     public $entity;
 
-    public static function _()
+    public static function _(): self
     {
         return self::$app;
     }

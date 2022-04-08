@@ -1,4 +1,5 @@
 <?php
+
 namespace App;
 
 abstract class Model extends \R\ORM\Model
@@ -34,7 +35,7 @@ abstract class Model extends \R\ORM\Model
         return $this->db;
     }
 
-    public function _app()
+    public static function _app()
     {
         return \App::_();
     }
