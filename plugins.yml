@@ -140,8 +140,7 @@ tcpdf:
   php: ['tcpdf.php']
 
 ckeditor:
-  js: ['ckeditor.js']
-  js: ['lang/{language}.js']
+  js: ['ckeditor.js','lang/{language}.js']
 
 hostlink/fancybox:
   js: ['dist/jquery.fancybox.min.js']
