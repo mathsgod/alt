@@ -34,7 +34,7 @@
         "mathsgod/r-webauthn": "^1.0",
         "mathsgod/r-graphql": "^1.2",
         "mathsgod/r": "^2.6",
-        "mathsgod/r-db": "^3.0",
+        "mathsgod/r-db": "dev-theorchards",
         "mathsgod/p-query": "^3.2",
         "mathsgod/bs": "^1.2",
         "mathsgod/gql-php-generator": "^1.0",

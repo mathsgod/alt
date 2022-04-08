@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "227eef597ad04d5a09a0c92486282b54",
+    "content-hash": "7b0260c40a71e5f73f1444c822ec95cb",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -1179,24 +1179,23 @@
         },
         {
             "name": "mathsgod/r-db",
-            "version": "3.15.2",
+            "version": "dev-theorchards",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mathsgod/r-db.git",
-                "reference": "2eb051ad18249a53aa3886bdba0e8d4102e883d4"
+                "reference": "0bcb36b7488b5af5dd79e91ee098898a33263b25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mathsgod/r-db/zipball/2eb051ad18249a53aa3886bdba0e8d4102e883d4",
-                "reference": "2eb051ad18249a53aa3886bdba0e8d4102e883d4",
+                "url": "https://api.github.com/repos/mathsgod/r-db/zipball/0bcb36b7488b5af5dd79e91ee098898a33263b25",
+                "reference": "0bcb36b7488b5af5dd79e91ee098898a33263b25",
                 "shasum": ""
             },
             "require": {
                 "ext-pdo": "*",
                 "mathsgod/data-structure": "^1.3",
-                "mathsgod/php-util": "^1.1",
-                "php": "^8.0",
-                "psr/log": "^1.0.1 || ^2.0 || ^3.0"
+                "php": ">=7.0 || ^8.0",
+                "psr/log": "^1.1 || ^2.0 || ^3.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^9.5"
@@ -1219,9 +1218,9 @@
             "description": "raymond framework db",
             "support": {
                 "issues": "https://github.com/mathsgod/r-db/issues",
-                "source": "https://github.com/mathsgod/r-db/tree/3.15.2"
+                "source": "https://github.com/mathsgod/r-db/tree/theorchards"
             },
-            "time": "2022-04-07T08:19:32+00:00"
+            "time": "2022-04-08T10:07:43+00:00"
         },
         {
             "name": "mathsgod/r-graphql",
@@ -4701,7 +4700,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "mathsgod/r-db": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
