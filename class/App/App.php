@@ -327,7 +327,7 @@ class App extends \R\App
         return true;
     }
 
-    public function login($username, $password, $code = null)
+    public function login(string $username, string $password, $code = null)
     {
         if ($username == "") {
             throw new \Exception("Username cannot be empty", 400);

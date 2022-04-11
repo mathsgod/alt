@@ -18,6 +18,10 @@ class User extends Model
 
     public function verifyPassword(string $password): bool
     {
+        if (!$this->password) {
+            return false;
+        }
+
         if (!Util::PasswordVerify($password, $this->password)) {
             return false;
         }
@@ -91,7 +95,8 @@ class User extends Model
     }
 
     public function offline()
-    { }
+    {
+    }
 
     public function setting()
     {
@@ -342,7 +347,7 @@ class User extends Model
         ];
         $head = [
             "iss" => self::$_app->config["user"]["domain"],
-          //  "aud" => self::$_app->config["user"]["domain"],
+            //  "aud" => self::$_app->config["user"]["domain"],
             "iat" => time(),
             "nbf" => time(),
             "exp" => time() + 3600
