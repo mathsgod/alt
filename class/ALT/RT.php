@@ -1,8 +1,13 @@
-<?
+<?php
+
 namespace ALT;
 
-use \Box\Spout\Writer\WriterFactory;
+use Box\Spout\Common\Entity\Row;
 use \Box\Spout\Common\Type;
+use Box\Spout\Writer\Common\Creator\WriterFactory;
+use Closure;
+use Iterator;
+use ReflectionFunction;
 
 class RTRow
 {
@@ -90,7 +95,7 @@ class RTColumn
         return $this;
     }
 
-    public function ss($index)
+    public function ss($index = null)
     {
         if ($index) {
             $this->index($index);
@@ -112,7 +117,6 @@ class RTColumn
     {
         $this->resizable = $value;
         return $this;
-
     }
 
     public function searchEQ()
@@ -188,7 +192,7 @@ class RTColumn
         return $this;
     }
 
-    public function index($index)
+    public function index($index = null)
     {
         if ($index instanceof \Closure) {
             $index = md5(new \ReflectionFunction($index));
@@ -239,7 +243,7 @@ class RTColumn
 
     public function gf($getter)
     {
-        if ($func instanceof Closure) {
+        if ($getter instanceof Closure) {
             $this->index = md5(new ReflectionFunction($getter));
         } else {
             $this->index = $getter;
@@ -384,7 +388,7 @@ class RTRequest
                 return $_GET["order"][0]["column"] . " " . $_GET["order"][0]["dir"];
             }
         }
-        
+
 
         //prevent user direct input order
         $columns_index = array_map(function ($column) {
@@ -455,7 +459,6 @@ class RTRequest
                 if ($value["to"] != "") {
                     $where[] = ["$name <= ?", $value["to"]];
                 }
-
             } elseif ($column->search_type == 'select') {
                 if ($value != "") {
                     $where[] = ["$name = ?", $value];
@@ -546,7 +549,7 @@ class RT implements \JsonSerializable
         $column->width(28);
 
         $this->columns[] = $column;
-        return $c;
+        return $column;
     }
 
     public function addView()
@@ -564,7 +567,7 @@ class RT implements \JsonSerializable
         $column->width(28);
 
         $this->columns[] = $column;
-        return $c;
+        return $column;
     }
 
     public function addDel($redirect = "")
@@ -585,7 +588,7 @@ class RT implements \JsonSerializable
         $c->align("center");
         $c->index("[dels]");
         $c->width(28);
-        $column->descriptor[] = function ($obj) {
+        $c->descriptor[] = function ($obj) {
             if ($obj->canDelete()) {
                 return "del";
             }
@@ -602,7 +605,7 @@ class RT implements \JsonSerializable
     public function bind($func)
     {
         if ($func instanceof Iterator) {
-            $this->objects = $objects;
+            $this->objects = $func;
         } else {
             $this->data_func = $func;
         }
@@ -666,7 +669,7 @@ class RT implements \JsonSerializable
                     foreach ($c->childs as $child) {
                         $clone_obj = clone $child;
                         p($clone_obj)->data("object", $obj);
-//                        $clone_obj->bind($obj);
+                        //                        $clone_obj->bind($obj);
                         $result .= (string)$clone_obj;
                     }
                     $r[$c->index] = $result;
@@ -704,7 +707,7 @@ class RT implements \JsonSerializable
                 if ($c->alink && $last_obj) {
                     $htmlspecialchars = false;
                     $d["type"] = "link";
-                    $d["href"] = $last_obj->uri($c->alink); 
+                    $d["href"] = $last_obj->uri($c->alink);
                     // $a = PA::_()->href($last_obj->uri(PFunc::_($c->alink)->call($last_obj)))->text($result);
                     /*$p = new \P\Query("a");
                     $alink = $c->alink;
@@ -766,7 +769,6 @@ class RT implements \JsonSerializable
                     $r[$c->index]["value"] = $obj->$index;
                     $r[$c->index]["content"] = $d;
                 }
-
             }
             $ds[] = $r;
         }
@@ -784,11 +786,12 @@ class RT implements \JsonSerializable
                 $t = Type::CSV;
                 break;
         }
-        $writer = WriterFactory::create($t);
+        $writer = WriterFactory::createFromType($t);
         $writer->openToFile("php://output");
 
         $columns = $this->columns;
         $cols = [];
+
         $row = [];
         foreach ($columns as $k => $c) {
             if ($c->type == 'text') {
@@ -796,7 +799,7 @@ class RT implements \JsonSerializable
                 $cols[] = $c->index;
             }
         }
-        $writer->addRow($row);
+        $writer->addRow(new Row($row, null));
         $data = $this->jsonSerialize();
         foreach ($data["data"] as $d) {
             $ds = [];
@@ -806,9 +809,8 @@ class RT implements \JsonSerializable
                 } else {
                     $ds[$c] = $d[$c];
                 }
-
             }
-            $writer->addRow($ds);
+            $writer->addRow(new Row($ds, null));
         }
 
         $writer->close();
@@ -921,7 +923,7 @@ class RT implements \JsonSerializable
                     $display_member = $col->searchOptions[1];
                     $value_member = $col->searchOptions[2];
                     if (!$value_member) {
-                        $value_member = $column->index;
+                        $value_member = $col->index;
                     }
                     foreach ($col->searchOptions[0] as $k => $v) {
                         if (is_object($v)) {
@@ -953,7 +955,6 @@ class RT implements \JsonSerializable
                 $div->_child[] = $btn;
             }
             $rt->_child[] = $div;
-
         }
 
 
@@ -962,5 +963,4 @@ class RT implements \JsonSerializable
 
         return $html;
     }
-
 }

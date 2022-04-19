@@ -45,7 +45,8 @@
         "twig/extensions": "^1.5"
     },
     "require-dev": {
-        "kevinchappell/form-builder": "^3.2"
+        "kevinchappell/form-builder": "^3.2",
+        "box/spout": "^3.3"
     },
     "suggest": {
         "ckeditor/ckeditor": "JavaScript WYSIWYG web text editor.",
