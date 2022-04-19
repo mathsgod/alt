@@ -1,4 +1,5 @@
-<?
+<?php
+
 namespace App\UI;
 
 use Closure;
@@ -29,7 +30,7 @@ class DataTables extends HTMLDivElement
             "name" => "data-dom"
         ],
         "pageLength" => [
-            "type"=>"string",
+            "type" => "string",
             "name" => "data-page-length"
         ]
     ] + parent::ATTRIBUTES;

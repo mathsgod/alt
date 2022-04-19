@@ -1,16 +1,19 @@
-<?
+<?php
 
 namespace ALT;
-class BoxGroup extends \P\HTMLDivElement {
 
-	public function __construct() {
+class BoxGroup extends \P\HTMLDivElement
+{
+
+	public function __construct()
+	{
 		parent::__construct();
 		$this->classList->add("box-group");
 		$this->attributes["id"] = uniqid();
-		
 	}
 
-	public function addBox($box) {
+	public function addBox($box)
+	{
 		p($box)->addClass("panel");
 		p($this)->append($box);
 
@@ -28,5 +31,4 @@ class BoxGroup extends \P\HTMLDivElement {
 
 		return $this;
 	}
-
 }

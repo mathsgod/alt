@@ -24,7 +24,7 @@ class BoxHeader extends HTMLDivElement
 
     public function addButton($label, $uri)
     {
-        $button = new Button("default","btn-xs",$uri);
+        $button = new Button("default", "btn-xs", $uri);
         $button->classList[] = "btn-xs";
         $button->text($label);
         $this->appendChild($button);

@@ -1,4 +1,5 @@
-<?
+<?php
+
 namespace App\UI;
 
 use Exception;
@@ -429,7 +430,7 @@ class Col extends HTMLElement
 
     public function ws($value = "pre")
     {
-        $this->css("white-space", $value);
+        $this->style->whiteSpace = $value;
         return $this;
     }
 
@@ -585,7 +586,7 @@ class Col extends HTMLElement
         foreach ($this->cell as $cell) {
 
             $is = new InputSelect();
-            $input=p($is)->find("input");
+            $input = p($is)->find("input");
             $input->attr("data-field", $field);
             $input->attr("name", $field);
             $cell->append($is);
@@ -617,7 +618,8 @@ class Col extends HTMLElement
     public function checkboxes($field)
     {
         $p = p();
-        foreach ($this->cell as $cell) { }
+        foreach ($this->cell as $cell) {
+        }
         return $p;
     }
 
@@ -645,8 +647,8 @@ class Col extends HTMLElement
             $input->attr("name", $field);
             $input->attr("data-field", $field);
             $input->val(1);
-            $input->attr("true-value","true");
-            $input->attr("false-value","false");
+            $input->attr("true-value", "true");
+            $input->attr("false-value", "false");
 
 
             if ($object = p($cell)->data("object")) {
@@ -933,7 +935,8 @@ class Col extends HTMLElement
                 try {
                     $data_value = is_object($object) ? $object->$field : $object[$field];
                     $select[0]->setAttribute("data-value", json_encode($data_value));
-                } catch (\Exception $e) { }
+                } catch (\Exception $e) {
+                }
 
                 if ($this->callback) {
                     call_user_func($this->callback, $object, $select[0]);

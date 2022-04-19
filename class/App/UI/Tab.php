@@ -1,4 +1,5 @@
 <?php
+
 namespace App\UI;
 
 use App\Page;
@@ -33,7 +34,7 @@ class Tab extends HTMLDivElement
 
         self::$_MyTab++;
         $module = $page->module();
-        $this->setAttribute("prefix",$prefix);
+        $this->setAttribute("prefix", $prefix);
 
         if ($module) {
             $this->setAttribute("data-cookie", $page->path() . "/$prefix" . self::$_MyTab);
@@ -86,7 +87,7 @@ class Tab extends HTMLDivElement
 
         $a = p("a")->attr("href", $href)->text($label)->appendTo($ti->li);
 
-        $prefix=$this->getAttribute("prefix");
+        $prefix = $this->getAttribute("prefix");
         $id = "tab-{$prefix}{$tab_id}";
         $a->attr("data-target", "#$id");
         $a->attr("data-toggle", "tabajax");

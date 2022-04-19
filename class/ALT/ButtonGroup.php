@@ -19,6 +19,5 @@ class ButtonGroup extends \BS\ButtonGroup
 			$b->href($uri);
 		}
 		return $b;
-
 	}
 }

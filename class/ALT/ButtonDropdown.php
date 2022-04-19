@@ -11,6 +11,4 @@ class ButtonDropdown extends \BS\ButtonDropdown
 		$this->page = $page;
 		parent::__construct($page->translate($label));
 	}
-
-
 }

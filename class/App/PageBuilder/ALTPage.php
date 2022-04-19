@@ -1,4 +1,5 @@
-<?
+<?php
+
 namespace App\PageBuilder\ALTPage;
 
 class ALTPage extends \ALT\Page

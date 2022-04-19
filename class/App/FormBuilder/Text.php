@@ -9,26 +9,26 @@ class Text extends HTMLCollection
 {
     public function bind($object)
     {
-        if ($name=$this->getAttribute("name")) {
+        if ($name = $this->getAttribute("name")) {
             if (is_object($object)) {
-                $this->value=$object->$name;
+                $this->value = $object->$name;
             } else {
-                $this->value=$object[$name];
+                $this->value = $object[$name];
             }
         }
         return $this;
     }
-    
+
     public static function Create($params)
     {
-        $ctrl=new HTMLCollection();
 
-        $text=new static();
-        
+
+        $text = new static();
+
         $text->classList->add($params["className"]);
         $text->setAttribute("name", $params["name"]);
-     
-        if ($params["subtype"]=="text") {
+
+        if ($params["subtype"] == "text") {
             $text->setAttribute("type", "text");
         }
 

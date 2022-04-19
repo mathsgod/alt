@@ -1,4 +1,5 @@
 <?php
+
 namespace App\UI;
 
 class TabItem
@@ -10,13 +11,13 @@ class TabItem
     {
         $this->li = p("li")[0];
         $this->div = p("div")[0];
-        $this->div->classList[]="tab-pane";
+        $this->div->classList[] = "tab-pane";
     }
 
     public function active()
     {
-        $this->li->classList[]='active';
-        $this->div->classList[]='active';
+        $this->li->classList[] = 'active';
+        $this->div->classList[] = 'active';
     }
 
     public function addBadge($text)

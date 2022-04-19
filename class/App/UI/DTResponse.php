@@ -1,4 +1,5 @@
-<?
+<?php
+
 namespace App\UI;
 
 use JsonSerializable;
@@ -40,8 +41,8 @@ class DTResponse implements JsonSerializable
         $c->type = "edit";
         $c->data = "__edit__";
         $c->name = "__edit__";
-        $c->className[]="text-center";
-        $c->width="1px";
+        $c->className[] = "text-center";
+        $c->width = "1px";
         $c->descriptor[] = function ($obj) {
             if (!$obj->canUpdate()) {
                 return;
@@ -61,8 +62,8 @@ class DTResponse implements JsonSerializable
         $c->type = "view";
         $c->data = "__view__";
         $c->name = "__view__";
-        $c->className[]="text-center";
-        $c->width="1px";
+        $c->className[] = "text-center";
+        $c->width = "1px";
         $c->descriptor[] = function ($obj) {
             if (!$obj->canRead()) {
                 return;
@@ -83,13 +84,13 @@ class DTResponse implements JsonSerializable
         $c->type = "delete";
         $c->data = "__del__";
         $c->name = "__del__";
-        $c->width="1px";
-        $c->className[]="text-center";
+        $c->width = "1px";
+        $c->className[] = "text-center";
         $c->descriptor[] = function ($obj) {
             if (!$obj->canDelete()) {
                 return;
             }
-            return $a=html("a")->class("btn btn-xs btn-danger")->href($obj->uri("del"))->html("<i class='fa fa-fw fa-times'></i>");
+            return $a = html("a")->class("btn btn-xs btn-danger")->href($obj->uri("del"))->html("<i class='fa fa-fw fa-times'></i>");
         };
         $this->_columns["__del__"] = $c;
         return $c;
@@ -108,8 +109,8 @@ class DTResponse implements JsonSerializable
 
     public function data()
     {
-        foreach($this->fields as $c){
-            $this->add($c,$c);
+        foreach ($this->fields as $c) {
+            $this->add($c, $c);
         }
 
         $source = $this->filteredSource();
@@ -141,7 +142,8 @@ class DTResponse implements JsonSerializable
         return $this->source->count();
     }
 
-    public function filteredSource(){
+    public function filteredSource()
+    {
         $source = clone $this->source;
 
         foreach ($this->order as $o) {
@@ -152,14 +154,14 @@ class DTResponse implements JsonSerializable
 
         foreach ($this->request["columns"] as $k => $c) {
             if ($c["searchable"] == "false") continue;
-            $column=$this->_columns[$c["name"]];
-            
+            $column = $this->_columns[$c["name"]];
+
             if ($value = $c["search"]["value"]) {
-                if($column->searchCallback){
-                    $w=[];
+                if ($column->searchCallback) {
+                    $w = [];
                     $w[] = call_user_func($column->searchCallback, $value);
                     $source->where($w);
-                }elseif ($c["searchType"] == "text") {
+                } elseif ($c["searchType"] == "text") {
                     $w = [];
                     $w[] = [$c["data"] . " like ?", "%$value%"];
                     $source->where($w);
@@ -167,11 +169,11 @@ class DTResponse implements JsonSerializable
                     $w = [];
                     $w[] = [$c["data"] . " = ?", $value];
                     $source->where($w);
-                } elseif ($c["searchType"] == "date"){
-                    $value=json_decode($value,true);
-                    $field=$c["data"];
-                    $w=[];
-                    $w[]=["date(`$field`) between ? and ?",[$value["from"],$value["to"]]];
+                } elseif ($c["searchType"] == "date") {
+                    $value = json_decode($value, true);
+                    $field = $c["data"];
+                    $w = [];
+                    $w[] = ["date(`$field`) between ? and ?", [$value["from"], $value["to"]]];
                     $source->where($w);
                 }
             }

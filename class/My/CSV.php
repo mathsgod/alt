@@ -1,8 +1,11 @@
 <?php
+
 namespace My;
 
-class utf8encode_filter extends \php_user_filter {
-    function filter($in, $out, &$consumed, $closing) {
+class utf8encode_filter extends \php_user_filter
+{
+    function filter($in, $out, &$consumed, bool $closing): int
+    {
         while ($bucket = stream_bucket_make_writeable($in)) {
             $bucket->data = iconv("BIG5", "UTF-8", $bucket->data);
             $consumed += $bucket->datalen;
@@ -12,10 +15,12 @@ class utf8encode_filter extends \php_user_filter {
     }
 }
 
-class CSV extends \ArrayIterator {
+class CSV extends \ArrayIterator
+{
     public $columns = [];
 
-    public function __construct($file = null, $delimiter = ',', $big5 = true) {
+    public function __construct($file = null, $delimiter = ',', $big5 = true)
+    {
         if (isset($file)) {
             $fp = fopen($file, 'r');
             if ($big5) {
@@ -27,8 +32,8 @@ class CSV extends \ArrayIterator {
 
             while (($d = fgetcsv($fp, 0, $delimiter)) !== false) {
                 $row = [];
-                foreach($d as $k => $c) {
-                    $row[ $this->columns[$k] ] = $c;
+                foreach ($d as $k => $c) {
+                    $row[$this->columns[$k]] = $c;
                 }
                 $this[] = $row;
             }
@@ -36,7 +41,8 @@ class CSV extends \ArrayIterator {
         }
     }
 
-    public function save($file, $bom = true) {
+    public function save($file, $bom = true)
+    {
         $fp = fopen($file, 'w');
         fputcsv($fp, $this->columns);
         foreach ($this as $row) {

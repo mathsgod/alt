@@ -1,4 +1,5 @@
 <?php
+
 namespace App\UI;
 
 class T extends Box
@@ -51,7 +52,7 @@ class T extends Box
 
     public function setCreate(string $uri)
     {
-        return $this->header->addButton(null,$uri)->icon("fa fa-fw fa-plus")->addClass("btn-primary");
+        return $this->header->addButton(null, $uri)->icon("fa fa-fw fa-plus")->addClass("btn-primary");
     }
 
     public function formCreate($options, $default = null)
