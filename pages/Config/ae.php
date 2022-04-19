@@ -2,8 +2,9 @@
 
 class Config_ae extends ALT\Page
 {
-	public function get($type)
+	public function get()
 	{
+		$type = $_GET["type"];
 		$obj = $this->object();
 		if ($obj->config_id) {
 			$type = $obj->type;
@@ -28,5 +29,4 @@ class Config_ae extends ALT\Page
 
 		$this->write($f);
 	}
-
 }
