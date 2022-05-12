@@ -259,7 +259,7 @@ class Page extends \R\Page
                     }
                     if ($echo_content) {
                         $content = $echo_content;
-                        $content .= (string)$response;
+                        $content .= $response->getBody()->getContents();
 
                         return $response->withBody(new Stream($content));
                     }
