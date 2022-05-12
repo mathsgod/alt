@@ -168,7 +168,7 @@ class ACL extends Model
         $w[] = implode(" or ", $u);
 
         if (!isset(self::$_CACHE[$user->user_id])) {
-            self::$_CACHE[$user->user_id] = (array)self::Find($w);
+            self::$_CACHE[$user->user_id] = self::Find($w)->asArray();
         }
 
 
