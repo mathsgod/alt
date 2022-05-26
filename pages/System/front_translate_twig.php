@@ -423,7 +423,7 @@ class System_front_translate_twig extends \ALT\Page
 
         $tree = new TreeView();
         $this->renderTree($this->frontPath(), $tree);
-        $data["tree"] = $tree;
+        $data["tree"] = (string)$tree;
         return $data;
     }
 }
