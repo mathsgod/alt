@@ -115,7 +115,7 @@ class ACL_edit extends ALT\Page
 
         $ms = $this->app->getModule();
         usort($ms, function ($a, $b) {
-            return $a->class > $b->class;
+            return $a->class <=> $b->class;
         });
 
         return [

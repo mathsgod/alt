@@ -362,9 +362,13 @@ class System_front_translate_twig extends \ALT\Page
         foreach ($this->getToken($file) as $values) {
             $msgstr = [];
             foreach ($this->getLang() as $lang) {
-                $entries = $poEntries[$lang][$values["value"]];
-                $msgstr[$lang] = implode("", $entries["msgstr"]);
-                unset($poEntries[$lang][$values["value"]]);
+                if($poEntries[$lang][$values["value"]]){
+                    $entries = $poEntries[$lang][$values["value"]];
+                    $msgstr[$lang] = implode("", $entries["msgstr"]);
+                    unset($poEntries[$lang][$values["value"]]);
+                }else{
+                    $msgstr[$lang] = "";
+                }
             }
             $data[] = ["msgid" => $values["value"], "msgstr" => $msgstr];
         }
@@ -423,7 +427,7 @@ class System_front_translate_twig extends \ALT\Page
 
         $tree = new TreeView();
         $this->renderTree($this->frontPath(), $tree);
-        $data["tree"] = $tree;
+        $data["tree"] = (string)$tree;
         return $data;
     }
 }

@@ -172,7 +172,8 @@ class Page extends \R\Page
     public function _redirect($uri = null)
     {
         if ($uri) {
-            $location = $this->request->getUri() . "/" . $uri;
+            $prelink = $this->request->getUri()->getBasePath();
+            $location = $prelink . "/" . $uri;
             $this->response = $this->response->withHeader("Location", $location);
             return;
         }
@@ -259,7 +260,7 @@ class Page extends \R\Page
                     }
                     if ($echo_content) {
                         $content = $echo_content;
-                        $content .= (string)$response;
+                        $content .= $response->getBody()->getContents();
 
                         return $response->withBody(new Stream($content));
                     }
